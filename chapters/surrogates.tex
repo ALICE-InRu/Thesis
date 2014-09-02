@@ -102,7 +102,7 @@ Once the validation algorithm has completed, the training set is pruned to a siz
 \>15  \> {\bf od} %  Repeated the steps 1-9 above until $\tau_t>0.999$ or at least the $\mu$  highest ranking individuals  of unknown fitness have been evaluated. There is no need to evaluate more than the $\mu$ best ranking individuals  since they will be disregarded in the next iteration of CMA-ES.
 \end{tabbing}}
 \caption{Pseudo code}
-\label{fig:pseudocode}
+\label{fig:schema:pseudocode}
 \end{figure}
 
 \begin{figure} \centering 
@@ -112,7 +112,7 @@ Once the validation algorithm has completed, the training set is pruned to a siz
 
 
 \section{Experimental Study}\label{sec:sur:expr}
-In the experimental study CMA-ES  is run for several test functions, namely sphere model and Rosenbrock function (cf.~\cref{app:fun:sphere} and~\cref{app:fun:rosen}), of various dimensions $d=2,5,10$ and $20$. The average fitness for $100$ independent runs versus the number of function evaluations is reported using the original validation procedure presented in \cite{Ru06:PPSN} and compared with its new and improved validation procedure, whose pseudo code is presented in~\cref{fig:pseudocode} and shown schematically in~\cref{fig:schema}. The procedures will be referred to as using ``all'' or only the ``$\mu$ best'' candidate individuals during the validation, respectively.
+In the experimental study CMA-ES  is run for several test functions, namely sphere model and Rosenbrock function (cf.~\cref{app:fun:sphere} and~\cref{app:fun:rosen}), of various dimensions $d=2,5,10$ and $20$. The average fitness for $100$ independent runs versus the number of function evaluations is reported using the original validation procedure presented in \cite{Ru06:PPSN} and compared with its new and improved validation procedure, whose pseudo code is presented in~\cref{fig:schema:pseudocode} and shown schematically in~\cref{fig:schema}. The procedures will be referred to as using ``all'' or only the ``$\mu$ best'' candidate individuals during the validation, respectively.
 The parameter setting for the $(\mu,\lambda)$ CMA-ES is as recommended in \cite{Hansen01} with population size $\lambda = 4+\lfloor 3\ln(n)\rfloor$ and the number of parents selected $\mu=\lambda/4$. The stopping criteria used are $1000n$ function evaluation or a fitness less than $10^{-10}$. The initial mean search individual is generated from a uniform distribution between $0$ and $1$. It is also noted that the training set is only pruned to size $\overline{l} = \lambda$ subsequent to the validation and improvement procedure.
 
 \subsection{Sphere model}\label{sec:sphere}
