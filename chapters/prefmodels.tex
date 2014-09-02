@@ -1,7 +1,7 @@
 \HeaderQuote{It was much pleasanter at home, when one wasn't always growing larger and smaller, and being ordered about by mice and rabbits.}{Alice} 
 %\HeaderQuote{The adventures first\dots explanations take such a dreadful time.}{The Gryphon} 
 
-\chapter{Learning Models}\label{ch:prefmodels} \todo[color=green!40,noline]{\cref{ch:learningmodels} Unfinished}
+\chapter{Learning Models}\label{ch:prefmodels} \todo[color=green!40,noline]{\cref{ch:prefmodels} Unfinished}
 
 \FirstSentence{L}{earning models considered in this } dissertation are based on ordinal regression in which the learning task is formulated as learning preferences. In the case of scheduling, learning which operations are preferred to others. Ordinal regression has been previously presented in \cite{Ru06:PPSN}, and given in \cref{ch:ordinal} for completeness. 
 
@@ -18,7 +18,7 @@ S = \left\{\left\{\vec{z}_o,+1\right\}_{k=1}^{\ell},\left\{\vec{z}_s,-1\right\}_
 \end{equation}
 where $\Phi\subset \mathbb{R}^d$ is the training set of $d$ features, $Y=\{-1,+1\}$ is the outcome space, $\ell=n\cdot m$ is the total number of optimal dispatches, $o\in\mathcal{O}^{(k)}$, and suboptimal dispatches $s\in \mathcal{S}^{(k)}$, at dispatch $k$. Note, $\mathcal{O}^{(k)}\cup\mathcal{S}^{(k)}=\mathcal{R}^{(k)}$, and $\mathcal{O}^{(k)}\cap\mathcal{S}^{(k)}=\emptyset$. 
 
-For \JSP\ there are $d=\NrFeatTotal$ features (cf. the step-by-step varying features from \cref{tbl:features}), and the training set is created in the manner described in \cref{ch:gentrainingdata}.
+For \JSP\ there are $d=\NrFeatTotal$ features (cf. the step-by-step varying features from \cref{tbl:features}), and the training set is created in the manner described in \cref{sec:gentrainingdata}.
 
 Logistic regression makes decisions regarding optimal dispatches and at the same time efficiently estimates a posteriori probabilities. When using linear classification model (cf. \cref{sec:ord:linpref}), i.e., 
 \begin{equation}\label{eq:jssp:linweights}
@@ -51,13 +51,13 @@ For \jsp\ scheduling there are $N$ problem instances generated using $n$ jobs an
 
 \subsection{\JSP\ tree representation}\label{sec:gen:gametree}
 When building a complete \JSP\ schedule $\ell=n\cdot m$ dispatches must be made sequentially. 
-A job is placed at the earliest available time slot for its next machine, whilst still fulfilling constraints \cref{eq:Permutation,eq:OneJobPerMac}.
+A job is placed at the earliest available time slot for its next machine, whilst still fulfilling constraints \cref{eq:permutation,eq:oneJobPerMac}.
 %that each machine can handle at most one job at each time, and jobs need to have finished their previous machines according to its machine order. 
-Unfinished jobs are dispatched one at a time according to some heuristic. After each dispatch\footnote{Dispatch and time step are used interchangeably.} the schedule's current features (cf. \cref{tbl:jssp:feat}) are updated based on the half-finished schedule. \cref{fig:jssp:gametree} shows how the first two dispatches could be executed for a six-job six-machine \jsp\ scheduling problem, with the machines, $a\in\{M_1,...,M_6\}$, on the vertical axis and the horizontal axis yields the current makespan. The next possible dispatches are denoted as dashed boxes with the job index $j$ within and its length corresponding to $p_{ja}$.
+Unfinished jobs are dispatched one at a time according to some heuristic. After each dispatch\footnote{Dispatch and time step are used interchangeably.} the schedule's current features (cf. \cref{tbl:features}) are updated based on the half-finished schedule. \cref{fig:jssp:gametree} shows how the first two dispatches could be executed for a six-job six-machine \jsp\ scheduling problem, with the machines, $a\in\{M_1,...,M_6\}$, on the vertical axis and the horizontal axis yields the current makespan. The next possible dispatches are denoted as dashed boxes with the job index $j$ within and its length corresponding to $p_{ja}$.
 In the top layer one can see an empty schedule.
 In the middle layer one of the possible dispatches from the layer above is fixed, and one can see the resulting schedule, i.e., what are the next possible dispatches given this scenario? This sort of tree representation is similar to \emph{game trees} \citep[cf.][]{Rosen03} where the root node denotes the initial, i.e., empty, schedule and the leaf nodes denote the complete schedule (resulting after $n\cdot m$ dispatches, thus height of the tree is $\ell$), therefore the distance $k$ from an internal node to the root yields the number of operations already dispatched. Traversing from root to leaf node one can obtain a sequence of dispatches that yielded the resulting schedule, i.e., the sequence indicates in which order the tasks should be dispatched for that particular schedule. 
 
-However one can easily see that this sequence of task assignments is by no means unique. Inspecting a partial schedule further along in the dispatching process such as in \cref{fig:jssp:example}, then let's say $J_1$ would be dispatched next, and in the next iteration $J_2$. Now this sequence would yield the same schedule as if $J_2$ would have been dispatched first and then $J_1$ in the next iteration, i.e., these are non-conflicting jobs. Which indicates that some of the nodes in game tree can merge. In the meantime the state of the schedules are different and thus their features, although they manage to yield with the same (partial) schedule at a later date.  % ATHUGASEMD 1 -- SEQ. REP NON-UNIQUE
+However one can easily see that this sequence of task assignments is by no means unique. Inspecting a partial schedule further along in the dispatching process such as in \cref{fig:example}, then let's say $J_1$ would be dispatched next, and in the next iteration $J_2$. Now this sequence would yield the same schedule as if $J_2$ would have been dispatched first and then $J_1$ in the next iteration, i.e., these are non-conflicting jobs. Which indicates that some of the nodes in game tree can merge. In the meantime the state of the schedules are different and thus their features, although they manage to yield with the same (partial) schedule at a later date.  % ATHUGASEMD 1 -- SEQ. REP NON-UNIQUE
 In this particular instance one can not infer that choosing $J_1$ is better and $J_2$ is worse (or vice versa) since they can both yield the same solution.
 
 Note that in some cases there can be multiple optimal solutions to the same problem instance. Hence not only is the sequence representation `flawed' in the sense that slight permutations on the sequence are in fact equivalent w.r.t. the end-result, but very varying permutations on the dispatching sequence (however given the same partial initial sequence) can result in very different complete schedules but can still achieve the same makespan, and thus same \fullnamerho, which is the measure under consideration. Care must be taken in this case that neither resulting features are labelled as undesirable. Only the resulting features from a dispatch resulting in a suboptimal solution should be labelled undesirable. 
@@ -97,7 +97,7 @@ The nature of the CMA-ES is to explore suboptimal routes until it converges to a
 For instance \cite{Siggi05} used decision trees to `rediscover' the LPT single priority based dispatching rule by using the dispatching rule to create its training data. The limitations of using heuristics to label the training data is that the learning algorithm will mimic the original heuristic (both when it works poorly and well on the problem instances) and does not consider the real optimum. In order to learn heuristics that can outperform existing heuristics then the training data needs to be correctly labelled. This drawback is confronted in \citep{Malik08,Russell09,Siggi10} by using an optimal scheduler, computed off-line. 
 
 These aspects are the main motivation for the data generation in this dissertation. All problem instances are correctly labelled; their optimal solution were found using \cite{gurobi}, a commercial software package for solving large-scale linear optimization and a state-of-the-art solver for mixed integer programming. In order to create training instances, i.e., preference pairs, both a features resulting in optimal solutions are gathered (following optimal trajectories) and features that would have been chosen if a dispatching rule had been implemented (following DR trajectories). 
-For this dissertation only MWR and LWR will be deemed worthwhile to generate training data, since it is the most promising single priority dispatching rules for \JSP\ and \FSP, respectively, (cf. \cref{sec:distdiffSDR}).
+For this dissertation only MWR and LWR will be deemed worthwhile to generate training data, since it is the most promising single priority dispatching rules for \JSP\ and \FSP, respectively, (cf. \cref{ch:problemstructure}).
 
 In conclusion, one needs to consider two main aspects of the generation of the training data, 
 \begin{inparaenum}[(a)]
@@ -126,12 +126,12 @@ The following trajectory strategies were explored for adding preference pairs to
 \end{description}
 In the case of $S^{mwr}$ and $S^{cma}$ it is sufficient to explore each trajectory exactly once for each problem instance. Whereas, for $S^{opt}$ and $S^{rnd}$ there can be several trajectories worth exploring, however, only one is chosen (at random). It is noted that since the number of problem instances $N$ is large, it is deemed sufficient to explore one trajectory for each instance, in those cases as well.
 
-These trajectory strategies were initially introduced in \citet{InRu14b}, save for $S^{cma}$ and $S^{lwr}$, however the latter is currently addressed since LWR is considered more favourable for \FSP\ rather than MWR (cf. \cref{sec:distdiffSDR}). 
+These trajectory strategies were initially introduced in \citet{InRu14b}, save for $S^{cma}$ and $S^{lwr}$, however the latter is currently addressed since LWR is considered more favourable for \FSP\ rather than MWR (cf. \cref{ch:problemstructure}). 
 
 \subsection{Experimental study}\label{sec:expr:locallin}
-To test the validity of different ranking and strategies from \cref{sec:S:strategies}, a training set of $N_{\text{train}}$ problem instances of $n\times m$ \jsp\ for several problem space distributions, namely problem{1} and problem{2}, described in \cref{tbl:data:sim}. The size of the preference set, $S$, for different trajectory and ranking strategies is depicted in \cref{fig:sizeofprefset:p1} and  \cref{fig:sizeofprefset:p2}, for problem{1} and problem{2}, respectively. 
+To test the validity of different ranking and strategies from \cref{sec:S:strategies}, a training set of $N_{\text{train}}$ problem instances of $n\times m$ \jsp\ for several problem space distributions, namely problem{1} and problem{2}, described in \cref{tbl:data}. The size of the preference set, $S$, for different trajectory and ranking strategies is depicted in \cref{fig:sizeofprefset:p1} and  \cref{fig:sizeofprefset:p2}, for problem{1} and problem{2}, respectively. 
 
-A linear ordinal regression model (cf. \cref{ch:learningmodels}) was created for each preference set, $S$, for problem space problem{1}. A box-plot with \fullnamerho, is presented in \cref{fig:track:boxplot:p1,fig:rank:boxplot:p2}, note sub-figure (a) uses training data and sub-figure (b) uses test data. \cref{fig:track:boxplot:p1} depicts different ranking strategies for a fixed trajectory, whereas \cref{fig:rank:boxplot:p1} depicts different trajectory strategies for a fixed ranking. 
+A linear ordinal regression model (cf. \cref{ch:prefmodels}) was created for each preference set, $S$, for problem space problem{1}. A box-plot with \fullnamerho, is presented in \cref{fig:track:boxplot:p1,fig:rank:boxplot:p2}, note sub-figure (a) uses training data and sub-figure (b) uses test data. \cref{fig:track:boxplot:p1} depicts different ranking strategies for a fixed trajectory, whereas \cref{fig:rank:boxplot:p1} depicts different trajectory strategies for a fixed ranking. 
 From the figures it is apparent there can be a performance edge gained by implementing a particular ranking or trajectory strategy, moreover the behaviour is analogous across different disciplines. Similarly, \cref{fig:track:boxplot:p2,fig:rank:boxplot:p2} for problem space problem{2}.
 
 
@@ -216,7 +216,7 @@ Now, due to the nature of the sequence representation, earlier dispatches are mo
 \end{equation}
 
 \subsection{Experimental study}\label{sec:global}
-Given $N=500$ problem instances of 6-jobs 5-machines \jsp, one can see from \cref{fig:global:sizeofprefset} that $l=|\zeta_k|$ can be quite great for small $k$. Hence, the size of the preference set $\zeta_k$ is limited to $l_{\max}\leq 3.5\times10^{5}$ via random sampling prior implementing the learning algorithm. The training accuracy for the linear ordinal regression model is depicted in \cref{fig:global:tracc}, for problem space distributions problem{1} and problem{2}, described in \cref{tbl:data:sim}.
+Given $N=500$ problem instances of 6-jobs 5-machines \jsp, one can see from \cref{fig:global:sizeofprefset} that $l=|\zeta_k|$ can be quite great for small $k$. Hence, the size of the preference set $\zeta_k$ is limited to $l_{\max}\leq 3.5\times10^{5}$ via random sampling prior implementing the learning algorithm. The training accuracy for the linear ordinal regression model is depicted in \cref{fig:global:tracc}, for problem space distributions problem{1} and problem{2}, described in \cref{tbl:data}.
 Moreover, a box-plot for \fullnamerho, for problem spaces considered are depicted in  \cref{fig:stepbystep:boxplot}. Note, figures utilize training set of size $N_{\text{train}}$ in all cases. Main statistics are reported in \cref{tbl:comp:p1p2p3:summary}. 
 
 \begin{figure}\centering 
@@ -281,9 +281,7 @@ Moreover, a box-plot for \fullnamerho, for problem spaces considered are depicte
 %\input{tables/globalpjor}
 \end{table}
 
-In addition, the global linear regression schedule policies $\zeta_{14}(\mathcal{P}_1)$ and $\zeta_{14}(\mathcal{P}_2)$ were tested on synthetic \FSP\ problems subclasses \frnd{6}{5}, \frndn{6}{5},\fjc{6}{5}, \fmc{6}{5} and \fmxc{6}{5} generated by \citet{Whitley} (cf. \cref{data:sim:fsp}). 
-
-\todo[inline]{Note, that difficult problem instances are not filtered out beforehand, such as the approach in \citet{Whitley}, however difficult problem instances are discussed in \cref{sec:data:expr}.}
+In addition, the global linear regression schedule policies $\zeta_{14}(\mathcal{P}_1)$ and $\zeta_{14}(\mathcal{P}_2)$ were tested on synthetic \FSP\ problems subclasses \frnd{6}{5}, \frndn{6}{5},\fjc{6}{5}, \fmc{6}{5} and \fmxc{6}{5} generated by \citet{Whitley} (cf. \cref{sec:data:FSP}). 
 
 %\input{tables/orlib-fssp} 
 %\begin{table}\centering

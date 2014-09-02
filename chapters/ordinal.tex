@@ -29,6 +29,8 @@ The function used to induce the preference is defined by a linear function in th
 \end{equation}
 where $\vec{w}=[w_1,\ldots,w_d]\in\mathbb{R}^d$ has weight $w_i$ for feature $\phi_i$.
 
+
+\begin{comment}
 Let $\vec{z}$ denote either $\vphi(\vec{x}_k^{(1)})-\vphi(\vec{x}_k^{(2)})$ with \mbox{$t_k=+1$} or 
 $\vphi(\vec{x}_k^{(2)})-\vphi(\vec{x}_k^{(1)})$ with \mbox{$t_k=-1$}, positive or negative example respectively.
 
@@ -41,27 +43,18 @@ where $C > 0$ is a penalty parameter, and the negative log-likelihood is due to 
 \mathcal{P}\big(y=\pm1|\vec{z},\vec{w}\big)=\frac{1}{1+e^{-y\inner{\vec{w}}{\vec{z}_i}}}.
 \end{equation}
 The logistic regression defined in \eqref{eq:margin} is solved iteratively, in particular using Trust Region Newton method \citep[cf.][]{Lin08:newtontrustregion}, which generates a sequence $\{\vec{w}^{(k)}\}_{k=1}^\infty$ converging to the optimal solution $\vec{w}^*$ of \eqref{eq:margin}.
+\end{comment}
 
-\todo[inline]{The aim now is to find a function $h$ that encounters as few training errors as possible on $S'$. Applying the method of large margin rank boundaries of ordinal regression described in \cite{Herbrich00}, the optimal $\vec{w}^*$ is determined by solving the following task:
-\begin{equation} 
+The aim now is to find a function $h$ that encounters as few training errors as possible on $S'$. Applying the method of large margin rank boundaries of ordinal regression described in \cite{Herbrich00}, the optimal $\vec{w}^*$ is determined by solving the following task, 
+\begin{equation}\label{eq:margin}
   \min_{\vec{w}}\quad \tfrac{1}{2}\inner{\vec{w}}{\vec{w}} + \tfrac{C}{2}\sum_{k=1}^{N'}\xi_k^2
 \end{equation}
 subject to $t_k\inner{\vec{w}}{(\vphi(\vec{x}_k^{(1)})-\vphi(\vec{x}_k^{(2)})}\ge 1 - \xi_k$ and $\xi_k \ge 0$, $k = 1,\ldots, N'$. The degree of constraint violation is given by the margin slack variable $\xi_k$ and when greater than $1$ the corresponding pair are incorrectly ranked. 
-}
-
 Note that,
 \begin{equation}
 h(\vec{x}_i)-h(\vec{x}_j)=\inner{\vec{w}}{\vphi(\vec{x}_i)-\vphi(\vec{x}_j)}
 \end{equation}
 and minimising $\inner{\vec{w}}{\vec{w}}$ in~\eqref{eq:margin} maximises the margin between rank boundaries, i.e., the distance between adjacently ranked pair $h(\vec{x}^{(1)})$ and $h(\vec{x}^{(2)})$.
-
-
-
-
-
-
-
-
 
 
 
