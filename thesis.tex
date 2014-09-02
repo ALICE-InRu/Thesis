@@ -1,0 +1,85 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+%! xelatex thesis.tex
+%! makeindex thesis.nlo -s nomencl.ist -o thesis.nls
+
+\documentclass{hi-thesis} 
+
+\input{scripts/shorthand} % put your own shorthand declarations in this document
+\input{../shorthandCommon}
+
+\newcommand{\printFrontMatter}[1]{
+  \ifthenelse{\equal{#1}{true}}{
+	  \input{frontmatter/coverpage}
+	  \maketitle
+	  \copyrightpage
+	  \dedicationpage
+	  \abstractpage % both in English and Icelandic
+	  \tableofcontents
+	  \listoffigures
+	  \addcontentsline{toc}{chapter}{Listing of Figures}
+	  \listoftables
+	  \addcontentsline{toc}{chapter}{Listing of Tables}
+	  \include{scripts/nomencl}	  
+	  \printnomenclature  
+	  \addcontentsline{toc}{chapter}{Nomenclature}
+	  \acknowledgments
+  }{}
+  \ifthenelse{\equal{#1}{false}}{
+      \pagenumbering{roman}
+	  \listoftodos   
+	  
+	  % Main matter
+	  \cleardoublepage
+	  \pagestyle{fancy} \setcounter{page}{1} \pagenumbering{arabic}
+	  \normalsize
+	  
+	  \cfoot{Draft -- \today}
+  }{}
+  \onehalfspacing
+}
+\newcommand{\printBackMatter}[1]{
+  % Back matter
+  \singlespacing
+  \clearpage
+  		
+  \HeaderQuote{A cat may look at a king. I've read that in some book, but I don't remember where.}{Alice}
+
+  \bibliographystyle{abbrvnat} 
+  \bibliography{../references}
+  	
+  \ifthenelse{\equal{#1}{true}}{  	  
+	\addcontentsline{toc}{chapter}{References}
+	\appendix
+	\include{endmatter/fun} % test function suite
+	\include{endmatter/conf} % published papers etc.
+	\include{endmatter/colophon}  
+  }{}
+  \ifthenelse{\equal{#1}{false}}{}{}
+}
+\newcommand{\printAll}{false} % either true or false
+
+\begin{document}
+
+% Front matter
+\printFrontMatter{\printAll}
+
+% Main matter, include each chapter...
+\include{chapters/introduction}
+\include{chapters/scheduling}
+\include{chapters/genprobleminstances}
+\include{chapters/problemstructure}
+\include{chapters/prefmodels}
+\include{chapters/esmodels}
+\include{chapters/surrogates}
+\include{chapters/ordinal}
+\include{chapters/experiments}
+\include{chapters/conclusions}
+
+
+% Back matter
+\printBackMatter{\printAll}
+
+
+\end{document}

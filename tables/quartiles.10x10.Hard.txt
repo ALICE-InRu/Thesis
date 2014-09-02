@@ -1,0 +1,55 @@
+\begin{table}[p]\centering
+\caption{Percentage ($\%$) of $ 10\times 10 $ training instances classified as hard simultaneously. Note, each problem space consists of $N_{\text{train}}= 300 $ problem instances.}
+\label{tbl:hard:cnt:10x10}
+\small{
+\subfloat[][\jrnd{10}{10}]{\begin{tabular}{lrrrr}
+\toprule SDR
+&      SPT&  LPT&MWR&  LWR\\ \midrule
+SPT&27.00& 4.67&  0&17.67\\
+LPT& 4.67&13.67&  0& 9.00\\
+MWR&    0&    0&  0&    0\\
+LWR&17.67& 9.00&  0&59.33\\
+\bottomrule
+\end{tabular}}
+\quad 
+\subfloat[][\jrndn{10}{10}]{\begin{tabular}{lrrrr}
+\toprule SDR
+&      SPT& LPT&MWR&  LWR\\ \midrule
+SPT&31.67&3.00&  0&23.33\\
+LPT& 3.00&9.33&  0& 5.33\\
+MWR&    0&   0&  0&    0\\
+LWR&23.33&5.33&  0&59.00\\
+\bottomrule
+\end{tabular}}
+\newline
+\subfloat[][\jrndJ{10}{10}]{\begin{tabular}{lrrrr}
+\toprule SDR
+&    SPT&  LPT&MWR&  LWR\\ \midrule
+SPT& 40.00& 7.00&  0&27.00\\
+LPT&  7.00&11.33&  0& 9.67\\
+MWR&  0&    0&  0&    0\\
+LWR& 27.00& 9.67&  0&48.67\\
+\bottomrule
+\end{tabular}}
+\quad
+\subfloat[][\jrndM{10}{10}]{\begin{tabular}{lrrrr}
+\toprule SDR
+&      SPT& LPT&MWR&  LWR\\ \midrule
+SPT&44.33&1.67&  0&28.00\\
+LPT& 1.67&3.33&  0& 2.00\\
+MWR&    0&   0&  0&    0\\
+LWR&28.00&2.00&  0&52.33\\
+\bottomrule
+\end{tabular}}
+\newline 
+\subfloat[][\frnd{10}{10}]{\begin{tabular}{lrrrr}
+\toprule SDR
+&      SPT&  LPT&  MWR& LWR\\ \midrule
+SPT&20.90&12.31& 4.85&2.61\\
+LPT&12.31&49.25&14.93&5.22\\
+MWR& 4.85&14.93&24.63&1.49\\
+LWR& 2.61& 5.22& 1.49&5.60\\
+\bottomrule
+\end{tabular}}
+}
+\end{table}

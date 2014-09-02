@@ -1,0 +1,6 @@
+xelatex thesis.tex
+makeindex thesis.nlo -s nomencl.ist -o thesis.nls
+xelatex thesis.tex
+bibtex thesis.aux
+xelatex thesis.tex
+evince thesis.pdf & 

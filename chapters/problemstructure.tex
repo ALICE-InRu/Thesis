@@ -1,0 +1,121 @@
+\HeaderQuote{I can't explain myself, I'm afraid, Sir, because I'm not myself you see.}{Alice} 
+
+\chapter{Problem structure}\label{ch:problemstructure} 
+
+%\begin{abstract} 
+%Many heuristic methods have been proposed for the \jsp\ scheduling problem. Different solution methodologies outperform other depending on the particular problem instance under consideration. Therefore, one is interested in knowing how the instances differ in structure and determine when a particular heuristic solution is likely to fail and explore in further detail the causes. In order to achieve this, we seek to characterise features for different difficulties. Preliminary experiments show there are different significant features that distinguish between easy and hard \jsp\ problem, and that they vary throughout the scheduling process. 
+%The insight attained by investigating the relationship between problem structure and heuristic performance can undoubtedly lead to better heuristic design that is tailored to the data distribution under consideration.
+%\end{abstract}
+
+
+\FirstSentence{P}{roblem structure and heuristic effectiveness} are closely intertwined. When investigating the relation between the two one can research what \citet{Corne10} call \emph{footprints} in instance space, which is an indicator how an algorithm generalises over a given instance space. This sort of investigation has also been conducted by \citet{Pfahringer00} under the alias \emph{landmarking}. 
+% quote Corne10: ``such a footprint indicates how an algorithm's comparative performance generalises in instance space''
+% quote Katie2009: ``Landmarking tries to directly characterise a domain by relating the performance to some learners -- the landmarkers -- to the performance of some other algorithm.''
+From experiments performed by \citeauthor{Corne10}, it is evident that one-algorithm-for-all problem instances is not ideal, in accordance with no free lunch theorem \citep{Wolpert97nofree}. An algorithm may be favoured for its best overall performance, however it is rarely the best algorithm available over various subspaces of the instance space.
+Therefore, when comparing different algorithms one needs to explore how they perform w.r.t. the instance space, i.e., their footprint. That is to say, one can look at it as finding which footprints correspond to a subset of the instance space that works \emph{well} for a given algorithm, and similarly finding which footprints correspond to a subset of the instance space that works \emph{poorly} for a given algorithm. 
+
+In the context of \jsp\ this corresponds to finding \emph{good} (makespan close to its optimum)  and \emph{bad} (makespan far off its optimum) schedules. Note, good and bad schedules are interchangeably referred to as \emph{easy} and \emph{hard} schedules, respectively. 
+
+\citet{SmithMilesLion5} also investigate algorithm performance in instance space using footprints. The main difference between \citeauthor{Corne10} and \citeauthor{SmithMilesLion5} is how they discretise the instance space. In the case of \citeauthor{Corne10} they use \jsp\ and discretise manually between different problem instances; on one hand w.r.t. processing times, e.g.,  $\vec{p}\sim \mathcal{U}(10,20)$ versus $\vec{p}\sim \mathcal{U}(20,30)$ etc., and on the other hand w.r.t. number of jobs $n$. 
+They warn that footprinting can be uneven, so great care needs to be taken in how to discretise the instance space into subspaces. 
+On the other than, \citeauthor{SmithMilesLion5} use a completely automated approach. Using timetabling instances, they implement a self-organizing map to group similar problem instances together, that were both real world instances and synthetic ones using different problem generators. 
+
+Going back to the \jsp\ paradigm, then the interaction between problem distribution and its permutation is extremely important, because it introduces hidden properties in the data structure making it \emph{easy} or \emph{hard} to schedule for the given algorithm. These underlying characteristics, i.e., features, define its data structure. A more sophisticated way of discretising the instance space is grouping together problem instances that show the same kind of feature behaviour, especially given the fact the learning models from \cref{ch:prefmodels} will be heavily based on feature pairs. Making it possible to infer which sort of feature behaviour distinguishes  between \emph{good} and \emph{bad} schedules. 
+
+In \citet{InRu12}, a single problem generator was used to create  $N=1,500$ synthetic $6\times6$ \jsp\ problem instances, where $\vec{p}\sim\mathcal{U}(1,200)$ and $\vsigma$ was a random permutation. The experimental study showed that MWR works either well or poorly on a subset of the instances, in fact 18\% and 16\% of the instances were classified as \emph{easy} and \emph{hard} for MWR, respectively. 
+Since the problem instances were naively generated, not to mention given the high variance of the data distribution, it is intuitive that there are some inherent structural qualities that could explain this difference in performance. The experimental study investigated the feature behaviours for these two subsets, namely, the easy and hard problem instances. For some features, the trend was more or less the same, which are explained by the common denominating factor, that all instances were sampled from the same problem generator. Whereas, those features that were highly correlated with the end-result, i.e., the final makespan, which determined if an instance was labelled easy or hard, then the significant features varied greatly between the two difficulties, which imply the inherent difference in data structure. 
+
+Moreover, the study in \citet{InRu12} gives support to that random problem instance generators are \emph{too} general and might not suit real-world applications. \citet{Whitley} argue that problem instance generator should be more structured, since real-world manufacturing environment is not completely random, but rather structured, e.g.,  job's tasks can be correlated or machines in the shop. \citeauthor{Whitley} propose a problem instance generator that relates to real-world \fsp\ attributes, albeit not directly modelled after real-world \fsp\ due to the fact that deterministic $Fm||C_{\max}$ is seldom directly applicable in practice \citep{Dudek92}, this is why \fjc{n}{m}, \fmc{n}{m} and \fmxc{n}{m} are also taken into consideration in~\cref{ch:genprobleminstances} as they are an attempt to mimic the real-world characteristics of \fsp.
+
+It is interesting to know if the difference in the structure of the schedule is time dependent, e.g.,  is there a clear time of divergence within the scheduling process? 
+Moreover, investigation of how sensitive is the difference between two sets of features, e.g.,  can two schedules with similar feature values yield completely contradictory outcomes, i.e., one poor and one good schedule? Or will they more or less follow the their predicted trend? If the latter is the prevalent case, then these instances need to be segregated and each having their own learning algorithm implemented, for a meaningful outcome overall.  
+This also, essentially, answers the question of whether  it is in fact feasible to discriminate between \emph{good} and \emph{bad} schedules using the currently selected features as a measure. If results are contradictory, it is an indicator the features selected are not robust enough to capture the essence of the data structure and some key features are missing from the feature set that could be able to discriminate between \emph{good} and \emph{bad} schedules. 
+Additionally, there is also the question of how can one define ``similar'' schedules, and what measures should be used? This \lcnamecref{ch:problemstructure} describes some preliminary experiments with the aim of investigating the feasibility of finding distinguishing features corresponding to \emph{good} and \emph{bad} schedules in \jsp. To summarise:
+\begin{inparaenum}[(a)]
+\item Is there a time of divergence?
+\item How does one define ``similar'' schedules?
+\item Do similar features yield contradictory outcomes?
+\item Are extra features needed?
+\end{inparaenum}
+
+Instead of searching through a large set of algorithms  and determining which algorithm is the most suitable for a given subset of the instance space, i.e., creating an algorithm portfolio, as is generally the focus in the current literature \citep{SmithMilesLion3,SmithMilesLion5,Corne10}, the focus of the experimental study in \cref{sec:easyhard:jrnd,sec:easyhard:jrndn,sec:easyhard:frnd,sec:easyhard:frndn,sec:easyhard:fjc,sec:easyhard:fmc,sec:easyhard:fmxc} 
+(each corresponding to a given problem space from \cref{ch:genprobleminstances})
+is rather on few simple algorithms, here the SDRs described in \cref{sec:SDR}, and understanding \emph{how} they work on the instance space, similar to \citet{Whitley} who analyse the fitness landscape of several problem classes for a fixed algorithm. 
+
+
+
+\section{Distribution difficulty w.r.t. SDRs}
+Depending on the data distribution, dispatching rules perform differently. Take for instance the common single-based priority dispatching rules; SPT, LPT, LWR and MWR (cf. \cref{sec:SDR}). 
+A box-plot for \fullnamerho, for all problem spaces in \cref{ch:genprobleminstances} are depicted in \cref{fig:SDR:boxplot}. 
+As one can see, MWR is by far the best out of the four SDRs inspected for \JSP\ -- not only does it reach the known optimum most often but it also has the lowest worst-case factor from optimality. Similarly LWR for \FSP.
+Although the same problem generator is used, there are some inherent structure in which MWR and LWR can exploit for \JSP\ and  \FSP, respectively, whereas the other SDRs cannot. However, \emph{all} of these dispatching rules are considered good and commonly used in practice and no one is better than the rest \citep{Haupt89}, it simply depends on the data distribution at hand. This indicates that some distributions are harder than others, and these \JSP\ problem generators simply favours MWR, whereas the \FSP\ problem generators favours LWR. 
+
+\begin{figure}[p]\centering
+\subfloat[][$6\times5$]{\includegraphics[width=\textwidth]{{boxplotRho.SDR.6x5}.eps}\label{fig:SDR:boxplot:6x5}}
+\caption{Box-plots of \namerho, when applying SDRs for all problem spaces in \cref{ch:genprobleminstances}.}\label{fig:SDR:boxplot}
+\end{figure}
+\begin{figure}[p]\centering
+\ContinuedFloat
+\subfloat[][$10\times10$]{\includegraphics[width=\textwidth]{{boxplotRho.SDR.10x10}.eps}\label{fig:SDR:boxplot:10x10}}
+\end{figure}
+
+\section{Characteristics of difficult problem instances}
+% Katie orðar: A correlation analysis between the feature space and the performance space was conducted across all 1,500 problem instances revealed that instance features that appear to correlate (linearly) with heuristic performance are $phi(?)$ (correlation $=-0.59$) and $phi(?)$ (correlation $=0.44$). None of the other instance features appear to have a linear relationship with algorithmic performance.
+
+The main focus is on knowing \emph{when} during the scheduling process easy and hard problems diverge and explore in further detail \emph{why} they diverged. Rather than visualising high-dimensional data projected onto two dimensional space (as was the focus in \cite{SmithMilesLion5} with self-organising maps), instead appropriate statistical tests with a significance level 0.05 are sufficient to determine if there is any difference between different data distributions. For this the two-sample Kolmogorov–Smirnov test (K-S test) is used to determine whether two underlying one-dimensional probability distributions differ. 
+
+\subsection{Defining `easy' versus `hard' schedules}
+In order to differentiate between easy and hard scheduling problems, the classification is based on the quantiles of \namerho, defined as follows, 
+\begin{description}
+\item[Easy] schedules belong to the first quantile, 
+\item[Hard] schedules belong to the third quantile.
+\end{description}
+\Cref{tbl:easyhard:cnt} reports the quantiles of \namerho, for each problem space, and \cref{tbl:easyhard:cnt:6x5,tbl:easyhard:cnt:10x10} shows the division of easy and hard schedules w.r.t. various SDRs. 
+
+A simple Kolmogorov-Smirnov goodness of fit hypothesis test with a significance level 0.05 is used to determine any statistical difference between data distribution of the features (on a step-by-step basis) between the easy and hard problem instances.
+
+In order to find defining characteristics for easy and hard problems, a (linear) correlation was computed between features (on a step-by-step basis) (with $\alpha=0.05$) to the resulting \namerho.
+
+\todo[inline]{Rýni frá Lion6: I am not overly sure about the confidence level on the statistical tests on tables 2-4. The authors are doing statistical testing on 16 different indicators, all of them obtained with the same data at 35 different steps. Every time we do a statistical test on the same data, we have a significance and a confidence level. This might be 5\% and 95\%, respectively. However, if the same data is used for repetitive statistical testing, it is not true that these stay at 5\% and 95\%. After all, using the same data, at 5\% significance level, 5 out of 100 statistical tests would return a false positive (or true negative, depending on the null hypothesis meaning). The authors need to employ an adjustment, like the Bonferroni adjustment or something similar.}
+
+\input{tables/quartiles.EasyHard.txt}
+\input{tables/quartiles.6x5.EasyHard.txt}
+\input{tables/quartiles.10x10.EasyHard.txt}
+\input{tables/quartiles.6x5.Easy.txt}
+\input{tables/quartiles.10x10.Easy.txt}
+\input{tables/quartiles.6x5.Hard.txt}
+\input{tables/quartiles.10x10.Hard.txt}
+
+\begin{comment}
+\subsection{\Jrnd}\label{sec:easyhard:jrnd}
+\missingfigure{Easy-hard jrnd}
+\subsection{\Jrndn}\label{sec:easyhard:jrndn}
+\missingfigure{Easy-hard jrnd}
+\subsection{\Frnd}\label{sec:easyhard:frnd}
+\missingfigure{Easy-hard frnd}
+\subsection{\Frndn}\label{sec:easyhard:frndn}
+\missingfigure{Easy-hard frnd}
+\subsection{\Fjc}\label{sec:easyhard:fjc}
+\missingfigure{Easy-hard fjc}
+\subsection{\Fmc}\label{sec:easyhard:fmc}
+\missingfigure{Easy-hard fmc}
+\subsection{\Fmxc}\label{sec:easyhard:fmxc}
+\missingfigure{Easy-hard fxc}
+\end{comment}
+\section{Discussion and Conclusion}
+From the experimental study it is apparent that features have different %impact 
+correlation with the resulting schedule depending in what stage it is in the scheduling process, implying that their influence varies throughout the scheduling process. And features constant throughout the scheduling process are not correlated with the end-result.
+There are some common features for both difficulties considered which define \JSP\ on a whole. However the significant features are quite different across the two difficulties, implying there is a clear difference in their data structure. The amount of significant features were considerably more for easy problems, indicating their key elements had been found. However, the features distinguishing hard problems were scarce. Most likely due to their more complex data structure their key features are of a more composite nature.
+
+It is possible for a \JSP\ schedule to have more than one sequential dispatching representation. It is especially w.r.t. the initial dispatches. Visiting \cref{fig:example} again, if jobs $J_j\in\{J_1,J_2,J_3,J_4\}$ were to be dispatched first, then all permutations yield the same equivalent temporal schedule, this is because they don't create a conflict for one another (as is the case for jobs $J_4$ and $J_5$). This drawback of non-uniqueness of sequential dispatching representation explains why there is hardly any significant feature for the initial steps of the scheduling process (cf. \cref{tbl:JSP:feat:easy} and \cref{tbl:JSP:feat:hard}). 
+
+Since feature selection is of paramount importance in order for algorithms to become successful, one needs to give great thought to how features are selected. What kind of features yield \emph{bad} schedules? And can they be steered onto the path of more promising feature characteristics. This sort of investigation can be an indicator how to create meaningful problem generators. On the account that real-world problem instances are scarce, their hidden properties need be drawn forth in order to generate artificial problem instances from the same data distribution. 
+
+The feature attributes need to be based on statistical or theoretical grounds. Thus scrutiny in understanding the nature of problem instances is of paramount importance in feature engineering for learning. Which yields feedback into what features are important to devote more attention to, i.e., features that result in a failing algorithm. For instance, in \cref{tbl:JSP:feat:same} the slack features have the same distribution in the initial stages of the scheduling process, however there is a clear point of divergence which needs to be investigate why the sudden change? 
+In general, this sort of investigation can undoubtedly be used in better algorithm design which is more equipped to deal with varying problem instances and tailor to individual problem instance's needs, i.e., a footprint-oriented algorithm. 
+
+Although this methodology was only implemented on a simple single-priority dispatching rule heuristic, the methodology is easily adaptable for more complex algorithms. The main objective of this work is to illustrate the interaction of a specific algorithm on a given problem structure and its properties.
+The authors fully expect that this could help improve performance in solving \JSP\ with ordinal regression, which is a per-instance tuning paradigm. This is currently underway as an extension to work introduced in \cite{InRu11a}.
+
+
+\todo[inline]{Remake the experiment from \cite{InRu12} for the new problem spaces. Start with SDR, to understand the problem spaces better. Then apply them on the learning models - PREF \& CMA-ES: Comparative study.}

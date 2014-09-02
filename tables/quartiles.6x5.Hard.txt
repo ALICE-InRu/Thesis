@@ -1,0 +1,94 @@
+\begin{table}[p]\centering
+\caption{Percentage ($\%$) of $ 6\times 5 $ training instances classified as hard simultaneously. Note, each problem space consists of $N_{\text{train}}= 500 $ problem instances.}
+\label{tbl:hard:cnt:6x5}
+\small{
+\subfloat[][\jrnd{6}{5}]{\begin{tabular}{lrrrr}
+\toprule SDR
+&      SPT&  LPT& MWR&  LWR\\ \toprule
+SPT&30.38&  5.24& 0.04& 21.08\\
+LPT& 5.24& 15.24& 0.10&  9.78\\
+MWR& 0.04&  0.10& 0.20&  0.08\\
+LWR&21.08&  9.78& 0.08& 54.18\\
+\bottomrule
+\end{tabular}}
+\quad 
+\subfloat[][\jrndn{6}{5}]{\begin{tabular}{lrrrr}
+\toprule SDR
+&      SPT& LPT& MWR&  LWR\\ \toprule
+SPT&37.54& 4.46& 0.02& 25.56\\
+LPT& 4.46& 9.70& 0.04&  6.18\\
+MWR& 0.02& 0.04& 0.06&  0.06\\
+LWR&25.56& 6.18& 0.06& 52.82\\
+\bottomrule
+\end{tabular}}
+\\
+\subfloat[][\jrndJ{6}{5}]{\begin{tabular}{lrrrr}
+\toprule SDR
+&      SPT&  LPT& MWR&  LWR\\ \toprule
+SPT&38.20&  7.34& 0.40& 26.46\\
+LPT& 7.34& 14.18& 0.46&  9.10\\
+MWR& 0.40&  0.46& 0.92&  0.48\\
+LWR&26.46&  9.10& 0.48& 46.70\\
+\bottomrule
+\end{tabular}}
+\quad 
+\subfloat[][\jrndM{6}{5}]{\begin{tabular}{lrrrr}
+\toprule SDR
+&      SPT& LPT& MWR&  LWR\\ \toprule
+SPT&43.08& 3.00& 0.04& 31.42\\
+LPT& 3.00& 5.72&    0&  3.62\\
+MWR& 0.04&    0& 0.10&  0.04\\
+LWR&31.42& 3.62& 0.04& 51.12\\
+\bottomrule
+\end{tabular}}
+\\
+\subfloat[][\frnd{6}{5}]{\begin{tabular}{lrrrr}
+\toprule SDR
+&      SPT&  LPT&  MWR& LWR\\ \toprule
+SPT&22.90& 11.70&  6.24& 3.74\\
+LPT&11.70& 41.82& 16.14& 5.64\\
+MWR& 6.24& 16.14& 27.82& 1.16\\
+LWR& 3.74&  5.64&  1.16& 7.50\\
+\bottomrule
+\end{tabular}}
+\quad 
+\subfloat[][\frndn{6}{5}]{\begin{tabular}{lrrrr}
+\toprule SDR
+&      SPT& LPT&  MWR&LWR\\ \toprule
+SPT&44.38& 3.48& 22.20&   0\\
+LPT& 3.48& 7.28&  3.90&   0\\
+MWR&22.20& 3.90& 48.42&   0\\
+LWR&    0&    0&     0&   0\\
+\bottomrule
+\end{tabular}}
+\\
+\subfloat[][\fjc{6}{5}]{\begin{tabular}{lrrrr}
+\toprule SDR
+&      SPT&  LPT&  MWR& LWR\\ \toprule
+SPT&36.44& 12.48& 18.22& 2.74\\
+LPT&12.48& 24.08& 14.28& 0.94\\
+MWR&18.22& 14.28& 36.70& 0.90\\
+LWR& 2.74&  0.94&  0.90& 2.80\\
+\bottomrule
+\end{tabular}}
+\quad 
+\subfloat[][\fmc{6}{5}]{\begin{tabular}{lrrrr}
+\toprule SDR
+&      SPT&  LPT&  MWR&LWR\\ \toprule
+SPT&49.20& 12.94& 23.16&   0\\
+LPT&12.94& 18.98&  9.76&   0\\
+MWR&23.16&  9.76& 31.76&   0\\
+LWR&    0&     0&     0&   0\\
+\bottomrule
+\end{tabular}}
+\\
+\subfloat[][\fmxc{6}{5}]{\begin{tabular}{lrrrr}
+\toprule SDR
+&     SPT&  LPT&  MWR& LWR\\ \toprule
+SPT&45.16& 12.24& 11.34& 7.48\\
+LPT&12.24& 24.78& 14.10& 0.52\\
+MWR&11.34& 14.10& 22.48& 0.26\\
+LWR& 7.48&  0.52&  0.26& 7.68\\
+  \bottomrule
+\end{tabular}}
+}\end{table}

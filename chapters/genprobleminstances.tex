@@ -1,0 +1,139 @@
+\HeaderQuote{If it had grown up, it would have made a dreadfully ugly child; but it makes rather a handsome pig, I think.}{Alice} 
+
+\chapter{Problem generators}\label{ch:genprobleminstances} 
+\todo[noline,color=green!40]{\cref{ch:genprobleminstances} Practically finished}
+
+\FirstSentence{S}{ynthetic problem instances for } \JSP\ and \FSP\  will be used  throughout this dissertation. The  problem spaces are detailed in the \cref{sec:data:JSP,sec:data:FSP} for \JSP\ and \FSP, respectively. Moreover, a brief summary is given in \cref{tbl:data}.
+Note, that difficult problem instances are not filtered out beforehand, such as the approach in \citet{Whitley}, although they will be specifically addressed in \cref{ch:problemstructure}. 
+
+Although real-world instances are desirable, unfortunately they are scarce, hence in some experiments problem instances from OR-Library maintained by \citet{ORlibrary} will be used as benchmark problems, and detailed in \cref{sec:data:orlib}. It is noted, that some of the instances are also simulated, but the majority are based on real-world instances, albeit sometimes simplified. 
+ %\citet{Panwalkar77} reports an extensive survey of 36 research papers in scheduling, most experiments are based on simulated data, and its verification on real-world data would be desirable, but missing. 
+
+\section{\Jsp}\label{sec:data:JSP}
+Problem instances for \JSP\ are generated stochastically by fixing the number of jobs and machines and 
+discrete processing time are i.i.d. and sampled from a discrete uniform distribution. % from the interval $I=[u_1,u_2]$, i.e., $\vec{p}\sim \mathcal{U}(u_1,u_2)$. 
+Two different processing times distributions were explored, namely,
+\begin{description}
+\item[\Jrnd] \jrnd{n}{m} \hfill \\ where $\vec{p}\sim\mathcal{U}(1,99)$;
+\item[\Jrndn] \jrndn{n}{m} \hfill \\ where $\vec{p}\sim\mathcal{U}(45,55)$.
+\end{description}
+The machine ordering is a random permutation of all of the machines in the \jsp. 
+For each \JSP\ class $N_{\text{train}}$  and $N_{\text{test}}$ instances were generated for training and testing, respectively. Values for $N$ are given in \cref{tbl:data}. 
+
+Although in the case of \jrnd{n}{m}\ this may be an excessively large range for the uniform distribution, it is however chosen in accordance with the literature \citep{Demirkol98} for creating synthesised $Jm||C_{\max}$ problem instances. In addition, w.r.t. the machine ordering, one could look into a subset of \JSP\ where the machines are partitioned into two (or more) sets, where all jobs must be processed on the machines from the first set (in some random order) before being processed on any machine in the second set, commonly denoted as $Jm|2\textrm{sets}|C_{\max}$ problems, but as discussed in \cite{orlib_swv} this family of \JSP\ is considered ``hard'' (w.r.t. relative error from best known solution) in comparison with the ``easy'' or ``unchallenging'' family with the general $Jm||C_{\max}$ setup. % ath. Holtsclaw96 vitnar í orlib_swv um easy-hard pælinguna
+This is in stark contrast to \citet{Whitley} whose findings showed that structured $Fm||C_{\max}$ were much easier to solve than completely random structures. 
+Intuitively, an inherent structure in machine ordering should be exploitable for a better performance.  However, for the sake of generality, a random structure is preferred as they correspond to difficult problem instances in the case of \JSP. Whereas, structured problem subclasses will be explored for \FSP.  
+
+Moreover, in order to inspect the impact of any slight change within the problem spaces, two mutated versions were created based on \jrnd{n}{m}, namely, 
+\begin{description}
+\item[\JrndJ] \jrndJ{n}{m} \hfill \\ where the first job, $J_1$, is always twice as long as its random counterpart, i.e.,\linebreak
+$\tilde{p}_{1a}=2\cdot p_{1a}$, where $p\in$\jrnd{n}{m}, for all $M_a\in\mathcal{M}$. 
+\item[\JrndM] \jrndM{n}{m} \hfill \\ where the first machine, $M_1$, is always twice as long as its random counterpart, i.e.,\linebreak
+ $\tilde{p}_{j1}=2\cdot p_{j1}$, where $p\in$\jrnd{n}{m}, for all $J_j\in\mathcal{J}$. 
+\end{description}
+Therefore making job $J_1$ and machine $M_1$ bottlenecks for \jrndJ{n}{m} and \jrndM{n}{m}, respectively.
+
+\section{\Fsp}\label{sec:data:FSP}
+Problem instances for \FSP\  are generated using \citet{Whitley} problem generator\footnote{Both code, written in \texttt{C++}, and problem instances used in their experiments can be found at: \url{http://www.cs.colostate.edu/sched/generator/}}. There are two fundamental types of problem classes: non-structured versus structured.
+
+Firstly, there are two ``conventional'' random, i.e., non-structured, problem classes for \FSP\  where processing times are i.i.d. and uniformly distributed, 
+\begin{description}
+\item[\Frnd]  \frnd{n}{m} \hfill \\
+where $\vec{p}\sim\mathcal{U}(1,99)$ whose instances are equivalent to \cite{Taillard1993}\footnote{\citeauthor{Taillard1993}'s generator is available from the OR-Library.};
+\item[\Frndn]  \frndn{n}{m} \hfill \\
+where $\vec{p}\sim\mathcal{U}(45,55)$.
+\end{description}
+In the \JSP\ context \frnd{n}{m}\ and \frndn{n}{m}\ are analogous to \jrnd{n}{m}\ and \jrndn{n}{m}, respectively.  
+
+
+Secondly, there are three structured problem classes of \FSP\  which are modelled after real-world \emph{characteristics} in \fsp\ manufacturing, namely, 
+\begin{description}
+\item[\Fjc] \fjc{n}{m} \hfill \\
+job processing times are dependent on job index, however independent of machine index. Job-correlation can be of degree $0\leq\alpha\leq1$;
+\item[\Fmc]  \fmc{n}{m} \hfill \\
+job processing times are dependent on machine index, however independent of job index. Machine-correlation can be of degree $0\leq\alpha\leq1$; 
+\item[\Fmxc]  \fmxc{n}{m} \hfill \\
+job processing times are dependent on machine and job indices. Mixed-correlation can be of a degree $0\leq\alpha\leq1$.
+\end{description} 
+Note, for $\alpha=0.0$ the problem instances closely correspond to \frnd{n}{m}, hence the degree of $\alpha$ controls the transition of random to structured \FSP. However, if not otherwise stipulated, a value of $\alpha=1$ is assumed.
+
+For each \FSP\  class $N_{\text{train}}$  and $N_{\text{test}}$ instances were generated for training and testing, respectively. Values for $N$ are given in \cref{tbl:data}. Moreover, an example of distribution of processing times are depicted in \cref{fig:fsp:structure}.
+
+
+\begin{table}\centering
+\caption[Problem space distributions used in experimental studies.]{Problem space distributions used in experimental studies. Note, problem instances are synthetic and each problem space is i.i.d. and `--' denotes not available.}\label{tbl:data}
+{\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{llcccl}\toprule
+type&name&size ($n\times m$)& $N_{\text{train}}$&$N_{\text{test}}$  & note 
+\\ \midrule
+\multirow{6}{*}{\rot{\JSP}}
+&\jrnd{6}{5} & $6\times5$ & 500 & 500 & random \\
+&\jrndn{6}{5} & $6\times5$ & 500 & 500 & random-narrow \\
+&\jrndJ{6}{5} & $6\times5$ & 500 & 500 & random with job variation\\
+&\jrndM{6}{5} & $6\times5$ & 500 & 500 & random with machine variation\\
+&\jrnd{10}{10} &$10\times10$& 300 & 200 & random \\
+&\jrndn{10}{10} &$10\times10$& 300 & 200 & random-narrow \\ %&\jrndJ{10}{10} & $10\times10$ & 300 & 200 & random with job variation\\
+%&\jrndM{10}{10} & $10\times10$ & 300 & 200 & random with machine variation\\
+\midrule
+\multirow{6}{*}{\rot{\FSP}}
+&\frnd{6}{5} &$6\times5$& 500&500& random \\ 
+&\frndn{6}{5}&$6\times5$& 500&500& random-narrow \\ 
+&\fjc{6}{5}&$6\times5$& 500&500& job-correlated \\ 
+&\fmc{6}{5}&$6\times5$& 500&500& machine-correlated \\ 
+&\fmxc{6}{5}&$6\times5$& 500&500& mixed-correlation  \\ 
+&\frnd{10}{10}&$10\times10$&300&200&random \\ 
+%&\frndn{10}{10}&$10\times10$&--&500& random-narrow \\ 
+%&\fjc{10}{10}&$10\times10$&--&500& job-correlated \\ 
+%&\fmc{10}{10}&$10\times10$&--&500& machine-correlated \\ 
+%&\fmxc{10}{10}&$10\times10$&--&500& mixed-correlation  \\ \bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{figure}\centering 
+\includegraphics[width=\textwidth]{proctimes.pdf}
+\caption[Examples of distribution of job processing times for $20\times20$ \FSP\  with different types of structure.]{Examples of distribution of job processing times for $10\times10$ \FSP\  with different types of structure. Machine indices are on the vertical axis, job indices are colour-coded and their corresponding processing times, $p_{ja}$, are on the horizontal axis.}
+\label{fig:fsp:structure}
+\end{figure}
+
+
+\section{Benchmark problem suite}\label{sec:data:orlib}
+A total of 62 and 31 benchmark problems for \JSP\ and \FSP, respectively, were obtained from the Operations Research Library (OR-Library) maintained by \citet{ORlibrary} and summarised in \cref{tbl:data:orlib}. 
+Given the high problem dimensions of some problems, the optimum is not known, hence in those instances \cref{eq:rho} will be reporting  deviation from the latest best known solution (BKS) from the literature. For \JSP, they are reported by \citet{jsspBESTsofar} save for \problem{swv} which can be found in % \citet{CITATION_NEEDED}, and for \FSP\  consult \citet{CITATION_NEEDED}.
+.\todo[inline]{Ekki fundið BKS fyrir jsp swv and fsp OR-LIBRARY}
+
+\citet{orlib_ft} had one of the more notorious benchmark problems for \JSP, and computationally expensive, however, now these instances have been solved to optimality. \todo[inline]{Check with gurobi if that's accurate, and figure out which ones haven't yet been solved. Then report BKS.}
+
+\todo[inline]{\citet{orlib_la} info -- la01--la40 }
+
+Similar to the synthetic \JSP\ problem spaces discussed earlier, \citet{orlib_abz} introduce five \JSP\ instances with a random permutation of machine ordering and processing times following uniform distribution,  $\vec{p}\sim\mathcal{U}(50,100)$, for  dimensions $10\times10$ and $20\times15$. Likewise, \citet{orlib_yn} consists of four $20\times20$ random problem instances, where $\vec{p}\sim\mathcal{U}(10,50)$.
+\citet{orlib_swv} introduce a set of \JSP\ problems where the job processing times following a uniform distribution, $\vec{p}\sim\mathcal{U}(1,100)$. There are a total of  five problems in four dimension classes, namely, $20\times10$ (swv01--swv05), $20\times15$ (swv06--swv10), $50\times10$ (swv11--swv15) and $50\times10$ (swv16--swv20), where the first three classes are considered ``{hard}'' and the last one as ``{easy}''. Easy problems are ones corresponding to random machine ordering, whereas hard problems are partitioned in such a way the jobs must be processed on the first half of the machines before starting on the second half, i.e., $Jm|\text{2sets}|C_{\max}$.
+
+\citet{orlib_orb} introduced 10 problem instances of $10\times10$ \JSP\ where generated such that the machine ordering was chosen by random users in order to make them ``difficult.'' Moreover, the processing times were drawn at random, and the distribution that had the greater gap between its optimal value and standard lower bound was chosen. 
+
+For the \FSP\  benchmarks, \citet{orlib_hel} introduces two deterministic instances based on ``many-machine version of book-printing,'' where processing times for $n\in\{20,100\}$ jobs and $m=10$ machines are relatively short, i.e., $p_{ja}\in\{0,..,9\}$. \citet{orlib_car} however comprises of eight problems (of various dimension) where there is high variance in processing times, presumably $\vec{p}\sim\mathcal{U}(1,1000)$. 
+
+\citet{orlib_rec} argue that completely random problem instances are unlikely to occur in practice, however, only the random instances used are reported in the OR-Library; for a total of 42 problem instances with processing times following a uniform distribution, $\vec{p}\sim\mathcal{U}(1,100)$, of dimensions varying from $20\times5$ to $75\times20$. 
+
+% (Only odd-numbered instances are given, since the even-numbered instances are obtained from the previous instance by just reversing the processing order of each job; the optimal value of each odd-numbered instance and its even-numbered counterpart is the same.)
+
+\begin{savenotes}
+
+\begin{table}\centering
+\caption[Benchmark problems from OR-Library used in experimental studies.]{Benchmark problems from OR-Library used in experimental studies. }\label{tbl:data:orlib}
+\begin{tabular}{llrrll}\toprule
+type&name            &size ($n\times m$)& $N_{\text{test}}$  & note &  \\ \midrule
+\multirow{6}{*}{\rot{\JSP}}
+&\problem{abz} & various     &  5 & \citet{orlib_abz} & abz05--abz09 \footnote{Best known solutions reported in \citet{jsspBESTsofar}.}\\
+&\problem{ft}  & various     &  3 & \citet{orlib_ft}  & ft06,ft10,ft20 \textsuperscript{*}\\
+&\problem{la}  & various     & 40 & \citet{orlib_la}  & la01--la40 \textsuperscript{*}\\
+&\problem{orb} &$10\times10$ & 10 & \citet{orlib_orb} & orb01--orb10 \textsuperscript{*}\\
+&\problem{swv} & various     & 20 & \citet{orlib_swv} & swv01--swv20  \\
+&\problem{yn}  & $20\times20$&  4 & \citet{orlib_yn}  & yn01--yn04  \textsuperscript{*}\\
+\midrule
+\multirow{3}{*}{\rot{\FSP}}
+&\problem{car} & various &  8 & \citet{orlib_car} & car1--car8 \\
+&\problem{hel} & various &  2 & \citet{orlib_hel} & hel1,hel2 \\
+&\problem{rec} & various & 21 & \citet{orlib_rec} & rec01-rec41 \footnote{Only odd-numbered instances are given, since the even-numbered instances are obtained from the previous instance by just reversing the processing order of each job; the optimal value of each odd-numbered instance and its even-numbered counterpart is the same.}\\ \bottomrule
+\end{tabular}
+\end{table}
+\end{savenotes}

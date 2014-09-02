@@ -1,0 +1,40 @@
+\begin{table}\centering
+\caption{Threshold of $\rho$ for easy and hard schedules, i.e., $\rho<\rho^{1\text{st Qu.}}$ and $\rho>\rho^{3\text{rd Qu.}}$ are classified as easy and hard  schedules, respectively. Based on training set from \cref{tbl:data}.}
+\label{tbl:easyhard:cnt}
+\subfloat[][$ 6\times 5 $]{\begin{tabular}{lrr}
+% latex table generated in R 3.1.0 by xtable 1.7-3 package
+% Thu May  8 12:01:37 2014
+ \toprule
+Problem & Q1 & Q3 \\ 
+  \midrule
+\jrnd{6}{5} & 19.48 & 46.28 \\ 
+\jrndn{6}{5} & 19.08 & 44.94 \\ 
+\jrndJ{6}{5} & 11.28 & 36.64 \\ 
+\jrndM{6}{5} & 15.83 & 51.68 \\ 
+\frnd{6}{5} & 18.46 & 35.52 \\ 
+\frndn{6}{5} & 3.39 & 21.07 \\ 
+\fjc{6}{5} & 0.64 & 3.34 \\ 
+\fmc{6}{5} & 1.04 & 13.40 \\ 
+\fmxc{6}{5} & 0.46 & 3.67 \\ 
+  \bottomrule
+\end{tabular}
+\label{tbl:easyhard:cnt:6x5}
+}
+\quad
+\subfloat[][$ 10\times 10 $]{\begin{tabular}{lrr}
+% latex table generated in R 3.1.0 by xtable 1.7-3 package
+% Thu May  8 12:01:37 2014
+\toprule
+Problem & Q1 & Q3 \\ 
+  \midrule
+\jrnd{10}{10} & 29.27 & 58.45 \\
+\jrndn{10}{10} & 26.74 & 57.17 \\
+\jrndJ{10}{10} & 17.90 & 50.29 \\
+\jrndM{10}{10} & 18.00 & 65.79 \\
+\frnd{10}{10} & 26.13 & 39.27 \\
+   \bottomrule
+\end{tabular}
+\label{tbl:easyhard:cnt:10x10}
+}
+\quad
+\end{table}

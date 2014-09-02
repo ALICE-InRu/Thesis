@@ -1,0 +1,45 @@
+ {\footnotesize
+
+ \centering
+ \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{clll} %p{0.45\textwidth}|p{0.4\textwidth}|}
+   \toprule
+$\vphi$ & Feature description & Mathematical formulation& Shorthand\\ 
+%\hline  \multicolumn{4}{c}{\textbf{Local features}}  \\
+\midrule
+ \multicolumn{4}{c}{\textbf{job related}}\\
+  \phiproc & job processing time & $p_{ja}$&proc\\
+  \phistartTime & job start-time  & $x_s(j,a)$ &startTime\\
+  \phiendTime & job end-time & $x_f(j,a)$ &endTime\\
+  \phiarrivalTime & job arrival time &$x_f(j,a-1)$ & arrival\\ 
+  \phitotalProc & total processing time & $\sum_{a\in \mathcal{M}}p_{ja}$ & totalProc\\
+  \phiwait & time job had to wait &$x_s(j,a)-x_f(j,a-1) $ & wait\\   
+  \phiwrmJob & total work remaining for job & $\sum_{a'\in\mathcal{M}\setminus \mathcal{M}_{j}}p_{ja'}$ & wrmJob\\
+  \phijobOps & number of assigned operations for job & $|\mathcal{M}_j|$ & jobOps\\ 
+\midrule
+ \multicolumn{4}{c}{\textbf{machine related}}\\
+ \phimac & machine ID  & $ a$ & mac \\ 
+  \phimacFree & when machine is next free & $\max_{j'\in \mathcal{J}_a} \{x_f(j',a)\}$& macFree\\
+  \phiwrmMac & total work remaining for machine &$\sum_{j'\in\mathcal{J}\setminus \mathcal{J}_{a}}p_{j'a} $ & wrmMac\\
+  \phimacOps & number of assigned operations for machine & $|\mathcal{J}_a|$ & macOps\\
+\midrule
+ \multicolumn{4}{c}{\textbf{flow related}}\\
+  \phislotsReduced & change in idle time by assignment & $\Delta s(a,j)$& slotsReduced \\
+  \phislots & total idle time for machine & $\sum_{j'\in \mathcal{J}_a}s(a,j')$ & slots\\
+  \phislotsTotal & total idle time for all machines & $\sum_{a'\in \mathcal{M}}\sum_{j'\in \mathcal{J}_{a'}}s(a',j')$  & slotsTotal\\
+\midrule
+ \multicolumn{4}{c}{\textbf{current makespan related}}\\
+  \phimakespan & current makespan & $\max_{(j',a')\in \mathcal{J} \times \mathcal{M}_{j'}}\{x_f(j',a')\}$ & makespan \\
+ \phiwrmTotal & total work remaining for all jobs/mac& $\sum_{j'\in\mathcal{J}}\sum_{a'\in\mathcal{M}\setminus \mathcal{M}_{j'}}p_{j'a'}$ & wrmTotal \\
+  \phistep & current step in the dispatching process & $|\vchi|$ & step \\
+\midrule
+ \multicolumn{4}{c}{\textbf{global}}\\
+\phiMWR & final makespan using MWR & $ C_{\max}|\text{DR}=\text{MWR} $ & MWR \\
+\phiLWR & final makespan using LWR & $ C_{\max}|\text{DR}=\text{LWR}$ & LWR \\
+\phiSPT & final makespan using SPT & $ C_{\max}|\text{DR}=\text{SPT}$ & SPT \\
+\phiLPT & final makespan using LPT  & $ C_{\max}|\text{DR}=\text{LPT}$ & LPT \\
+\phiRND & final makespan using 100 random rollouts & $ \{C_{\max}|\text{DR}=\text{RND}\}_{i=1}^{100}$ & RND \\  
+   \bottomrule
+  \end{tabular}
+}
+ %Feature description for job $J_j$ on machine $M_a$ given current temporal schedule, where the set of jobs already dispatched are $J\subset\mathcal{J}$ on corresponding set of machines $\mathcal{M}_j\subset\mathcal{M}$

@@ -1,0 +1,34 @@
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{rllrrrrr}
+  \hline
+model&track&rank & mean & med & sd & min & max \\ 
+  \hline
+CMA-ES&& & 8.84 & 10.59 & 6.14 & 0.00 & 28.18 \\ 
+  PREF&all&p & 9.63 & 11.16 & 6.32 & 0.00 & 35.97 \\ 
+  PREF&all&f & 9.68 & 11.11 & 6.38 & 0.00 & 35.97 \\ 
+  PREF&opt&a & 9.92 & 11.22 & 6.49 & 0.00 & 27.39 \\ 
+  PREF&all&b & 9.98 & 11.27 & 6.61 & 0.00 & 37.36 \\ 
+  PREF&opt&b & 10.05 & 11.45 & 6.53 & 0.00 & 34.23 \\ 
+  PREF&opt&p & 10.13 & 11.33 & 6.74 & 0.00 & 27.39 \\ 
+  PREF&all&a & 10.15 & 11.38 & 6.30 & 0.00 & 27.57 \\ 
+  PREF&opt&f & 10.31 & 11.54 & 6.87 & 0.00 & 27.39 \\ 
+  PREF&rnd&b & 10.51 & 11.55 & 6.86 & 0.00 & 37.87 \\ 
+  PREF&rnd&p & 10.75 & 11.49 & 6.70 & 0.00 & 35.60 \\ 
+  PREF&cma&p & 10.78 & 11.52 & 6.89 & 0.00 & 36.60 \\ 
+  PREF&rnd&a & 10.82 & 11.59 & 6.73 & 0.00 & 28.65 \\ 
+  PREF&cma&f & 10.90 & 11.55 & 6.89 & 0.00 & 36.60 \\ 
+  PREF&cma&b & 10.90 & 11.55 & 7.10 & 0.00 & 36.91 \\ 
+  PREF&mwr&p & 10.95 & 11.46 & 7.26 & 0.00 & 37.47 \\ 
+  PREF&mwr&f & 11.07 & 11.48 & 7.35 & 0.00 & 37.47 \\ 
+  PREF&rnd&f & 11.09 & 11.58 & 6.92 & 0.00 & 35.60 \\ 
+  PREF&mwr&a & 11.09 & 11.44 & 7.21 & 0.00 & 44.55 \\ 
+  PREF&mwr&b & 11.30 & 11.54 & 7.63 & 0.00 & 36.26 \\ 
+  PREF&cma&a & 11.39 & 11.74 & 7.59 & 0.00 & 38.38 \\ 
+  MWR&& & 13.76 & 12.72 & 7.41 & 0.00 & 38.27 \\ 
+   \hline
+\end{tabular}
+\caption{Main statistics of percentage relative deviation from optimality, $\rho$, defined by~\eqref{eq:ratio} for various models using test set $\mathcal{P}_{ jrnd }$.}
+\label{tbl:results:jrnd}
+\end{center}
+\end{table}

@@ -1,0 +1,104 @@
+\begin{table}[p]\centering
+\caption{Percentage ($\%$) of $ 6\times 5 $ training instances classified as easy and hard schedules. Note, each problem space consists of $N_{\text{train}}= 500 $ problem instances.}
+\label{tbl:easyhard:cnt:6x5}
+\subfloat[][\jrnd{6}{5}]{\begin{tabular}{lrrrr}
+\toprule
+SDR & Easy & Hard \\ 
+\midrule
+SPT& 8.90&30.38\\
+LPT&22.06&15.24\\
+MWR&65.30& 0.20\\
+LWR& 3.64&54.18\\
+\bottomrule
+\end{tabular}}
+\quad
+\subfloat[][\jrndn{6}{5}]{\begin{tabular}{lrrrr}
+\toprule
+SDR & Easy & Hard \\ 
+\midrule
+SPT& 2.88&37.54\\
+LPT&24.42& 9.70\\
+MWR&70.70& 0.06\\
+LWR& 2.10&52.82\\
+\bottomrule
+\end{tabular}}
+\quad
+\subfloat[][\jrndJ{6}{5}]{\begin{tabular}{lrrrr}
+\toprule
+SDR & Easy & Hard \\ 
+\midrule
+SPT& 8.22&38.20\\
+LPT&27.92&14.18\\
+MWR&56.00& 0.92\\
+LWR& 7.80&46.70\\
+\bottomrule
+\end{tabular}}
+\\
+\subfloat[][\jrndM{6}{5}]{\begin{tabular}{lrrrr}
+\toprule
+SDR & Easy & Hard \\ 
+\midrule
+SPT& 2.28&43.08\\
+LPT&31.68& 5.72\\
+MWR&64.96& 0.10\\
+LWR& 1.10&51.12\\
+\bottomrule
+\end{tabular}}
+\quad
+\subfloat[][\frnd{6}{5}]{\begin{tabular}{lrrrr}
+\toprule
+SDR & Easy & Hard \\ 
+\midrule
+SPT&23.02&22.90\\
+LPT& 8.44&41.82\\
+MWR&20.94&27.82\\
+LWR&47.60& 7.50\\
+\bottomrule
+\end{tabular}}
+\quad
+\subfloat[][\frndn{6}{5}]{\begin{tabular}{lrrrr}
+\toprule
+SDR & Easy & Hard \\ 
+\midrule
+SPT& 0.94&44.38\\
+LPT&13.22& 7.28\\
+MWR& 0.48&48.42\\
+LWR&85.18&    0\\
+\bottomrule
+\end{tabular}}
+\\
+\subfloat[][\fjc{6}{5}]{\begin{tabular}{lrrrr}
+\toprule
+SDR & Easy & Hard \\ 
+\midrule
+SPT&22.14&36.44\\
+LPT&21.52&24.08\\
+MWR&21.38&36.70\\
+LWR&35.64& 2.80\\
+\bottomrule
+\end{tabular}}
+\quad
+\subfloat[][\fmc{6}{5}]{\begin{tabular}{lrrrr}
+\toprule
+SDR & Easy & Hard \\ 
+\midrule
+SPT&10.64&49.20\\
+LPT&18.46&18.98\\
+MWR&21.46&31.76\\
+LWR&49.04&    0\\
+\bottomrule
+\end{tabular}}
+\quad
+\subfloat[][\fmxc{6}{5}]{\begin{tabular}{lrrrr}
+\toprule
+SDR & Easy & Hard \\ 
+\midrule
+SPT&12.58&45.16\\
+LPT&26.30&24.78\\
+MWR&29.66&22.48\\
+LWR&31.60& 7.68\\
+\bottomrule
+\end{tabular}}
+\\
+\end{table}
+
