@@ -41,7 +41,7 @@
     citecolor=black, % could be themecolor
     filecolor=black,
     linkcolor=black,
-    urlcolor=themecolor,
+    urlcolor=black, % could be themecolor
     pdfauthor={\@author},
     pdftitle={\@title}   
 }
@@ -80,7 +80,8 @@
 \RequirePackage{lettrine} % big letter at start of chapter
 \newcommand{\FirstSentence}[2]{\lettrine[lines=2,slope=4pt,nindent=0pt,findent=0pt]{\textcolor{themecolor}{#1}}{#2}}
 
-\RequirePackage[margin=2.3cm,b5paper,includehead]{geometry}
+%showframe
+\RequirePackage[margin=2.3cm,b5paper,includehead]{geometry} % showframe option good for draft mode
 \RequirePackage[b5]{crop}
 
 \RequirePackage{fancyhdr} 
