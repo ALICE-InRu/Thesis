@@ -1,94 +1,93 @@
 \begin{table}[p]\centering
-\caption{Percentage ($\%$) of $ 6\times 5 $ training instances classified as hard simultaneously. Note, each problem space consists of $N_{\text{train}}= 500 $ problem instances.}
-\label{tbl:hard:cnt:6x5}
-\small{
+\caption{Percentage ($\%$) of $ 6\times 5 $ training instances classified as hard simultaneously, defined by \cref{eq:easyorhard:cnt}. Note, each problem space consists of $N_{\text{train}}= 500 $ problem instances.}
+\label{tbl:hard:cnt:6x5}{\small
 \subfloat[][\jrnd{6}{5}]{\begin{tabular}{lrrrr}
 \toprule SDR
-&      SPT&  LPT& MWR&  LWR\\ \toprule
-SPT&30.38&  5.24& 0.04& 21.08\\
-LPT& 5.24& 15.24& 0.10&  9.78\\
-MWR& 0.04&  0.10& 0.20&  0.08\\
-LWR&21.08&  9.78& 0.08& 54.18\\
+&      SPT&  LPT& LWR&  MWR\\ \toprule
+SPT&30.38&  5.24& 21.08& 0.04\\
+LPT& 5.24& 15.24&  9.78& 0.10\\
+LWR&21.08&  9.78& 54.18& 0.08\\
+MWR& 0.04&  0.10&  0.08& 0.20\\
 \bottomrule
 \end{tabular}}
 \quad 
 \subfloat[][\jrndn{6}{5}]{\begin{tabular}{lrrrr}
 \toprule SDR
-&      SPT& LPT& MWR&  LWR\\ \toprule
-SPT&37.54& 4.46& 0.02& 25.56\\
-LPT& 4.46& 9.70& 0.04&  6.18\\
+&      SPT& LPT& LWR&  MWR\\ \toprule
+SPT&37.54& 4.46& 25.56& 0.02\\
+LPT& 4.46& 9.70&  6.18& 0.04\\
+LWR&25.56& 6.18& 52.82& 0.06\\
 MWR& 0.02& 0.04& 0.06&  0.06\\
-LWR&25.56& 6.18& 0.06& 52.82\\
 \bottomrule
 \end{tabular}}
 \\
 \subfloat[][\jrndJ{6}{5}]{\begin{tabular}{lrrrr}
 \toprule SDR
-&      SPT&  LPT& MWR&  LWR\\ \toprule
-SPT&38.20&  7.34& 0.40& 26.46\\
-LPT& 7.34& 14.18& 0.46&  9.10\\
-MWR& 0.40&  0.46& 0.92&  0.48\\
-LWR&26.46&  9.10& 0.48& 46.70\\
+&      SPT&  LPT& LWR&  MWR\\ \toprule
+SPT&38.20&  7.34& 26.46& 0.40\\
+LPT& 7.34& 14.18&  9.10& 0.46\\
+LWR&26.46&  9.10& 46.70& 0.48\\
+MWR& 0.40&  0.46&  0.48& 0.92\\
 \bottomrule
 \end{tabular}}
 \quad 
 \subfloat[][\jrndM{6}{5}]{\begin{tabular}{lrrrr}
 \toprule SDR
-&      SPT& LPT& MWR&  LWR\\ \toprule
-SPT&43.08& 3.00& 0.04& 31.42\\
-LPT& 3.00& 5.72&    0&  3.62\\
-MWR& 0.04&    0& 0.10&  0.04\\
-LWR&31.42& 3.62& 0.04& 51.12\\
+&      SPT& LPT& LWR&  MWR\\ \toprule
+SPT&43.08& 3.00& 31.42& 0.04\\
+LPT& 3.00& 5.72&  3.62&    0\\
+LWR&31.42& 3.62& 51.12& 0.04\\
+MWR& 0.04&    0&  0.04& 0.10\\
 \bottomrule
 \end{tabular}}
 \\
 \subfloat[][\frnd{6}{5}]{\begin{tabular}{lrrrr}
 \toprule SDR
-&      SPT&  LPT&  MWR& LWR\\ \toprule
-SPT&22.90& 11.70&  6.24& 3.74\\
-LPT&11.70& 41.82& 16.14& 5.64\\
-MWR& 6.24& 16.14& 27.82& 1.16\\
-LWR& 3.74&  5.64&  1.16& 7.50\\
+&      SPT&  LPT&  LWR& MWR\\ \toprule
+SPT&22.90& 11.70& 3.74&  6.24\\
+LPT&11.70& 41.82& 5.64& 16.14\\
+LWR& 3.74&  5.64& 7.50&  1.16\\
+MWR& 6.24& 16.14& 1.16& 27.82\\
 \bottomrule
 \end{tabular}}
 \quad 
 \subfloat[][\frndn{6}{5}]{\begin{tabular}{lrrrr}
 \toprule SDR
-&      SPT& LPT&  MWR&LWR\\ \toprule
-SPT&44.38& 3.48& 22.20&   0\\
-LPT& 3.48& 7.28&  3.90&   0\\
-MWR&22.20& 3.90& 48.42&   0\\
-LWR&    0&    0&     0&   0\\
+&      SPT& LPT&  LWR&MWR\\ \toprule
+SPT&44.38& 3.48&   0& 22.20\\
+LPT& 3.48& 7.28&   0&  3.90\\
+LWR&    0&    0&   0&     0\\
+MWR&22.20& 3.90&   0& 48.42\\
 \bottomrule
 \end{tabular}}
 \\
 \subfloat[][\fjc{6}{5}]{\begin{tabular}{lrrrr}
 \toprule SDR
-&      SPT&  LPT&  MWR& LWR\\ \toprule
-SPT&36.44& 12.48& 18.22& 2.74\\
-LPT&12.48& 24.08& 14.28& 0.94\\
-MWR&18.22& 14.28& 36.70& 0.90\\
-LWR& 2.74&  0.94&  0.90& 2.80\\
+&      SPT&  LPT&  LWR& MWR\\ \toprule
+SPT&36.44& 12.48& 2.74& 18.22\\
+LPT&12.48& 24.08& 0.94& 14.28\\
+LWR& 2.74&  0.94& 2.80&  0.90\\
+MWR&18.22& 14.28& 0.90& 36.70\\
 \bottomrule
 \end{tabular}}
 \quad 
 \subfloat[][\fmc{6}{5}]{\begin{tabular}{lrrrr}
 \toprule SDR
-&      SPT&  LPT&  MWR&LWR\\ \toprule
-SPT&49.20& 12.94& 23.16&   0\\
-LPT&12.94& 18.98&  9.76&   0\\
-MWR&23.16&  9.76& 31.76&   0\\
-LWR&    0&     0&     0&   0\\
+&      SPT&  LPT&  LWR&MWR\\ \toprule
+SPT&49.20& 12.94&   0& 23.16\\
+LPT&12.94& 18.98&   0&  9.76\\
+LWR&    0&     0&   0&     0\\
+MWR&23.16&  9.76&   0& 31.76\\
 \bottomrule
 \end{tabular}}
 \\
 \subfloat[][\fmxc{6}{5}]{\begin{tabular}{lrrrr}
 \toprule SDR
-&     SPT&  LPT&  MWR& LWR\\ \toprule
-SPT&45.16& 12.24& 11.34& 7.48\\
-LPT&12.24& 24.78& 14.10& 0.52\\
-MWR&11.34& 14.10& 22.48& 0.26\\
-LWR& 7.48&  0.52&  0.26& 7.68\\
+&     SPT&  LPT&  LWR& MWR\\ \toprule
+SPT&45.16& 12.24& 7.48& 11.34\\
+LPT&12.24& 24.78& 0.52& 14.10\\
+LWR& 7.48&  0.52& 7.68&  0.26\\
+MWR&11.34& 14.10& 0.26& 22.48\\
   \bottomrule
 \end{tabular}}
 }\end{table}

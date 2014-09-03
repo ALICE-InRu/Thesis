@@ -1,55 +1,54 @@
 \begin{table}[p]\centering
-\caption{Percentage ($\%$) of $ 10\times 10 $ training instances classified as easy simultaneously. Note, each problem space consists of $N_{\text{train}}= 300 $ problem instances.}
+\caption{Percentage ($\%$) of $ 10\times 10 $ training instances classified as easy simultaneously, defined by \cref{eq:easyorhard:cnt}. Note, each problem space consists of $N_{\text{train}}= 300 $ problem instances.}
 \label{tbl:easy:cnt:10x10}
-\small{
 \subfloat[][\jrnd{10}{10}]{\begin{tabular}{lrrrr}
 \toprule SDR
-&     SPT&   LPT&   MWR&  LWR\\ \midrule
-SPT& 2.67&  0.33&  2.33&    0\\
-LPT& 0.33& 10.33& 10.33&    0\\
-MWR& 2.33& 10.33& 86.33& 0.33\\
-LWR&    0&     0&  0.33& 0.67\\
+&     SPT&   LPT&   LWR&  MWR\\ \midrule
+SPT& 2.67&  0.33&  0&2.33\\
+LPT& 0.33& 10.33& 0&10.33\\
+LWR&    0&     0&  0.67&0.33\\
+MWR& 2.33& 10.33&  0.33&86.33\\
 \bottomrule
 \end{tabular}}
 \quad 
 \subfloat[][\jrndn{10}{10}]{\begin{tabular}{lrrrr}
 \toprule SDR
-&     SPT&  LPT&   MWR& LWR\\ \midrule
-SPT& 1.00& 0.33&  1.00&   0\\
-LPT& 0.33& 6.67&  5.00&   0\\
-MWR& 1.00& 5.00& 92.33&   0\\
+&     SPT&  LPT&   LWR& MWR\\ \midrule
+SPT& 1.00& 0.33&     0&1.00\\
+LPT& 0.33& 6.67&  0& 5.00\\
 LWR&    0&    0&     0&   0\\
+MWR& 1.00& 5.00& 0& 92.33\\
 \bottomrule
 \end{tabular}}
 \\
 \subfloat[][\jrndJ{10}{10}]{\begin{tabular}{lrrrr}
 \toprule SDR
-&     SPT&   LPT&   MWR&  LWR\\ \midrule
-SPT& 3.33&  1.00&  3.00& 1.33\\
-LPT& 1.00& 21.67& 20.33& 1.67\\
-MWR& 3.00& 20.33& 71.33& 3.67\\
-LWR& 1.33&  1.67&  3.67& 3.67\\
+&     SPT&   LPT&   LWR&  MWR\\ \midrule
+SPT& 3.33&  1.00& 1.33&  3.00\\
+LPT& 1.00& 21.67& 1.67& 20.33\\
+LWR& 1.33&  1.67& 3.67&  3.67\\
+MWR& 3.00& 20.33& 3.67 & 71.33\\
 \bottomrule
 \end{tabular}}
 \quad
 \subfloat[][\jrndM{10}{10}]{\begin{tabular}{lrrrr}
 \toprule SDR
-&    SPT&   LPT&   MWR& LWR\\ \midrule
+&    SPT&   LPT&   LWR& MWR\\ \midrule
 SPT&   0&     0&     0&   0\\
-LPT&   0& 25.33& 25.00&   0\\
-MWR&   0& 25.00& 74.67&   0\\
+LPT&   0& 25.33&     0&25.00\\
 LWR&   0&     0&     0&   0\\
+MWR&   0& 25.00&     0&74.67\\
 \bottomrule
 \end{tabular}}
 \\
 \subfloat[][\frnd{10}{10}]{\begin{tabular}{lrrrr}
 \toprule SDR
-&      SPT&  LPT&   MWR&   LWR\\ \midrule
-SPT& 20.15& 1.49&  1.87& 15.30\\
-LPT&  1.49& 4.10&  0.75&  2.99\\
-MWR&  1.87& 0.75& 17.16&  7.09\\
-LWR& 15.30& 2.99&  7.09& 58.58\\
+&      SPT&  LPT&   LWR&   MWR\\ \midrule
+SPT& 20.15& 1.49& 15.30&  1.87\\
+LPT&  1.49& 4.10&  2.99&  0.75\\
+LWR& 15.30& 2.99& 58.58&  7.09\\
+MWR&  1.87& 0.75&  7.09& 17.16\\
   \bottomrule
 \end{tabular}}
-}\end{table}
+\end{table}
 

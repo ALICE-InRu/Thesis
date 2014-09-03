@@ -116,12 +116,12 @@ To summarise, in order to create a schedule for \JSP, a construction heuristic i
 \>  \> the current dispatching sequence. \\
 \>1 \> {\bf for} \= $k := 1$ to $\ell=n\cdot m$ {\bf do} \emph{(at each dispatch iteration)}\\ 
 \>2 \>\> {\bf for} \= $J_j\in \mathcal{R}^{(k)}\subset \mathcal{J}$ {\bf do} \emph{(inspect ready-list)} \\
-\>3 \>\>\>  $I_j^{DR}\leftarrow \text{DR}\left([\vchi,j],\text{CH}\right)$ \emph{(priority $J_j$)}\\
+\>3 \>\>\>  $I_j^{DR}\leftarrow \text{DR}\left([\vchi,j],Y\right)$ \emph{(priority $J_j$)}\\
 \>4 \>\> {\bf od} \\
 \>5 \>\> $j^*\leftarrow \argmax_{j\in \mathcal{R}^{(k)}}\{I_j^{DR}\}$ \emph{(choose highest priority)} \\
 \>6 \>\> $\chi_k \leftarrow j^*$ \emph{(dispatch $j^*$)}\\
 \>7 \> {\bf od} \\
-\>8 \> $C_{max} \leftarrow \text{CH}(\vchi)$ \emph{(makespan)}
+\>8 \> $C_{max} \leftarrow Y(\vchi)$ \emph{(makespan)}
 \end{tabbing}}
 \caption{Pseudo code for constructing a \JSP\ sequence using a dispatching rule (DR) for a fixed construction heuristic (CH).}\label{fig:pseudocode}
 \end{figure}
@@ -251,4 +251,4 @@ which indicates the \namerho. Thus $\mathcal{Y}$ is the following,
 \mathcal{Y}=\left\{\rho_i\right\}_{i=1}^{N}
 \end{equation}
 \end{description}
-The mapping $Y:\;\mathcal{A}\times\mathcal{F} \mapsto \mathcal{Y}$ is the step-by-step scheduling introduced in \cref{sec:CH}.
+The mapping $Y:\;\mathcal{A}\times\mathcal{F} \mapsto \mathcal{Y}$ is the step-by-step construction heuristic introduced in \cref{sec:CH}.
