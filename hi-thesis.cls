@@ -133,6 +133,16 @@
 
 \usepackage[caption=false]{subfig} 
 
+%Vertical layout of float pages : http://www.tex.ac.uk/cgi-bin/texfaq2html?label=floatpages+vertposfp
+%By default, LaTeX vertically centres the floats on a float page; the present author is not alone in not liking this arrangement. Unfortunately, the control of the positioning is “buried” in LaTeX-internal commands, so some care is needed to change the layout.
+\makeatletter
+\setlength{\@fptop}{0pt}
+\makeatother
+%Surprisingly, you may find this setting leaves your floats too high on the page. One can justify a value of 5pt (in place of 0pt) — it’s roughly the difference between \topskip and the height of normal (10pt) text.
+%Note that this is a “global” setting (best established in a class file, or at worst in the document preamble); making the change for a single float page is likely (at the least) to be rather tricky.
+
+
+
 \usepackage{enumitem}
 
 % some definitions
