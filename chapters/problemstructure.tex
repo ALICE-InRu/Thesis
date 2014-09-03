@@ -25,7 +25,7 @@ Going back to the \jsp\ paradigm, then the interaction between problem distribut
 In \citet{InRu12}, a single problem generator was used to create  $N=1,500$ synthetic $6\times6$ \jsp\ problem instances, where $\vec{p}\sim\mathcal{U}(1,200)$ and $\vsigma$ was a random permutation. The experimental study showed that MWR works either well or poorly on a subset of the instances, in fact 18\% and 16\% of the instances were classified as \emph{easy} and \emph{hard} for MWR, respectively. 
 Since the problem instances were naively generated, not to mention given the high variance of the data distribution, it is intuitive that there are some inherent structural qualities that could explain this difference in performance. The experimental study investigated the feature behaviours for these two subsets, namely, the easy and hard problem instances. For some features, the trend was more or less the same, which are explained by the common denominating factor, that all instances were sampled from the same problem generator. Whereas, those features that were highly correlated with the end-result, i.e., the final makespan, which determined if an instance was labelled easy or hard, then the significant features varied greatly between the two difficulties, which imply the inherent difference in data structure. 
 
-Moreover, the study in \citet{InRu12} gives support to that random problem instance generators are \emph{too} general and might not suit real-world applications. \citet{Whitley} argue that problem instance generator should be more structured, since real-world manufacturing environment is not completely random, but rather structured, e.g.,  job's tasks can be correlated or machines in the shop. \citeauthor{Whitley} propose a problem instance generator that relates to real-world \fsp\ attributes, albeit not directly modelled after real-world \fsp\ due to the fact that deterministic $Fm||C_{\max}$ is seldom directly applicable in practice \citep{Dudek92}, this is why \fjc{n}{m}, \fmc{n}{m} and \fmxc{n}{m} are also taken into consideration in~\cref{ch:genprobleminstances} as they are an attempt to mimic the real-world characteristics of \fsp.
+Moreover, the study in \citet{InRu12} gives support to that random problem instance generators are \emph{too} general and might not suit real-world applications. \citet{Whitley} argue that problem instance generator should be more structured, since real-world manufacturing environment is not completely random, but rather structured, e.g.,  job's tasks can be correlated or machines in the shop. \citeauthor{Whitley} propose a problem instance generator that relates to real-world \fsp\ attributes, albeit not directly modelled after real-world \fsp\ due to the fact that deterministic $Fm||C_{\max}$ is seldom directly applicable in practice \citep{Dudek92}, this is why \fjc{n}{m}, \fmc{n}{m} and \fmxc{n}{m} are also taken into consideration in \cref{ch:genprobleminstances} as they are an attempt to mimic the real-world characteristics of \fsp.
 
 It is interesting to know if the difference in the structure of the schedule is time dependent, e.g.,  is there a clear time of divergence within the scheduling process? 
 Moreover, investigation of how sensitive is the difference between two sets of features, e.g.,  can two schedules with similar feature values yield completely contradictory outcomes, i.e., one poor and one good schedule? Or will they more or less follow the their predicted trend? If the latter is the prevalent case, then these instances need to be segregated and each having their own learning algorithm implemented, for a meaningful outcome overall.  
@@ -59,13 +59,142 @@ Although the same problem generator is used, there are some inherent structure i
 \subfloat[][$10\times10$]{\includegraphics[width=\textwidth]{{boxplotRho.SDR.10x10}.eps}\label{fig:SDR:boxplot:10x10}}
 \end{figure}
 
+\section{Probability of choosing optimal decision}\label{sec:diff:opt:rnd}
+In order to create successful dispatching rules, a good starting point is to investigate the properties of optimal solutions and hopefully be able to learn how to mimic such `good' behaviour. For this, we follow an optimal solution, obtained by using a commercial software package \cite{gurobi}, and inspect the evolution of its features, defined in \cref{tbl:features}. Moreover, it is noted, that there are several optimal solutions available for each problem instance. However, it is deemed sufficient to inspect only one optimal trajectory per problem instance as there are $N_{\text{train}}$ independent instances which gives the training data variety. 
+
+Figures within this and subsequent \lcnamecref{sec:diff:opt:rnd}s depict the mean over all the training data, which are quite noisy functions.\footnote{\citet{InRu14c} depicts the mean as is, albeit only for $10\times10$ problem spaces.} Thus, for clarity purposes, they are fitted with local polynomial regression, making the boundary points biased. 
+
+Firstly, we can observe that on a step by step basis there are several optimal dispatches to choose from. \Cref{fig:diff:opt:unique} depicts how the number of optimal dispatches evolve at each dispatch iteration. Note, that only one optimal trajectory is pursued (chosen at random), hence this is only a lower bound of uniqueness of optimal solutions.
+As the number of possible dispatches decrease over time, \cref{fig:diff:opt} depicts the probability of choosing an optimal dispatch. 
+
+\begin{figure}
+\centering
+\subfloat[][$6\times5$]{\missingfigure{trdat.prob.optUniqueness.6x5.OPT}}
+\\
+\subfloat[][$10\times10$]{\includegraphics[width=1\linewidth]{figures/{trdat.prob.optUniqueness.10x10.OPT}.pdf}}
+\caption{Number of unique optimal dispatches (lower bound)}
+\label{fig:diff:opt:unique}
+\end{figure}
+
+\begin{figure}
+\centering
+\subfloat[][$6\times5$]{\missingfigure{trdat.prob.moveIsOptimal.6x5.OPT.matlab}}
+\\
+\subfloat[][$10\times10$]{\includegraphics[width=1\linewidth]{figures/{trdat.prob.moveIsOptimal.10x10.OPT.matlab}.pdf}}
+\caption{Probability of choosing optimal move}
+\label{fig:diff:opt}
+\end{figure}
+
+\section{Making suboptimal decisions}\label{sec:diff:opt:sub}
+Looking at \cref{fig:diff:opt}, \jrnd{10}{10} has a relatively high probability ($70\%$ and above) of choosing an optimal job. However, it is imperative to keep making optimal decisions, because once off the optimal track the consequences can be dire. To demonstrate this \cref{fig:diff:case} depicts the worst and best case scenario of the resulting deviation from optimality, $\rho$, once you've fallen off the optimal track. Note, that this is given that you make \emph{one} wrong turn. Generally, there will be more, and then the compound effects of making suboptimal decisions really start adding up. 
+
+It is interesting that for \JSP, that over time making suboptimal decisions make more of an impact on the resulting makespan. This is most likely due to the fact that if a suboptimal decision is made in the early stages, then there is space to rectify the situation with the subsequent dispatches. However, if done at a later point in time, little is to be done as the damage is already been inflicted upon the schedule. However, for \FSP, the case is the exact opposite. Then it's imperative to make good decisions right from the beginning. This is due to the major structural differences between \jsp\ and \fsp, namely the latter having a homogeneous machine ordering, constricting the solution immensely. Luckily, this does have the added benefit of making \fsp\ less vulnerable for suboptimal decisions later in the decision process. 
+
+
+\begin{figure}
+\centering
+\subfloat[][$6\times5$]{\missingfigure{trdat.prob.casescenario.6x5.matlab}}
+\\
+\subfloat[][$10\times10$]{\includegraphics[width=1\linewidth]{figures/{trdat.prob.casescenario.10x10.matlab}.pdf}}
+\caption{\Namerho, for best and worst case scenario of choosing suboptimal dispatch}
+\label{fig:diff:case}
+\end{figure}
+
+\subsection{Optimality of simple priority dispatching rules}\label{sec:diff:opt:sdr}
+The probability of optimality of the aforementioned SDRs from \cref{sec:SDR}, yet still maintaining our optimal trajectory, i.e., the probability of a job chosen by a SDR being able to yield an optimal makespan on a step by step basis, is depicted  in   \cref{fig:diff:opt:SDR}. Moreover, the dashed line represents the benchmark of random guessing (cf. \cref{fig:diff:opt}).
+
+Now, let's bare in mind the deviation from optimality of applying SDRs throughout the dispatching process, box-plots of which are depicted in \cref{fig:SDR:boxplot}, then there is a some correspondence between high probability of stepwise optimality and low $\rho$. Alas, this isn't always the case, for \jrnd{10}{10}, SPT always outperforms LPT w.r.t. stepwise optimality, however this does not transcend to SPT having a lower $\rho$ value than LPT. Hence, it's not enough to just learn optimal behaviour, one needs to investigate what happens once we encounter suboptimal state spaces.
+
+\begin{figure}[p]
+\centering
+\subfloat[][$6\times5$]{\missingfigure{trdat.prob.moveIsOptimal.6x5.SDR.matlab}}
+\caption{Probability of SDR being optimal}
+\label{fig:diff:opt:SDR}
+\end{figure}
+\begin{figure}[p]\centering
+\ContinuedFloat
+\subfloat[][$10\times10$]{\includegraphics[width=1\linewidth]{figures/{trdat.prob.moveIsOptimal.10x10.SDR.matlab}.pdf}}
+\end{figure}
+
+\subsection{Simple blended dispatching rule}\label{sec:diff:opt:bdr}
+A na\"ive approach to create a simple blended dispatching rule would be for instance be switching between two SDRs at a predetermined time point. Hence, going back to \cref{fig:diff:opt:SDR} a presumably good BDR for \jrnd{10}{10}  would be starting with SPT and then switching over to MWR at around time step 40, where the SDRs change places in outperforming one another. A box-plot for \namerho, for all $10\times10$ problem spaces is depicted in \cref{fig:diff:boxplot:BDR}. Now, this little manipulation between SDRs does outperform SPT immensely, yet doesn't manage to gain the performance edge of MWR, save for \frnd{10}{10}. This gives us insight that for \JSP, the attribute based on MWR is quite fruitful for good dispatches, whereas the same cannot be said about SPT -- a more sophisticated BDR is needed to improve upon MWR. 
+
+A reason for this lack of performance of our proposed BDR is perhaps that by starting out with SPT in the beginning, it sets up the schedules in such a way that it's quite greedy and only takes into consideration jobs with shortest immediate processing times. Now, even though it is possible to find optimal schedules from this scenario, as \cref{fig:diff:opt:SDR} show, the inherent structure that's already taking place, and might make it hard to come across by simple methods. Therefore it's by no means guaranteed that by simply swapping over to MWR will handle that situation which applying SPT has already created. \Cref{fig:diff:boxplot:BDR} does however show, that by applying MWR instead of SPT in the latter stages, does help the schedule to be more compact w.r.t. SPT. However, in the case of \jrnd{10}{10} and \jrndn{10}{10} the fact remains that the schedules have diverged too far from what MWR would have been able to achieve on its own. Preferably the blended dispatching rule should use  best of both worlds, and outperform all of its inherited DRs, otherwise it goes without saying one would simply still use the original DR that achieved the best results.
+
+\begin{figure}
+\centering
+\missingfigure{boxplotRho.BDR.10x10}
+%\includegraphics[width=1\linewidth]{figures/{boxplotRho.BDR.10x10}.pdf}
+\caption{Box plot for \namerho, for BDR where SPT is applied for the first 40\% of the dispatches, followed by MWR}
+\label{fig:diff:boxplot:BDR}
+\end{figure}
+
+
+\begin{comment}
+\subsection{Extremal feature}\label{sec:diff:opt:ext}
+The SDRs we've inspected so-far are based on two features from \cref{tbl:features}, namely
+\begin{itemize}
+\item \phiproc\ for SPT and LPT 
+\item \phiwrmJob\ for LWR and MWR 
+\end{itemize}
+by choosing the lowest value for the first SDR, and highest value for the latter SDR, i.e., the extremal values for those given features. Let's apply the same methodology from \cref{sec:diff:opt:sdr} to all varying features\footnote{Note, \phistep, \phimac\ and \phiwrmTotal\ describe the features, not the schedule. For instance, \phistep\, gives us no new information, as that feature is homogeneous for each timestep, making it equivalent to random guessing.} described in \cref{tbl:jssp:feat}.  \Cref{fig:diff:j.rnd:opt:minmax,fig:diff:j.rndn:opt:minmax,fig:diff:f.rnd:opt:minmax}
+depict the probability of all extremal features being an optimal dispatch, with random guessing from \cref{fig:diff:opt} as a dashed line. 
+
+In order to put the extremal features into perspective, it's worth comparing them with how the evolution of the features are over time, depicted in \cref{fig:diff:j.rnd:opt:evol,fig:diff:j.rndn:opt:evol,fig:diff:f.rnd:opt:evol}. 
+
+
+\begin{figure}
+\centering
+\includegraphics[width=1\linewidth]{figures/{j.rnd}/{trdat.feat.stepwise.10x10.OPT}.pdf}
+\caption{Feature evolution of optimal trajectory for \jrnd}
+\label{fig:diff:j.rnd:opt:evol}
+\end{figure}
+\begin{figure}
+\centering
+\missingfigure{j.rndn}
+%\includegraphics[width=1\linewidth]{figures/{j.rndn}/{trdat.feat.stepwise.10x10.OPT}.pdf}
+\caption{Feature evolution of optimal trajectory for \jrndn}
+\label{fig:diff:j.rndn:opt:evol}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=1\linewidth]{figures/{f.rnd}/{trdat.feat.stepwise.10x10.OPT}.pdf}
+\caption{Feature evolution of optimal trajectory for \frnd{10}{10}}
+\label{fig:diff:f.rnd:opt:evol}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=1\linewidth]{figures/{j.rnd}/{trdat.prob.moveIsOptimal.10x10.feat.minmax}.pdf}
+\caption{Probability of extremal feature being optimal for \jrnd}
+\label{fig:diff:j.rnd:opt:minmax}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=1\linewidth]{figures/{j.rndn}/{trdat.prob.moveIsOptimal.10x10.feat.minmax}.pdf}
+\caption{Probability of extremal feature being optimal for \jrndn}
+\label{fig:diff:j.rndn:opt:minmax}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=1\linewidth]{figures/{f.rnd}/{trdat.prob.moveIsOptimal.10x10.feat.minmax}.pdf}
+\caption{Probability of extremal feature being optimal for \frnd{10}{10}}
+\label{fig:diff:f.rnd:opt:minmax}
+\end{figure}
+\end{comment}
+
+
+
+
+
 \section{Characteristics of difficult problem instances}
 % Katie orðar: A correlation analysis between the feature space and the performance space was conducted across all 1,500 problem instances revealed that instance features that appear to correlate (linearly) with heuristic performance are $phi(?)$ (correlation $=-0.59$) and $phi(?)$ (correlation $=0.44$). None of the other instance features appear to have a linear relationship with algorithmic performance.
 
 The main focus is on knowing \emph{when} during the scheduling process easy and hard problems diverge and explore in further detail \emph{why} they diverged. Rather than visualising high-dimensional data projected onto two dimensional space (as was the focus in \cite{SmithMilesLion5} with self-organising maps), instead appropriate statistical tests with a significance level $\alpha=0.05$ are sufficient to determine if there is any difference between different data distributions. For this the two-sample Kolmogorov–Smirnov test (K-S test) is used to determine whether two underlying one-dimensional probability distributions differ. 
 Furthermore, in order to find defining characteristics for easy or hard problems, a (linear) correlation was computed between features to the resulting \namerho.
 
-Note, when inspecting any statistical difference between data distribution of the features on a step-by-step basis, the features at step $k+1$ are of course dependant on all previous $k$ steps. This results in repetitive statistical testing, therefore a Bonferroni adjustment is used to counteract the multiple comparisons, i.e., each stepwise comparison has the significant level $\alpha_k=\frac{\alpha}{\ell}$, and thus maintaining the $\sum_{k=1}^{\ell}\alpha_k=\alpha$ significance level.
+Note, when inspecting any statistical difference between data distribution of the features on a step by step basis, the features at step $k+1$ are of course dependant on all previous $k$ steps. This results in repetitive statistical testing, therefore a Bonferroni adjustment is used to counteract the multiple comparisons, i.e., each stepwise comparison has the significant level $\alpha_k=\frac{\alpha}{\ell}$, and thus maintaining the $\sum_{k=1}^{\ell}\alpha_k=\alpha$ significance level.
 
 \subsection{Defining `easy' versus `hard' schedules}\label{sec:diff:easyhard}
 It's relatively ad-hoc how to define what makes a schedule difficult. Intuitively, it's logical to use the schedules objective to define it directly, i.e., inspecting \fullnamerho. Moreover, since the SDRs from \cref{sec:SDR} will be used throughout as a benchmark for subsequent models, the quantiles for \namerho, using the SDRs on their training set will be used to differentiate between easy and hard scheduling problems. In particular, the classification is defined as follows, 
@@ -97,7 +226,7 @@ where $a_i,a_j\in\mathcal{A}$. Note, when $a_i=a_j$ then \cref{eq:easyorhard:cnt
 
 Even though this is a na\"ive way to inspect difference between varying SDRs, it's does give some initial insight of the potential of improving dispatching rules; a sanity check before going into extensive experiments, as will be done in \cref{sec:diff:stepwise}.
 
-For the corresponding $10\times10$ training set (cf. \cref{tbl:easy:cnt:10x10,tbl:hard:cnt:10x10}), the intersections between SDRs from $6\times5$ (cf. \cref{tbl:easy:cnt:6x5,tbl:hard:cnt:6x5}) seem to hold. However, by going to a higher dimension, the performance edge between SDRs becomes more apparent, e.g., in \JSP\ when there was a slight possibility of LWR being simultaneously easy as other SDRs ($5\%<$ chance), it becomes almost impossible for $10\times10$. Making LWR a clear underdog. However, for \FSP\ the tables turn, and LWR has the performance edge. For instance, for \frndn{6}{5} the second  best option is to apply LPT (13.22\%), however there is a quite high overlap with MWR (11.74\%), and since MWR is easier in significantly more often (85.18\%), the choice of SDR is quite obvious. Although, it goes to show that there is the possibility of improving MWR by sometimes applying LPT-based insight; by seeing what sets apart the intersection of the easy training sets between the two. 
+For the corresponding $10\times10$ training set (cf. \cref{tbl:easy:cnt:10x10,tbl:hard:cnt:10x10}), the intersections between SDRs from $6\times5$ (cf. \cref{tbl:easy:cnt:6x5,tbl:hard:cnt:6x5}) seem to hold. However, by going to a higher dimension, the performance edge between SDRs becomes more apparent, e.g., in \JSP\ when there was a slight possibility of LWR being simultaneously easy as other SDRs ($5\%<$ chance), it becomes almost impossible for $10\times10$. Making LWR a clear underdog. However, for \FSP\ the tables turn, and LWR has the performance edge. For instance, for \frnd{10}{10}n{6}{5} the second  best option is to apply LPT (13.22\%), however there is a quite high overlap with MWR (11.74\%), and since MWR is easier in significantly more often (85.18\%), the choice of SDR is quite obvious. Although, it goes to show that there is the possibility of improving MWR by sometimes applying LPT-based insight; by seeing what sets apart the intersection of the easy training sets between the two. 
 
 Similarly for every $10\times10$ \JSP\ (cf. \cref{tbl:easy:cnt:10x10}), almost all easy LPT schedules are also easy  for MWR ($<1\%$ difference), as is to be expected as MWR is the more sophisticated counterpart for LPT, like LWR is for SPT. However, the greedy approach here is  not gaining any new information on how to improve MWR. In fact, MWR is never considered hard for any of the \JSP\ (cf. \cref{tbl:hard:cnt:10x10}), therefore no intersection with any hard schedules, but the LPT counterpart has a relatively high occurrence rate (3-14\%), so due to the similarity of the dispatching rules, the denominating factor between LPT and MWR can be an indicator for explaining some of MWR's pitfalls, that is to say, why aren't all of the \jsp\ schedules easy when applying MWR. 
 
@@ -129,9 +258,9 @@ Now, as the SDRs vary greatly in performance, the contribution of a SDR to \cref
 \missingfigure{Easy-hard jrnd}
 \subsection{\Jrndn}\label{sec:easyhard:jrndn}
 \missingfigure{Easy-hard jrnd}
-\subsection{\Frnd}\label{sec:easyhard:frnd}
+\subsection{\frnd{10}{10}}\label{sec:easyhard:frnd}
 \missingfigure{Easy-hard frnd}
-\subsection{\Frndn}\label{sec:easyhard:frndn}
+\subsection{\frnd{10}{10}n}\label{sec:easyhard:frndn}
 \missingfigure{Easy-hard frnd}
 \subsection{\Fjc}\label{sec:easyhard:fjc}
 \missingfigure{Easy-hard fjc}
