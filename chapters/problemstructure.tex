@@ -47,6 +47,7 @@ is rather on few simple algorithms, here the SDRs described in \cref{sec:SDR}, a
 \section{Distribution difficulty w.r.t. SDRs}
 Depending on the data distribution, dispatching rules perform differently. Take for instance the common single-based priority dispatching rules; SPT, LPT, LWR and MWR (cf. \cref{sec:SDR}). 
 A box-plot for \fullnamerho, for all problem spaces in \cref{ch:genprobleminstances} are depicted in \cref{fig:SDR:boxplot}. 
+We can see there is a staggering difference between the interaction of SDRs and their problem space. 
 As one can see, MWR is by far the best out of the four SDRs inspected for \JSP\ -- not only does it reach the known optimum most often but it also has the lowest worst-case factor from optimality. Similarly LWR for \FSP.
 Although the same problem generator is used, there are some inherent structure in which MWR and LWR can exploit for \JSP\ and  \FSP, respectively, whereas the other SDRs cannot. However, \emph{all} of these dispatching rules are considered good and commonly used in practice and no one is better than the rest \citep{Haupt89}, it simply depends on the data distribution at hand. This indicates that some distributions are harder than others, and these \JSP\ problem generators simply favours MWR, whereas the \FSP\ problem generators favours LWR. 
 
@@ -58,6 +59,71 @@ Although the same problem generator is used, there are some inherent structure i
 \ContinuedFloat
 \subfloat[][$10\times10$]{\includegraphics[width=\textwidth]{{boxplotRho.SDR.10x10}.eps}\label{fig:SDR:boxplot:10x10}}
 \end{figure}
+\section{Characteristics of difficult problem instances}
+% Katie orðar: A correlation analysis between the feature space and the performance space was conducted across all 1,500 problem instances revealed that instance features that appear to correlate (linearly) with heuristic performance are $phi(?)$ (correlation $=-0.59$) and $phi(?)$ (correlation $=0.44$). None of the other instance features appear to have a linear relationship with algorithmic performance.
+
+The main focus is on knowing \emph{when} during the scheduling process easy and hard problems diverge and explore in further detail \emph{why} they diverged. Rather than visualising high-dimensional data projected onto two dimensional space (as was the focus in \cite{SmithMilesLion5} with self-organising maps), instead appropriate statistical tests with a significance level $\alpha=0.05$ are sufficient to determine if there is any difference between different data distributions. For this the two-sample Kolmogorov–Smirnov test (K-S test) is used to determine whether two underlying one-dimensional probability distributions differ. 
+Furthermore, in order to find defining characteristics for easy or hard problems, a (linear) correlation was computed between features to the resulting \namerho.
+
+Note, when inspecting any statistical difference between data distribution of the features on a step by step basis, the features at step $k+1$ are of course dependant on all previous $k$ steps. This results in repetitive statistical testing, therefore a Bonferroni adjustment is used to counteract the multiple comparisons, i.e., each stepwise comparison has the significant level $\alpha_k=\frac{\alpha}{\ell}$, and thus maintaining the $\sum_{k=1}^{\ell}\alpha_k=\alpha$ significance level.
+
+\subsection{Defining `easy' versus `hard' schedules}\label{sec:diff:easyhard}
+It's relatively ad-hoc how to define what makes a schedule difficult. Intuitively, it's logical to use the schedules objective to define it directly, i.e., inspecting \fullnamerho. Moreover, since the SDRs from \cref{sec:SDR} will be used throughout as a benchmark for subsequent models, the quantiles for \namerho, using the SDRs on their training set will be used to differentiate between easy and hard scheduling problems. In particular, the classification is defined as follows, 
+\begin{description}
+\item[Easy] schedules belong to the first quantile, i.e., \hfill \\
+\begin{equation}\label{eq:easy}
+\mathcal{E}(a):=\{\vec{x}\;|\;\rho=Y(a,\vec{x})<\rho^{\text{1st. Qu.}}\},
+\end{equation} 
+\item[Hard] schedules belong to the third quantile, i.e., \hfill \\
+\begin{equation}\label{eq:hard}
+\mathcal{H}(a):=\{\vec{x}\;|\;\rho=Y(a,\vec{x})>\rho^{\text{3rd. Qu.}}\,
+\end{equation} 
+\end{description}
+where $\vec{x}\in\mathcal{P}_{\text{train}}$ for a given dispatching rule $a\in\mathcal{A}:=\{\text{SPT,~LPT,~LWR,~MWR}\}$.
+
+\Cref{tbl:easyhard:quantile} reports the first and third quantiles for each problem space, i.e., the cut-off values that determine the SDRs difficulty, whose division, defined as percentage of problem instances, i.e., 
+\begin{equation}\label{eq:easyhard:cnt}
+\frac{\abs{\mathcal{E}(a)}}{N_{\text{train}}} \cdot 100\%
+\quad \text{and} \quad 
+\frac{\abs{\mathcal{H}(a)}}{N_{\text{train}}}\cdot 100\%
+\end{equation}
+is given in \cref{tbl:easyhard:cnt:6x5,tbl:easyhard:cnt:10x10}. Furthermore, the intersection of pairwise SDRs being simultaneously easy or hard are given in \cref{tbl:easy:cnt:6x5,tbl:easy:cnt:10x10,tbl:hard:cnt:6x5,tbl:hard:cnt:10x10}, i.e., 
+\begin{equation}\label{eq:easyorhard:cnt}
+\frac{\abs{\mathcal{E}(a_i)\cap \mathcal{E}(a_j) }}{N_{\text{train}}} \cdot 100\%
+\quad \text{or} \quad 
+\frac{\abs{\mathcal{H}(a_i)\cap \mathcal{H}(a_j)}}{N_{\text{train}}}\cdot 100\%
+\end{equation}
+where $a_i,a_j\in\mathcal{A}$. Note, when $a_i=a_j$ then \cref{eq:easyorhard:cnt} is equivalent to \cref{eq:easyhard:cnt}.
+
+Even though this is a na\"ive way to inspect difference between varying SDRs, it's does give some initial insight of the potential of improving dispatching rules; a sanity check before going into extensive experiments, as will be done in \cref{sec:diff:stepwise}.
+
+For the corresponding $10\times10$ training set (cf. \cref{tbl:easy:cnt:10x10,tbl:hard:cnt:10x10}), the intersections between SDRs from $6\times5$ (cf. \cref{tbl:easy:cnt:6x5,tbl:hard:cnt:6x5}) seem to hold. However, by going to a higher dimension, the performance edge between SDRs becomes more apparent, e.g., in \JSP\ when there was a slight possibility of LWR being simultaneously easy as other SDRs ($5\%<$ chance), it becomes almost impossible for $10\times10$. Making LWR a clear underdog. However, for \FSP\ the tables turn, and LWR has the performance edge. For instance, for \frnd{10}{10}n{6}{5} the second  best option is to apply LPT (13.22\%), however there is a quite high overlap with MWR (11.74\%), and since MWR is easier in significantly more often (85.18\%), the choice of SDR is quite obvious. Although, it goes to show that there is the possibility of improving MWR by sometimes applying LPT-based insight; by seeing what sets apart the intersection of the easy training sets between the two. 
+
+Similarly for every $10\times10$ \JSP\ (cf. \cref{tbl:easy:cnt:10x10}), almost all easy LPT schedules are also easy  for MWR ($<1\%$ difference), as is to be expected as MWR is the more sophisticated counterpart for LPT, like LWR is for SPT. However, the greedy approach here is  not gaining any new information on how to improve MWR. In fact, MWR is never considered hard for any of the \JSP\ (cf. \cref{tbl:hard:cnt:10x10}), therefore no intersection with any hard schedules, but the LPT counterpart has a relatively high occurrence rate (3-14\%), so due to the similarity of the dispatching rules, the denominating factor between LPT and MWR can be an indicator for explaining some of MWR's pitfalls, that is to say, why aren't all of the \jsp\ schedules easy when applying MWR. 
+
+These have up until now all been speculations about how SDRs differ. One thing is for certain, the underlying problem space plays a great role on a SDR's success. Even slight variations to one job or machine, i.e., \jrndJ{10}{10} and \jrndM{10}{10}, shows significant change in performance. Due to the presence of bottleneck, MWR is able to detect it and thus becomes the clear winner. Even outperforming the original \jrnd{10}{10} which they're based on, despite having processing times doubled for a single job or machine, with approximately 10\% lower first quantile (cf. \cref{tbl:easyhard:quantile:10x10}) in both cases. 
+
+As the objective of this dissertation is not to choose which DR is best to use for each problem instance, as done in portfolio optimisation, the focus is set on finding what characterises of \jsp\ on a whole are of value, i.e., feature selection, and create a new model that works well for the problem space overall, by exploiting feature behaviour that is considered more favourable. The hypothesis being that features evolutions of easy schedules greatly differ from features evolutions corresponding to hard schedules, and \cref{sec:diff:stepwise} will attempt to explain the evidence show in \cref{tbl:easyhard:cnt:6x5,tbl:easyhard:cnt:10x10,tbl:easy:cnt:6x5,tbl:easy:cnt:10x10,tbl:hard:cnt:6x5,tbl:hard:cnt:10x10}.
+
+Note, this \lcnamecref{sec:diff:easyhard} gave the definition of what constitutes an `easy' and `hard' schedule. Since these are based on four SDRs, $\mathcal{A}$, the training data for the experiments done in this \lcnamecref{ch:problemstructure} is based on $4N_{\text{train}}$ problem instances, per problem space, therefore,
+\begin{equation}\label{eq:easyhard:all}
+\sum_{a\in\mathcal{A}}\abs{\mathcal{E}(a)} \approx N_{\text{train}}
+\quad\text{and}\quad
+\sum_{a\in\mathcal{A}}\abs{\mathcal{H}(a)} \approx N_{\text{train}}
+\end{equation} 
+due to the fact \cref{eq:easy,eq:hard} are based on the first and third quantiles of the entire training set.
+Now, as the SDRs vary greatly in performance, the contribution of a SDR to \cref{eq:easyhard:all} varies, resulting in an unbalanced sample size when restricted to a single SDR. 
+
+\input{tables/quartiles.EasyHard}
+{\setlength{\tabcolsep}{3pt}
+\input{tables/quartiles.6x5.EasyHard}
+\input{tables/quartiles.10x10.EasyHard}
+\input{tables/quartiles.6x5.Easy}
+\input{tables/quartiles.10x10.Easy}
+\input{tables/quartiles.6x5.Hard}
+\input{tables/quartiles.10x10.Hard}
+}
+
 
 \section{Probability of choosing optimal decision}\label{sec:diff:opt:rnd}
 In order to create successful dispatching rules, a good starting point is to investigate the properties of optimal solutions and hopefully be able to learn how to mimic such `good' behaviour. For this, we follow an optimal solution, obtained by using a commercial software package \cite{gurobi}, and inspect the evolution of its features, defined in \cref{tbl:features}. Moreover, it is noted, that there are several optimal solutions available for each problem instance. However, it is deemed sufficient to inspect only one optimal trajectory per problem instance as there are $N_{\text{train}}$ independent instances which gives the training data variety. 
@@ -188,72 +254,7 @@ In order to put the extremal features into perspective, it's worth comparing the
 
 
 
-\section{Characteristics of difficult problem instances}
-% Katie orðar: A correlation analysis between the feature space and the performance space was conducted across all 1,500 problem instances revealed that instance features that appear to correlate (linearly) with heuristic performance are $phi(?)$ (correlation $=-0.59$) and $phi(?)$ (correlation $=0.44$). None of the other instance features appear to have a linear relationship with algorithmic performance.
-
-The main focus is on knowing \emph{when} during the scheduling process easy and hard problems diverge and explore in further detail \emph{why} they diverged. Rather than visualising high-dimensional data projected onto two dimensional space (as was the focus in \cite{SmithMilesLion5} with self-organising maps), instead appropriate statistical tests with a significance level $\alpha=0.05$ are sufficient to determine if there is any difference between different data distributions. For this the two-sample Kolmogorov–Smirnov test (K-S test) is used to determine whether two underlying one-dimensional probability distributions differ. 
-Furthermore, in order to find defining characteristics for easy or hard problems, a (linear) correlation was computed between features to the resulting \namerho.
-
-Note, when inspecting any statistical difference between data distribution of the features on a step by step basis, the features at step $k+1$ are of course dependant on all previous $k$ steps. This results in repetitive statistical testing, therefore a Bonferroni adjustment is used to counteract the multiple comparisons, i.e., each stepwise comparison has the significant level $\alpha_k=\frac{\alpha}{\ell}$, and thus maintaining the $\sum_{k=1}^{\ell}\alpha_k=\alpha$ significance level.
-
-\subsection{Defining `easy' versus `hard' schedules}\label{sec:diff:easyhard}
-It's relatively ad-hoc how to define what makes a schedule difficult. Intuitively, it's logical to use the schedules objective to define it directly, i.e., inspecting \fullnamerho. Moreover, since the SDRs from \cref{sec:SDR} will be used throughout as a benchmark for subsequent models, the quantiles for \namerho, using the SDRs on their training set will be used to differentiate between easy and hard scheduling problems. In particular, the classification is defined as follows, 
-\begin{description}
-\item[Easy] schedules belong to the first quantile, i.e., \hfill \\
-\begin{equation}\label{eq:easy}
-\mathcal{E}(a):=\{\vec{x}\;|\;\rho=Y(a,\vec{x})<\rho^{\text{1st. Qu.}}\},
-\end{equation} 
-\item[Hard] schedules belong to the third quantile, i.e., \hfill \\
-\begin{equation}\label{eq:hard}
-\mathcal{H}(a):=\{\vec{x}\;|\;\rho=Y(a,\vec{x})>\rho^{\text{3rd. Qu.}}\,
-\end{equation} 
-\end{description}
-where $\vec{x}\in\mathcal{P}_{\text{train}}$ for a given dispatching rule $a\in\mathcal{A}:=\{\text{SPT,~LPT,~LWR,~MWR}\}$.
-
-\Cref{tbl:easyhard:quantile} reports the first and third quantiles for each problem space, i.e., the cut-off values that determine the SDRs difficulty, whose division, defined as percentage of problem instances, i.e., 
-\begin{equation}\label{eq:easyhard:cnt}
-\frac{\abs{\mathcal{E}(a)}}{N_{\text{train}}} \cdot 100\%
-\quad \text{and} \quad 
-\frac{\abs{\mathcal{H}(a)}}{N_{\text{train}}}\cdot 100\%
-\end{equation}
-is given in \cref{tbl:easyhard:cnt:6x5,tbl:easyhard:cnt:10x10}. Furthermore, the intersection of pairwise SDRs being simultaneously easy or hard are given in \cref{tbl:easy:cnt:6x5,tbl:easy:cnt:10x10,tbl:hard:cnt:6x5,tbl:hard:cnt:10x10}, i.e., 
-\begin{equation}\label{eq:easyorhard:cnt}
-\frac{\abs{\mathcal{E}(a_i)\cap \mathcal{E}(a_j) }}{N_{\text{train}}} \cdot 100\%
-\quad \text{or} \quad 
-\frac{\abs{\mathcal{H}(a_i)\cap \mathcal{H}(a_j)}}{N_{\text{train}}}\cdot 100\%
-\end{equation}
-where $a_i,a_j\in\mathcal{A}$. Note, when $a_i=a_j$ then \cref{eq:easyorhard:cnt} is equivalent to \cref{eq:easyhard:cnt}.
-
-Even though this is a na\"ive way to inspect difference between varying SDRs, it's does give some initial insight of the potential of improving dispatching rules; a sanity check before going into extensive experiments, as will be done in \cref{sec:diff:stepwise}.
-
-For the corresponding $10\times10$ training set (cf. \cref{tbl:easy:cnt:10x10,tbl:hard:cnt:10x10}), the intersections between SDRs from $6\times5$ (cf. \cref{tbl:easy:cnt:6x5,tbl:hard:cnt:6x5}) seem to hold. However, by going to a higher dimension, the performance edge between SDRs becomes more apparent, e.g., in \JSP\ when there was a slight possibility of LWR being simultaneously easy as other SDRs ($5\%<$ chance), it becomes almost impossible for $10\times10$. Making LWR a clear underdog. However, for \FSP\ the tables turn, and LWR has the performance edge. For instance, for \frnd{10}{10}n{6}{5} the second  best option is to apply LPT (13.22\%), however there is a quite high overlap with MWR (11.74\%), and since MWR is easier in significantly more often (85.18\%), the choice of SDR is quite obvious. Although, it goes to show that there is the possibility of improving MWR by sometimes applying LPT-based insight; by seeing what sets apart the intersection of the easy training sets between the two. 
-
-Similarly for every $10\times10$ \JSP\ (cf. \cref{tbl:easy:cnt:10x10}), almost all easy LPT schedules are also easy  for MWR ($<1\%$ difference), as is to be expected as MWR is the more sophisticated counterpart for LPT, like LWR is for SPT. However, the greedy approach here is  not gaining any new information on how to improve MWR. In fact, MWR is never considered hard for any of the \JSP\ (cf. \cref{tbl:hard:cnt:10x10}), therefore no intersection with any hard schedules, but the LPT counterpart has a relatively high occurrence rate (3-14\%), so due to the similarity of the dispatching rules, the denominating factor between LPT and MWR can be an indicator for explaining some of MWR's pitfalls, that is to say, why aren't all of the \jsp\ schedules easy when applying MWR. 
-
-These have up until now all been speculations about how SDRs differ. One thing is for certain, the underlying problem space plays a great role on a SDR's success. Even slight variations to one job or machine, i.e., \jrndJ{n}{m} and \jrndM{n}{m}, shows significant change in performance. Due to the presence of bottleneck, MWR is able to detect it and thus becomes the clear winner. Even outperforming the original \jrnd{n}{m} which they're based on, despite having processing times doubled for a single job or machine, with approximately 10\% lower first quantile (cf. \cref{tbl:easyhard:quantile}) in both cases. 
-
-As the objective of this dissertation is not to choose which DR is best to use for each problem instance, as done in portfolio optimisation, the focus is set on finding what characterises of \jsp\ on a whole are of value, i.e., feature selection, and create a new model that works well for the problem space overall, by exploiting feature behaviour that is considered more favourable. The hypothesis being that features evolutions of easy schedules greatly differ from features evolutions corresponding to hard schedules, and \cref{sec:diff:stepwise} will attempt to explain the evidence show in \cref{tbl:easyhard:cnt:6x5,tbl:easyhard:cnt:10x10,tbl:easy:cnt:6x5,tbl:easy:cnt:10x10,tbl:hard:cnt:6x5,tbl:hard:cnt:10x10}.
-
-Note, this \lcnamecref{sec:diff:easyhard} gave the definition of what constitutes an `easy' and `hard' schedule. Since these are based on four SDRs, $\mathcal{A}$, the training data for the experiments done in this \lcnamecref{ch:problemstructure} is based on $\abs{\mathcal{A}}\cdot N_{\text{train}}$ problem instances, per problem space, therefore,
-\begin{equation}\label{eq:easyhard:all}
-\sum_{a\in\mathcal{A}}\abs{\mathcal{E}(a)} \approx N_{\text{train}}
-\quad\text{and}\quad
-\sum_{a\in\mathcal{A}}\abs{\mathcal{H}(a)} \approx N_{\text{train}}
-\end{equation} 
-due to the fact \cref{eq:easy,eq:hard} are based on the first and third quantiles of the entire training set.
-Now, as the SDRs vary greatly in performance, the contribution of a SDR to \cref{eq:easyhard:all} varies, resulting in an unbalanced sample size when restricted to a single SDR. 
-
-\input{tables/quartiles.EasyHard}
-{\setlength{\tabcolsep}{3pt}
-\input{tables/quartiles.6x5.EasyHard}
-\input{tables/quartiles.10x10.EasyHard}
-\input{tables/quartiles.6x5.Easy}
-\input{tables/quartiles.10x10.Easy}
-\input{tables/quartiles.6x5.Hard}
-\input{tables/quartiles.10x10.Hard}
-}
-
-\subsection{Emergence of problem difficulty}\label{sec:diff:stepwise}
+\section{Emergence of problem difficulty}\label{sec:diff:stepwise}
 \subsection{\Jrnd}\label{sec:easyhard:jrnd}
 \missingfigure{Easy-hard jrnd}
 \subsection{\Jrndn}\label{sec:easyhard:jrndn}
@@ -270,6 +271,12 @@ Now, as the SDRs vary greatly in performance, the contribution of a SDR to \cref
 \missingfigure{Easy-hard fxc}
 
 \section{Discussion and Conclusion}
+Despite problem instances being created by the same problem generator, they vary enough -- all instances are not created equal -- some are always hard to solve, others always easy. 
+Since the description of the problem space isn't enough to predict it's performance, we need a measure to understand what's going on. Why are some instances easier to find their optimum (or close enough), that is to say, what's their secret? This is where their feature evolution comes into play.
+By using schedules obtained by applying SDRs we have the ability to get some insight into the matter. 
+
+
+
 From the experimental study it is apparent that features have different %impact 
 correlation with the resulting schedule depending in what stage it is in the scheduling process, implying that their influence varies throughout the scheduling process. And features constant throughout the scheduling process are not correlated with the end-result.
 There are some common features for both difficulties considered which define \JSP\ on a whole. However the significant features are quite different across the two difficulties, implying there is a clear difference in their data structure. The amount of significant features were considerably more for easy problems, indicating their key elements had been found. However, the features distinguishing hard problems were scarce. Most likely due to their more complex data structure their key features are of a more composite nature.
