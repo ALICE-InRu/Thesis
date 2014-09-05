@@ -2,7 +2,7 @@
 
 \chapter{Ordinal regression}\label{ch:ordinal} \todo{\autoref{ch:ordinal} Unfinished}
 
-\FirstSentence{O}{rdinal regression has been} previously presented in~\cite{Ru06:PPSN}, but given here for completeness. The preference learning task of linear classification presented there is based on the work presented in \citep{liblinear,Lin08:newtontrustregion}. The modification relates to how the point pairs are selected and the fact that a $L2$-regularized logistic regression is used. {\color{red}Útskýra hvað er L2-regression?}
+\FirstSentence{O}{rdinal regression has been} previously presented in \cite{Ru06:PPSN}, but given here for completeness. The preference learning task of linear classification presented there is based on the work proposed in \citep{liblinear,Lin08:newtontrustregion}. The modification relates to how the point pairs are selected and the fact that a $L2$-regularized logistic regression is used. {\color{red}Útskýra hvað er L2-regression?}
 
 \section{Training set}
 The ranking problem is specified by a set $S_{0} = \{(\vec{x}_i,y_i)\}_{i=1}^N \subset X \times Y$ of $N$ (solution, rank)-pairs, where $Y=\{r_1,\ldots,r_N\}$ is the outcome space with ordered ranks $r_1> r_2,> \ldots > r_N$.  
@@ -16,7 +16,7 @@ S = \left\{(\vec{x}_k^{(1)}, \vec{x}_k^{(2)}),t_k=\text{sign}(y_k^{(1)} - y_k^{(
 \end{equation}
 where $(y_k^{(1)} = r_i) \wedge (y_k^{(2)} = r_{i+1})$ (and vice versa $(y_k^{(1)} = r_{i+1}) \wedge (y_k^{(2)} = r_{i})$) resulting in $N'=2(N-1)$ possible adjacently ranked training pairs. The rank difference is denoted by $t_k\in\{-1,1\}$.
 
-In order to generalize the technique to different solution data types and model spaces an implicit kernel-defined feature space $\Phi\subset\mathbb{R}^d$ of dimension $d$, with corresponding feature mapping $\vphi:X\mapsto\Phi$ is applied, i.e., the feature vector $\vphi(\vec{x})=[\phi_1(\vec{x}),\ldots,\phi_d(\vec{x})]^T\in\Phi$. Thus the training set defined by~\eqref{eq:S} is redefined as follows,
+In order to generalize the technique to different solution data types and model spaces an implicit kernel-defined feature space $\Phi\subset\mathbb{R}^d$ of dimension $d$, with corresponding feature mapping $\vphi:X\mapsto\Phi$ is applied, i.e., the feature vector $\vphi(\vec{x})=[\phi_1(\vec{x}),\ldots,\phi_d(\vec{x})]^T\in\Phi$. Thus the training set defined by \cref{eq:S} is redefined as follows,
 \begin{equation}
 S = \left\{\left(\vphi(\vec{x}_k^{(1)}), \vphi(\vec{x}_k^{(2)})\right),t_k=\text{sign}(y_k^{(1)} - y_k^{(2)})\right\}_{k=1}^{N'} \subset \Phi \times Y \label{eq:Sfeat}.
 \end{equation}
@@ -42,7 +42,7 @@ where $C > 0$ is a penalty parameter, and the negative log-likelihood is due to 
 \begin{equation}\label{eq:prob}
 \mathcal{P}\big(y=\pm1|\vec{z},\vec{w}\big)=\frac{1}{1+e^{-y\inner{\vec{w}}{\vec{z}_i}}}.
 \end{equation}
-The logistic regression defined in \eqref{eq:margin} is solved iteratively, in particular using Trust Region Newton method \citep[cf.][]{Lin08:newtontrustregion}, which generates a sequence $\{\vec{w}^{(k)}\}_{k=1}^\infty$ converging to the optimal solution $\vec{w}^*$ of \eqref{eq:margin}.
+The logistic regression defined in \cref{eq:margin} is solved iteratively, in particular using Trust Region Newton method \citep[cf.][]{Lin08:newtontrustregion}, which generates a sequence $\{\vec{w}^{(k)}\}_{k=1}^\infty$ converging to the optimal solution $\vec{w}^*$ of \cref{eq:margin}.
 \end{comment}
 
 The aim now is to find a function $h$ that encounters as few training errors as possible on $S'$. Applying the method of large margin rank boundaries of ordinal regression described in \cite{Herbrich00}, the optimal $\vec{w}^*$ is determined by solving the following task, 
@@ -54,14 +54,14 @@ Note that,
 \begin{equation}
 h(\vec{x}_i)-h(\vec{x}_j)=\inner{\vec{w}}{\vphi(\vec{x}_i)-\vphi(\vec{x}_j)}
 \end{equation}
-and minimising $\inner{\vec{w}}{\vec{w}}$ in~\eqref{eq:margin} maximises the margin between rank boundaries, i.e., the distance between adjacently ranked pair $h(\vec{x}^{(1)})$ and $h(\vec{x}^{(2)})$.
+and minimising $\inner{\vec{w}}{\vec{w}}$ in \cref{eq:margin} maximises the margin between rank boundaries, i.e., the distance between adjacently ranked pair $h(\vec{x}^{(1)})$ and $h(\vec{x}^{(2)})$.
 
 
 
 
 \begin{comment}
 \section{Non-linear preference}\label{sec:ord:nonlinpref}
-In the case that the training set $S$ defined by~\eqref{eq:Sfeat} is not linearly separable, a common way of coping with non-linearity is to apply the ``kernel-trick'' to transform $S$ onto a higher dimension. In which case, the dot product in \eqref{eq:linear} is replaced by a kernel function $\kappa$.
+In the case that the training set $S$ defined by \cref{eq:Sfeat} is not linearly separable, a common way of coping with non-linearity is to apply the ``kernel-trick'' to transform $S$ onto a higher dimension. In which case, the dot product in \cref{eq:linear} is replaced by a kernel function $\kappa$.
 
 In terms of training data, the optimal $\vec{w}^*$ can be expressed as, \todo{Finna uppr. heimild}
 \begin{equation}
@@ -97,7 +97,7 @@ for $\gamma>0$.
 \end{comment}
 
 \section{Parameter setting and tuning}
-The regulation parameter $C$ in \eqref{eq:margin}, controls the balance between model complexity and training errors, and must be chosen appropriately. A high value for $C$ gives greater emphasis on correctly distinguishing between different ranks, whereas a low $C$ value results in maximising the margin between classes.
+The regulation parameter $C$ in \cref{eq:margin}, controls the balance between model complexity and training errors, and must be chosen appropriately. A high value for $C$ gives greater emphasis on correctly distinguishing between different ranks, whereas a low $C$ value results in maximising the margin between classes.
 
 \section{Scaling}
 It is of paramount importance to scale the features $\vphi$ first, especially if implementing a kernel method. 

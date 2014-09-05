@@ -40,7 +40,7 @@ Clearly, w.r.t. minimum makespan, it is preferred that schedules are non-delay, 
 where $J_j$ is the immediate successor of $J_{j'}$ on $M_a$. Although this is not a variable directly needed to construct a schedule for \JSP, it is a key feature in order to measure the quality of the schedule. 
 
 \section{Construction heuristics}\label{sec:CH}
-Construction heuristics are designed in such a manner that it limits the search space in a logical manner, as to not to exclude the optimum. The construction heuristic here is to schedule the dispatches as closely together as possible, i.e., minimise the schedule's flow. 
+Construction heuristics are designed in such a way that it limits the search space in a logical manner, as to not to exclude the optimum. The construction heuristic here is to schedule the dispatches as closely together as possible, i.e., minimise the schedule's flow. 
 More specifically, once an operation $(j,a)$ has been chosen from the ready-list, $\mathcal{R}$, by some dispatching rule, it can placed immediately after (but not prior) $x_f(j,\vsigma_j(a-1))$ on machine $M_a$ due to constraint \cref{eq:permutation}. 
 However to guarantee that constraint \cref{eq:oneJobPerMac} is not violated, idle times $M_a$ are inspected, as they create flow time  which $J_j$ can occupy. Bearing in mind that $J_j$ release time is $x_f(j,\vsigma_j(a-1))$ one cannot implement \cref{eq:slack} directly, instead it has to be updated as follows,
 \begin{eqnarray}
@@ -160,7 +160,7 @@ To summarise, SDRs assign an index to each job of the ready-list waiting to be s
 % The intent of MWR is to speed up jobs with large processing work resulting in a well-balanced work progress of all jobs, at the expense of a high volume of in-process inventory, while LWR tend to reduce the number of jobs in the shop.
 
 \section{Features for \jsp}\label{sec:features}
-A DR may need to perform a one-step look-ahead and observes features of the partial schedule to make a decision, for example by observing the resulting temporal makespan. These resulting observed features are sometimes referred to as an \emph{after-state} or \emph{post-decision state}. 
+A DR may need to perform a one-step look-ahead and observes features of the partial schedule to make a decision, for example by observing the resulting temporal makespan. These emanated observed features are sometimes referred to as an \emph{after-state} or \emph{post-decision state}. 
 
 Features are used to grasp the essence of the current state of the schedule. Temporal scheduling features applied in this dissertation for a job $J_j$ to be dispatched on machine $M_a$ are given in \cref{tbl:features}. 
 Note, from a job-oriented viewpoint, for a job already dispatched $J_j\in\mathcal{J}$ the corresponding set of machines now processed is $\mathcal{M}_j\subset\mathcal{M}$. Similarly from the machine-oriented viewpoint, $M_a\in\mathcal{M}$ with corresponding $\mathcal{J}_a\subset\mathcal{J}$. 
@@ -172,7 +172,7 @@ Some features are directly observed from the partial schedule, such as the job- 
 In addition there are flow-related, \phiFlowRelated, which measure the influence of idle time on the schedule, 
 and current makespan-related, \phiScheduleRelated.
 
-Note that \phiLocalRelated\ are only based on the current step of the schedule, i.e., schedule's \emph{local features}, and might not give an accurate indication of how it will effect the schedule in the long run. Therefore, a set of features are needed to estimate the schedule's \emph{global features}. The approach here is to use well known SDRs, \phiSDRRelated, as a benchmark by retrieving what would the resulting $C_{\max}$ would be given if that SDR would be implemented from that point forward. Moreover, random completion of the partial schedule are implemented, here \phiRND\ corresponds to 100 random rollouts, which can be used to identify which features $\vphi$ are promising on a long-term basis.  
+Note that \phiLocalRelated\ are only based on the current step of the schedule, i.e., schedule's \emph{local features}, and might not give an accurate indication of how it will effect the schedule in the long run. Therefore, a set of features are needed to estimate the schedule's overall performance, referred to as its \emph{global features}. The approach here is to use well known SDRs, \phiSDRRelated, as a benchmark by retrieving what would the resulting $C_{\max}$ would be given if that SDR would be implemented from that point forward. Moreover, random completion of the partial schedule are implemented, here \phiRND\ corresponds to 100 random rollouts, which can be used to identify which features $\vphi$ are promising on a long-term basis.  
 
 All of the features vary throughout the scheduling process, w.r.t. operation belonging to the same time step $k$, save for \phitotalProc\ which varies between jobs; \phistep\ to keep track of features' evolution w.r.t. the scheduling process; and \phiwrmTotal\ which is static for a given problem instance, but used for normalising other features, such as work-remaining based (\phiwrmJob\ and \phiwrmMac) or makespan-based (\phiGlobalRelated) ones.
 In addition, \phimac, is reported in order to distinguish which features are in conflict with each other.
@@ -204,7 +204,7 @@ P_j = \sum_{i=1}^d w_i \cdot a_i
 \end{equation}
 where $w_i>0$ and $\sum_{i=0}^d w_i = 1$, then $w_i$ gives the weight of the proportional influence of performance measure $a_i$ (based on some SDR or CDR) to the overall priority. 
 
-Generally the weights $\vec{w}$ chosen by the algorithm designer apriori. 
+Generally the weights $\vec{w}$ chosen by the algorithm designer a priori. 
 A more sophisticated approach would to learn have the algorithm discover these weights autonomously, for instance via evolutionary search or ordinal regression, to be discussed in \cref{ch:esmodels} and \cref{ch:prefmodels}, respectively.
 
 \subsection{Automated discovery of dispatching rules}
@@ -212,7 +212,7 @@ A more sophisticated approach would to learn have the algorithm discover these w
 
 A recent editorial of the state-of-the-art approaches in advanced dispatching rules for large-scale manufacturing systems by \citet{Chen13} points out that:
 \begin{quote}
-[..] most traditional dispatching rules are based on historical data. With the emergence of data mining and online analytic processing, dispatching rules can now take predictive information into account.
+[..] most traditional dispatching rules are based on historical data. With the emergence of data mining and on-line analytic processing, dispatching rules can now take predictive information into account.
 \end{quote}
 implying that there has not been much automation in the process of discovering new dispatching rules, which is the ultimate goal of this dissertation, i.e., automate creating optimisation heuristics for scheduling. 
 
@@ -226,7 +226,7 @@ Their method is straightforward, and thus easy to implement and more importantly
 
 \citet{Korytkowski13} implement ant colony optimisation to select the best DR from a selection of nine DRs for \JSP\ and their experiments showed that the choice of DR do affect the results and that for all performance measures considered it was better to have all of the DRs to choose from rather than just a single DR at a time. 
 Similarly, \citet{Lu13} investigate eleven SDRs for \JSP\ to create a pool of thirty three CDRs that strongly outperformed the ones they were based on, which is intuitive since where one SDR might be failing, another could be excelling, hence combining them should yield a better CDR. \citeauthor{Lu13} create their CDRs with multi-contextual functions (MCF) based either on machine idle time or job waiting time, so one can say that the CDRs are a combination of those two key features of the schedule and then the basic DRs. However, there are no combinations of the basic DR explored, only machine idle time and job waiting time.  
-\citet{Yu13} used priority rules to combine twelve existing DRs from the literature, in their approach they had forty eight priority rules combinations, yielding forty eight different models to implement and test. This is a fairly ad-hoc solution and there is no guarantee the optimal combination of DRs is found. 
+\citet{Yu13} used priority rules to combine twelve existing DRs from the literature, in their approach they had forty eight priority rules combinations, yielding forty eight different models to implement and test. This is a fairly ad hoc solution and there is no guarantee the optimal combination of DRs is found. 
 
 \clearpage
 \section{Rice's framework for \jsp}\label{sec:rice:jsp}

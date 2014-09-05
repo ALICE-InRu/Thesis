@@ -16,7 +16,7 @@ In~\cref{sec:samplingstopping} sampling methods, stopping criteria and model acc
 
 
 \section{Sampling Methods and Improvements}\label{sec:samplingstopping}
-In surrogate modelling, a small sample of training individuals of known fitness are needed to generate an initial surrogate. There after sampling is needed to be conducted for validating and updating the surrogate. Bearing in mind that there is generally a predefined maximum number of expensive function evaluations that can be made, the sampling of test individuals  used for validating/updating the surrogate needs to be fruitful. 
+In surrogate modelling, a small sample of training individuals of known fitness are required to generate an initial surrogate. There after sampling is needed to be conducted for validating and updating the surrogate. Bearing in mind that there is generally a predefined maximum number of expensive function evaluations that can be made, the sampling of test individuals  used for validating/updating the surrogate needs to be fruitful. 
 
 During evolution different regions of the space are sampled and as a consequence the surrogate ranking model may be insufficiently accurate for new regions of the search space, hence if the surrogate is not updated to reflect the original fitness function it is very probable that the ES converges to a false optimum. It is, therefore, of paramount importance to validate the surrogate during evolution. In the literature this is referred to as model management or evolution control \citep[cf.][]{Jin05}.
 
@@ -41,7 +41,7 @@ Two rankings are the same when $\tau=1$, completely reversed if $\tau = -1$, and
 
 The surrogate ranking validation and improvement strategy using ordinal regression is tested using a Covariance Matrix Adaptation Evolution Strategy (CMA-ES) developed by \cite{Hansen01}. CMA-ES is a very efficient numerical optimization technique, however we still expect to reduce the number of function evaluations needed for search. For \cite{Ru06:PPSN} the validation policy had to successfully rank all of the candidate individuals, i.e.,  until $\tau=1$. %<viðbót vegna rýnis>
 If there is no limit to training size then updating the surrogate becomes too computationally expensive, hence the training size needs to be pruned to size to $\overline{l}$. %</viðbót vegna rýnis>
-\citeauthor{Ru06:PPSN} pruned the set to a size $\overline{l} = \lambda$ by omitting the oldest individuals first. These are quite stringent restrictions which can be improved upon. 
+\citeauthor{Ru06:PPSN} reduces the set to a size $\overline{l} = \lambda$ by omitting the oldest individuals first. These are quite stringent restrictions which can be improved upon. 
 % Pruning away the worst - instead of the oldest 
 The pruning only considers the age of the individuals, however older individuals might still be of more interest than newer ones if their fitness ranks higher. A more sophisticated way of pruning would be omitting the lowest ranking individuals first. 
 % Validating on a mean pseudo individual  
