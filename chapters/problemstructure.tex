@@ -131,7 +131,7 @@ In order to create successful dispatching rules, a good starting point is to inv
 Figures within this and subsequent \lcnamecref{sec:diff:opt:rnd}s depict the mean over all the training data, which are quite noisy functions.\footnote{\citet{InRu14c} depicts the mean as is, albeit only for $10\times10$ problem spaces.} Thus, for clarity purposes, they are fitted with local polynomial regression, making the boundary points biased. 
 
 Firstly, we can observe that on a step by step basis there are several optimal dispatches to choose from. \Cref{fig:diff:opt:unique} depicts how the number of optimal dispatches evolve at each dispatch iteration. Note, that only one optimal trajectory is pursued (chosen at random), hence this is only a lower bound of uniqueness of optimal solutions.
-As the number of possible dispatches decrease over time, \cref{fig:diff:opt} depicts the probability of choosing an optimal dispatch. 
+As the number of possible dispatches decrease over time, \cref{fig:diff:opt} depicts the probability of choosing an optimal dispatch at each iteration. 
 
 \begin{figure}
 \centering
@@ -152,9 +152,10 @@ As the number of possible dispatches decrease over time, \cref{fig:diff:opt} dep
 \end{figure}
 
 \section{Making suboptimal decisions}\label{sec:diff:opt:sub}
-Looking at \cref{fig:diff:opt}, \jrnd{10}{10} has a relatively high probability ($70\%$ and above) of choosing an optimal job. However, it is imperative to keep making optimal decisions, because once off the optimal track the consequences can be dire. To demonstrate this \cref{fig:diff:case} depicts the worst and best case scenario of the resulting deviation from optimality, $\rho$, once you've fallen off the optimal track. Note, that this is given that you make \emph{one} wrong turn. Generally, there will be more, and then the compound effects of making suboptimal decisions really start adding up. 
+Looking at \cref{fig:diff:opt}, \jrnd{10}{10} has a relatively high probability ($70\%$ and above) of choosing an optimal job. However, it is imperative to keep making optimal decisions, because once off the optimal track the consequences can be dire. To demonstrate this \cref{fig:diff:case} depicts the worst and best case scenario of \namerho, once you've fallen off the optimal track. Note, that this is given that you make \emph{one} wrong turn. Generally, there will be many mistakes made, and then the compound effects of making suboptimal decisions really start adding up. 
 
-It is interesting that for \JSP, that over time making suboptimal decisions make more of an impact on the resulting makespan. This is most likely due to the fact that if a suboptimal decision is made in the early stages, then there is space to rectify the situation with the subsequent dispatches. However, if done at a later point in time, little is to be done as the damage is already been inflicted upon the schedule. However, for \FSP, the case is the exact opposite. Then it's imperative to make good decisions right from the beginning. This is due to the major structural differences between \jsp\ and \fsp, namely the latter having a homogeneous machine ordering, constricting the solution immensely. Luckily, this does have the added benefit of making \fsp\ less vulnerable for suboptimal decisions later in the decision process. 
+It is interesting that for \JSP, that over time making suboptimal decisions make more of an impact on the resulting makespan. This is most likely due to the fact that if a suboptimal decision is made in the early stages, then there is space to rectify the situation with the subsequent dispatches. However, if done at a later point in time, little is to be done as the damage is already been inflicted upon the schedule. 
+However, for \FSP, the case is the exact opposite. Under those circumstances it's imperative to make good decisions right from the beginning. This is due to the major structural differences between \jsp\ and \fsp, namely the latter having a homogeneous machine ordering, constricting the solution immensely. Luckily, this does have the added benefit of making \fsp\ less vulnerable for suboptimal decisions later in the decision process. 
 
 
 \begin{figure}
@@ -166,10 +167,10 @@ It is interesting that for \JSP, that over time making suboptimal decisions make
 \label{fig:diff:case}
 \end{figure}
 
-\subsection{Optimality of simple priority dispatching rules}\label{sec:diff:opt:sdr}
+\section{Optimality of simple priority dispatching rules}\label{sec:diff:opt:sdr}
 The probability of optimality of the aforementioned SDRs from \cref{sec:SDR}, yet still maintaining our optimal trajectory, i.e., the probability of a job chosen by a SDR being able to yield an optimal makespan on a step by step basis, is depicted  in   \cref{fig:diff:opt:SDR}. Moreover, the dashed line represents the benchmark of random guessing (cf. \cref{fig:diff:opt}).
 
-Now, let's bare in mind the deviation from optimality of applying SDRs throughout the dispatching process, box-plots of which are depicted in \cref{fig:SDR:boxplot}, then there is a some correspondence between high probability of stepwise optimality and low $\rho$. Alas, this isn't always the case, for \jrnd{10}{10}, SPT always outperforms LPT w.r.t. stepwise optimality, however this does not transcend to SPT having a lower $\rho$ value than LPT. Hence, it's not enough to just learn optimal behaviour, one needs to investigate what happens once we encounter suboptimal state spaces.
+Now, let's bare in mind \namerho, of applying SDRs throughout the dispatching process (cf. box-plots of which in \cref{fig:SDR:boxplot}), then there is a some correspondence between high probability of stepwise optimality and low $\rho$. Alas, this isn't always the case, for \jrnd{10}{10} SPT always outperforms LPT w.r.t. stepwise optimality, however this does not transcend to SPT having a lower $\rho$ value than LPT. Hence, it's not enough to just learn optimal behaviour, one needs to investigate what happens once we encounter suboptimal state spaces.
 
 \begin{figure}[p]
 \centering
@@ -182,8 +183,9 @@ Now, let's bare in mind the deviation from optimality of applying SDRs throughou
 \subfloat[][$10\times10$]{\includegraphics[width=1\linewidth]{figures/{trdat.prob.moveIsOptimal.10x10.SDR.matlab}.pdf}}
 \end{figure}
 
-\subsection{Simple blended dispatching rule}\label{sec:diff:opt:bdr}
-A na\"ive approach to create a simple blended dispatching rule would be for instance be switching between two SDRs at a predetermined time point. Hence, going back to \cref{fig:diff:opt:SDR} a presumably good BDR for \jrnd{10}{10}  would be starting with SPT and then switching over to MWR at around time step 40, where the SDRs change places in outperforming one another. A box-plot for \namerho, for all $10\times10$ problem spaces is depicted in \cref{fig:diff:boxplot:BDR}. Now, this little manipulation between SDRs does outperform SPT immensely, yet doesn't manage to gain the performance edge of MWR, save for \frnd{10}{10}. This gives us insight that for \JSP, the attribute based on MWR is quite fruitful for good dispatches, whereas the same cannot be said about SPT -- a more sophisticated BDR is needed to improve upon MWR. 
+\section{Simple blended dispatching rule}\label{sec:diff:opt:bdr}
+As stated before, the goal of this \lcnamecref{ch:problemstructure} is to utilise feature behaviour to motivate new, and \emph{hopefully} better, dispatching rules. 
+A na\"ive approach would be creating a simple blended dispatching rule which would be for instance switch between two SDRs at a predetermined time point. Hence, going back to \cref{fig:diff:opt:SDR} a presumably good BDR for \jrnd{10}{10}  would be starting with SPT and then switching over to MWR at around time step $k=40$, where the SDRs change places in outperforming one another. A box-plot for \namerho, for all $10\times10$ problem spaces is depicted in \cref{fig:diff:boxplot:BDR}. Now, this little manipulation between SDRs does outperform SPT immensely, yet doesn't manage to gain the performance edge of MWR, save for \frnd{10}{10}. This gives us insight that for \jsp, the attribute based on MWR is quite fruitful for good dispatches, whereas the same cannot be said about SPT -- a more sophisticated BDR is needed to improve upon MWR. 
 
 A reason for this lack of performance of our proposed BDR is perhaps that by starting out with SPT in the beginning, it sets up the schedules in such a way that it's quite greedy and only takes into consideration jobs with shortest immediate processing times. Now, even though it is possible to find optimal schedules from this scenario, as \cref{fig:diff:opt:SDR} show, the inherent structure that's already taking place, and might make it hard to come across by simple methods. Therefore it's by no means guaranteed that by simply swapping over to MWR will handle that situation which applying SPT has already created. \Cref{fig:diff:boxplot:BDR} does however show, that by applying MWR instead of SPT in the latter stages, does help the schedule to be more compact w.r.t. SPT. However, in the case of \jrnd{10}{10} and \jrndn{10}{10} the fact remains that the schedules have diverged too far from what MWR would have been able to achieve on its own. Preferably the blended dispatching rule should use  best of both worlds, and outperform all of its inherited DRs, otherwise it goes without saying one would simply still use the original DR that achieved the best results.
 
@@ -196,63 +198,49 @@ A reason for this lack of performance of our proposed BDR is perhaps that by sta
 \end{figure}
 
 
-\begin{comment}
-\subsection{Extremal feature}\label{sec:diff:opt:ext}
+\section{Extremal feature}\label{sec:diff:opt:ext}
 The SDRs we've inspected so-far are based on two features from \cref{tbl:features}, namely
-\begin{itemize}
-\item \phiproc\ for SPT and LPT 
-\item \phiwrmJob\ for LWR and MWR 
-\end{itemize}
-by choosing the lowest value for the first SDR, and highest value for the latter SDR, i.e., the extremal values for those given features. Let's apply the same methodology from \cref{sec:diff:opt:sdr} to all varying features\footnote{Note, \phistep, \phimac\ and \phiwrmTotal\ describe the features, not the schedule. For instance, \phistep\, gives us no new information, as that feature is homogeneous for each timestep, making it equivalent to random guessing.} described in \cref{tbl:jssp:feat}.  \Cref{fig:diff:j.rnd:opt:minmax,fig:diff:j.rndn:opt:minmax,fig:diff:f.rnd:opt:minmax}
+\begin{inparaenum}[(i)]
+\item \phiproc\ for SPT and LPT, 
+\item \phiwrmJob\ for LWR and MWR. 
+\end{inparaenum}
+By choosing the lowest value for the first SDR, and highest value for the latter SDR, i.e., the extremal values for those given features. Let's apply the same methodology from \cref{sec:diff:opt:sdr} to all varying features\footnote{Note, \phistep, \phimac\ and \phiwrmTotal\ describe the features, not the schedule. For instance, \phistep\, gives us no new information, as that feature is homogeneous for each time step, making it equivalent to random guessing.} described in \cref{tbl:features}. 
+\Cref{fig:diff:opt:minmax}
 depict the probability of all extremal features being an optimal dispatch, with random guessing from \cref{fig:diff:opt} as a dashed line. 
 
-In order to put the extremal features into perspective, it's worth comparing them with how the evolution of the features are over time, depicted in \cref{fig:diff:j.rnd:opt:evol,fig:diff:j.rndn:opt:evol,fig:diff:f.rnd:opt:evol}. 
+In order to put the extremal features into perspective, it's worth comparing them with how the evolution of the features are over time, depicted in \cref{fig:diff:opt:evol}. 
 
-
 \begin{figure}
 \centering
-\includegraphics[width=1\linewidth]{figures/{j.rnd}/{trdat.feat.stepwise.10x10.OPT}.pdf}
-\caption{Feature evolution of optimal trajectory for \jrnd}
-\label{fig:diff:j.rnd:opt:evol}
+\subfloat[][\jrnd{10}{10}]{\missingfigure{j.rnd}}
+%\includegraphics[width=1\linewidth]{figures/{j.rnd}/{trdat.feat.stepwise.10x10.OPT}.pdf}
+\caption{Feature evolution of optimal trajectory}
+\label{fig:diff:opt:evol}
 \end{figure}
-\begin{figure}
-\centering
-\missingfigure{j.rndn}
-%\includegraphics[width=1\linewidth]{figures/{j.rndn}/{trdat.feat.stepwise.10x10.OPT}.pdf}
-\caption{Feature evolution of optimal trajectory for \jrndn}
-\label{fig:diff:j.rndn:opt:evol}
+\begin{figure}[p]\centering
+\ContinuedFloat
+\subfloat[][\jrndn{10}{10}]{\missingfigure{j.rndn}}
 \end{figure}
-\begin{figure}
-\centering
-\includegraphics[width=1\linewidth]{figures/{f.rnd}/{trdat.feat.stepwise.10x10.OPT}.pdf}
-\caption{Feature evolution of optimal trajectory for \frnd{10}{10}}
-\label{fig:diff:f.rnd:opt:evol}
+\begin{figure}[p]\centering
+\ContinuedFloat
+\subfloat[][\frnd{10}{10}]{\missingfigure{f.rnd}}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width=1\linewidth]{figures/{j.rnd}/{trdat.prob.moveIsOptimal.10x10.feat.minmax}.pdf}
-\caption{Probability of extremal feature being optimal for \jrnd}
-\label{fig:diff:j.rnd:opt:minmax}
+\subfloat[][\jrnd{10}{10}]{\missingfigure{j.rnd}}
+%\includegraphics[width=1\linewidth]{figures/{j.rnd}/{trdat.prob.moveIsOptimal.10x10.feat.minmax}.pdf}
+\caption{Probability of extremal feature being optimal}
+\label{fig:diff:opt:minmax}
 \end{figure}
-\begin{figure}
-\centering
-\includegraphics[width=1\linewidth]{figures/{j.rndn}/{trdat.prob.moveIsOptimal.10x10.feat.minmax}.pdf}
-\caption{Probability of extremal feature being optimal for \jrndn}
-\label{fig:diff:j.rndn:opt:minmax}
+\begin{figure}[p]\centering
+\ContinuedFloat
+\subfloat[][\jrndn{10}{10}]{\missingfigure{j.rndn}}
 \end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=1\linewidth]{figures/{f.rnd}/{trdat.prob.moveIsOptimal.10x10.feat.minmax}.pdf}
-\caption{Probability of extremal feature being optimal for \frnd{10}{10}}
-\label{fig:diff:f.rnd:opt:minmax}
+\begin{figure}[p]\centering
+\ContinuedFloat
+\subfloat[][\frnd{10}{10}]{\missingfigure{f.rnd}}
 \end{figure}
-\end{comment}
-
-
-
-
 
 \section{Emergence of problem difficulty}\label{sec:diff:stepwise}
 \subsection{\Jrnd}\label{sec:easyhard:jrnd}
