@@ -20,7 +20,6 @@
 \DeclareGraphicsExtensions{.eps, .ps, .pdf}
 \graphicspath{{figures/EPS/}{figures/}}
 
-
 % Colors
 \RequirePackage{color} 
 % official color definitions at the University of Iceland:
@@ -58,8 +57,8 @@
 \RequirePackage{url}
 \RequirePackage[titles]{tocloft}
 \setcounter{tocdepth}{1}
-%\setcounter{lofdepth}{2}
-%\setcounter{lotdepth}{2}
+\setcounter{lofdepth}{2}
+\setcounter{lotdepth}{2}
 \renewcommand{\cftchapfont}{\normalsize \scshape}
 
 \renewcommand\bibname{References}
@@ -128,11 +127,11 @@
 %\setsansfont[Scale=MatchLowercase,Mapping=tex-text]{Helvetica Neue} 
 %\setmonofont[Scale=MatchLowercase]{Consolas}
 
-% gæti breytt leturgerðinni á myndum/töflum með því að taka út 'sf' hér fyrir neðan
-\RequirePackage[labelfont={sf,bf,small},textfont={sf,small},justification=RaggedRight,margin=0pt, figurewithin=chapter, tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
+\usepackage[list=true]{subcaption}
 
-\usepackage[caption=false]{subfig} 
-\setcounter{lofdepth}{2}
+% gæti breytt leturgerðinni á myndum/töflum með því að taka út 'sf' hér fyrir neðan
+\RequirePackage[labelfont={sf,bf,small}, textfont={sf,small}, justification=RaggedRight, margin=0pt, figurewithin=chapter, tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
+%\renewcommand\thesubfigure{\Alph{subfigure}} %just for aesthetics use upper case for sub figures 
 
 
 %Vertical layout of float pages : http://www.tex.ac.uk/cgi-bin/texfaq2html?label=floatpages+vertposfp

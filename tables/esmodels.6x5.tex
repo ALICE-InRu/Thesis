@@ -2,7 +2,7 @@
 \caption{Main statistics of percentage relative deviation from optimality, $\rho$, defined by \cref{eq:rho} for various models, using corresponding $6\times5$ training data.}
 \label{tbl:results:train}
 %jsp
-\subfloat[\jrnd{6}{5}]{\label{tbl:train:j.rnd}
+\subcaptionbox{\jrnd{6}{5}}{\label{tbl:train:j.rnd}
 \begin{tabular}{lrrrrr} \toprule
 model&mean & med & sd & min & max \\   \midrule
 ES$_{C_{\max}}$& 8.54 & 10 &  6 &  0 & 26   \\ % CMA-ES min_Cmax j.rnd 6x5 train
@@ -11,7 +11,7 @@ PREF&   10.18 & 11 &  7 &  0 & 30  \\ %PREF j.rnd 6x5 train
 MWR &  16.48 & 16 &  9 &  0 & 45   \\ %MWR j.rnd 6x5 train
 \bottomrule \end{tabular}}
 \quad
-\subfloat[\jrndn{6}{5}]{\label{tbl:train:j.rndn}
+\subcaptionbox{\jrndn{6}{5}}{\label{tbl:train:j.rndn}
 \begin{tabular}{lrrrrr} \toprule
 model&mean & med & sd & min & max \\   \midrule
 ES$_{C_{\max}}$& 8.68 & 11 &  6 &  0 & 31   \\ % CMA-ES min_Cmax j.rndn 6x5 train
@@ -21,7 +21,7 @@ MWR &  14.02 & 13 &  8 &  0 & 37   \\ %MWR j.rndn 6x5 train
 \bottomrule \end{tabular}}
 \\
 %flow shop
-\subfloat[\frnd{6}{5}]{\label{tbl:train:f.rnd}
+\subcaptionbox{\frnd{6}{5}}{\label{tbl:train:f.rnd}
 \begin{tabular}{lrrrrr} \toprule
 model&mean & med & sd & min & max \\   \midrule
 ES$_{C_{\max}}$& 7.44 &  7 &  5 &  0 & 23   \\ % CMA-ES min_Cmax f.rnd 6x5 train
@@ -30,7 +30,7 @@ PREF&   9.87 &  9 &  7 &  0 & 38  \\ %PREF f.rnd 6x5 train
 LWR &  20.05 & 19 & 10 &  0 & 71   \\ %LWR f.rnd 6x5 train
 \bottomrule \end{tabular}}
 \quad
-\subfloat[\frndn{6}{5}]{\label{tbl:train:f.rndn}
+\subcaptionbox{\frndn{6}{5}}{\label{tbl:train:f.rndn}
 \begin{tabular}{lrrrrr} \toprule
 model&mean & med & sd & min & max \\   \midrule
 ES$_{C_{\max}}$& 8.09 &  8 &  2 &  0 & 11   \\ % CMA-ES min_Cmax f.rndn 6x5 train
@@ -39,7 +39,7 @@ PREF&   2.38 &  2 &  1 &  0 &  7  \\ %PREF f.rndn 6x5 train
 LWR &  2.25 &  2 &  1 &  0 &  7   \\ %LWR f.rndn 6x5 train
 \bottomrule \end{tabular}}
 \\
-\subfloat[\fjc{6}{5}]{\label{tbl:train:f.jc}
+\subcaptionbox{\fjc{6}{5}}{\label{tbl:train:f.jc}
 \begin{tabular}{lrrrrr} \toprule
 model&mean & med & sd & min & max \\   \midrule
 ES$_{C_{\max}}$& 0.33 &  0 &  0 &  0 &  2   \\ % CMA-ES min_Cmax f.jc 6x5 train

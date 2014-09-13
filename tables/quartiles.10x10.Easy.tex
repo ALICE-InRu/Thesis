@@ -1,7 +1,7 @@
 \begin{table}[p]\centering
 \caption{Percentage ($\%$) of $ 10\times 10 $ training instances classified as easy simultaneously, defined by \cref{eq:easyorhard:cnt}. Note, each problem space consists of $N_{\text{train}}= 300 $ problem instances.}
 \label{tbl:easy:cnt:10x10}
-\subfloat[\jrnd{10}{10}]{\begin{tabular}{lrrrr}
+\subcaptionbox{\jrnd{10}{10}}{\begin{tabular}{lrrrr}
 \toprule SDR
 &     SPT&   LPT&   LWR&  MWR\\ \midrule
 SPT& 2.67&  0.33&  0&2.33\\
@@ -11,7 +11,7 @@ MWR& 2.33& 10.33&  0.33&86.33\\
 \bottomrule
 \end{tabular}}
 \quad 
-\subfloat[\jrndn{10}{10}]{\begin{tabular}{lrrrr}
+\subcaptionbox{\jrndn{10}{10}}{\begin{tabular}{lrrrr}
 \toprule SDR
 &     SPT&  LPT&   LWR& MWR\\ \midrule
 SPT& 1.00& 0.33&     0&1.00\\
@@ -21,7 +21,7 @@ MWR& 1.00& 5.00& 0& 92.33\\
 \bottomrule
 \end{tabular}}
 \\
-\subfloat[\jrndJ{10}{10}]{\begin{tabular}{lrrrr}
+\subcaptionbox{\jrndJ{10}{10}}{\begin{tabular}{lrrrr}
 \toprule SDR
 &     SPT&   LPT&   LWR&  MWR\\ \midrule
 SPT& 3.33&  1.00& 1.33&  3.00\\
@@ -31,7 +31,7 @@ MWR& 3.00& 20.33& 3.67 & 71.33\\
 \bottomrule
 \end{tabular}}
 \quad
-\subfloat[\jrndM{10}{10}]{\begin{tabular}{lrrrr}
+\subcaptionbox{\jrndM{10}{10}}{\begin{tabular}{lrrrr}
 \toprule SDR
 &    SPT&   LPT&   LWR& MWR\\ \midrule
 SPT&   0&     0&     0&   0\\
@@ -41,7 +41,7 @@ MWR&   0& 25.00&     0&74.67\\
 \bottomrule
 \end{tabular}}
 \\
-\subfloat[\frnd{10}{10}]{\begin{tabular}{lrrrr}
+\subcaptionbox{\frnd{10}{10}}{\begin{tabular}{lrrrr}
 \toprule SDR
 &      SPT&  LPT&   LWR&   MWR\\ \midrule
 SPT& 20.15& 1.49& 15.30&  1.87\\
