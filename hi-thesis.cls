@@ -127,11 +127,15 @@
 %\setsansfont[Scale=MatchLowercase,Mapping=tex-text]{Helvetica Neue} 
 %\setmonofont[Scale=MatchLowercase]{Consolas}
 
-\usepackage[list=true]{subcaption}
-
 % gæti breytt leturgerðinni á myndum/töflum með því að taka út 'sf' hér fyrir neðan
 \RequirePackage[labelfont={sf,bf,small}, textfont={sf,small}, justification=RaggedRight, margin=0pt, figurewithin=chapter, tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
 %\renewcommand\thesubfigure{\Alph{subfigure}} %just for aesthetics use upper case for sub figures 
+\usepackage[labelfont=bf,list=true]{subcaption}
+
+\captionsetup[table]{position=top}
+\captionsetup[subtable]{textfont=sf,aboveskip=3pt,belowskip=9pt}
+\captionsetup[figure]{position=bottom}
+\captionsetup[subfigure]{textfont=sf}
 
 
 %Vertical layout of float pages : http://www.tex.ac.uk/cgi-bin/texfaq2html?label=floatpages+vertposfp
