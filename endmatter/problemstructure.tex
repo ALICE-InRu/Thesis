@@ -1,8 +1,11 @@
 \HeaderQuote{I can't explain myself, I'm afraid, Sir, because I'm not myself you see.}{Alice} 
 
-\chapter{Problem structure}\label{app:problemstructure} \todo[color=green!40]{\cref{ch:ordinal} Unfinished}
+\chapter{Problem structure}\label{app:problemstructure} 
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque, id pulvinar odio lorem non turpis. Nullam sit amet enim. Suspendisse id velit vitae ligula volutpat condimentum. Aliquam erat volutpat. Sed quis velit. Nulla facilisi. Nulla libero. Vivamus pharetra posuere sapien. Nam consectetuer. Sed aliquam, nunc eget euismod ullamcorper, lectus nunc ullamcorper orci, fermentum bibendum enim nibh eget ipsum. Donec porttitor ligula eu dolor. Maecenas vitae nulla consequat libero cursus venenatis. Nam magna enim, accumsan eu, blandit sed, blandit a, eros.
 
+Quisque facilisis erat a dui. Nam malesuada ornare dolor. Cras gravida, diam sit amet rhoncus ornare, erat elit consectetuer erat, id egestas pede nibh eget odio. Proin tincidunt, velit vel porta elementum, magna diam molestie sapien, non aliquet massa pede eu diam. Aliquam iaculis. Fusce et ipsum et nulla tristique facilisis. Donec eget sem sit amet ligula viverra gravida. Etiam vehicula urna vel turpis. Suspendisse sagittis ante a urna. Morbi a est quis orci consequat rutrum. Nullam egestas feugiat felis. Integer adipiscing semper ligula. Nunc molestie, nisl sit amet cursus convallis, sapien lectus pretium metus, vitae pretium enim wisi id lectus. 
 
+\clearpage
 \input{tables/quartiles.EasyHard}
 {\setlength{\tabcolsep}{3pt}
 \input{tables/quartiles.6x5.EasyHard}
@@ -12,3 +15,153 @@
 \input{tables/quartiles.6x5.Hard}
 \input{tables/quartiles.10x10.Hard}
 }
+
+\clearpage
+\begin{figure}\centering
+\subfloat[$6\times5$]{\includegraphics[width=\textwidth]{{boxplotRho.SDR.6x5}.eps}\label{fig:SDR:boxplot:6x5}}
+\caption{Box-plots of \namerho, when applying SDRs for all problem spaces in \cref{ch:genprobleminstances}.}\label{fig:SDR:boxplot}
+\end{figure}
+\begin{figure}\centering
+\ContinuedFloat
+\subfloat[$10\times10$]{\includegraphics[width=\textwidth]{{boxplotRho.SDR.10x10}.eps}\label{fig:SDR:boxplot:10x10}}
+\end{figure}
+
+
+\clearpage
+\begin{figure}
+\centering
+\subfloat[$6\times5$]{\missingfigure{trdat.prob.optUniqueness.6x5.OPT}}
+\\
+\subfloat[$10\times10$]{\includegraphics[width=1\linewidth]{figures/{trdat.prob.optUniqueness.10x10.OPT}.pdf}}
+\caption[Number of unique optimal dispatches]{Number of unique optimal dispatches (lower bound).}
+\label{fig:diff:opt:unique}
+\end{figure}
+
+\clearpage
+\begin{figure}
+\centering
+\subfloat[$6\times5$]{\missingfigure{trdat.prob.moveIsOptimal.6x5.OPT.matlab}}
+\\
+\subfloat[$10\times10$]{\includegraphics[width=1\linewidth]{figures/{trdat.prob.moveIsOptimal.10x10.OPT.matlab}.pdf}}
+\caption{Probability of choosing optimal move}
+\label{fig:diff:opt}
+\end{figure}
+
+
+\clearpage
+\begin{figure}
+\centering
+\subfloat[$6\times5$]{\includegraphics[width=1\linewidth]{figures/{stepwise.6x5.OPT.casescenario}.pdf}}
+\\
+\subfloat[$10\times10$]{\includegraphics[width=1\linewidth]{figures/{stepwise.10x10.OPT.casescenario}.pdf}}
+\caption{Mean \namerho, for best and worst case scenario of choosing suboptimal dispatch, depicted as lower and upper bound, respectively. Moreover, mean suboptimal move is given as dashed line.}
+\label{fig:diff:case}
+\end{figure}
+
+
+\clearpage
+\begin{figure}
+\centering
+\subfloat[$6\times5$]{\missingfigure{trdat.prob.moveIsOptimal.6x5.SDR.matlab}}
+\caption{Probability of SDR being optimal}
+\label{fig:diff:opt:SDR}
+\end{figure}
+\begin{figure}\centering
+\ContinuedFloat
+\subfloat[$10\times10$]{\includegraphics[width=1\linewidth]{figures/{trdat.prob.moveIsOptimal.10x10.SDR.matlab}.pdf}}
+\end{figure}
+
+\clearpage 
+\begin{figure}
+\subfloat[\jrnd{6}{5}]{\missingfigure{Feature evolution of optimal trajectory}}
+\caption{Feature evolution of optimal trajectory}
+\label{fig:diff:opt:evol}
+\end{figure}
+\begin{figure}\centering
+\ContinuedFloat
+\subfloat[\jrnd{10}{10}]{\missingfigure{Feature evolution of optimal trajectory}}
+\end{figure}
+\begin{figure}\centering
+\ContinuedFloat
+\subfloat[\jrndn{6}{5}]{\missingfigure{Feature evolution of optimal trajectory}}
+\end{figure}
+\begin{figure}\centering
+\ContinuedFloat
+\subfloat[\jrndn{10}{10}]{\missingfigure{Feature evolution of optimal trajectory}}
+\end{figure}
+\begin{figure}\centering
+\ContinuedFloat
+\subfloat[\frnd{6}{5}]{\missingfigure{Feature evolution of optimal trajectory}}
+\end{figure}
+\begin{figure}\centering
+\ContinuedFloat
+\subfloat[\jrndn{10}{10}]{\missingfigure{Feature evolution of optimal trajectory}}
+\end{figure}
+\begin{figure}\centering
+\ContinuedFloat
+\subfloat[\frndn{6}{5}]{\missingfigure{Feature evolution of optimal trajectory}}
+\end{figure}
+\begin{figure}\centering
+\ContinuedFloat
+\subfloat[\fjc{6}{5}]{\missingfigure{Feature evolution of optimal trajectory}}
+\end{figure}
+\begin{figure}\centering
+\ContinuedFloat
+\subfloat[\fmc{6}{5}]{\missingfigure{Feature evolution of optimal trajectory}}
+\end{figure}
+\begin{figure}\centering
+\ContinuedFloat
+\subfloat[\fmxc{6}{5}]{\missingfigure{Feature evolution of optimal trajectory}}
+\end{figure}
+
+\clearpage
+\begin{figure}
+\subfloat[\jrnd{6}{5}]{\includegraphics[width=1\linewidth]{figures/{j.rnd}/{stepwise.6x5.OPT.extremal}.pdf}}
+\caption{Probability of extremal feature being optimal}
+\label{fig:diff:opt:minmax}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\subfloat[\jrnd{10}{10}]{\includegraphics[width=1\linewidth]{figures/{j.rnd}/{stepwise.10x10.OPT.extremal}.pdf}}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\subfloat[\jrndn{6}{5}]{\includegraphics[width=1\linewidth]{figures/{j.rndn}/{stepwise.6x5.OPT.extremal}.pdf}}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\subfloat[\jrndn{10}{10}]{\includegraphics[width=1\linewidth]{figures/{j.rndn}/{stepwise.10x10.OPT.extremal}.pdf}}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\subfloat[\frnd{6}{5}]{\includegraphics[width=1\linewidth]{figures/{f.rnd}/{stepwise.6x5.OPT.extremal}.pdf}}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\subfloat[\frnd{10}{10}]{\includegraphics[width=1\linewidth]{figures/{f.rnd}/{stepwise.10x10.OPT.extremal}.pdf}}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\subfloat[\frndn{6}{5}]{\includegraphics[width=1\linewidth]{figures/{f.rndn}/{stepwise.6x5.OPT.extremal}.pdf}}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\subfloat[\fjc{6}{5}]{\includegraphics[width=1\linewidth]{figures/{f.jc}/{stepwise.6x5.OPT.extremal}.pdf}}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\subfloat[\fmc{6}{5}]{\includegraphics[width=1\linewidth]{figures/{f.mc}/{stepwise.6x5.OPT.extremal}.pdf}}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\subfloat[\fmxc{6}{5}]{\includegraphics[width=1\linewidth]{figures/{f.mxc}/{stepwise.6x5.OPT.extremal}.pdf}}
+\end{figure}
+
+\clearpage
+\begin{figure}
+\subfloat[\jrnd{6}{5}]{\includegraphics[width=1\linewidth]{figures/{j.rnd/stepwise.6x5.Track.casescenario}.pdf}}\\
+\subfloat[\jrndn{6}{5}]{\includegraphics[width=1\linewidth]{figures/{j.rndn/stepwise.6x5.Track.casescenario}.pdf}}
+\caption{Mean best and worst case scenario over various trajectories.}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\subfloat[\frnd{6}{5}]{\includegraphics[width=1\linewidth]{figures/{f.rnd/stepwise.6x5.Track.casescenario}.pdf}}\\
+\subfloat[\frndn{6}{5}]{\includegraphics[width=1\linewidth]{figures/{f.rndn/stepwise.6x5.Track.casescenario}.pdf}}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\subfloat[\fjc{6}{5}]{\includegraphics[width=1\linewidth]{figures/{f.jc/stepwise.6x5.Track.casescenario}.pdf}}\\
+\subfloat[\fmc{6}{5}]{\includegraphics[width=1\linewidth]{figures/{f.mc/stepwise.6x5.Track.casescenario}.pdf}}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\subfloat[\fmxc{6}{5}]{\includegraphics[width=1\linewidth]{figures/{f.mxc/stepwise.6x5.Track.casescenario}.pdf}}
+\end{figure}

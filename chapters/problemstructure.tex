@@ -1,4 +1,4 @@
-\HeaderQuote{I can't explain myself, I'm afraid, Sir, because I'm not myself you see.}{Alice} 
+\HeaderQuote{Sentence first -- verdict afterwards.}{The Queen}
 
 \chapter{Problem structure}\label{ch:problemstructure} 
 
@@ -38,9 +38,9 @@ Additionally, there is also the question of how can one define ``similar'' sched
 \item Are extra features needed?
 \end{inparaenum}
 
-Instead of searching through a large set of algorithms  and determining which algorithm is the most suitable for a given subset of the instance space, i.e., creating an algorithm portfolio, as is generally the focus in the current literature \citep{SmithMilesLion3,SmithMilesLion5,Corne10}, the focus of the experimental study in \cref{sec:easyhard:jrnd,sec:easyhard:jrndn,sec:easyhard:frnd,sec:easyhard:frndn,sec:easyhard:fjc,sec:easyhard:fmc,sec:easyhard:fmxc} 
+Instead of searching through a large set of algorithms  and determining which algorithm is the most suitable for a given subset of the instance space, i.e., creating an algorithm portfolio, as is generally the focus in the current literature \citep{SmithMilesLion3,SmithMilesLion5,Corne10}, the focus of the experimental study in \cref{sec:jrnd,sec:jrndn,sec:frnd,sec:frndn,sec:fjc,sec:fmc,sec:fmxc} 
 (each corresponding to a given problem space from \cref{ch:genprobleminstances})
-is rather on few simple algorithms, here the SDRs described in \cref{sec:SDR}, and understanding \emph{how} they work on the instance space, similar to \citet{Whitley} who analyse the fitness landscape of several problem classes for a fixed algorithm. 
+is rather on few simple algorithms, here the SDRs described in \cref{sec:SDR}, and understanding \emph{how} they work on the instance space, similar to \citet{Whitley} who analyse the fitness landscape of several problem classes for a fixed algorithm. Furthermore, figures that pertain to this \lcnamecref{ch:problemstructure} are mostly located in 
 
 
 
@@ -51,14 +51,6 @@ We can see there is a staggering difference between the interaction of SDRs and 
 As one can see, MWR is by far the best out of the four SDRs inspected for \JSP\ -- not only does it reach the known optimum most often but it also has the lowest worst-case factor from optimality. Similarly LWR for \FSP.
 Although the same problem generator is used, there are some inherent structure in which MWR and LWR can exploit for \JSP\ and  \FSP, respectively, whereas the other SDRs cannot. However, \emph{all} of these dispatching rules are considered good and commonly used in practice and no one is better than the rest \citep{Haupt89}, it simply depends on the data distribution at hand. This indicates that some distributions are harder than others, and these \JSP\ problem generators simply favours MWR, whereas the \FSP\ problem generators favours LWR. 
 
-\begin{figure}[p]\centering
-\subfloat[][$6\times5$]{\includegraphics[width=\textwidth]{{boxplotRho.SDR.6x5}.eps}\label{fig:SDR:boxplot:6x5}}
-\caption{Box-plots of \namerho, when applying SDRs for all problem spaces in \cref{ch:genprobleminstances}.}\label{fig:SDR:boxplot}
-\end{figure}
-\begin{figure}[p]\centering
-\ContinuedFloat
-\subfloat[][$10\times10$]{\includegraphics[width=\textwidth]{{boxplotRho.SDR.10x10}.eps}\label{fig:SDR:boxplot:10x10}}
-\end{figure}
 \section{Characteristics of difficult problem instances}
 % Katie orðar: A correlation analysis between the feature space and the performance space was conducted across all 1,500 problem instances revealed that instance features that appear to correlate (linearly) with heuristic performance are $phi(?)$ (correlation $=-0.59$) and $phi(?)$ (correlation $=0.44$). None of the other instance features appear to have a linear relationship with algorithmic performance.
 
@@ -114,17 +106,6 @@ Note, this \lcnamecref{sec:diff:easyhard} gave the definition of what constitute
 due to the fact \cref{eq:easy,eq:hard} are based on the first and third quantiles of the entire training set.
 Now, as the SDRs vary greatly in performance, the contribution of a SDR to \cref{eq:easyhard:all} varies, resulting in an unbalanced sample size when restricted to a single SDR. 
 
-\input{tables/quartiles.EasyHard}
-{\setlength{\tabcolsep}{3pt}
-\input{tables/quartiles.6x5.EasyHard}
-\input{tables/quartiles.10x10.EasyHard}
-\input{tables/quartiles.6x5.Easy}
-\input{tables/quartiles.10x10.Easy}
-\input{tables/quartiles.6x5.Hard}
-\input{tables/quartiles.10x10.Hard}
-}
-
-
 \section{Probability of choosing optimal decision}\label{sec:diff:opt:rnd}
 In order to create successful dispatching rules, a good starting point is to investigate the properties of optimal solutions and hopefully be able to learn how to mimic such `good' behaviour. For this, we follow an optimal solution, obtained by using a commercial software package \cite{gurobi}, and inspect the evolution of its features, defined in \cref{tbl:features}. Moreover, it is noted, that there are several optimal solutions available for each problem instance. However, it is deemed sufficient to inspect only one optimal trajectory per problem instance as there are $N_{\text{train}}$ independent instances which gives the training data variety. 
 
@@ -133,24 +114,6 @@ Figures within this and subsequent \lcnamecref{sec:diff:opt:rnd}s depict the mea
 Firstly, we can observe that on a step by step basis there are several optimal dispatches to choose from. \Cref{fig:diff:opt:unique} depicts how the number of optimal dispatches evolve at each dispatch iteration. Note, that only one optimal trajectory is pursued (chosen at random), hence this is only a lower bound of uniqueness of optimal solutions.
 As the number of possible dispatches decrease over time, \cref{fig:diff:opt} depicts the probability of choosing an optimal dispatch at each iteration. 
 
-\begin{figure}
-\centering
-\subfloat[][$6\times5$]{\missingfigure{trdat.prob.optUniqueness.6x5.OPT}}
-\\
-\subfloat[][$10\times10$]{\includegraphics[width=1\linewidth]{figures/{trdat.prob.optUniqueness.10x10.OPT}.pdf}}
-\caption{Number of unique optimal dispatches (lower bound)}
-\label{fig:diff:opt:unique}
-\end{figure}
-
-\begin{figure}
-\centering
-\subfloat[][$6\times5$]{\missingfigure{trdat.prob.moveIsOptimal.6x5.OPT.matlab}}
-\\
-\subfloat[][$10\times10$]{\includegraphics[width=1\linewidth]{figures/{trdat.prob.moveIsOptimal.10x10.OPT.matlab}.pdf}}
-\caption{Probability of choosing optimal move}
-\label{fig:diff:opt}
-\end{figure}
-
 \section{Making suboptimal decisions}\label{sec:diff:opt:sub}
 Looking at \cref{fig:diff:opt}, \jrnd{10}{10} has a relatively high probability ($70\%$ and above) of choosing an optimal job. However, it is imperative to keep making optimal decisions, because once off the optimal track the consequences can be dire. To demonstrate this \cref{fig:diff:case} depicts the worst and best case scenario of \namerho, once you've fallen off the optimal track. Note, that this is given that you make \emph{one} wrong turn. Generally, there will be many mistakes made, and then the compound effects of making suboptimal decisions really start adding up. 
 
@@ -158,30 +121,10 @@ It is interesting that for \JSP, that over time making suboptimal decisions make
 However, for \FSP, the case is the exact opposite. Under those circumstances it's imperative to make good decisions right from the beginning. This is due to the major structural differences between \jsp\ and \fsp, namely the latter having a homogeneous machine ordering, constricting the solution immensely. Luckily, this does have the added benefit of making \fsp\ less vulnerable for suboptimal decisions later in the decision process. 
 
 
-\begin{figure}
-\centering
-\subfloat[][$6\times5$]{\missingfigure{trdat.prob.casescenario.6x5.matlab}}
-\\
-\subfloat[][$10\times10$]{\includegraphics[width=1\linewidth]{figures/{trdat.prob.casescenario.10x10.matlab}.pdf}}
-\caption{\Namerho, for best and worst case scenario of choosing suboptimal dispatch}
-\label{fig:diff:case}
-\end{figure}
-
 \section{Optimality of simple priority dispatching rules}\label{sec:diff:opt:sdr}
 The probability of optimality of the aforementioned SDRs from \cref{sec:SDR}, yet still maintaining our optimal trajectory, i.e., the probability of a job chosen by a SDR being able to yield an optimal makespan on a step by step basis, is depicted  in   \cref{fig:diff:opt:SDR}. Moreover, the dashed line represents the benchmark of random guessing (cf. \cref{fig:diff:opt}).
 
 Now, let's bare in mind \namerho, of applying SDRs throughout the dispatching process (cf. box-plots of which in \cref{fig:SDR:boxplot}), then there is a some correspondence between high probability of stepwise optimality and low $\rho$. Alas, this isn't always the case, for \jrnd{10}{10} SPT always outperforms LPT w.r.t. stepwise optimality, however this does not transcend to SPT having a lower $\rho$ value than LPT. Hence, it's not enough to just learn optimal behaviour, one needs to investigate what happens once we encounter suboptimal state spaces.
-
-\begin{figure}[p]
-\centering
-\subfloat[][$6\times5$]{\missingfigure{trdat.prob.moveIsOptimal.6x5.SDR.matlab}}
-\caption{Probability of SDR being optimal}
-\label{fig:diff:opt:SDR}
-\end{figure}
-\begin{figure}[p]\centering
-\ContinuedFloat
-\subfloat[][$10\times10$]{\includegraphics[width=1\linewidth]{figures/{trdat.prob.moveIsOptimal.10x10.SDR.matlab}.pdf}}
-\end{figure}
 
 \section{Simple blended dispatching rule}\label{sec:diff:opt:bdr}
 As stated before, the goal of this \lcnamecref{ch:problemstructure} is to utilise feature behaviour to motivate new, and \emph{hopefully} better, dispatching rules. 
@@ -197,11 +140,10 @@ A reason for this lack of performance of our proposed BDR is perhaps that by sta
 \label{fig:diff:boxplot:BDR}
 \end{figure}
 
-
 \section{Extremal feature}\label{sec:diff:opt:ext}
-The SDRs we've inspected so-far are based on two features from \cref{tbl:features}, namely
+The SDRs we've inspected so-far are based on two features from \cref{tbl:features}, namely, 
 \begin{inparaenum}[(i)]
-\item \phiproc\ for SPT and LPT, 
+\item \phiproc\ for SPT and LPT, and
 \item \phiwrmJob\ for LWR and MWR. 
 \end{inparaenum}
 By choosing the lowest value for the first SDR, and highest value for the latter SDR, i.e., the extremal values for those given features. Let's apply the same methodology from \cref{sec:diff:opt:sdr} to all varying features\footnote{Note, \phistep, \phimac\ and \phiwrmTotal\ describe the features, not the schedule. For instance, \phistep\, gives us no new information, as that feature is homogeneous for each time step, making it equivalent to random guessing.} described in \cref{tbl:features}. 
@@ -210,60 +152,24 @@ depict the probability of all extremal features being an optimal dispatch, with 
 
 In order to put the extremal features into perspective, it's worth comparing them with how the evolution of the features are over time, depicted in \cref{fig:diff:opt:evol}. 
 
-\begin{figure}
-\centering
-\subfloat[][\jrnd{10}{10}]{\missingfigure{j.rnd}}
-%\includegraphics[width=1\linewidth]{figures/{j.rnd}/{trdat.feat.stepwise.10x10.OPT}.pdf}
-\caption{Feature evolution of optimal trajectory}
-\label{fig:diff:opt:evol}
-\end{figure}
-\begin{figure}[p]\centering
-\ContinuedFloat
-\subfloat[][\jrndn{10}{10}]{\missingfigure{j.rndn}}
-\end{figure}
-\begin{figure}[p]\centering
-\ContinuedFloat
-\subfloat[][\frnd{10}{10}]{\missingfigure{f.rnd}}
-\end{figure}
-
-\begin{figure}
-\centering
-\subfloat[][\jrnd{10}{10}]{\missingfigure{j.rnd}}
-%\includegraphics[width=1\linewidth]{figures/{j.rnd}/{trdat.prob.moveIsOptimal.10x10.feat.minmax}.pdf}
-\caption{Probability of extremal feature being optimal}
-\label{fig:diff:opt:minmax}
-\end{figure}
-\begin{figure}[p]\centering
-\ContinuedFloat
-\subfloat[][\jrndn{10}{10}]{\missingfigure{j.rndn}}
-\end{figure}
-\begin{figure}[p]\centering
-\ContinuedFloat
-\subfloat[][\frnd{10}{10}]{\missingfigure{f.rnd}}
-\end{figure}
 
 \section{Emergence of problem difficulty}\label{sec:diff:stepwise}
-\subsection{\Jrnd}\label{sec:easyhard:jrnd}
-\missingfigure{Easy-hard jrnd}
-\subsection{\Jrndn}\label{sec:easyhard:jrndn}
-\missingfigure{Easy-hard jrnd}
-\subsection{\frnd{10}{10}}\label{sec:easyhard:frnd}
-\missingfigure{Easy-hard frnd}
-\subsection{\frnd{10}{10}n}\label{sec:easyhard:frndn}
-\missingfigure{Easy-hard frnd}
-\subsection{\Fjc}\label{sec:easyhard:fjc}
-\missingfigure{Easy-hard fjc}
-\subsection{\Fmc}\label{sec:easyhard:fmc}
-\missingfigure{Easy-hard fmc}
-\subsection{\Fmxc}\label{sec:easyhard:fmxc}
-\missingfigure{Easy-hard fxc}
+
+
+\section{Problem structure}
+\subsection{\Jrnd}\label{sec:diff:jrnd}
+\subsection{\Jrndn}\label{sec:diff:jrndn}
+\subsection{\Frnd}\label{sec:diff:frnd}
+\subsection{\Frndn}\label{sec:diff:frndn}
+\subsection{\Fjc}\label{sec:diff:fjc}
+\subsection{\Fmc}\label{sec:diff:fmc}
+\subsection{\Fmxc}\label{sec:diff:fmxc}
+
 
 \section{Discussion and Conclusion}
 Despite problem instances being created by the same problem generator, they vary enough -- all instances are not created equal -- some are always hard to solve, others always easy. 
 Since the description of the problem space isn't enough to predict it's performance, we need a measure to understand what's going on. Why are some instances easier to find their optimum (or close enough), that is to say, what's their secret? This is where their feature evolution comes into play.
 By using schedules obtained by applying SDRs we have the ability to get some insight into the matter. 
-
-
 
 From the experimental study it is apparent that features have different %impact 
 correlation with the resulting schedule depending in what stage it is in the scheduling process, implying that their influence varies over the dispatching sequencing. Moreover, features constant throughout the scheduling process are not correlated with the end-result.

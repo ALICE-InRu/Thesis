@@ -120,10 +120,10 @@ The first experimental results are presented for the unimodal sphere model of di
 The average fitness versus the number of function evaluations is presented in~\cref{fig:sphereFitness}. A performance edge is achieved by restricting the validation strategy to only having the surrogate correctly rank the $\mu$ highest ranking individuals, and thereby saving the algorithm of evaluating individuals  that would have been disregarded in the next iteration.~\cref{fig:sphereIntmEval} shows the mean intermediate function evaluations that are calculated during the validation process. As one expects, requiring the method to evaluate no more than the $\mu$ best ranked candidate individuals results in a lower intermediate function evaluations, generally saving the method one function evaluation per generation, it also achieves a better mean fitness, as shown in~\cref{tbl:Sphere}.
 
 \begin{figure}
-%\subfloat[][Mean fitness values versus number of function evaluation]{\includegraphics[trim = 8mm 10mm 10mm 5mm, clip, width=\textwidth]{sphere_meanFitness_funcEval}}
+%\subfloat[Mean fitness values versus number of function evaluation]{\includegraphics[trim = 8mm 10mm 10mm 5mm, clip, width=\textwidth]{sphere_meanFitness_funcEval}}
 \label{fig:sphereFitness}
 \,
-%\subfloat[][Mean intermediate function evaluations versus generation]{\includegraphics[trim = 10mm 10mm 10mm 5mm, clip, width=\textwidth]{sphere_intmEvals_gen}}
+%\subfloat[Mean intermediate function evaluations versus generation]{\includegraphics[trim = 10mm 10mm 10mm 5mm, clip, width=\textwidth]{sphere_intmEvals_gen}}
 \label{fig:sphereIntmEval}
 \caption{Sphere model: Surrogate updated using all (dotted) or $\mu$ best (solid) individuals.}
 \end{figure}
@@ -138,10 +138,10 @@ The first experiment is now repeated for Rosenbrock function.
 The average fitness versus the number of function evaluations is presented in~\cref{fig:rosenFitness} and~\cref{fig:rosenIntmEval} shows the mean intermediate function evaluations that are calculated during the validation process. Despite requiring more generations, the over all function evaluations are significantly lower and yield a better fitness when updating the surrogate on only the $\mu$ best individuals as shown in~\cref{tbl:Rosenbrock}. If all of the candidate individuals have to be ranked correctly, the method will get stuck in local minima for this problem in around 6 out of 100 experiments, however this is not a problem if only the $\mu$ best candidate individuals are ranked consistently, except at high dimensions, and even then the $\mu$ best individuals  policy significantly outperforms evaluating all of the candidate individuals. Clearly the choice of validation policy will influence search performance. 
 
 \begin{figure}
-%\subfloat[][Mean fitness values versus number of function evaluation]{\includegraphics[trim = 10mm 10mm 10mm 5mm, clip, width=\textwidth]{rosen_meanFitness_funcEval}}
+%\subfloat[Mean fitness values versus number of function evaluation]{\includegraphics[trim = 10mm 10mm 10mm 5mm, clip, width=\textwidth]{rosen_meanFitness_funcEval}}
 \label{fig:rosenFitness}
 \,
-%\subfloat[][Mean intermediate function evaluations versus generation]{\includegraphics[trim = 15mm 10mm 15mm 5mm, clip, width=\textwidth]{rosen_intmEvals_gen}}
+%\subfloat[Mean intermediate function evaluations versus generation]{\includegraphics[trim = 15mm 10mm 15mm 5mm, clip, width=\textwidth]{rosen_intmEvals_gen}}
 \label{fig:rosenIntmEval}
 \caption{Rosenbrock function: Surrogate updated using all (dotted) or $\mu$ best (solid) individuals.}
 \end{figure}

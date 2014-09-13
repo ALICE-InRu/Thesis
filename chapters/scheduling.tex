@@ -55,8 +55,8 @@ Now, there are several heuristics for selecting a slot from \cref{eq:slots}, e.g
 \begin{comment} % virðist að þetta vandamál sé leyst, sbr. "scriptCompareSlotChoice.m"
 Preliminary experiments which at each time step all jobs on the ready-list are explored and dispatched according to a (fixed) construction heuristic. The job corresponding to the best resulting makespan (found via analytical methods) is chosen to have the highest priority. The resulting makespan is divided by its theoretical optimal makespan, i.e., the deviation from optimality defined by \cref{eq:ratio}. A histogram for 6-job 5-machine \jsp\ problem instances ($N=500$) is depicted in \cref{fig:slot:smallestvsfirst} using both the intrinsic heuristics: (\subref{fig:slot:first}) first slot chosen and (\subref{fig:slot:small}) slot corresponding to the smallest slot size chosen. Using always the first slot, roughly 26\% of the instances were able to achieve the optimum makespan, however mere 16\% using the smallest slot size. Hence dispatching in the first slot was favoured and will be used throughout the study.
 \begin{figure}
-\subfloat[][First slot]{\includegraphics[width=\textwidth]{slotsize_first.eps}} %\label{fig:slot:first}}
-\subfloat[][Smallest slot size]{\includegraphics[width=\textwidth]{slotsize_small.eps}} %\label{fig:slot:small}}
+\subfloat[First slot]{\includegraphics[width=\textwidth]{slotsize_first.eps}} %\label{fig:slot:first}}
+\subfloat[Smallest slot size]{\includegraphics[width=\textwidth]{slotsize_small.eps}} %\label{fig:slot:small}}
 \caption{Histogram of deviation from optimality by sequentially dispatching optimal jobs using a fixed construction heuristic.}
 \label{fig:slot:smallestvsfirst}
 \end{figure}

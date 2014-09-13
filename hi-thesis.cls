@@ -132,6 +132,8 @@
 \RequirePackage[labelfont={sf,bf,small},textfont={sf,small},justification=RaggedRight,margin=0pt, figurewithin=chapter, tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
 
 \usepackage[caption=false]{subfig} 
+\setcounter{lofdepth}{2}
+
 
 %Vertical layout of float pages : http://www.tex.ac.uk/cgi-bin/texfaq2html?label=floatpages+vertposfp
 %By default, LaTeX vertically centres the floats on a float page; the present author is not alone in not liking this arrangement. Unfortunately, the control of the positioning is “buried” in LaTeX-internal commands, so some care is needed to change the layout.

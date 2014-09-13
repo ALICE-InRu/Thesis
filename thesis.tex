@@ -48,14 +48,16 @@
 
   \bibliographystyle{abbrvnat} 
   \bibliography{../references}
+  \addcontentsline{toc}{chapter}{References}
+  \appendix
+  \include{endmatter/problemstructure}
+  	
   	
   \ifthenelse{\equal{#1}{true}}{  	  
-	\addcontentsline{toc}{chapter}{References}
-	\appendix
 	\include{endmatter/fun} % test function suite
 	\include{endmatter/conf} % published papers etc.
 	\include{endmatter/colophon}  
-  }{}
+  }{\listoffigures}
   \ifthenelse{\equal{#1}{false}}{}{}
 }
 \newcommand{\printAll}{false} % either true or false
