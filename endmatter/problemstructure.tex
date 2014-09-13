@@ -1,12 +1,8 @@
 \HeaderQuote{I can't explain myself, I'm afraid, Sir, because I'm not myself you see.}{Alice} 
 
 \chapter{Problem structure}\label{app:problemstructure} 
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque, id pulvinar odio lorem non turpis. Nullam sit amet enim. Suspendisse id velit vitae ligula volutpat condimentum. Aliquam erat volutpat. Sed quis velit. Nulla facilisi. Nulla libero. Vivamus pharetra posuere sapien. Nam consectetuer. Sed aliquam, nunc eget euismod ullamcorper, lectus nunc ullamcorper orci, fermentum bibendum enim nibh eget ipsum. Donec porttitor ligula eu dolor. Maecenas vitae nulla consequat libero cursus venenatis. Nam magna enim, accumsan eu, blandit sed, blandit a, eros.
+\input{tables/quartiles.EasyHard} 
 
-Quisque facilisis erat a dui. Nam malesuada ornare dolor. Cras gravida, diam sit amet rhoncus ornare, erat elit consectetuer erat, id egestas pede nibh eget odio. Proin tincidunt, velit vel porta elementum, magna diam molestie sapien, non aliquet massa pede eu diam. Aliquam iaculis. Fusce et ipsum et nulla tristique facilisis. Donec eget sem sit amet ligula viverra gravida. Etiam vehicula urna vel turpis. Suspendisse sagittis ante a urna. Morbi a est quis orci consequat rutrum. Nullam egestas feugiat felis. Integer adipiscing semper ligula. Nunc molestie, nisl sit amet cursus convallis, sapien lectus pretium metus, vitae pretium enim wisi id lectus. 
-
-\clearpage
-\input{tables/quartiles.EasyHard}
 {\setlength{\tabcolsep}{3pt}
 \input{tables/quartiles.6x5.EasyHard}
 \input{tables/quartiles.10x10.EasyHard}
@@ -30,9 +26,9 @@ Quisque facilisis erat a dui. Nam malesuada ornare dolor. Cras gravida, diam sit
 \clearpage
 \begin{figure}
 \centering
-\subcaptionbox{$6\times5$}{\missingfigure{trdat.prob.optUniqueness.6x5.OPT}}
+\subcaptionbox{$6\times5$}{\includegraphics[width=1\linewidth]{figures/{stepwise.6x5.OPT.unique}.pdf}}
 \\
-\subcaptionbox{$10\times10$}{\includegraphics[width=1\linewidth]{figures/{trdat.prob.optUniqueness.10x10.OPT}.pdf}}
+\subcaptionbox{$10\times10$}{\includegraphics[width=1\linewidth]{figures/{stepwise.10x10.OPT.unique}.pdf}}
 \caption[Number of unique optimal dispatches]{Number of unique optimal dispatches (lower bound).}
 \label{fig:diff:opt:unique}
 \end{figure}
@@ -40,9 +36,9 @@ Quisque facilisis erat a dui. Nam malesuada ornare dolor. Cras gravida, diam sit
 \clearpage
 \begin{figure}
 \centering
-\subcaptionbox{$6\times5$}{\missingfigure{trdat.prob.moveIsOptimal.6x5.OPT.matlab}}
+\subcaptionbox{$6\times5$}{\includegraphics[width=1\linewidth]{figures/{stepwise.6x5.OPT}.pdf}}
 \\
-\subcaptionbox{$10\times10$}{\includegraphics[width=1\linewidth]{figures/{trdat.prob.moveIsOptimal.10x10.OPT.matlab}.pdf}}
+\subcaptionbox{$10\times10$}{\includegraphics[width=1\linewidth]{figures/{stepwise.10x10.OPT}.pdf}}
 \caption{Probability of choosing optimal move}
 \label{fig:diff:opt}
 \end{figure}
@@ -62,13 +58,13 @@ Quisque facilisis erat a dui. Nam malesuada ornare dolor. Cras gravida, diam sit
 \clearpage
 \begin{figure}
 \centering
-\subcaptionbox{$6\times5$}{\missingfigure{trdat.prob.moveIsOptimal.6x5.SDR.matlab}}
+\subcaptionbox{$6\times5$}{\includegraphics[width=1\linewidth]{figures/{stepwise.6x5.OPT.SDR}.pdf}}
 \caption{Probability of SDR being optimal}
 \label{fig:diff:opt:SDR}
 \end{figure}
 \begin{figure}\centering
 \ContinuedFloat
-\subcaptionbox{$10\times10$}{\includegraphics[width=1\linewidth]{figures/{trdat.prob.moveIsOptimal.10x10.SDR.matlab}.pdf}}
+\subcaptionbox{$10\times10$}{\includegraphics[width=1\linewidth]{figures/{stepwise.10x10.OPT.SDR}.pdf}}
 \end{figure}
 
 \clearpage 
