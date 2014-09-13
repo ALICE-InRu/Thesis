@@ -1,8 +1,7 @@
 \HeaderQuote{What is the use of repeating all that stuff, if you don't explain it as you go on? It's by far the most confusing thing I ever heard!}{The Mock Turtle} 
 
-\chapter{Ordinal regression}\label{ch:ordinal} \todo{\autoref{ch:ordinal} Unfinished}
-
-\FirstSentence{O}{rdinal regression has been} previously presented in \cite{Ru06:PPSN}, but given here for completeness. The preference learning task of linear classification presented there is based on the work proposed in \citep{liblinear,Lin08:newtontrustregion}. The modification relates to how the point pairs are selected and the fact that a $L2$-regularized logistic regression is used. {\color{red}Útskýra hvað er L2-regression?}
+\chapter{Ordinal regression}\label{ch:ordinal} 
+\FirstSentence{O}{rdinal regression has been} previously presented in \cite{Ru06:PPSN}, but given here for completeness. The preference learning task of linear classification presented there is based on the work proposed in \citep{liblinear,Lin08:newtontrustregion}. The modification relates to how the point pairs are selected and the fact that a $L2$-regularized logistic regression is used. \todo[inline]{Útskýra hvað er L2-regression?}
 
 \section{Training set}
 The ranking problem is specified by a set $S_{0} = \{(\vec{x}_i,y_i)\}_{i=1}^N \subset X \times Y$ of $N$ (solution, rank)-pairs, where $Y=\{r_1,\ldots,r_N\}$ is the outcome space with ordered ranks $r_1> r_2,> \ldots > r_N$.  
@@ -10,7 +9,9 @@ Now consider the model space $\mathcal{H} = \{h(\cdot) : X \mapsto Y\}$ of mappi
 \begin{equation}\label{eq:linear}
 \vec{x}_i \succ \vec{x}_j \quad \Leftrightarrow \quad h(\vec{x}_i) > h(\vec{x}_j)
 \end{equation}
-where the symbol $\succ$ denotes ``is preferred to.''  In ordinal regression the task is to obtain function $h$ that can for a given pair $(\vec{x}_i,y_i)$ and $(\vec{x}_j,y_j)$ distinguish between two different outcomes: $y_i > y_j$ and $y_j > y_i$. The task is, therefore, transformed into the problem of predicting the relative ordering of all possible pairs of examples \citep{Herbrich00,Joachims02}.  However, it is sufficient to consider only all possible pairs of adjacent ranks (see also \cite{ShaweTaylor04:book} for yet an alternative formulation).  The training set, composed of pairs, is then as follows,
+where the symbol $\succ$ denotes ``is preferred to.''  
+
+In ordinal regression the task is to obtain function $h$ that can for a given pair $(\vec{x}_i,y_i)$ and $(\vec{x}_j,y_j)$ distinguish between two different outcomes: $y_i > y_j$ and $y_j > y_i$. The task is, therefore, transformed into the problem of predicting the relative ordering of all possible pairs of examples \citep{Herbrich00,Joachims02}.  However, it is sufficient to consider only all possible pairs of adjacent ranks (see also \cite{ShaweTaylor04:book} for yet an alternative formulation).  The training set, composed of pairs, is then as follows,
 \begin{equation}
 S = \left\{(\vec{x}_k^{(1)}, \vec{x}_k^{(2)}),t_k=\text{sign}(y_k^{(1)} - y_k^{(2)})\right\}_{k=1}^{N'} \subset X\times Y  \label{eq:S}
 \end{equation}
