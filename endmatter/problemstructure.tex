@@ -1,6 +1,7 @@
 \HeaderQuote{I can't explain myself, I'm afraid, Sir, because I'm not myself you see.}{Alice} 
 
 \chapter{Problem structure}\label{app:problemstructure} 
+
 \input{tables/quartiles.EasyHard} 
 
 {\setlength{\tabcolsep}{3pt}
@@ -14,12 +15,12 @@
 
 \clearpage
 \begin{figure}\centering
-\subcaptionbox{$6\times5$}{\includegraphics[width=\textwidth]{{boxplotRho.SDR.6x5}.eps}\label{fig:SDR:boxplot:6x5}}
+\subcaptionbox{$6\times5$}{\includegraphics[width=\textwidth]{{boxplotRho.SDR.6x5}.pdf}\label{fig:SDR:boxplot:6x5}}
 \caption[Box-plots of \namerho, when applying SDRs]{Box-plots of \namerho, when applying SDRs for all problem spaces in \cref{ch:genprobleminstances}.}\label{fig:SDR:boxplot}
 \end{figure}
 \begin{figure}\centering
 \ContinuedFloat
-\subcaptionbox{$10\times10$}{\includegraphics[width=\textwidth]{{boxplotRho.SDR.10x10}.eps}\label{fig:SDR:boxplot:10x10}}
+\subcaptionbox{$10\times10$}{\includegraphics[width=\textwidth]{{boxplotRho.SDR.10x10}.pdf}\label{fig:SDR:boxplot:10x10}}
 \end{figure}
 
 
@@ -67,6 +68,41 @@
 \subcaptionbox{$10\times10$}{\includegraphics[width=1\linewidth]{figures/{stepwise.10x10.OPT.SDR}.pdf}\label{fig:diff:opt:SDR:10x10}}
 \end{figure}
 
+\clearpage
+\begin{figure}
+	\subcaptionbox{\jrnd{6}{5}}{\includegraphics[width=1\linewidth]{figures/{j.rnd}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:jrnd:6x5}}
+	\caption{Probability of extremal feature being optimal}
+	\label{fig:diff:opt:minmax}
+\end{figure}
+\begin{figure}\ContinuedFloat
+	\subcaptionbox{\jrnd{10}{10}}{\includegraphics[width=1\linewidth]{figures/{j.rnd}/{stepwise.10x10.OPT.extremal}.pdf}\label{diff:extr:jrnd:10x10}}
+\end{figure}
+\begin{figure}\ContinuedFloat
+	\subcaptionbox{\jrndn{6}{5}}{\includegraphics[width=1\linewidth]{figures/{j.rndn}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:jrndn:6x5}}
+\end{figure}
+\begin{figure}\ContinuedFloat
+	\subcaptionbox{\jrndn{10}{10}}{\includegraphics[width=1\linewidth]{figures/{j.rndn}/{stepwise.10x10.OPT.extremal}.pdf}\label{diff:extr:jrndn:10x10}}
+\end{figure}
+\begin{figure}\ContinuedFloat
+	\subcaptionbox{\frnd{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.rnd}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:frnd:6x5}}
+\end{figure}
+\begin{figure}\ContinuedFloat
+	\subcaptionbox{\frnd{10}{10}}{\includegraphics[width=1\linewidth]{figures/{f.rnd}/{stepwise.10x10.OPT.extremal}.pdf}\label{diff:extr:frnd:10x10}}
+\end{figure}
+\begin{figure}\ContinuedFloat
+	\subcaptionbox{\frndn{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.rndn}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:frndn:6x5}}
+\end{figure}
+\begin{figure}\ContinuedFloat
+	\subcaptionbox{\fjc{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.jc}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:fjc:6x5}}
+\end{figure}
+\begin{figure}\ContinuedFloat
+	\subcaptionbox{\fmc{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.mc}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:fmc:6x5}}
+\end{figure}
+\begin{figure}\ContinuedFloat
+	\subcaptionbox{\fmxc{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.mxc}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:fmxc:6x5}}
+\end{figure}
+
+
 \clearpage 
 \begin{figure}
 \subcaptionbox{\jrnd{6}{5}}{\includegraphics[width=1\linewidth]{figures/{j.rnd}/{stepwise.6x5.Track.evolution}.pdf}\label{diff:evol:jrnd:6x5}}
@@ -110,39 +146,6 @@
 \subcaptionbox{\fmxc{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.mxc}/{stepwise.6x5.Track.evolution}.pdf}\label{diff:evol:fmxc:6x5}}
 \end{figure}
 
-\clearpage
-\begin{figure}
-\subcaptionbox{\jrnd{6}{5}}{\includegraphics[width=1\linewidth]{figures/{j.rnd}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:jrnd:6x5}}
-\caption{Probability of extremal feature being optimal}
-\label{fig:diff:opt:minmax}
-\end{figure}
-\begin{figure}\ContinuedFloat
-\subcaptionbox{\jrnd{10}{10}}{\includegraphics[width=1\linewidth]{figures/{j.rnd}/{stepwise.10x10.OPT.extremal}.pdf}\label{diff:extr:jrnd:10x10}}
-\end{figure}
-\begin{figure}\ContinuedFloat
-\subcaptionbox{\jrndn{6}{5}}{\includegraphics[width=1\linewidth]{figures/{j.rndn}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:jrndn:6x5}}
-\end{figure}
-\begin{figure}\ContinuedFloat
-\subcaptionbox{\jrndn{10}{10}}{\includegraphics[width=1\linewidth]{figures/{j.rndn}/{stepwise.10x10.OPT.extremal}.pdf}\label{diff:extr:jrndn:10x10}}
-\end{figure}
-\begin{figure}\ContinuedFloat
-\subcaptionbox{\frnd{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.rnd}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:frnd:6x5}}
-\end{figure}
-\begin{figure}\ContinuedFloat
-\subcaptionbox{\frnd{10}{10}}{\includegraphics[width=1\linewidth]{figures/{f.rnd}/{stepwise.10x10.OPT.extremal}.pdf}\label{diff:extr:frnd:10x10}}
-\end{figure}
-\begin{figure}\ContinuedFloat
-\subcaptionbox{\frndn{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.rndn}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:frndn:6x5}}
-\end{figure}
-\begin{figure}\ContinuedFloat
-\subcaptionbox{\fjc{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.jc}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:fjc:6x5}}
-\end{figure}
-\begin{figure}\ContinuedFloat
-\subcaptionbox{\fmc{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.mc}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:fmc:6x5}}
-\end{figure}
-\begin{figure}\ContinuedFloat
-\subcaptionbox{\fmxc{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.mxc}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:fmxc:6x5}}
-\end{figure}
 
 \clearpage
 \begin{figure}
