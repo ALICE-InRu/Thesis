@@ -93,7 +93,7 @@
 
 \newcommand{\HeaderQuote}[2]{ \begin{savequote}[75mm] #1 \qauthor{#2} \end{savequote}}
 
-\RequirePackage[palatino]{quotchap}
+\RequirePackage[palatino]{quotchap} % for quotes at top of chapters
 %\definecolor{chaptergrey}{rgb}{0.6,0,0} % color for the chapter numbers reddish 
 \definecolor{chaptergrey}{RGB}{0,69,124} % color for the chapter numbers blueish 
 \RequirePackage{titling}
@@ -276,5 +276,5 @@
    \addvspace{1.0\baselineskip plus 0.5ex minus 0.2ex}%
    \noindent\textsc{#1}}%
 	
-%Be more forgiving, and stretch word spacing out more so that wormds don't run out into the margins..
+%Be more forgiving, and stretch word spacing out more so that words don't run out into the margins..
 %\emergencystretch=1.5em
