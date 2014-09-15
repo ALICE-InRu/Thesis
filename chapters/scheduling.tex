@@ -64,7 +64,7 @@ Preliminary experiments which at each time step all jobs on the ready-list are e
 
 Note that the choice of slot is an intrinsic heuristic within the construction heuristic. As has been previously mentioned, construction heuristics are designed in such a manner that they limit the search space. Preferably without excluding the true optimum. The focus of this dissertation, however, is on learning the priority of the jobs on the ready-list, for a fixed construction heuristic. Hence there are some problem instances in which the optimum makespan cannot be achieved due to the limitations of the schedule's construction heuristic of not being properly able to differentiate between which slot from $\tilde{S}_{ja}$ is the most effective. Instead, hopefully, the learning algorithm will be able to spot these problematic situations, should they arise, by inspecting the schedule's features and translate that into the jobs' priorities.
 
-\section{Example}
+\section{Example}\label{sec:jsp:example}
 Let's define a six-job and five-machine \jsp\ problem, with the following $\vec{p}\sim\mathcal{U}(1,99)$ and $\vsigma$ matrices,
 \begin{eqnarray}
 \vec{p}=
