@@ -30,6 +30,15 @@
       \pagenumbering{roman}
 	  \listoftodos   
 	  
+	  \tableofcontents
+	  \listoffigures
+	  \addcontentsline{toc}{chapter}{Listing of Figures}
+	  \listoftables
+	  \addcontentsline{toc}{chapter}{Listing of Tables}
+	  \include{scripts/nomencl}	  
+	  \printnomenclature  
+	  \addcontentsline{toc}{chapter}{Nomenclature}
+	  
 	  % Main matter
 	  \cleardoublepage
 	  \pagestyle{fancy} \setcounter{page}{1} \pagenumbering{arabic}
@@ -57,7 +66,7 @@
 	\include{endmatter/fun} % test function suite
 	\include{endmatter/conf} % published papers etc.
 	\include{endmatter/colophon}  
-  }{\listoffigures}
+  }{}
   \ifthenelse{\equal{#1}{false}}{}{}
 }
 \newcommand{\printAll}{false} % either true or false

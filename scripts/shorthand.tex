@@ -11,7 +11,11 @@
 \newcommand{\Alice}{Alice}
 \newcommand{\fullnameAlice}{Adaptive Learning Intelligent Composite rulEs}
 
-\newcommand*\cleartoleftpage{%
-	\clearpage
-	\ifodd\value{page}\hbox{}\newpage\fi
+\newcommand*\blankpage{%
+	\newpage	
+	\topskip0pt
+	\vspace*{\fill}
+	\centering This page is intentionally left blank.
+	\vspace{\fill}			
 }
+
