@@ -1,6 +1,7 @@
 \HeaderQuote{I can't explain myself, I'm afraid, Sir, because I'm not myself you see.}{Alice} 
 
 \chapter{Problem structure}\label{app:problemstructure} 
+Figures and tables within this \lcnamecref{app:problemstructure} pertain to \cref{ch:problemstructure}. \Cref{fig:diff:opt:unique,fig:diff:opt,fig:diff:opt:SDR,fig:diff:opt:minmax} depict the mean over all the training data, which are quite noisy functions.\footnote{\citet{InRu14c} depicts the mean as is, albeit only for $10\times10$ problem spaces.} Thus, for clarity purposes, they are fitted with local polynomial regression, making the boundary points sometimes biased. However, \cref{fig:diff:case,fig:diff:opt:evol} depict the mean as is.
 
 \input{tables/quartiles.EasyHard} 
 
@@ -13,7 +14,7 @@
 \input{tables/quartiles.10x10.Hard}
 }
 
-\clearpage
+\cleartoleftpage
 \begin{figure}\centering
 \subcaptionbox{$6\times5$}{\includegraphics[width=\textwidth]{{boxplotRho.SDR.6x5}.pdf}\label{fig:SDR:boxplot:6x5}}
 \caption[Box-plots of \namerho, when applying SDRs]{Box-plots of \namerho, when applying SDRs for all problem spaces in \cref{ch:genprobleminstances}.}\label{fig:SDR:boxplot}
@@ -23,8 +24,6 @@
 \subcaptionbox{$10\times10$}{\includegraphics[width=\textwidth]{{boxplotRho.SDR.10x10}.pdf}\label{fig:SDR:boxplot:10x10}}
 \end{figure}
 
-
-\clearpage
 \begin{figure}
 \centering
 \subcaptionbox{$6\times5$}{\includegraphics[width=1\linewidth]{figures/{stepwise.6x5.OPT.unique}.pdf}\label{fig:diff:opt:unique:6x5}}
@@ -34,7 +33,6 @@
 \label{fig:diff:opt:unique}
 \end{figure}
 
-\clearpage
 \begin{figure}
 \centering
 \subcaptionbox{$6\times5$}{\includegraphics[width=1\linewidth]{figures/{stepwise.6x5.OPT}.pdf}\label{fig:diff:opt:6x5}}
@@ -44,8 +42,7 @@
 \label{fig:diff:opt}
 \end{figure}
 
-
-\clearpage
+\cleartoleftpage
 \begin{figure}
 \centering
 \subcaptionbox{$6\times5$}{\includegraphics[width=1\linewidth]{figures/{stepwise.6x5.OPT.casescenario}.pdf}\label{fig:diff:case:6x5}}
@@ -56,7 +53,7 @@
 \end{figure}
 
 
-\clearpage
+\cleartoleftpage
 \begin{figure}
 \centering
 \subcaptionbox{$6\times5$}{\includegraphics[width=1\linewidth]{figures/{stepwise.6x5.OPT.SDR}.pdf}\label{fig:diff:opt:SDR:6x5}}
@@ -68,7 +65,7 @@
 \subcaptionbox{$10\times10$}{\includegraphics[width=1\linewidth]{figures/{stepwise.10x10.OPT.SDR}.pdf}\label{fig:diff:opt:SDR:10x10}}
 \end{figure}
 
-\clearpage
+\cleartoleftpage
 \begin{figure}
 	\subcaptionbox{\jrnd{6}{5}}{\includegraphics[width=1\linewidth]{figures/{j.rnd}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:jrnd:6x5}}
 	\caption{Probability of extremal feature being optimal}
@@ -103,7 +100,7 @@
 \end{figure}
 
 
-\clearpage 
+\cleartoleftpage 
 \begin{figure}
 \subcaptionbox{\jrnd{6}{5}}{\includegraphics[width=1\linewidth]{figures/{j.rnd}/{stepwise.6x5.Track.evolution}.pdf}\label{diff:evol:jrnd:6x5}}
 \caption[Mean stepwise evolution of $\tilde{\vphi}$]{Mean stepwise evolution of $\tilde{\vphi}$, which is scaled according to \cref{eq:scale}.}
@@ -147,11 +144,11 @@
 \end{figure}
 
 
-\clearpage
+\cleartoleftpage
 \begin{figure}
 \subcaptionbox{\jrnd{6}{5}}{\includegraphics[width=1\linewidth]{figures/{j.rnd/stepwise.6x5.Track.casescenario}.pdf}\label{diff:case:track:jrnd:6x5}}\\
 \subcaptionbox{\jrndn{6}{5}}{\includegraphics[width=1\linewidth]{figures/{j.rndn/stepwise.6x5.Track.casescenario}.pdf}\label{diff:case:track:jrndn:6x5}}
-\caption{Mean best and worst case scenario over various trajectories.}
+\caption{Mean best and worst case scenario over various trajectories.}\label{diff:case:track}
 \end{figure}
 \begin{figure}\ContinuedFloat
 \subcaptionbox{\frnd{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.rnd/stepwise.6x5.Track.casescenario}.pdf}\label{diff:case:track:frnd:6x5}}\\
