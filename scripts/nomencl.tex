@@ -6,49 +6,84 @@
 %\nomenclature[xi]{$\oint_\gamma$}{integration around a curve $\gamma$} % first letter X is for Other Symbols
 %\nomenclature[rj]{$j$}{superscript index}                              % first letter R is for superscripts
 %\nomenclature[s0]{$0$}{subscript index}                                % first letter S is for subscripts
-\nomenclature[so]{opt}{(known) optimum}
-\nomenclature[ss]{sub}{sub-optimum}
-\nomenclature[ssb]{bks}{best known solution}
-\nomenclature[juni]{$\mathcal{U}(u_1,u_2)$}{uniform distribution from the interval $I=[u_1,u_2]\subset\R$}
-\nomenclature[zbks]{BKS}{Best known solution}
-\nomenclature[osizepruned]{$N$}{number of problem instances}
-\nomenclature[osize]{$l$}{size of preference set, $l=\abs{S}$}
-\nomenclature[oe]{$\ell$}{number of dispatches needed for a complete schedule, $\ell=n\cdot m$}
-\nomenclature[sk]{$k$}{refers to dispatch/time step $k$ for a schedule}
-\nomenclature[ophi]{$\vphi_k$}{feature set, i.e. post-decision state, of a (partial) schedule at time $k$}
-\nomenclature[od]{$d$}{number of distinct features, i.e. dimension of $\vphi$}
-\nomenclature[ophi]{$\Phi$}{training set}
-\nomenclature[ophi2]{$S$}{preference set}
-\nomenclature[oset1]{$\mathcal{O}^{(k)}$}{set of optimal dispatches at time  $k$}
-\nomenclature[oset2]{$\mathcal{S}^{(k)}$}{set of suboptimal dispatches at time  $k$}
-\nomenclature[olin]{$h$}{linear classification model}
-\nomenclature[zjssp]{JSP}{job-shop scheduling problem}
-\nomenclature[zfssp]{PFSP}{permutation flow-shop scheduling problem}
-\nomenclature[sj1]{$j$}{refers to job $J_j$}
-\nomenclature[sj2]{$a$}{refers to machine $M_a$}
-\nomenclature[sj3]{$k$}{refers to the $k$-th operation, $(j,a)$}
-\nomenclature[J1a]{$n$}{number of jobs in shop}
-\nomenclature[J1b]{$m$}{number of machines in shop}
-\nomenclature[J2a]{$\mathcal{J}$}{set of jobs, $\{J_1,\dotsc,J_j,\dotsc,J_n\}$}
-\nomenclature[J2b]{$\mathcal{M}$}{set of machines, $\{M_1,\dotsc,M_a,\dotsc,M_m\}$}
-\nomenclature[J3]{$p_{ja}$}{processing time for job $J_j$ on machine $M_a$}
-\nomenclature[J4]{$\sigma_j$}{machine ordering for job $J_j$} 
-\nomenclature[J5]{$x_s(j,a)$}{starting time for job $J_j$ on machine $M_a$}
-\nomenclature[J6]{$x_f(j,a)$}{finishing time for job $J_j$ on machine $M_a$}
-\nomenclature[J8]{$C_{\max}$}{makespan, i.e. maximum completion times for all tasks}
-\nomenclature[J7]{$s(a,j)$}{flow between current and previous task on machine $M_a$}
-\nomenclature[Jslotset]{$\tilde{S}_{ja}^{(k)}$}{set of applicable flow times on machine $M_a$ that job $J_j$ can be processed at step $k$}
-\nomenclature[J9]{$\vchi$}{sequence of dispatches $J_j$ to create (partial) schedule/solution} 
-\nomenclature[Jready]{$\mathcal{R}^{(k)}$}{ready-list of jobs at step $k$, $\mathcal{R}\subset\mathcal{J}$}
-\nomenclature[zdr]{DR}{dispatching rule}
-\nomenclature[zsdr]{SDR}{simple priority dispatching rule}
-\nomenclature[zmwr]{MWR}{most work remaining}
-\nomenclature[zlwr]{LWR}{least work remaining}
-\nomenclature[zspt]{SPT}{shortest processing time}
-\nomenclature[zlpt]{LPT}{largest processing time}
-\nomenclature[zcdr]{CDR}{composite dispatching rule}
-\nomenclature[zbdr]{BDR}{blended dispatching rule}
-\nomenclature[jrho]{$\rho$}{percentage relative deviation from optimality}
-\nomenclature[zES]{ES}{evolution strategy}
-\nomenclature[rtau]{$\tau$}{Kendall's $\tau$ statistic: normalised difference in number of concordant and discordant pairs.}
-\nomenclature[zEScma]{CMA}{covariance matrix adaptation }
+
+% Rice's Framework
+\nomenclature[f01]{$\mathcal{P}$}{Problem space or instance space}
+\nomenclature[f02]{$\mathcal{F}$}{Feature space, i.e., measurable properties of the instances in $\mathcal{P}$}
+\nomenclature[f03]{$\mathcal{A}$}{Algorithm space}
+\nomenclature[f04]{$\mathcal{Y}$}{Performance space, i.e., the outcome for $\mathcal{P}$ using an algorithm from $\mathcal{A}$}
+\nomenclature[f05]{$Y$}{Mapping for algorithm and feature space onto performance space, i.e., $y=Y(a,\vphi(\vec{x}))\in\mathcal{Y}$ where $Y:\mathcal{A}\times\mathcal{F}\mapsto\mathcal{Y}$}
+
+% JOB SHOP
+\nomenclature[j01]{$n$}{number of jobs in shop}
+\nomenclature[j02]{$m$}{number of machines in shop}
+\nomenclature[j03]{$\mathcal{J}$}{set of jobs, $\{J_1,\dotsc,J_j,\dotsc,J_n\}$}
+\nomenclature[j04]{$\mathcal{M}$}{set of machines, $\{M_1,\dotsc,M_a,\dotsc,M_m\}$}
+\nomenclature[j05]{$p_{ja}$}{processing time for job $J_j$ on machine $M_a$}
+\nomenclature[j06]{$\vsigma_j$}{machine ordering for job $J_j$} 
+\nomenclature[j07]{$x_s(j,a)$}{starting time for job $J_j$ on machine $M_a$}
+\nomenclature[j08]{$x_f(j,a)$}{finishing time for job $J_j$ on machine $M_a$}
+\nomenclature[j09]{$s(a,j)$}{flow between current and previous task on machine $M_a$}
+\nomenclature[j10{$\mathcal{R}$}{ready-list of jobs that have unassigned tasks, $\mathcal{R}\subset\mathcal{J}$}
+\nomenclature[j11]{$C_{\max}$}{makespan, i.e. maximum completion times for all tasks}
+\nomenclature[j12]{$\vchi$}{sequence of dispatches $J_j$ to create (partial) schedule/solution} 
+\nomenclature[j13]{$\mathcal{U}(u_1,u_2)$}{uniform distribution from the interval $I=[u_1,u_2]\subset\R$}
+\nomenclature[j14]{$\rho$}{percentage relative deviation from optimality}
+\nomenclature[j15]{$\ell$}{number of dispatches needed for a complete schedule, $\ell=n\cdot m$}
+
+% ORDINAL REGRESSION 
+\nomenclature[o01]{$d$}{number of distinct features, i.e., dimension of $\mathcal{F}$}
+\nomenclature[o02]{$N$}{number of problem instances}
+\nomenclature[o03]{$\Phi$}{training set}
+\nomenclature[o04]{$S$}{preference set}
+\nomenclature[o05]{$l$}{size of preference set, $l=\abs{S}$}
+\nomenclature[o06]{$\vphi_k$}{feature set, i.e., post-decision state, of a (partial) schedule at time $k$}
+\nomenclature[o07]{$\tilde{\vphi}$}{scaled feature set, such that $\tilde{\vphi}_i\in[-1,1]$ for all $i\in\{1,..,d\}$}
+\nomenclature[o08]{$\mathcal{O}^{(k)}$}{set of optimal dispatches at time  $k$}
+\nomenclature[o09]{$\mathcal{S}^{(k)}$}{set of suboptimal dispatches at time  $k$}
+\nomenclature[o10]{$\vec{w}$}{linear weights for features $\vphi$}
+\nomenclature[o11]{$h$}{linear classification model, $h(\vec{x})=\inner{\vec{w}}{\vphi(\vec{x})}$}
+
+% SURROGATE MODELLING
+\nomenclature[s01]{$\tau$}{Kendall's $\tau$ statistic, i.e., normalised difference in number of concordant and discordant pairs}
+
+% EXPERIMENTAL SETTING
+\nomenclature[x01]{$S_b$}{preference set added w.r.t. basic ranking}
+\nomenclature[x02]{$S_f$}{preference set added w.r.t. full subsequent ranking}
+\nomenclature[x03]{$S_p$}{preference set added w.r.t. partial subsequent ranking}
+\nomenclature[x04]{$S_a$}{union of all aforementioned rankings, i.e., $S_{a}=S_b\cup S_f\cup S_p$}
+\nomenclature[x05]{$\Phi^{SPT}$}{training data guided by SPT trajectory}
+\nomenclature[x06]{$\Phi^{LPT}$}{training data guided by LPT trajectory}
+\nomenclature[x07]{$\Phi^{LWR}$}{training data guided by LWR trajectory}
+\nomenclature[x08]{$\Phi^{MWR}$}{training data guided by MWR trajectory}
+\nomenclature[x09]{$\Phi^{OPT}$}{training data guided by (random) optimum trajectory}
+\nomenclature[x10]{$\Phi^{RND}$}{training data guided by a random trajectory}
+\nomenclature[x11]{$\Phi^{CMA}$}{training data guided by trajectory using by CMA-ES obtained weights}
+\nomenclature[x12]{$\Phi^{ALL}$}{union of all aforementioned trajectories, i.e.,  $S^{ALL}=S^{SPT}\cup S^{LPT}\cup S^{LWR}\cup S^{MWR} \cup S^{OPT} \cup S^{RND} \cup S^{CMA}$}
+\nomenclature[x13]{$p^{equal}$}{all preferences sampled equally }
+\nomenclature[x14]{$p^{opt}$}{preferences sampled proportional w.r.t. its stepwise optimality}
+\nomenclature[x15]{$p^{bcs}$}{preferences sampled reciprocally proportional w.r.t. its stepwise best case scenario of suboptimal dispatches }
+\nomenclature[x16]{$p^{wcs}$}{preferences sampled reciprocally proportional w.r.t. its stepwise worst case scenario of suboptimal dispatches }
+
+% SUBSCRIPS AND SUPERSCRIPTS
+\nomenclature[y01]{$j$}{refers to job $J_j$}
+\nomenclature[y02]{$a$}{refers to machine $M_a$}
+\nomenclature[y03]{$k$}{refers to dispatch/time step $k$ for a schedule, $k\in\{1,..,\ell}$}
+\nomenclature[y04]{opt}{(known) optimum}
+\nomenclature[y05]{sub}{sub-optimum}
+\nomenclature[y06]{bks}{best known solution}
+
+% ACRONYMS
+\nomenclature[z01]{JSP}{\jsp\ scheduling problem}
+\nomenclature[z02]{PFSP}{permutation \fsp\ scheduling problem}
+\nomenclature[z03]{DR}{dispatching rule}
+\nomenclature[z04]{SDR}{simple priority dispatching rule}
+\nomenclature[z05]{CDR}{composite dispatching rule}
+\nomenclature[z06]{BDR}{blended dispatching rule}
+\nomenclature[z07]{SPT}{shortest processing time}
+\nomenclature[z08]{LPT}{largest processing time}
+\nomenclature[z09]{LWR}{least work remaining}
+\nomenclature[z10]{MWR}{most work remaining}
+\nomenclature[z11]{ES}{evolution strategy}
+\nomenclature[z12]{CMA}{covariance matrix adaptation}
+\nomenclature[z13]{PREF}{linear preference learning model}
