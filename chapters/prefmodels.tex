@@ -1,24 +1,24 @@
 \HeaderQuote{It was much pleasanter at home, when one wasn't always growing larger and smaller, and being ordered about by mice and rabbits.}{Alice} 
 %\HeaderQuote{The adventures first\dots explanations take such a dreadful time.}{The Gryphon} 
 
-\chapter{Learning Models}\label{ch:prefmodels} 
-
+\chapter{Preference Learning of CDRs}\label{ch:prefmodels} 
 \FirstSentence{L}{earning models considered in this } dissertation are based on ordinal regression in which the learning task is formulated as learning preferences. In the case of scheduling, learning which operations are preferred to others. Ordinal regression has been previously presented in \cite{Ru06:PPSN}, and given in \cref{ch:ordinal} for completeness. 
 
 \section{Ordinal regression for \jsp}
-Let $\vphi_{o}\in\R^d$ denote the post-decision state when dispatching $J_o$ corresponds to an optimal schedule being built. All post-decisions states corresponding to suboptimal dispatches, $J_s$, are denoted by $\vphi_{s}\in\R^d$. One could label which feature sets were considered optimal, $\vec{z}_{o}=\vphi_{o}-\vphi_{s}$, and suboptimal, $\vec{z}_{s}=\vphi_{s}-\vphi_{o}$ by $y_o=+1$ and $y_s=-1$ respectively. 
+Let $\vphi_{o}\in\mathcal{F}$ denote the post-decision state when dispatching $J_o$ corresponds to an optimal schedule being built. All post-decisions states corresponding to suboptimal dispatches, $J_s$, are denoted by $\vphi_{s}\in\mathcal{F}$. One could label which feature sets were considered optimal, $\vec{z}_{o}=\vphi_{o}-\vphi_{s}$, and suboptimal, $\vec{z}_{s}=\vphi_{s}-\vphi_{o}$ by $y_o=+1$ and $y_s=-1$ respectively. 
 Note, a negative example is only created as long as $J_s$ actually results in a worse makespan, i.e., $C_{\max}^{(s)}\gneq C_{\max}^{(o)}$, since there can exist situations in which more than one operation can be considered optimal.
 
 The preference learning problem is specified by a set of preference pairs,
-\begin{equation}
-S = \left\{\left\{\vec{z}_o,+1\right\}_{k=1}^{\ell},\left\{\vec{z}_s,-1\right\}_{k=1}^{\ell}
+\begin{equation}\label{eq:S:jsp}
+S := \left\{\left\{\vec{z}_o,+1\right\},\left\{\vec{z}_s,-1\right\}
 \;|\;\forall (o,s) \in \mathcal{O}^{(k)} \times \mathcal{S}^{(k)}
-\right\}\subset \Phi\times Y \label{eq:S:jsp}
+\right\}_{k=1}^{\ell} \subset \Phi\times Y 
 \end{equation}
-where $\Phi\subset \mathbb{R}^d$ is the training set of $d$ features, $Y=\{-1,+1\}$ is the outcome space, $\ell=n\cdot m$ is the total number of optimal dispatches, $o\in\mathcal{O}^{(k)}$, and suboptimal dispatches $s\in \mathcal{S}^{(k)}$, at dispatch $k$. Note, $\mathcal{O}^{(k)}\cup\mathcal{S}^{(k)}=\mathcal{R}^{(k)}$, and $\mathcal{O}^{(k)}\cap\mathcal{S}^{(k)}=\emptyset$. 
+where $\Phi\subset\mathcal{F}$ is the training set of $d$ features, $Y=\{-1,+1\}$ is the outcome space, $\ell$ is the total number of optimal dispatches, $o\in\mathcal{O}^{(k)}$, and suboptimal dispatches $s\in \mathcal{S}^{(k)}$, at dispatch $k$. Note, $\mathcal{O}^{(k)}\cup\mathcal{S}^{(k)}=\mathcal{R}^{(k)}$, and $\mathcal{O}^{(k)}\cap\mathcal{S}^{(k)}=\emptyset$. 
 
 For \jsp\ there are $d=\NrFeatTotal$ features (cf. the step-by-step varying features from \cref{tbl:features}), and the training set is created in the manner described in \cref{sec:gentrainingdata}.
 
+\todo{Which is being used, ordinal or logistic regression?}
 Logistic regression makes decisions regarding optimal dispatches and at the same time efficiently estimates a posteriori probabilities. When using linear classification model (cf. \cref{sec:ord:linpref}), i.e., 
 \begin{equation}\label{eq:jsp:linweights}
 h(\vec{x})=\sum_{i=1}^d w_i\phi_i(\vec{x})=\inner{\vec{w}}{\vphi(\vec{x})},
@@ -31,7 +31,7 @@ J_{j^*}=\argmax_{J_j\in \mathcal{R}}\; h(\vphi_j)
 \end{equation}
 where $h(\cdot)$ is the classification model obtained by the preference set, $S$, defined by \cref{eq:S:jsp}. 
 
-\clearpage
+
 \section{Interpreting linear classification models}
 Looking at the features description in \cref{tbl:features} it is possible for the ordinal regression to `discover' the weights $\vec{w}$ in order for \cref{eq:jsp:linweights} corresponding applying a single priority dispatching rules from \cref{sec:SDR}. For instance, 
 \begin{IEEEeqnarray}{s"rCl}
@@ -50,10 +50,15 @@ When using a feature space based on single priority dispatching rules, the linea
 For \jsp\ there are $N_{\text{train}}$ problem instances generated using $n$ jobs and $m$ machines for processing times, $\vec{p}$, following the same data distribution and a random $\vsigma$ permutations, summarised in \cref{tbl:features}.  
 
 \subsection{\Jsp\ tree representation}\label{sec:gen:gametree}
-When building a complete \jsp\ schedule $\ell=n\cdot m$ dispatches must be made sequentially. 
+When building a complete \jsp\ schedule, $\ell=n\cdot m$ dispatches must be made sequentially.
 A job is placed at the earliest available time slot for its next machine, whilst still fulfilling constraints \cref{eq:permutation,eq:oneJobPerMac}.
 %that each machine can handle at most one job at each time, and jobs need to have finished their previous machines according to its machine order. 
-Unfinished jobs are dispatched one at a time according to some heuristic. After each dispatch\footnote{Dispatch and time step are used interchangeably.} the schedule's current features (cf. \cref{tbl:features}) are updated based on the half-finished schedule. 
+Unfinished jobs are dispatched one at a time according to some heuristic. 
+After each dispatch\footnote{The terms dispatch (iteration) and time step are used interchangeably.} the schedule's current features (cf. \cref{tbl:features}) are updated based on the half-finished schedule. 
+These collected features are denoted $\Phi$, where, 
+\begin{eqnarray}\label{eq:Phi}
+\Phi:= \bigcup_{i=1}^{N_{\text{train}}} \bigcup_{k=1}^\ell\bigcup_{J_j\in\mathcal{R}^{(k)}} \left\{ \vphi_j  \;\Big|\; (\vec{p}_i,\vsigma_i)\in\mathcal{P}^{n\times m} \right\}.
+\end{eqnarray}
 
 Continuing with the example from \cref{sec:jsp:example}, \cref{fig:jssp:gametree} shows how the first two dispatches could be executed for a six-job five-machine \jsp\ scheduling problem, with the machines, $a\in\{M_1,...,M_5\}$, on the vertical axis and the horizontal axis yields the current makespan. The next possible dispatches are denoted as dashed boxes with the job index $j$ within and its length corresponding to $p_{ja}$.
 In the top layer one can see an empty schedule.
@@ -61,12 +66,20 @@ In the middle layer one of the possible dispatches from the layer above is fixed
 
 This sort of tree representation is similar to \emph{game trees} \citep[cf.][]{Rosen03} where the root node denotes the initial (i.e. empty) schedule and the leaf nodes denote the complete schedule (resulting after $n\cdot m$ dispatches, thus height of the tree is $\ell$), therefore the distance $k$ from an internal node to the root yields the number of operations already dispatched. Traversing from root to leaf node one can obtain a sequence of dispatches that yielded the resulting schedule, i.e., the sequence indicates in which order the tasks should be dispatched for that particular schedule. 
 
-However one can easily see that this sequence of task assignments is by no means unique. Inspecting a partial schedule further along in the dispatching process such as in \cref{fig:example}, then let's say $J_1$ would be dispatched next, and in the next iteration $J_2$. Now this sequence would yield the same schedule as if $J_2$ would have been dispatched first and then $J_1$ in the next iteration, i.e., these are non-conflicting jobs. Which indicates that some of the nodes in game tree can merge. In the meantime the state of the schedules are different and thus their features, although they manage to yield with the same (partial) schedule at a later date.  % ATHUGASEMD 1 -- SEQ. REP NON-UNIQUE
+However one can easily see that this sequence of task assignments is by no means unique. 
+Inspecting a partial schedule further along in the dispatching process such as in \cref{fig:example}, then let's say $J_1$ would be dispatched next, and in the next iteration $J_2$. 
+Now this sequence would yield the same schedule as if $J_2$ would have been dispatched first and then $J_1$ in the next iteration. 
+This is due to the fact these are non-conflicting jobs, which indicates that some of the nodes in game tree can merge. 
+In the meantime the states of the schedule are different and thus their features, although they manage to yield with the same (partial) schedule at a later date.  % ATHUGASEMD 1 -- SEQ. REP NON-UNIQUE
 In this particular instance one can not infer that choosing $J_1$ is better and $J_2$ is worse (or vice versa) since they can both yield the same solution.
 
-Note that in some cases there can be multiple optimal solutions to the same problem instance. Hence not only is the sequence representation `flawed' in the sense that slight permutations on the sequence are in fact equivalent w.r.t. the end-result, but very varying permutations on the dispatching sequence (however given the same partial initial sequence) can result in very different complete schedules but can still achieve the same makespan, and thus same \fullnamerho, which is the measure under consideration. Care must be taken in this case that neither resulting features are labelled as undesirable. Only the features from a dispatch yielding a suboptimal solution should be labelled undesirable. 
+In some cases there can be multiple optimal solutions to the same problem instance. 
+Hence not only is the sequence representation `flawed' in the sense that slight permutations on the sequence are in fact equivalent w.r.t. the end-result.
+In addition, varying permutations of the dispatching sequence (however given the same partial initial sequence) can result in very different complete schedules but can still achieve the same makespan, and thus same \fullnamerho\ (which is the measure under consideration). 
+Care must be taken in this case that neither resulting features are labelled as undesirable. 
+Only the features from a dispatch yielding a truly suboptimal solution should be labelled undesirable. 
 
-The creation of the game tree for \jsp\ can be done recursively for all possible permutation of dispatches, in the manner described above, resulting in a full \mbox{$n$-ary} tree (since $|\mathcal{R}|\leq n$) of height $\ell=n\cdot m$. Such an exhaustive search would yield at the most $n^{\ell}$ leaf nodes (worst case scenario being that no sub-trees merge). Now, since the internal vertices, i.e., partial schedules, are only of interest to learn,\footnote{The root is the empty initial schedule and for the last dispatch there is only one option left to choose from, so there is no preferred `choice' to learn.} the number of those can be at the most \mbox{${}^{n^{\ell}-1}/_{n-1}$}.
+The creation of the game tree for \jsp\ can be done recursively for all possible permutation of dispatches, in the manner described above, resulting in a full \mbox{$n$-ary} tree (since $|\mathcal{R}|\leq n$) of height $\ell$. Such an exhaustive search would yield at the most $n^{\ell}$ leaf nodes (worst case scenario being that no sub-trees merge). Now, since the internal vertices, i.e., partial schedules, are only of interest to learn,\footnote{The root is the empty initial schedule and for the last dispatch there is only one option left to choose from, so there is no preferred `choice' to learn.} the number of those can be at the most \mbox{${}^{n^{\ell}-1}/_{n-1}$}.
 Even for small dimensions of $n$ and $m$ the number of internal vertices are quite substantial and thus computationally expensive to investigate them all. Not to mention that this is done iteratively for all $N_{\text{train}}$ problem instances.
 
 \begin{figure}
@@ -80,33 +93,51 @@ Bottom layer depicts when job $J_4$ on machine $M_2$ has been chosen to be dispa
 
 \subsection{Labelling schedules w.r.t. optimal decisions}\label{sec:gentrdat:labelling}
 The optimum makespan is known for each problem instance. 
-At each time step (i.e. layer of the game tree) a number of feature pair are created, they consist of the features $\vphi_o$ resulting from optimal dispatches $o\in\mathcal{O}^{(k)}$, versus features $\vphi_s$ resulting from suboptimal dispatches $s\in\mathcal{S}^{(k)}$ at time $k$. 
-In particular, each job is compared against another job of the ready-list, $\mathcal{R}^{(k)}$, and if the makespan differs, i.e., $C_{\max}^{(s)}\gneq C_{\max}^{(o)}$, an optimal/suboptimal pair is created, however if the makespan would be unaltered the pair is omitted since they give the same optimal makespan. This way, only features from a dispatch resulting in a suboptimal solution is labelled undesirable.
+At each time step (i.e. layer of the game tree) a number of feature pairs are created. 
+They consist of the features $\vphi_o$ resulting from optimal dispatches $o\in\mathcal{O}^{(k)}$, versus features $\vphi_s$ resulting from suboptimal dispatches $s\in\mathcal{S}^{(k)}$ at time $k$. 
+In particular, each job is compared against another job of the ready-list, $\mathcal{R}^{(k)}$, and if the makespan differs, i.e., $C_{\max}^{(s)}\gneq C_{\max}^{(o)}$, an optimal/suboptimal pair is created. 
+However if the makespan would be unaltered, the pair is omitted since they give the same optimal makespan. 
+This way, only features from a dispatch resulting in a suboptimal solution is labelled undesirable.
 
-The approach taken here is to verify analytically, at each time step, by fixing the current temporal schedule as an initial state, whether it can indeed \emph{somehow} yield an optimal schedule by manipulating the remainder of the sequence. This also takes care of the scenario that having dispatched a job resulting in a different temporal makespan would have resulted in the same final makespan if another optimal dispatching sequence would have been chosen. That is to say the data generation takes into consideration when there are multiple optimal solutions to the same problem instance. 
+The approach taken here is to verify analytically, at each time step, by retaining the current temporal schedule as an initial state, whether it can indeed \emph{somehow} yield an optimal schedule by manipulating the remainder of the sequence. 
+This also takes care of the scenario that having dispatched a job resulting in a different temporal makespan would have resulted in the same final makespan if another optimal dispatching sequence would have been chosen. 
+That is to say the data generation takes into consideration when there are multiple optimal solutions to the same problem instance. 
 
-\subsection{Selecting preference pairs}\label{sec:S:strategies}
-At each dispatch iteration $k$ a number of preference pairs are created which can then be multiplied by the number of problem instance, $N_{\text{train}}$, created. A separate data set is deliberately created for each dispatch iterations, as the initial feeling is that dispatch rules used in the beginning of the schedule building process may not necessarily be the same as in the middle or end of the schedule. As a result there are $\ell$ linear scheduling rules for solving a $n \times m$ \jsp. \todo[inline]{No longer the case, one model for all steps}
+\section{Time dependant dispatching rules}
+At each dispatch iteration $k$, a number of preference pairs are created, which is then repeated for all the $N_{\text{train}}$ problem instances created. 
+A separate data set is deliberately created for each dispatch iterations, as the initial feeling is that dispatch rules used in the beginning of the schedule building process may not necessarily be the same as in the middle or end of the schedule. As a result there are $\ell$ linear scheduling rules for solving a $n \times m$ \jsp. \todo[inline]{No longer the case, one model for all steps}
 
-Defining the size of the preference set as $l=\abs{S}$, then \cref{eq:S:jsp} gives the size of the feature training set as $\abs{\Phi}=\frac{1}{2}l$. If $l$ is too large, than sampling needs to be done in order for the ordinal regression to be computationally feasible.
+\section{Selecting preference pairs}\label{sec:S:strategies}
+Defining the size of the preference set as $l=\abs{S}$, then \cref{eq:S:jsp} gives the size of the feature training set as $\abs{\Phi}=\frac{1}{2}l$.
+If $l$ is too large, than sampling needs to be done in order for the ordinal regression to be computationally feasible.
 
-Due to the nature of the sequence representation, the earlier stages of the dispatching are more or less equivalent (and thus irrelevant), hence it is appropriate to follow some random optimal path to begin with and then go after some (if not all possible) optimal paths until completion at step $\ell$. The strategy approached in  \cite{InRu11a} was to follow some optimal job $J_j\in\mathcal{O}^{(k)}$, thus creating $\abs{\mathcal{O}^{(k)}}\cdot\abs{\mathcal{S}^{(k)}}$ feature pairs at each dispatch $k$, resulting in a training size of,
+%Due to the nature of the sequence representation, the earlier stages of the dispatching are more or less equivalent (and thus irrelevant), hence it is appropriate to follow some random optimal path to begin with and then go after some (if not all possible) optimal paths until completion at step $\ell$. 
+
+The strategy approached in  \cite{InRu11a} was to follow some optimal job $J_j\in\mathcal{O}^{(k)}$ (chosen at random), thus creating $\abs{\mathcal{O}^{(k)}}\cdot\abs{\mathcal{S}^{(k)}}$ feature pairs at each dispatch $k$, resulting in a training size of,
 \begin{equation}\label{eq:sizeS_b}
 l =  \sum_{i=1}^{N_{\text{train}}} \left(2 \abs{\mathcal{O}^{(k)}_i}\cdot \abs{\mathcal{S}^{(k)}_i} \right)
 \end{equation}
-For the data distribution of problem instances considered there, that sort of simple sampling was sufficient for a favourable outcome. However for a considerably harder problem spaces (see \cref{ch:problemstructure}), preliminary experiments were not satisfactory. 
+For the problem spaces considered there, that sort of simple sampling of the state space was sufficient for a favourable outcome. However for a considerably harder problem spaces (see \cref{ch:problemstructure}), preliminary experiments were not satisfactory. 
 
-A brute force approach was adopted to investigate the feasibility of finding optimal weights $\vec{w}$ for \cref{eq:jsp:linweights}. By applying CMA-ES (discussed thoroughly in \cref{ch:esmodels}) to directly minimize the mean $C_{\max}$  w.r.t. the weights $\vec{w}$, gave a considerably more favourable result in predicting optimal versus suboptimal dispatching paths. So the question put forth is, why was the ordinal regression not able to detect it?
-The nature of the CMA-ES is to explore suboptimal routes until it converges to an optimal one. Implying that the previous approach of only looking into one optimal route is not sufficient information. Which suggest that the training set should incorporate a more complete knowledge about \emph{all} possible preferences, i.e., make also the distinction between suboptimal and sub-suboptimal features, etc.  This would require a Pareto ranking for the ready-list, $\mathcal{R}$, which can be used to make the distinction to which feature sets are equivalent, better or worse, and to what degree (i.e. giving a weight to the preference). This would involve a much greater training set, which of course would again need to be sampled in order to be computationally feasible to learn. 
+A brute force approach was adopted to investigate the feasibility of finding optimal weights $\vec{w}$ for \cref{eq:jsp:linweights}. 
+By applying CMA-ES (discussed thoroughly in \cref{ch:esmodels}) to directly minimize the mean $C_{\max}$  w.r.t. the weights $\vec{w}$, gave a considerably more favourable result in predicting optimal versus suboptimal dispatching paths. 
+So the question put forth is, why was the ordinal regression not able to detect it?
+The nature of the CMA-ES is to explore suboptimal routes until it converges to an optimal one. 
+Implying that the previous approach of only looking into one optimal route is not sufficient information. 
+Suggesting that the training set should incorporate a more complete knowledge about \emph{all} possible preferences, i.e., make also the distinction between suboptimal and sub-suboptimal features, etc.  
+This would require a Pareto ranking for the ready-list, $\mathcal{R}$, which can be used to make the distinction to which feature sets are equivalent, better or worse, and to what degree (i.e. giving a weight to the preference)? 
+By doing so, the training set becomes much greater, which of course would again need to be sampled in order to be computationally feasible to learn. 
 
 For instance \cite{Siggi05} used decision trees to `rediscover' LPT by using the dispatching rule to create its training data. The limitations of using heuristics to label the training data is that the learning algorithm will mimic the original heuristic (both when it works poorly and well on the problem instances) and does not consider the real optimum. In order to learn new heuristics that can outperform existing heuristics then the training data needs to be correctly labelled. This drawback is confronted in \citep{Malik08,Russell09,Siggi10} by using an optimal scheduler, computed off-line. 
 
-These aspects are the main motivation for the data generation in this dissertation. All problem instances are correctly labelled; their optimal solution were found using \cite{gurobi}, a commercial software package for solving large-scale linear optimization and a state-of-the-art solver for mixed integer programming. In order to create training instances (i.e. preference pairs) both a features resulting in optimal solutions are gathered (following optimal trajectories) and features that would have been chosen if a dispatching rule had been implemented (following DR trajectories). 
-For this dissertation the trajectories pursued will be the SDRs from \cref{sec:SDR} as well as randomly dispatching operations.
+These aspects are the main motivation for the data generation in this dissertation. 
+All problem instances are correctly labelled w.r.t. their optimum makespan, found with analytical means.\footnote{Optimal solution were found using \cite{gurobi}, a commercial software package for solving large-scale linear optimization and a state-of-the-art solver for mixed integer programming.} 
+In order to create training instances (and subsequently preference pairs) both a features resulting in optimal solutions are gathered (following optimal trajectories) and features that would have been chosen if a dispatching rule had been implemented (following DR trajectories). 
+In the latter case, the trajectories pursued here, will be the SDRs from \cref{sec:SDR} as well as randomly dispatching operations.
 
-In conclusion, one needs to consider two main aspects of the generation of the training data, 
+To summarise, one needs to consider two main aspects of the generation of the training data, 
 \begin{inparaenum}[(a)]
-\item What sort of rankings should be compared during each step? 
+\item what sort of rankings should be compared during each step? 
 \item Which path(s) should be investigated? Pursuing solely optimal trajectories? Creating random dispatches? Following other means: CMA-ES computed weights, single priority dispatching rules, etc. 
 \end{inparaenum}
 
@@ -213,19 +244,20 @@ Let's inspect the CMA-ES guided training data more closely, in particular the li
 \end{figure}
 
 
-\subsubsection{Summary and conclusion }
+\subsection{Summary and conclusion }
 As the experimental results showed in \cref{sec:expr:locallin}, the ranking of optimal\footnote{Here the tasks labelled `optimal' do not necessarily yield the optimum makespan (except in the case of following optimal trajectories), instead these are the optimal dispatches for the given partial schedule.} and suboptimal features are of paramount importance. The subsequent rankings are not of much value, since they are disregarded anyway. However, the trajectories to create training instances have to be varied.
 
 Unlike \citep{Siggi10,Malik08,Russell09}, learning only on optimal training data was not fruitful. However, inspired by the original work by \cite{Siggi05}, having DR guide the generation of training data (except correctly labelling with analytic means) gave meaningful preference pairs which the learning algorithm could learn. In conclusion, henceforth, the training data will be generate with $S_{b}^{all}$ scheme.
 
-\subsection{Creating time-independent dispatching rules}\label{sec:pref:scalability}
+
+\section{Time independent dispatching rules}\label{sec:pref:scalability}
 As stated in \cref{sec:S:strategies}, a separate data set is deliberately created for each dispatch iteration, as it is initially assumed that dispatch rules used in the schedule building might differ in the beginning, the middle or towards the end of the process. As a result there is a local linear model for each dispatch; a total of $\ell$ linear models for solving $n\times m$ \jsp. Now, if we were to create a global rule, then there would have to be one model for all dispatches iterations. The approach in \cite{InRu11a} was to take the mean weight for all stepwise linear models, i.e., $\bar{w}_i=\frac{1}{\ell}\sum_{k=1}^{\ell}w_i^{(k)}$ where $\vec{w}^{(k)}$ is the linear weight resulting from learning preference set $S^{(k)}$ at dispatch $k$. 
 
 A more sophisticated way, would be to create a \emph{new} linear model, where the preference set, $S$, is the union of the preference pairs across the $\ell$ dispatches. This would amount to a substantial training set, and for $S$ to be computationally feasible to learn, $S$ has to be filtered to size $l_{\max}$.
 
-\subsection{Exhaustive feature selection}
+\section{Exhaustive feature selection}
 
-\subsection{Resample instances you want to give higher probability}
+\subsection{Sampling strategies}
 Four different probability were implemented to sample $S$ to size $l_{\max}$. 
 \begin{description}
 	\item[Equal, $p^{equal}$], all preferences are of equal probability.
@@ -310,3 +342,6 @@ In addition, the global linear regression schedule policies $\zeta_{14}(\mathcal
 %\input{tables/globalpfor}
 %\end{table}
 
+
+
+\section{Discussion and conclusions}

@@ -140,7 +140,7 @@ Henceforth, a \emph{sequence} will refer to the sequential ordering of the dispa
 \section{Single-based priority dispatching rules}\label{sec:SDR}
 \emph{Dispatching rules} (DR) are of a construction heuristics, where one starts with an empty schedule and adds sequentially on one operation (or task) at a time. Namely, at each time step $k$, an operation is dispatched which has the highest priority of the ready-list, \mbox{$\mathcal{R}^{(k)}\subset\mathcal{J}$}, i.e., the jobs who still have operations unassigned. If there is a tie, some other priority measure is used. 
 
-A \emph{single-based priority dispatching rule}(SDR), or simple priority dispatching rule, is a function of features of the jobs and/or machines of the schedule. The features can be constant or vary throughout the scheduling process. For instance, the priority may depend on job processing attributes, such as which job has, 
+A \emph{single-based priority dispatching rule} (SDR), or simple priority dispatching rule, is a function of features of the jobs and/or machines of the schedule. The features can be constant or vary throughout the scheduling process. For instance, the priority may depend on job processing attributes, such as which job has, 
 \begin{description}
 \item[Shortest immediate processing time (SPT)] \hfill \\
 greedy approach to finish shortest tasks first,  
@@ -151,7 +151,7 @@ whose intention is to complete jobs advanced in their pro\-gress, i.e., minimisi
 \item[Most work remaining (MWR)] \hfill \\
 whose intention is to accelerate the processing of jobs that require a great deal of work, yielding a balanced progress for all jobs during dispatching, however in-process inventory can be high.
 \end{description}
-These rules are the ones most commonly applied in the literature due to their simplicity and effectiveness, %\citep[cf.][]{Haupt89,Panwalkar77}
+These rules are the ones most commonly applied in the literature due to their simplicity and efficiency, %\citep[cf.][]{Haupt89,Panwalkar77}
 therefore they will be referenced throughout the dissertation. 
 However there are many more available, e.g., randomly selecting an operation with equal possibility (RND); minimum slack time (MST); smallest slack per operation (S/OP); and using the aforementioned dispatching rules with predetermined weights. A survey of more than 100 of such rules are presented in \citet{Panwalkar77}, however the reader is referred to an in-depth survey for SDRs by \citet{Haupt89}. 
 
