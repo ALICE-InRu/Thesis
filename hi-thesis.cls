@@ -56,7 +56,7 @@
 
 \RequirePackage{url}
 \RequirePackage[titles]{tocloft}
-\setcounter{tocdepth}{1}
+\setcounter{tocdepth}{2}
 \setcounter{lofdepth}{2}
 \setcounter{lotdepth}{2}
 \renewcommand{\cftchapfont}{\normalsize \scshape}
