@@ -3,7 +3,7 @@
 \chapter{Problem structure}\label{app:problemstructure} 
 Figures and tables within this \lcnamecref{app:problemstructure} pertain to \cref{ch:problemstructure}. \Cref{fig:diff:opt:unique,fig:diff:opt,fig:diff:opt:SDR,fig:diff:opt:minmax} depict the mean over all the training data, which are quite noisy functions.\footnote{\citet{InRu14c} depicts the mean as is, albeit only for $10\times10$ problem spaces.} Thus, for clarity purposes, they are fitted with local polynomial regression, making the boundary points sometimes biased. However, \cref{fig:diff:case,fig:diff:opt:evol} depict the mean as is.
 
-\blankpage
+%\blankpage
 \input{tables/quartiles.EasyHard} 
 {\setlength{\tabcolsep}{3pt}
 \input{tables/quartiles.6x5.EasyHard}
@@ -15,38 +15,38 @@ Figures and tables within this \lcnamecref{app:problemstructure} pertain to \cre
 }
 
 \begin{figure}[p]
-\subcaptionbox{$6\times5$}{\includegraphics[width=\textwidth]{{boxplotRho.SDR.6x5}.pdf}\label{fig:SDR:boxplot:6x5}}
+\subcaptionbox{$6\times5$\label{fig:SDR:boxplot:6x5}}{\includegraphics[width=\textwidth]{{boxplotRho.SDR.6x5}.pdf}}
 \caption[Box-plots of \namerho, when applying SDRs]{Box-plots of \namerho, when applying SDRs for all problem spaces in \cref{ch:genprobleminstances}.}\label{fig:SDR:boxplot}
 \end{figure}
 \begin{figure}[p]
 \ContinuedFloat
-\subcaptionbox{$10\times10$}{\includegraphics[width=\textwidth]{{boxplotRho.SDR.10x10}.pdf}\label{fig:SDR:boxplot:10x10}}
+\subcaptionbox{$10\times10$\label{fig:SDR:boxplot:10x10}}{\includegraphics[width=\textwidth]{{boxplotRho.SDR.10x10}.pdf}}
 \end{figure}
 
 \begin{figure}
 \centering
-\subcaptionbox{$6\times5$}{\includegraphics[width=1\linewidth]{figures/{stepwise.6x5.OPT.unique}.pdf}\label{fig:diff:opt:unique:6x5}}
+\subcaptionbox{$6\times5$\label{fig:diff:opt:unique:6x5}}{\includegraphics[width=1\linewidth]{figures/{stepwise.6x5.OPT.unique}.pdf}}
 \\
-\subcaptionbox{$10\times10$}{\includegraphics[width=1\linewidth]{figures/{stepwise.10x10.OPT.unique}.pdf}\label{fig:diff:opt:unique:10x10}}
+\subcaptionbox{$10\times10$\label{fig:diff:opt:unique:10x10}}{\includegraphics[width=1\linewidth]{figures/{stepwise.10x10.OPT.unique}.pdf}}
 \caption[Number of unique optimal dispatches]{Number of unique optimal dispatches (lower bound).}
 \label{fig:diff:opt:unique}
 \end{figure}
 
 \begin{figure}
 \centering
-\subcaptionbox{$6\times5$}{\includegraphics[width=1\linewidth]{figures/{stepwise.6x5.OPT}.pdf}\label{fig:diff:opt:6x5}}
+\subcaptionbox{$6\times5$\label{fig:diff:opt:6x5}}{\includegraphics[width=1\linewidth]{figures/{stepwise.6x5.OPT}.pdf}}
 \\
-\subcaptionbox{$10\times10$}{\includegraphics[width=1\linewidth]{figures/{stepwise.10x10.OPT}.pdf}\label{fig:diff:opt:10x10}}
+\subcaptionbox{$10\times10$\label{fig:diff:opt:10x10}}{\includegraphics[width=1\linewidth]{figures/{stepwise.10x10.OPT}.pdf}}
 \caption{Probability of choosing optimal move}
 \label{fig:diff:opt}
 \end{figure}
 
-\blankpage
+%\blankpage
 \begin{figure}
 \centering
-\subcaptionbox{$6\times5$}{\includegraphics[width=1\linewidth]{figures/{stepwise.6x5.OPT.casescenario}.pdf}\label{fig:diff:case:6x5}}
+\subcaptionbox{$6\times5$\label{fig:diff:case:6x5}}{\includegraphics[width=1\linewidth]{figures/{stepwise.6x5.OPT.casescenario}.pdf}}
 \\
-\subcaptionbox{$10\times10$}{\includegraphics[width=1\linewidth]{figures/{stepwise.10x10.OPT.casescenario}.pdf}\label{fig:diff:case:10x10}}
+\subcaptionbox{$10\times10$\label{fig:diff:case:10x10}}{\includegraphics[width=1\linewidth]{figures/{stepwise.10x10.OPT.casescenario}.pdf}}
 \caption{Mean \namerho, for best and worst case scenario of choosing suboptimal dispatch, depicted as lower and upper bound, respectively. Moreover, mean suboptimal move is given as dashed line.}
 \label{fig:diff:case}
 \end{figure}
@@ -54,105 +54,105 @@ Figures and tables within this \lcnamecref{app:problemstructure} pertain to \cre
 
 \begin{figure}
 \centering
-\subcaptionbox{$6\times5$}{\includegraphics[width=1\linewidth]{figures/{stepwise.6x5.OPT.SDR}.pdf}\label{fig:diff:opt:SDR:6x5}}
+\subcaptionbox{$6\times5$\label{fig:diff:opt:SDR:6x5}}{\includegraphics[width=1\linewidth]{figures/{stepwise.6x5.OPT.SDR}.pdf}}
 \caption{Probability of SDR being optimal}
 \label{fig:diff:opt:SDR}
 \end{figure}
 \begin{figure}[p]
 \ContinuedFloat
-\subcaptionbox{$10\times10$}{\includegraphics[width=1\linewidth]{figures/{stepwise.10x10.OPT.SDR}.pdf}\label{fig:diff:opt:SDR:10x10}}
+\subcaptionbox{$10\times10$\label{fig:diff:opt:SDR:10x10}}{\includegraphics[width=1\linewidth]{figures/{stepwise.10x10.OPT.SDR}.pdf}}
 \end{figure}
 
 \begin{figure}
-	\subcaptionbox{\jrnd{6}{5}}{\includegraphics[width=1\linewidth]{figures/{j.rnd}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:jrnd:6x5}}
+	\subcaptionbox{\jrnd{6}{5}\label{diff:extr:jrnd:6x5}}{\includegraphics[width=1\linewidth]{figures/{j.rnd}/{stepwise.6x5.OPT.extremal}.pdf}}
 	\caption{Probability of extremal feature being optimal}
 	\label{fig:diff:opt:minmax}
 \end{figure}
 \begin{figure}\ContinuedFloat
-	\subcaptionbox{\jrnd{10}{10}}{\includegraphics[width=1\linewidth]{figures/{j.rnd}/{stepwise.10x10.OPT.extremal}.pdf}\label{diff:extr:jrnd:10x10}}
+	\subcaptionbox{\jrnd{10}{10}\label{diff:extr:jrnd:10x10}}{\includegraphics[width=1\linewidth]{figures/{j.rnd}/{stepwise.10x10.OPT.extremal}.pdf}}
 \end{figure}
 \begin{figure}\ContinuedFloat
-	\subcaptionbox{\jrndn{6}{5}}{\includegraphics[width=1\linewidth]{figures/{j.rndn}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:jrndn:6x5}}
+	\subcaptionbox{\jrndn{6}{5}\label{diff:extr:jrndn:6x5}}{\includegraphics[width=1\linewidth]{figures/{j.rndn}/{stepwise.6x5.OPT.extremal}.pdf}}
 \end{figure}
 \begin{figure}\ContinuedFloat
-	\subcaptionbox{\jrndn{10}{10}}{\includegraphics[width=1\linewidth]{figures/{j.rndn}/{stepwise.10x10.OPT.extremal}.pdf}\label{diff:extr:jrndn:10x10}}
+	\subcaptionbox{\jrndn{10}{10}\label{diff:extr:jrndn:10x10}}{\includegraphics[width=1\linewidth]{figures/{j.rndn}/{stepwise.10x10.OPT.extremal}.pdf}}
 \end{figure}
 \begin{figure}\ContinuedFloat
-	\subcaptionbox{\frnd{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.rnd}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:frnd:6x5}}
+	\subcaptionbox{\frnd{6}{5}\label{diff:extr:frnd:6x5}}{\includegraphics[width=1\linewidth]{figures/{f.rnd}/{stepwise.6x5.OPT.extremal}.pdf}}
 \end{figure}
 \begin{figure}\ContinuedFloat
-	\subcaptionbox{\frnd{10}{10}}{\includegraphics[width=1\linewidth]{figures/{f.rnd}/{stepwise.10x10.OPT.extremal}.pdf}\label{diff:extr:frnd:10x10}}
+	\subcaptionbox{\frnd{10}{10}\label{diff:extr:frnd:10x10}}{\includegraphics[width=1\linewidth]{figures/{f.rnd}/{stepwise.10x10.OPT.extremal}.pdf}}
 \end{figure}
 \begin{figure}\ContinuedFloat
-	\subcaptionbox{\frndn{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.rndn}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:frndn:6x5}}
+	\subcaptionbox{\frndn{6}{5}\label{diff:extr:frndn:6x5}}{\includegraphics[width=1\linewidth]{figures/{f.rndn}/{stepwise.6x5.OPT.extremal}.pdf}}
 \end{figure}
 \begin{figure}\ContinuedFloat
-	\subcaptionbox{\fjc{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.jc}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:fjc:6x5}}
+	\subcaptionbox{\fjc{6}{5}\label{diff:extr:fjc:6x5}}{\includegraphics[width=1\linewidth]{figures/{f.jc}/{stepwise.6x5.OPT.extremal}.pdf}}
 \end{figure}
 \begin{figure}\ContinuedFloat
-	\subcaptionbox{\fmc{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.mc}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:fmc:6x5}}
+	\subcaptionbox{\fmc{6}{5}\label{diff:extr:fmc:6x5}}{\includegraphics[width=1\linewidth]{figures/{f.mc}/{stepwise.6x5.OPT.extremal}.pdf}}
 \end{figure}
 \begin{figure}\ContinuedFloat
-	\subcaptionbox{\fmxc{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.mxc}/{stepwise.6x5.OPT.extremal}.pdf}\label{diff:extr:fmxc:6x5}}
+	\subcaptionbox{\fmxc{6}{5}\label{diff:extr:fmxc:6x5}}{\includegraphics[width=1\linewidth]{figures/{f.mxc}/{stepwise.6x5.OPT.extremal}.pdf}}
 \end{figure}
 
 
 \begin{figure}
-\subcaptionbox{\jrnd{6}{5}}{\includegraphics[width=1\linewidth]{figures/{j.rnd}/{stepwise.6x5.Track.evolution}.pdf}\label{diff:evol:jrnd:6x5}}
+\subcaptionbox{\jrnd{6}{5}\label{diff:evol:jrnd:6x5}}{\includegraphics[width=1\linewidth]{figures/{j.rnd}/{stepwise.6x5.Track.evolution}.pdf}}
 \caption[Mean stepwise evolution of $\tilde{\vphi}$]{Mean stepwise evolution of $\tilde{\vphi}$, which is scaled according to \cref{eq:scale}.}
 \label{fig:diff:opt:evol}
 \end{figure}
 \begin{figure}[p]
 \ContinuedFloat
-\subcaptionbox{\jrnd{10}{10}}{\includegraphics[width=1\linewidth]{figures/{j.rnd}/{stepwise.10x10.Track.evolution}.pdf}\label{diff:evol:jrnd:10x10}}
+\subcaptionbox{\jrnd{10}{10}\label{diff:evol:jrnd:10x10}}{\includegraphics[width=1\linewidth]{figures/{j.rnd}/{stepwise.10x10.Track.evolution}.pdf}}
 \end{figure}
 \begin{figure}[p]
 \ContinuedFloat
-\subcaptionbox{\jrndn{6}{5}}{\includegraphics[width=1\linewidth]{figures/{j.rndn}/{stepwise.6x5.Track.evolution}.pdf}\label{diff:evol:jrndn:6x5}}
+\subcaptionbox{\jrndn{6}{5}\label{diff:evol:jrndn:6x5}}{\includegraphics[width=1\linewidth]{figures/{j.rndn}/{stepwise.6x5.Track.evolution}.pdf}}
 \end{figure}
 \begin{figure}[p]
 \ContinuedFloat
-\subcaptionbox{\jrndn{10}{10}}{\includegraphics[width=1\linewidth]{figures/{j.rndn}/{stepwise.10x10.Track.evolution}.pdf}\label{diff:evol:jrndn:10x10}}
+\subcaptionbox{\jrndn{10}{10}\label{diff:evol:jrndn:10x10}}{\includegraphics[width=1\linewidth]{figures/{j.rndn}/{stepwise.10x10.Track.evolution}.pdf}}
 \end{figure}
 \begin{figure}[p]
 \ContinuedFloat
-\subcaptionbox{\frnd{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.rnd}/{stepwise.6x5.Track.evolution}.pdf}\label{diff:evol:frnd:6x5}}
+\subcaptionbox{\frnd{6}{5}\label{diff:evol:frnd:6x5}}{\includegraphics[width=1\linewidth]{figures/{f.rnd}/{stepwise.6x5.Track.evolution}.pdf}}
 \end{figure}
 \begin{figure}[p]
 \ContinuedFloat
-\subcaptionbox{\frnd{10}{10}}{\includegraphics[width=1\linewidth]{figures/{f.rnd}/{stepwise.10x10.Track.evolution}.pdf}\label{diff:evol:frnd:10x10}}
+\subcaptionbox{\frnd{10}{10}\label{diff:evol:frnd:10x10}}{\includegraphics[width=1\linewidth]{figures/{f.rnd}/{stepwise.10x10.Track.evolution}.pdf}}
 \end{figure}
 \begin{figure}[p]
 \ContinuedFloat
-\subcaptionbox{\frndn{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.rndn}/{stepwise.6x5.Track.evolution}.pdf}\label{diff:evol:frndn:6x5}}
+\subcaptionbox{\frndn{6}{5}\label{diff:evol:frndn:6x5}}{\includegraphics[width=1\linewidth]{figures/{f.rndn}/{stepwise.6x5.Track.evolution}.pdf}}
 \end{figure}
 \begin{figure}[p]
 \ContinuedFloat
-\subcaptionbox{\fjc{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.jc}/{stepwise.6x5.Track.evolution}.pdf}\label{diff:evol:fjc:6x5}}
+\subcaptionbox{\fjc{6}{5}\label{diff:evol:fjc:6x5}}{\includegraphics[width=1\linewidth]{figures/{f.jc}/{stepwise.6x5.Track.evolution}.pdf}}
 \end{figure}
 \begin{figure}[p]
 \ContinuedFloat
-\subcaptionbox{\fmc{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.mc}/{stepwise.6x5.Track.evolution}.pdf}\label{diff:evol:fmc:6x5}}
+\subcaptionbox{\fmc{6}{5}\label{diff:evol:fmc:6x5}}{\includegraphics[width=1\linewidth]{figures/{f.mc}/{stepwise.6x5.Track.evolution}.pdf}}
 \end{figure}
 \begin{figure}[p]
 \ContinuedFloat
-\subcaptionbox{\fmxc{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.mxc}/{stepwise.6x5.Track.evolution}.pdf}\label{diff:evol:fmxc:6x5}}
+\subcaptionbox{\fmxc{6}{5}\label{diff:evol:fmxc:6x5}}{\includegraphics[width=1\linewidth]{figures/{f.mxc}/{stepwise.6x5.Track.evolution}.pdf}}
 \end{figure}
 
 
 \begin{figure}
-\subcaptionbox{\jrnd{6}{5}}{\includegraphics[width=1\linewidth]{figures/{j.rnd/stepwise.6x5.Track.casescenario}.pdf}\label{diff:case:track:jrnd:6x5}}\\
-\subcaptionbox{\jrndn{6}{5}}{\includegraphics[width=1\linewidth]{figures/{j.rndn/stepwise.6x5.Track.casescenario}.pdf}\label{diff:case:track:jrndn:6x5}}
+\subcaptionbox{\jrnd{6}{5}\label{diff:case:track:jrnd:6x5}}{\includegraphics[width=1\linewidth]{figures/{j.rnd/stepwise.6x5.Track.casescenario}.pdf}}\\
+\subcaptionbox{\jrndn{6}{5}\label{diff:case:track:jrndn:6x5}}{\includegraphics[width=1\linewidth]{figures/{j.rndn/stepwise.6x5.Track.casescenario}.pdf}}
 \caption{Mean best and worst case scenario over various trajectories.}\label{diff:case:track}
 \end{figure}
 \begin{figure}\ContinuedFloat
-\subcaptionbox{\frnd{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.rnd/stepwise.6x5.Track.casescenario}.pdf}\label{diff:case:track:frnd:6x5}}\\
-\subcaptionbox{\frndn{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.rndn/stepwise.6x5.Track.casescenario}.pdf}\label{diff:case:track:frndn:6x5}}
+\subcaptionbox{\frnd{6}{5}\label{diff:case:track:frnd:6x5}}{\includegraphics[width=1\linewidth]{figures/{f.rnd/stepwise.6x5.Track.casescenario}.pdf}}\\
+\subcaptionbox{\frndn{6}{5}\label{diff:case:track:frndn:6x5}}{\includegraphics[width=1\linewidth]{figures/{f.rndn/stepwise.6x5.Track.casescenario}.pdf}}
 \end{figure}
 \begin{figure}\ContinuedFloat
-\subcaptionbox{\fjc{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.jc/stepwise.6x5.Track.casescenario}.pdf}\label{diff:case:track:fjc:6x5}}\\
-\subcaptionbox{\fmc{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.mc/stepwise.6x5.Track.casescenario}.pdf}\label{diff:case:track:fmc:6x5}}
+\subcaptionbox{\fjc{6}{5}\label{diff:case:track:fjc:6x5}}{\includegraphics[width=1\linewidth]{figures/{f.jc/stepwise.6x5.Track.casescenario}.pdf}}\\
+\subcaptionbox{\fmc{6}{5}\label{diff:case:track:fmc:6x5}}{\includegraphics[width=1\linewidth]{figures/{f.mc/stepwise.6x5.Track.casescenario}.pdf}}
 \end{figure}
 \begin{figure}\ContinuedFloat
-\subcaptionbox{\fmxc{6}{5}}{\includegraphics[width=1\linewidth]{figures/{f.mxc/stepwise.6x5.Track.casescenario}.pdf}\label{diff:case:track:fmxc:6x5}}
+\subcaptionbox{\fmxc{6}{5}\label{diff:case:track:fmxc:6x5}}{\includegraphics[width=1\linewidth]{figures/{f.mxc/stepwise.6x5.Track.casescenario}.pdf}}
 \end{figure}
