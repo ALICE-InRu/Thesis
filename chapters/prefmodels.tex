@@ -147,8 +147,8 @@ The following ranking strategies were implemented for adding preference pairs to
 \item[Basic ranking, $S_b$,] i.e., all optimum rankings $r_1$ versus all possible suboptimum rankings $r_i$, $i\in\{2,\ldots,n'\}$, preference pairs are added -- same basic set-up introduced in \cite{InRu11a}. Note, $|S_b|$ is defined in \cref{eq:sizeS_b}.
 \item[Full subsequent rankings, $S_f$,] i.e., all possible combinations of $r_i$ and $r_{i+1}$ for $i\in\{1,\ldots,n'\}$, preference pairs are added.
 \item[Partial subsequent rankings, $S_p$,] i.e., sufficient set of combinations of $r_i$ and $r_{i+1}$ for $i\in\{1,\ldots,n'\}$, are added to the training set -- e.g. in the cases that there are more than one operation with the same ranking, only one of that rank is needed to compared to the subsequent rank. Note that $S_p\subset S_f$.
-\item[All rankings, $S_a$,] denotes that all aforementioned rankings were explored, i.e., 
-\begin{equation}S_{a}:=S_b\cup S_f\cup S_p.\end{equation}
+\item[All rankings, $S_a$,] denotes that all possible rankings were explored, i.e.,
+$r_i$ versus $r_j$ for $i,j\in\{1,\ldots,n'\}$ and $i\neq j$, preference pairs are added.
 \end{description}
 where $r_1>r_2>\ldots>r_{n'}$ ($n'\leq n$) are the rankings of the ready-list, $\mathcal{R}^{(k)}$, at time step $k$.
 
@@ -180,11 +180,16 @@ From the figures it is apparent there can be a performance edge gained by implem
 
 
 \begin{figure}
-\missingfigure{Missing plots for different trajectory strategies}
-\missingfigure{Missing plots for different ranking strategies}
-%\includegraphics[width=\textwidth]{NUMtrinstances_d30}
-\caption{Size of preference set, $l$, for different trajectory strategies for given problem spaces, where $N_{\text{train}}=500$. }
-\label{fig:sizeofprefset}
+\includegraphics[width=\textwidth]{{trdat.size.6x5}.pdf}
+\caption[Size of training set, $\abs{\Phi}$]{Size of training set, $\abs{\Phi}$, for different trajectory strategies ($N_{\text{train}}=500$)}
+\label{fig:size:prefset}
+\end{figure}
+
+
+\begin{figure}
+\includegraphics[width=\textwidth]{{prefdat.size.6x5}.pdf}
+\caption[Size of preference set, $\abs{S}$]{Size of preference set, $l=\abs{S}$, for different trajectory strategies and ranking schemes (where $N_{\text{train}}=500$) }
+\label{fig:size:trdat}
 \end{figure}
 
 \todo[inline]{Missing MISTA2013 figures}
