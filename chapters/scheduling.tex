@@ -27,20 +27,20 @@ Starting time of job $J_j$ on machine $M_a$ is denoted $x_s(j,a)$ and its comple
 \begin{equation}  x_f(j,a):=x_s(j,a)+p_{ja} \end{equation} 
 Each job $J_j$ has a specified processing order through the machines, it is a permutation vector, $\vsigma_j$, of $\{1,..,m\}$, representing a job $J_j$ can be processed on $M_{\vsigma_j(a)}$ only after it has been completely processed on $M_{\vsigma_j(a-1)}$, i.e.,
 \begin{equation}\label{eq:permutation}
-   x_s(j,\vsigma_j(a)) \geq x_f(j,\vsigma_j(a-1)) 
+	x_s(j,\vsigma_j(a)) \geq x_f(j,\vsigma_j(a-1)) 
 \end{equation}
 for all $J_j\in\mathcal{J}$ and $a\in\{2,..,m\}$. 
 Note, that each job can have its own distinctive flow pattern through the machines, which is independent of the other jobs. However, in the case that all jobs share the same permutation route, \JSP\ is reduced to a \FSP\ \citep{Guinet1998,Tay08}.
 
 The disjunctive condition that each machine can handle at most one job at a time is the following,
 \begin{equation}\label{eq:oneJobPerMac}
-   x_s(j,a) \geq x_f(j',a) \quad\textrm{or}\quad x_s(j',a) \geq x_f(j,a)  
+	x_s(j,a) \geq x_f(j',a) \quad\textrm{or}\quad x_s(j',a) \geq x_f(j,a)  
 \end{equation}
 for all $J_j,J_{j'}\in\mathcal{J},\; J_j\neq J_{j'}$ and $M_a\in\mathcal{M}$. 
 
 The objective function is to minimise its maximum completion times for all tasks, commonly referred to as the makespan, $C_{\max}$, which is defined as follows,
 \begin{equation}
-  C_{\max} := \max\{x_f(j,\vsigma_j(m))\;|\;J_j\in\mathcal{J}\}.\label{eq:makespan}
+	C_{\max} := \max\{x_f(j,\vsigma_j(m))\;|\;J_j\in\mathcal{J}\}.\label{eq:makespan}
 \end{equation} 
 Clearly, w.r.t. minimum makespan, it is preferred that schedules are non-delay, i.e., the machines are not kept idle. The time in which machine $M_a$ is idle between consecutive jobs $J_j$ and $J_{j'}$ is called idle time, or flow, 
 \begin{equation} s(a,j):=x_s(j,a)-x_f(j',a) \label{eq:slack}\end{equation}
@@ -51,21 +51,21 @@ Construction heuristics are designed in such a way that it limits the search spa
 More specifically, once an operation $(j,a)$ has been chosen from the ready-list, $\mathcal{R}$, by some dispatching rule, it can placed immediately after (but not prior) $x_f(j,\vsigma_j(a-1))$ on machine $M_a$ due to constraint \cref{eq:permutation}. 
 However to guarantee that constraint \cref{eq:oneJobPerMac} is not violated, idle times $M_a$ are inspected, as they create flow time  which $J_j$ can occupy. Bearing in mind that $J_j$ release time is $x_f(j,\vsigma_j(a-1))$ one cannot implement \cref{eq:slack} directly, instead it has to be updated as follows,
 \begin{eqnarray}
-\tilde{s}(a,j')&:=& x_s(j'',a)-\max\{x_f(j',a),x_f(j,\vsigma_j(a-1))\} % \textrm{ if } x_f(j,\vsigma_j(a-1)\geq x_f(j',a) 
+	\tilde{s}(a,j')&:=& x_s(j'',a)-\max\{x_f(j',a),x_f(j,\vsigma_j(a-1))\} % \textrm{ if } x_f(j,\vsigma_j(a-1)\geq x_f(j',a) 
 \end{eqnarray}
 for all already dispatched jobs $J_{j'},J_{j''}\in \mathcal{J}_a$ where $J_{j''}$ is $J_{j'}$ successor on $M_a$. Since pre-emption is not allowed, the only applicable slots are whose idle time can process the entire operation, i.e.,
 \begin{eqnarray}
-\tilde{S}_{ja}&:=&\{J_{j'}\in \mathcal{J}_a\;|\;\tilde{s}(a,j')\geq p_{ja} \}\label{eq:slots}.
+	\tilde{S}_{ja}&:=&\{J_{j'}\in \mathcal{J}_a\;|\;\tilde{s}(a,j')\geq p_{ja} \}\label{eq:slots}.
 \end{eqnarray} 
 Now, there are several heuristic methods for selecting a slot from \cref{eq:slots}, e.g., if the main concern were to utilise the slot space, then choosing the slot with the smallest idle time would yield a closer-fitted schedule and leaving greater idle times undiminished for subsequent dispatches on $M_a$. However dispatching $J_j$ in the first slot would result in its earliest possible release time, which would be beneficial for subsequent dispatches for $J_j$. Preliminary experiments favoured dispatching in the first (earliest) slot,\footnote{Preliminary experiments of 500 \JSP\ instances where inspected: First slot chosen could always achieve its known optimum by implementing the pseudo code in \cref{fig:pseudocode}, however only $97\%$ of the instances when choosing the smallest slot.} and henceforth will be used throughout the dissertation.
 
 \begin{comment} % virðist að þetta vandamál sé leyst, sbr. "scriptCompareSlotChoice.m"
 Preliminary experiments which at each time step all jobs on the ready-list are explored and dispatched according to a (fixed) construction heuristic. The job corresponding to the best resulting makespan (found via analytical methods) is chosen to have the highest priority. The resulting makespan is divided by its theoretical optimal makespan, i.e., the deviation from optimality defined by \cref{eq:ratio}. A histogram for 6-job 5-machine \jsp\ problem instances ($N=500$) is depicted in \cref{fig:slot:smallestvsfirst} using both the intrinsic heuristics: (\subref{fig:slot:first}) first slot chosen and (\subref{fig:slot:small}) slot corresponding to the smallest slot size chosen. Using always the first slot, roughly 26\% of the instances were able to achieve the optimum makespan, however mere 16\% using the smallest slot size. Hence dispatching in the first slot was favoured and will be used throughout the study.
 \begin{figure}
-\subfloat[First slot]{\includegraphics[width=\textwidth]{slotsize_first.eps}} %\label{fig:slot:first}}
-\subfloat[Smallest slot size]{\includegraphics[width=\textwidth]{slotsize_small.eps}} %\label{fig:slot:small}}
-\caption{Histogram of deviation from optimality by sequentially dispatching optimal jobs using a fixed construction heuristic.}
-\label{fig:slot:smallestvsfirst}
+	\subfloat[First slot]{\includegraphics[width=\textwidth]{slotsize_first.eps}} %\label{fig:slot:first}}
+	\subfloat[Smallest slot size]{\includegraphics[width=\textwidth]{slotsize_small.eps}} %\label{fig:slot:small}}
+	\caption{Histogram of deviation from optimality by sequentially dispatching optimal jobs using a fixed construction heuristic.}
+	\label{fig:slot:smallestvsfirst}
 \end{figure}
 \end{comment}
 
@@ -75,32 +75,32 @@ Construction heuristics are designed in such a manner that they limit the search
 \section{Example}\label{sec:jsp:example}
 Let's define a six-job and five-machine \jsp\ problem, with the following $\vec{p}\sim\mathcal{U}(1,99)$ and $\vsigma$ matrices,
 \begin{eqnarray}
-\vec{p}=
-\left[\begin{array}{rrrrr}
- \tcr{91} & \tcr{53} & \textbf{31} & 59 & 84 \\
- \tcr{15} & \textbf{22} & 23 & 13 & 92 \\
- \tcr{54} & \tcr{33} & \tcr{15} & \tcr{62} & \tcr{83} \\
- \tcr{83} & \tcr{51} & \tcr{80} & \tcr{97} & \textbf{40} \\
- \tcr{51} & \tcr{27} & \textbf{74} & 85 & 70 \\
- \tcr{59} & \textbf{69} & 66 & 46 & 20 
-\end{array}\right], 
-\quad \label{eq:psigma}
-\vsigma=
-\left[\begin{array}{r}
-\vsigma_1 \\ \vsigma_2  \\ \vsigma_3 \\ \vsigma_4 \\ \vsigma_5 \\ \vsigma_6
-\end{array}\right] =
-\left[\begin{array}{rrrrr} 
- \tcr{4} & \tcr{5} & \textbf{3} & 2 & 1 \\
- \tcr{1} & \textbf{3} & 2 & 4 & 5 \\
- \tcr{3} & \tcr{1} & \tcr{2} & \tcr{4} & \tcr{5} \\
- \tcr{2} & \tcr{3} & \tcr{5} & \tcr{1} & \textbf{4} \\
- \tcr{2} & \tcr{5} & \textbf{4} & 3 & 1 \\
- \tcr{2} & \textbf{3} & 5 & 1 & 4 
-\end{array}\right].
+	\vec{p}=
+	\left[\begin{array}{rrrrr}
+		\tcr{91} & \tcr{53} & \textbf{31} & 59 & 84 \\
+		\tcr{15} & \textbf{22} & 23 & 13 & 92 \\
+		\tcr{54} & \tcr{33} & \tcr{15} & \tcr{62} & \tcr{83} \\
+		\tcr{83} & \tcr{51} & \tcr{80} & \tcr{97} & \textbf{40} \\
+		\tcr{51} & \tcr{27} & \textbf{74} & 85 & 70 \\
+		\tcr{59} & \textbf{69} & 66 & 46 & 20 
+	\end{array}\right], 
+	\quad \label{eq:psigma}
+	\vsigma=
+	\left[\begin{array}{r}
+		\vsigma_1 \\ \vsigma_2  \\ \vsigma_3 \\ \vsigma_4 \\ \vsigma_5 \\ \vsigma_6
+	\end{array}\right] =
+	\left[\begin{array}{rrrrr} 
+		\tcr{4} & \tcr{5} & \textbf{3} & 2 & 1 \\
+		\tcr{1} & \textbf{3} & 2 & 4 & 5 \\
+		\tcr{3} & \tcr{1} & \tcr{2} & \tcr{4} & \tcr{5} \\
+		\tcr{2} & \tcr{3} & \tcr{5} & \tcr{1} & \textbf{4} \\
+		\tcr{2} & \tcr{5} & \textbf{4} & 3 & 1 \\
+		\tcr{2} & \textbf{3} & 5 & 1 & 4 
+	\end{array}\right].
 \end{eqnarray}
 Now assume 15 operations have already dispatched been made, i.e., the red entries, by using the following sequence of jobs,
 \begin{eqnarray}
-\vchi=\left[J_3,J_3,J_3,J_3,J_4,J_4,J_5,J_1,J_1,J_2,J_4,J_6,J_4,J_5,J_3\right]
+	\vchi=\left[J_3,J_3,J_3,J_3,J_4,J_4,J_5,J_1,J_1,J_2,J_4,J_6,J_4,J_5,J_3\right]
 \end{eqnarray}
 hence the ready-list is $\mathcal{R}=\{J_1,J_2,J_4,J_5,J_6\}$ (note that $J_3$ has traversed through all of its machines) indicating the 5 potential jobs to be dispatched at step $k=16$, denoted in bold. \Cref{fig:example} illustrates the temporal partial schedule of the dispatching process.
 Numbers in the boxes represent the job identification $j$. The width of the box illustrates the processing times for a given job for a particular machine $M_a$ (on the vertical axis). The dashed boxes represent the resulting partial schedule for when a particular job is scheduled next. Moreover, the current $C_{\max}$ is denoted with a dotted line.
@@ -113,25 +113,25 @@ To summarise, in order to create a schedule for \JSP, a construction heuristic i
 
 
 \begin{figure}[p]
-\includegraphics[width=\textwidth]{jssp_example}
-\caption[Gantt chart of a partial \JSP\ schedule]{Gantt chart of a partial \JSP\ schedule after 15 dispatches: Solid and dashed boxes represent $\vchi$ and $\mathcal{R}^{(16)}$, respectively. Current $C_{\max}$ denoted as dotted line.}
-\label{fig:example}
+	\includegraphics[width=\textwidth]{jssp_example}
+	\caption[Gantt chart of a partial \JSP\ schedule]{Gantt chart of a partial \JSP\ schedule after 15 dispatches: Solid and dashed boxes represent $\vchi$ and $\mathcal{R}^{(16)}$, respectively. Current $C_{\max}$ denoted as dotted line.}
+	\label{fig:example}
 \end{figure}
 
 \begin{figure}[p]\centering 
-\noindent{\footnotesize\begin{tabbing}
-\quad \quad \= 0\;\; \= \emph{Initialization}: Let $\vchi=\emptyset$ denote \\
-\>  \> the current dispatching sequence. \\
-\>1 \> {\bf for} \= $k := 1$ to $\ell=n\cdot m$ {\bf do} \emph{(at each dispatch iteration)}\\ 
-\>2 \>\> {\bf for} \= $J_j\in \mathcal{R}^{(k)}\subset \mathcal{J}$ {\bf do} \emph{(inspect ready-list)} \\
-\>3 \>\>\>  $I_j^{DR}\leftarrow \text{DR}\left([\vchi,j],Y\right)$ \emph{(priority $J_j$)}\\
-\>4 \>\> {\bf od} \\
-\>5 \>\> $j^*\leftarrow \argmax_{j\in \mathcal{R}^{(k)}}\{I_j^{DR}\}$ \emph{(choose highest priority)} \\
-\>6 \>\> $\chi_k \leftarrow j^*$ \emph{(dispatch $j^*$)}\\
-\>7 \> {\bf od} \\
-\>8 \> $C_{max} \leftarrow Y(\vchi)$ \emph{(makespan)}
-\end{tabbing}}
-\caption{Pseudo code for constructing a \JSP\ sequence using a dispatching rule (DR) for a fixed construction heuristic (CH).}\label{fig:pseudocode}
+	\noindent{\footnotesize\begin{tabbing}
+		\quad \quad \= 0\;\; \= \emph{Initialization}: Let $\vchi=\emptyset$ denote \\
+		\>  \> the current dispatching sequence. \\
+		\>1 \> {\bf for} \= $k := 1$ to $\ell=n\cdot m$ {\bf do} \emph{(at each dispatch iteration)}\\ 
+		\>2 \>\> {\bf for} \= $J_j\in \mathcal{R}^{(k)}\subset \mathcal{J}$ {\bf do} \emph{(inspect ready-list)} \\
+		\>3 \>\>\>  $I_j^{DR}\leftarrow \text{DR}\left([\vchi,j],Y\right)$ \emph{(priority $J_j$)}\\
+		\>4 \>\> {\bf od} \\
+		\>5 \>\> $j^*\leftarrow \argmax_{j\in \mathcal{R}^{(k)}}\{I_j^{DR}\}$ \emph{(choose highest priority)} \\
+		\>6 \>\> $\chi_k \leftarrow j^*$ \emph{(dispatch $j^*$)}\\
+		\>7 \> {\bf od} \\
+		\>8 \> $C_{max} \leftarrow Y(\vchi)$ \emph{(makespan)}
+		\end{tabbing}}
+	\caption{Pseudo code for constructing a \JSP\ sequence using a dispatching rule (DR) for a fixed construction heuristic (CH).}\label{fig:pseudocode}
 \end{figure}
 
 
@@ -142,14 +142,14 @@ Henceforth, a \emph{sequence} will refer to the sequential ordering of the dispa
 
 A \emph{single-based priority dispatching rule} (SDR), or simple priority dispatching rule, is a function of features of the jobs and/or machines of the schedule. The features can be constant or vary throughout the scheduling process. For instance, the priority may depend on job processing attributes, such as which job has, 
 \begin{description}
-\item[Shortest immediate processing time (SPT)] \hfill \\
-greedy approach to finish shortest tasks first,  
-\item[Longest immediate processing time (LPT)] \hfill \\
-greedy approach to finish largest tasks first, 
-\item[Least work remaining (LWR)] \hfill \\
-whose intention is to complete jobs advanced in their pro\-gress, i.e., minimising the ready-list $\mathcal{R}$,
-\item[Most work remaining (MWR)] \hfill \\
-whose intention is to accelerate the processing of jobs that require a great deal of work, yielding a balanced progress for all jobs during dispatching, however in-process inventory can be high.
+	\item[Shortest immediate processing time (SPT)] \hfill \\
+	greedy approach to finish shortest tasks first,  
+	\item[Longest immediate processing time (LPT)] \hfill \\
+	greedy approach to finish largest tasks first, 
+	\item[Least work remaining (LWR)] \hfill \\
+	whose intention is to complete jobs advanced in their pro\-gress, i.e., minimising the ready-list $\mathcal{R}$,
+	\item[Most work remaining (MWR)] \hfill \\
+	whose intention is to accelerate the processing of jobs that require a great deal of work, yielding a balanced progress for all jobs during dispatching, however in-process inventory can be high.
 \end{description}
 These rules are the ones most commonly applied in the literature due to their simplicity and efficiency, %\citep[cf.][]{Haupt89,Panwalkar77}
 therefore they will be referenced throughout the dissertation. 
@@ -186,9 +186,9 @@ All of the features vary throughout the scheduling process, w.r.t. operation bel
 In addition, \phimac, is reported in order to distinguish which features are in conflict with each other.
 
 \begin{table} \centering 
-  \caption[Feature space $\mathcal{F}$ for \JSP]{Feature space $\mathcal{F}$ for \JSP\ where job $J_j$ on machine $M_a$ given the resulting temporal schedule after dispatching $(j,a)$.}
-  \label{tbl:features}
-  \input{tables/features-description}
+	\caption[Feature space $\mathcal{F}$ for \JSP]{Feature space $\mathcal{F}$ for \JSP\ where job $J_j$ on machine $M_a$ given the resulting temporal schedule after dispatching $(j,a)$.}
+	\label{tbl:features}
+	\input{tables/features-description}
 \end{table}
 
 
@@ -201,14 +201,14 @@ one gets the CDR apparent tardiness cost (ATC) which can work well on a broader 
 
 CDRs can deal with greater number of features and more complicated form, in short, CDR are a combination of several SDRs. For instance let CDR be comprised of $d$ SDRs, then the index $I$ for job $J_j$ using CDR is, 
 \begin{equation}
-I_j^{CDR} = \sum_{i=1}^d w_i \cdot \text{DR}^i(\vphi_j)
+	I_j^{CDR} = \sum_{i=1}^d w_i \cdot \text{DR}^i(\vphi_j)
 \end{equation}
 where $w_i>0$ and $\sum_{i=0}^d w_i = 1$, then $w_i$ gives the \emph{weight} of the influence of $\text{DR}^i$ (which could be SDR or another CDR) to CDR. Note, each $\text{DR}^i$ is a function of the job $J_j$'s feature state $\vphi_j$.
 
 \subsection{Blended dispatching rules}
 Since each DR yield a priority index $I^{DR}$ then it is easy to translate its index as a  performance measure $a$, i.e., $a:~I^{DR}\mapsto \mathcal{Y}$. Then it is possible to combine several performance measures into a single DR, these are referred to as \emph{blended dispatching rules} (BDR), where an overall blended priority index $P$ is defined as 
 \begin{equation}
-P_j = \sum_{i=1}^d w_i \cdot a_i 
+	P_j = \sum_{i=1}^d w_i \cdot a_i 
 \end{equation}
 where $w_i>0$ and $\sum_{i=0}^d w_i = 1$, then $w_i$ gives the weight of the proportional influence of performance measure $a_i$ (based on some SDR or CDR) to the overall priority. 
 
@@ -221,7 +221,7 @@ However, \citeauthor{Monch13} note that this sort of investigation is still in i
 
 A recent editorial of the state-of-the-art approaches in advanced dispatching rules for large-scale manufacturing systems by \citet{Chen13} points out that:
 \begin{quote}
-[..] most traditional dispatching rules are based on historical data. With the emergence of data mining and on-line analytic processing, dispatching rules can now take predictive information into account.
+	[..] most traditional dispatching rules are based on historical data. With the emergence of data mining and on-line analytic processing, dispatching rules can now take predictive information into account.
 \end{quote}
 implying that there has not been much automation in the process of discovering new dispatching rules, which is the ultimate goal of this dissertation, i.e., automate creating optimisation heuristics for scheduling. 
 
@@ -241,23 +241,23 @@ Similarly, \citet{Lu13} investigate eleven SDRs for \JSP\ to create a pool of th
 \section{Rice's framework for \jsp}\label{sec:rice:jsp}
 \citeauthor{Rice76}'s framework for algorithm selection (discussed in \cref{sec:rice}) has already been formulated for \jsp\ \citep[cf.][]{SmithMilesLion3,SmithMilesLion5,InRu12}, as follows, 
 \begin{description} 
-\item[Problem space] $\mathcal{P}$ is defined as the union of $N$ problem instances consisting of processing time and ordering matrices,
-\begin{equation} 
-\mathcal{P}=\left\{(p_{ja}^{(i)},\vsigma_j^{(i)})\;\big|\;J_j\in\mathcal{J},\;M_a\in\mathcal{M}\right\}_{i=1}^{N}
-\end{equation}
-Problem generators for $\mathcal{P}$ are given in \cref{ch:genprobleminstances}.
-\item[Feature space] $\mathcal{F}$ which is outlined in \cref{sec:features}. Note, these are not the only possible set of features, however, the local feature, \phiLocalRelated, are built on the work by \cite{InRu11a,SmithMilesLion3} and deemed successful in capturing the essence of a \jsp\ data structure;
-\item[Algorithm space] $\mathcal{A}$ is simply the scheduling policies under consideration, e.g., SDRs from \cref{sec:SDR},
-\begin{equation}
-\mathcal{A}=\left\{\text{SPT,~LPT,~LWR,~MWR,~}\dotsc\right\}
-\end{equation} 
-\item[Performance space] $\mathcal{Y}$ is based on the resulting $C_{\max}$, defined by \cref{eq:makespan}. The optimum makespan is denoted $C_{\max}^{\text{opt}}$, and the makespan obtained from the scheduling policy $A\in\mathcal{A}$ under inspection by $C_{\max}^{A}$. Since the optimal makespan varies between problem instances the performance measure is the following, 
-\begin{equation}\label{eq:rho}
-\rho=\frac{C_{\max}^{A}-C_{\max}^{opt}}{C_{\max}^{\text{opt}}}\cdot 100\%
-\end{equation}
-which indicates the \namerho. Thus $\mathcal{Y}$ is the following, 
-\begin{equation}
-\mathcal{Y}=\left\{\rho_i\right\}_{i=1}^{N}
-\end{equation}
+	\item[Problem space] $\mathcal{P}$ is defined as the union of $N$ problem instances consisting of processing time and ordering matrices,
+	\begin{equation} 
+		\mathcal{P}=\left\{(p_{ja}^{(i)},\vsigma_j^{(i)})\;\big|\;J_j\in\mathcal{J},\;M_a\in\mathcal{M}\right\}_{i=1}^{N}
+	\end{equation}
+	Problem generators for $\mathcal{P}$ are given in \cref{ch:genprobleminstances}.
+	\item[Feature space] $\mathcal{F}$ which is outlined in \cref{sec:features}. Note, these are not the only possible set of features, however, the local feature, \phiLocalRelated, are built on the work by \cite{InRu11a,SmithMilesLion3} and deemed successful in capturing the essence of a \jsp\ data structure;
+	\item[Algorithm space] $\mathcal{A}$ is simply the scheduling policies under consideration, e.g., SDRs from \cref{sec:SDR},
+	\begin{equation}
+		\mathcal{A}=\left\{\text{SPT,~LPT,~LWR,~MWR,~}\dotsc\right\}
+	\end{equation} 
+	\item[Performance space] $\mathcal{Y}$ is based on the resulting $C_{\max}$, defined by \cref{eq:makespan}. The optimum makespan is denoted $C_{\max}^{\text{opt}}$, and the makespan obtained from the scheduling policy $A\in\mathcal{A}$ under inspection by $C_{\max}^{A}$. Since the optimal makespan varies between problem instances the performance measure is the following, 
+	\begin{equation}\label{eq:rho}
+		\rho=\frac{C_{\max}^{A}-C_{\max}^{opt}}{C_{\max}^{\text{opt}}}\cdot 100\%
+	\end{equation}
+	which indicates the \namerho. Thus $\mathcal{Y}$ is the following, 
+	\begin{equation}
+		\mathcal{Y}=\left\{\rho_i\right\}_{i=1}^{N}
+	\end{equation}
 \end{description}
 The mapping $Y:\;\mathcal{A}\times\mathcal{F} \mapsto \mathcal{Y}$ is the step-by-step construction heuristic introduced in \cref{sec:CH}.

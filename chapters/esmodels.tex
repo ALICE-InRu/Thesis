@@ -18,8 +18,8 @@ Moreover, \cref{sec:es:measure} shows that the choice of objective function  for
 \section{Introduction}
 As previously discussed in \cref{ch:introduction}, there are two main viewpoints on how to approach scheduling problems,
 \begin{inparaenum}[\itshape a\upshape)] 
-\item local level by building schedules for one problem instance at a time;
-and \item global level by building schedules for all problem instances at once.
+	\item local level by building schedules for one problem instance at a time;
+	and \item global level by building schedules for all problem instances at once.
 \end{inparaenum}
 \tcr{For local level construction a simple construction heuristic is applied, the schedule's features are collected at each dispatch iteration, from which a learning model will inspect the feature set to discriminate which operations are preferred to others via ordinal regression. The focus is essentially on creating a meaningful preference set composed of features and their ranks, as the learning algorithm is only run once to find suitable operators for the value function. This is the approach taken in \cite{InRu11a}.} Expanding on that  work, this study will explore global level construction viewpoint, where there is no feature set collected beforehand since the learning model is optimised directly via evolutionary search. This requires numerous costly value function evaluations. In fact it involves an indirect method of evaluation whether one learning model is preferable to another, w.r.t. which one yields a better expected mean. 
 
@@ -32,11 +32,11 @@ Using standard set-up of parameters of the CMA-ES optimisation, the runtime was 
 \section{Performance measures}\label{sec:es:measure}
 Generally, evolutionary search only needs to minimise the expected fitness value, however the  approach in \cite{InRu11a} was to use the known optimum to correctly label which operations' features were indeed optimal compared to other possible operations, then it would be of interest to inspect if there is any performance edge gained in incorporating optimal labelling in evolutionary search. Therefore, two objective functions will be considered, namely, 
 \begin{equation}
-ES_{C_{\max}} := \min \Exp[C_{\max}] \label{eq:cma:makespan}
+	ES_{C_{\max}} := \min \Exp[C_{\max}] \label{eq:cma:makespan}
 \end{equation}
 for optimising w.r.t. $C_{\max}$ directly, and on the other hand
 \begin{equation}
-ES_{\rho} := \min \Exp[\rho] \label{eq:cma:rho}
+	ES_{\rho} := \min \Exp[\rho] \label{eq:cma:rho}
 \end{equation} 
 which optimises w.r.t. the resulting $C_{\max}$ scaled to its true optimum, i.e., \cref{eq:rho}.
 
@@ -48,24 +48,24 @@ In the case of \frndn{6}{5}, \cref{eq:cma:rho}  gave a considerably worse result
 For other problem spaces, \cref{eq:cma:makespan} gave slightly better results than \cref{eq:cma:rho}, however, there was no statical difference between adopting either objective function. Therefore, minimisation of expectation of $\rho$, is preferred over simply using the unscaled resulting makespan. 
 
 \begin{table}\centering
-\caption{Final results for CMA-ES optimisation.}\label{cma:funeval}
-\begin{tabular}{l |rrr |rrr}\toprule
-\multirow{2}{*}{$\mathcal{P}$}
-& \multicolumn{3}{c|}{minimise w.r.t. $C_{\max}$}& \multicolumn{3}{c}{minimise w.r.t. $\rho$} \\
- & \#gen & \#eval & ES$_{C_{\max}}$ & \#gen & \#eval & ES$_\rho$ \\
-\midrule
-f.jc & 5984 & 65835 & 567.688  & 1625 & 17886 & 0.361 \\
-f.rnd & 5088 & 55979 & 571.394 & 4546 & 50006 & 7.479 \\
-f.rndn & 5557 & 61138 & 544.764 & 2701 & 29722 & 0.938 \\
-j.rnd & 4707 & 51788 & 448.612 & 1944 & 21395 & 8.258 \\
-j.rndn & 4802 & 52833 & 449.942 & 1974 & 21725 & 8.691 \\
-\bottomrule
-\end{tabular}
+	\caption{Final results for CMA-ES optimisation.}\label{cma:funeval}
+	\begin{tabular}{l |rrr |rrr}\toprule
+		\multirow{2}{*}{$\mathcal{P}$}
+		& \multicolumn{3}{c|}{minimise w.r.t. $C_{\max}$}& \multicolumn{3}{c}{minimise w.r.t. $\rho$} \\
+		       & \#gen & \#eval & ES$_{C_{\max}}$ & \#gen & \#eval & ES$_\rho$ \\
+		\midrule
+		f.jc   & 5984  & 65835  & 567.688         & 1625  & 17886  & 0.361     \\
+		f.rnd  & 5088  & 55979  & 571.394         & 4546  & 50006  & 7.479     \\
+		f.rndn & 5557  & 61138  & 544.764         & 2701  & 29722  & 0.938     \\
+		j.rnd  & 4707  & 51788  & 448.612         & 1944  & 21395  & 8.258     \\
+		j.rndn & 4802  & 52833  & 449.942         & 1974  & 21725  & 8.691     \\
+		\bottomrule
+	\end{tabular}
 \end{table}
 
 \begin{figure}
-\includegraphics[width=\columnwidth]{CMAboxplotEvoTrain}
-\caption{Box-plot of training data for percentage relative deviation from optimality, defined by \cref{eq:rho}, when implementing the final weights obtained from CMA-ES optimisation, using both objective functions from \cref{eq:cma:makespan,eq:cma:rho}, left and right, respectively.}\label{fig:cma:trainboxpl}
+	\includegraphics[width=\columnwidth]{CMAboxplotEvoTrain}
+	\caption{Box-plot of training data for percentage relative deviation from optimality, defined by \cref{eq:rho}, when implementing the final weights obtained from CMA-ES optimisation, using both objective functions from \cref{eq:cma:makespan,eq:cma:rho}, left and right, respectively.}\label{fig:cma:trainboxpl}
 \end{figure}
 
 \subsection{Problem difficulty}\label{sec:expr:data}
@@ -73,15 +73,15 @@ The evolution of fitness per generation from the CMA-ES optimisation of \cref{eq
 Furthermore, the  evolution of the decision variables, $\vec{w}$, are depicted in \cref{fig:cma:wei}. As one can see, the relative contribution for each weight clearly differs between problem spaces. Note that in the case of \jrndn{6}{5} (cf. \cref{fig:cma:wei:rho}), CMA-ES restarts around generation 1,000 and quickly converges back to its previous fitness, however lateral relation of weights has completely changed. Implying that there are many optimal combinations of weights to be used, which can be expected due  to the fact some features in \cref{tbl:features} are a linear combination of one others, e.g., $\phi_3=\phi_1+\phi_2$.
 
 \begin{figure} 
-\includegraphics[width=\columnwidth]{CMAfitnessEvo}
-\caption{Fitness for optimising (w.r.t. \cref{eq:cma:makespan,eq:cma:rho} above and below, receptively), per generation of the CMA-ES optimisation.}\label{fig:cma:fit}
+	\includegraphics[width=\columnwidth]{CMAfitnessEvo}
+	\caption{Fitness for optimising (w.r.t. \cref{eq:cma:makespan,eq:cma:rho} above and below, receptively), per generation of the CMA-ES optimisation.}\label{fig:cma:fit}
 \end{figure}
 
 \begin{figure*} 
-\subcaptionbox{minimise w.r.t. \cref{eq:cma:makespan}}{\includegraphics[width=\columnwidth]{CMAweightsEvomin_Cmax}\label{fig:cma:wei:cmax}}
-\\
-\subcaptionbox{minimise w.r.t. \cref{eq:cma:rho}}{\includegraphics[width=\columnwidth]{CMAweightsEvomin_rho}\label{fig:cma:wei:rho}}
-\caption{Evolution of weights of features (given in \cref{tbl:features}) at each generation of the CMA-ES optimisation. Note, weights are normalised such that $\norm{\vec{w}}=1$.}\label{fig:cma:wei}
+	\subcaptionbox{minimise w.r.t. \cref{eq:cma:makespan}}{\includegraphics[width=\columnwidth]{CMAweightsEvomin_Cmax}\label{fig:cma:wei:cmax}}
+	\\
+	\subcaptionbox{minimise w.r.t. \cref{eq:cma:rho}}{\includegraphics[width=\columnwidth]{CMAweightsEvomin_rho}\label{fig:cma:wei:rho}}
+	\caption{Evolution of weights of features (given in \cref{tbl:features}) at each generation of the CMA-ES optimisation. Note, weights are normalised such that $\norm{\vec{w}}=1$.}\label{fig:cma:wei}
 \end{figure*}
 
 
@@ -92,8 +92,8 @@ Using the weights obtained from optimising \cref{eq:cma:rho} and applying them o
 To explore the scalability of the learning methods, a similar comparison to \cref{sec:expr:robust} is made for the applying the learning models on their corresponding $10\times10$ testing data, results are reported in \cref{tbl:results:test}. Note that only resulting $C_{\max}$ is reported, as the optimum makespan is not known. 
 
 {\setlength{\tabcolsep}{3pt}
-\input{tables/esmodels.6x5}
-\input{tables/esmodels.10x10}}
+	\input{tables/esmodels.6x5}
+	\input{tables/esmodels.10x10}}
 
 \section{Discussion and conclusions}\label{sec:disc}
 Data distributions considered in this study either varied 

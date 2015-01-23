@@ -10,9 +10,9 @@ Note, a negative example is only created as long as $J_s$ actually results in a 
 
 The preference learning problem is specified by a set of preference pairs,
 \begin{equation}\label{eq:S:jsp}
-S := \left\{\left\{\vec{z}_o,+1\right\},\left\{\vec{z}_s,-1\right\}
-\;|\;\forall (o,s) \in \mathcal{O}^{(k)} \times \mathcal{S}^{(k)}
-\right\}_{k=1}^{\ell} \subset \Phi\times Y 
+	S := \left\{\left\{\vec{z}_o,+1\right\},\left\{\vec{z}_s,-1\right\}
+	\;|\;\forall (o,s) \in \mathcal{O}^{(k)} \times \mathcal{S}^{(k)}
+	\right\}_{k=1}^{\ell} \subset \Phi\times Y 
 \end{equation}
 where $\Phi\subset\mathcal{F}$ is the training set of $d$ features, $Y=\{-1,+1\}$ is the outcome space, $\ell$ is the total number of optimal dispatches, $o\in\mathcal{O}^{(k)}$, and suboptimal dispatches $s\in \mathcal{S}^{(k)}$, at dispatch $k$. Note, $\mathcal{O}^{(k)}\cup\mathcal{S}^{(k)}=\mathcal{R}^{(k)}$, and $\mathcal{O}^{(k)}\cap\mathcal{S}^{(k)}=\emptyset$. 
 
@@ -21,13 +21,13 @@ For \jsp\ there are $d=\NrFeatTotal$ features (cf. the step-by-step varying feat
 \todo{Which is being used, ordinal or logistic regression?}
 Logistic regression makes decisions regarding optimal dispatches and at the same time efficiently estimates a posteriori probabilities. When using linear classification model (cf. \cref{sec:ord:linpref}), i.e., 
 \begin{equation}\label{eq:jsp:linweights}
-h(\vec{x})=\sum_{i=1}^d w_i\phi_i(\vec{x})=\inner{\vec{w}}{\vphi(\vec{x})},
+	h(\vec{x})=\sum_{i=1}^d w_i\phi_i(\vec{x})=\inner{\vec{w}}{\vphi(\vec{x})},
 \end{equation}
 the optimal $\vec{w}^*$ obtained from the preference set can be used on any new data point, $\vphi$, and their inner product is proportional to probability estimate \cref{eq:prob}. 
 %Similarly for non-linear classification models. 
 Hence, for each job on the ready-list, $J_j\in\mathcal{R}$, let $\vphi_j$ denote its corresponding  post-decision state. Then the job chosen to be dispatched, $J_{j^*}$, is the one corresponding to the highest preference estimate, i.e.,
 \begin{equation}\label{eq:lin}
-J_{j^*}=\argmax_{J_j\in \mathcal{R}}\; h(\vphi_j)
+	J_{j^*}=\argmax_{J_j\in \mathcal{R}}\; h(\vphi_j)
 \end{equation}
 where $h(\cdot)$ is the classification model obtained by the preference set, $S$, defined by \cref{eq:S:jsp}. 
 
@@ -35,10 +35,10 @@ where $h(\cdot)$ is the classification model obtained by the preference set, $S$
 \section{Interpreting linear classification models}
 Looking at the features description in \cref{tbl:features} it is possible for the ordinal regression to `discover' the weights $\vec{w}$ in order for \cref{eq:jsp:linweights} corresponding applying a single priority dispatching rules from \cref{sec:SDR}. For instance, 
 \begin{IEEEeqnarray}{s"rCl}
-SPT:& w_i&=&\bigg\{ \begin{array}{rl}-1&\text{if }i=1\\0&\text{otherwise}\end{array} \\
-LPT:& w_i&=&\bigg\{ \begin{array}{rl} 1&\text{if }i=1\\0&\text{otherwise}\end{array} \\
-MWR:& w_i&=&\bigg\{ \begin{array}{rl} 1&\text{if }i=7\\0&\text{otherwise}\end{array} \\
-LWR:& w_i&=&\bigg\{ \begin{array}{rl}-1&\text{if }i=7\\0&\text{otherwise}\end{array}
+	SPT:& w_i&=&\bigg\{ \begin{array}{rl}-1&\text{if }i=1\\0&\text{otherwise}\end{array} \\
+	LPT:& w_i&=&\bigg\{ \begin{array}{rl} 1&\text{if }i=1\\0&\text{otherwise}\end{array} \\
+	MWR:& w_i&=&\bigg\{ \begin{array}{rl} 1&\text{if }i=7\\0&\text{otherwise}\end{array} \\
+	LWR:& w_i&=&\bigg\{ \begin{array}{rl}-1&\text{if }i=7\\0&\text{otherwise}\end{array}
 \end{IEEEeqnarray}
 where $i\in\{1,\ldots,d\}$.
 When using a feature space based on single priority dispatching rules, the linear classification models can very easily be interpreted as composite dispatching rules with predetermined weights. 
@@ -57,7 +57,7 @@ Unfinished jobs are dispatched one at a time according to some heuristic.
 After each dispatch\footnote{The terms dispatch (iteration) and time step are used interchangeably.} the schedule's current features (cf. \cref{tbl:features}) are updated based on the half-finished schedule. 
 These collected features are denoted $\Phi$, where, 
 \begin{eqnarray}\label{eq:Phi}
-\Phi:= \bigcup_{i=1}^{N_{\text{train}}} \bigcup_{k=1}^\ell\bigcup_{J_j\in\mathcal{R}^{(k)}} \left\{ \vphi_j  \;\Big|\; (\vec{p}_i,\vsigma_i)\in\mathcal{P}^{n\times m} \right\}.
+	\Phi:= \bigcup_{i=1}^{N_{\text{train}}} \bigcup_{k=1}^\ell\bigcup_{J_j\in\mathcal{R}^{(k)}} \left\{ \vphi_j  \;\Big|\; (\vec{p}_i,\vsigma_i)\in\mathcal{P}^{n\times m} \right\}.
 \end{eqnarray}
 
 Continuing with the example from \cref{sec:jsp:example}, \cref{fig:jssp:gametree} shows how the first two dispatches could be executed for a six-job five-machine \jsp\ scheduling problem, with the machines, $a\in\{M_1,...,M_5\}$, on the vertical axis and the horizontal axis yields the current makespan. The next possible dispatches are denoted as dashed boxes with the job index $j$ within and its length corresponding to $p_{ja}$.
@@ -83,12 +83,12 @@ The creation of the game tree for \jsp\ can be done recursively for all possible
 Even for small dimensions of $n$ and $m$ the number of internal vertices are quite substantial and thus computationally expensive to investigate them all. Not to mention that this is done iteratively for all $N_{\text{train}}$ problem instances.
 
 \begin{figure}
-\includegraphics[width=\linewidth]{gametree}
-\caption[Partial Game Tree for \jsp]{Partial Game Tree for \jsp\ for the first two dispatches. 
-Top layer depicts all possible dispatches (dashed) for an empty schedule. 
-Middle layer depicts all possible dispatches given that one of the dispatches from the layer above has been executed (solid). 
-Bottom layer depicts when job $J_4$ on machine $M_2$ has been chosen to be dispatched from the previous layer, moreover it depicts all possible next dispatches from that scenario.}
-\label{fig:jssp:gametree}
+	\includegraphics[width=\linewidth]{gametree}
+	\caption[Partial Game Tree for \jsp]{Partial Game Tree for \jsp\ for the first two dispatches. 
+		Top layer depicts all possible dispatches (dashed) for an empty schedule. 
+		Middle layer depicts all possible dispatches given that one of the dispatches from the layer above has been executed (solid). 
+	Bottom layer depicts when job $J_4$ on machine $M_2$ has been chosen to be dispatched from the previous layer, moreover it depicts all possible next dispatches from that scenario.}
+	\label{fig:jssp:gametree}
 \end{figure}
 
 \subsection{Labelling schedules w.r.t. optimal decisions}\label{sec:gentrdat:labelling}
@@ -115,7 +115,7 @@ If $l$ is too large, than sampling needs to be done in order for the ordinal reg
 
 The strategy approached in  \cite{InRu11a} was to follow some optimal job $J_j\in\mathcal{O}^{(k)}$ (chosen at random), thus creating $\abs{\mathcal{O}^{(k)}}\cdot\abs{\mathcal{S}^{(k)}}$ feature pairs at each dispatch $k$, resulting in a training size of,
 \begin{equation}\label{eq:sizeS_b}
-l =  \sum_{i=1}^{N_{\text{train}}} \left(2 \abs{\mathcal{O}^{(k)}_i}\cdot \abs{\mathcal{S}^{(k)}_i} \right)
+	l =  \sum_{i=1}^{N_{\text{train}}} \left(2 \abs{\mathcal{O}^{(k)}_i}\cdot \abs{\mathcal{S}^{(k)}_i} \right)
 \end{equation}
 For the problem spaces considered there, that sort of simple sampling of the state space was sufficient for a favourable outcome. However for a considerably harder problem spaces (see \cref{ch:problemstructure}), preliminary experiments were not satisfactory. 
 
@@ -137,19 +137,19 @@ In the latter case, the trajectories pursued here, will be the SDRs from \cref{s
 
 To summarise, one needs to consider two main aspects of the generation of the training data, 
 \begin{inparaenum}[(a)]
-\item what sort of rankings should be compared during each step? 
-\item Which path(s) should be investigated? Pursuing solely optimal trajectories? Creating random dispatches? Following other means: CMA-ES computed weights, single priority dispatching rules, etc. 
+	\item what sort of rankings should be compared during each step? 
+	\item Which path(s) should be investigated? Pursuing solely optimal trajectories? Creating random dispatches? Following other means: CMA-ES computed weights, single priority dispatching rules, etc. 
 \end{inparaenum}
 
 \subsection{Ranking strategies}
 The following ranking strategies were implemented for adding preference pairs 
 to $S$ defined by \cref{eq:S:jsp}, they were first reported in \citet{InRu15a},
 \begin{description}
-\item[Basic ranking, $S_b$,] i.e., all optimum rankings $r_1$ versus all possible suboptimum rankings $r_i$, $i\in\{2,\ldots,n'\}$, preference pairs are added -- same basic set-up introduced in \cite{InRu11a}. Note, $|S_b|$ is defined in \cref{eq:sizeS_b}.
-\item[Full subsequent rankings, $S_f$,] i.e., all possible combinations of $r_i$ and $r_{i+1}$ for $i\in\{1,\ldots,n'\}$, preference pairs are added.
-\item[Partial subsequent rankings, $S_p$,] i.e., sufficient set of combinations of $r_i$ and $r_{i+1}$ for $i\in\{1,\ldots,n'\}$, are added to the training set -- e.g. in the cases that there are more than one operation with the same ranking, only one of that rank is needed to compared to the subsequent rank. Note that $S_p\subset S_f$.
-\item[All rankings, $S_a$,] denotes that all possible rankings were explored, i.e.,
-$r_i$ versus $r_j$ for $i,j\in\{1,\ldots,n'\}$ and $i\neq j$, preference pairs are added.
+	\item[Basic ranking, $S_b$,] i.e., all optimum rankings $r_1$ versus all possible suboptimum rankings $r_i$, $i\in\{2,\ldots,n'\}$, preference pairs are added -- same basic set-up introduced in \cite{InRu11a}. Note, $|S_b|$ is defined in \cref{eq:sizeS_b}.
+	\item[Full subsequent rankings, $S_f$,] i.e., all possible combinations of $r_i$ and $r_{i+1}$ for $i\in\{1,\ldots,n'\}$, preference pairs are added.
+	\item[Partial subsequent rankings, $S_p$,] i.e., sufficient set of combinations of $r_i$ and $r_{i+1}$ for $i\in\{1,\ldots,n'\}$, are added to the training set -- e.g. in the cases that there are more than one operation with the same ranking, only one of that rank is needed to compared to the subsequent rank. Note that $S_p\subset S_f$.
+	\item[All rankings, $S_a$,] denotes that all possible rankings were explored, i.e.,
+	$r_i$ versus $r_j$ for $i,j\in\{1,\ldots,n'\}$ and $i\neq j$, preference pairs are added.
 \end{description}
 where $r_1>r_2>\ldots>r_{n'}$ ($n'\leq n$) are the rankings of the ready-list, $\mathcal{R}^{(k)}$, at time step $k$.
 
@@ -157,17 +157,17 @@ where $r_1>r_2>\ldots>r_{n'}$ ($n'\leq n$) are the rankings of the ready-list, $
 \subsection{Trajectory strategies}
 The following trajectory strategies were explored for adding preference pairs to $S$ defined by \cref{eq:S:jsp},
 \begin{description}
-\item[SPT trajectory, $S^{SPT}$,] at each dispatch the task corresponding to shortest processing time is dispatched, i.e., following the simple dispatching rule SPT.
-\item[LPT trajectory, $S^{LPT}$,] at each dispatch the task corresponding to largest processing time is dispatched, i.e., following the simple dispatching rule LPT.
-\item[LWR trajectory, $S^{LWR}$,] at each dispatch the task corresponding to least work remaining is dispatched, i.e., following the simple dispatching rule LWR.
-\item[MWR trajectory, $S^{MWR}$,] at each dispatch the task corresponding to most work remaining is dispatched, i.e., following the simple dispatching rule MWR.
-\item[Optimum trajectory, $S^{OPT}$,] at each dispatch some (random) optimal task is dispatched.
-\item[Random trajectory, $S^{RND}$,] at each dispatch some random task is dispatched.
-\item[CMA-ES trajectory, $S^{CMA}$,] at each dispatch the task corresponding to highest priority, computed with fixed weights $\vec{w}$, which were obtained by optimising the mean for \fullnamerho, with CMA-ES. 
-\item[All trajectories, $S^{ALL}$,] denotes all aforementioned trajectories were explored, i.e., 
-\begin{equation}
-S^{ALL}:=S^{OPT}\cup S^{CMA}\cup S^{MWR}\cup S^{LWR} \cup S^{RND}.
-\end{equation}
+	\item[SPT trajectory, $S^{SPT}$,] at each dispatch the task corresponding to shortest processing time is dispatched, i.e., following the simple dispatching rule SPT.
+	\item[LPT trajectory, $S^{LPT}$,] at each dispatch the task corresponding to largest processing time is dispatched, i.e., following the simple dispatching rule LPT.
+	\item[LWR trajectory, $S^{LWR}$,] at each dispatch the task corresponding to least work remaining is dispatched, i.e., following the simple dispatching rule LWR.
+	\item[MWR trajectory, $S^{MWR}$,] at each dispatch the task corresponding to most work remaining is dispatched, i.e., following the simple dispatching rule MWR.
+	\item[Optimum trajectory, $S^{OPT}$,] at each dispatch some (random) optimal task is dispatched.
+	\item[Random trajectory, $S^{RND}$,] at each dispatch some random task is dispatched.
+	\item[CMA-ES trajectory, $S^{CMA}$,] at each dispatch the task corresponding to highest priority, computed with fixed weights $\vec{w}$, which were obtained by optimising the mean for \fullnamerho, with CMA-ES. 
+	\item[All trajectories, $S^{ALL}$,] denotes all aforementioned trajectories were explored, i.e., 
+	\begin{equation}
+		S^{ALL}:=S^{OPT}\cup S^{CMA}\cup S^{MWR}\cup S^{LWR} \cup S^{RND}.
+	\end{equation}
 \end{description}
 In the case of the SDR-based and $S^{CMA-ES}$ trajectories it is sufficient to explore each trajectory exactly once for each problem instance. Whereas, for $S^{OPT}$ and $S^{RND}$ there can be several trajectories worth exploring, however, only one is chosen (at random). It is noted that since the number of problem instances, $N_{\text{train}}$, is relatively large, it is deemed sufficient to explore one trajectory for each instance, in those cases as well.
 
@@ -184,16 +184,16 @@ From the figures it is apparent there can be a performance edge gained by implem
 
 
 \begin{figure}
-\includegraphics[width=\textwidth]{{trdat.size.6x5}.pdf}
-\caption[Size of training set, $\abs{\Phi}$]{Size of training set, $\abs{\Phi}$, for different trajectory strategies ($N_{\text{train}}=500$)}
-\label{fig:size:prefset}
+	\includegraphics[width=\textwidth]{{trdat.size.6x5}.pdf}
+	\caption[Size of training set, $\abs{\Phi}$]{Size of training set, $\abs{\Phi}$, for different trajectory strategies ($N_{\text{train}}=500$)}
+	\label{fig:size:prefset}
 \end{figure}
 
 
 \begin{figure}
-\includegraphics[width=\textwidth]{{prefdat.size.6x5}.pdf}
-\caption[Size of preference set, $\abs{S}$]{Size of preference set, $l=\abs{S}$, for different trajectory strategies and ranking schemes (where $N_{\text{train}}=500$) }
-\label{fig:size:trdat}
+	\includegraphics[width=\textwidth]{{prefdat.size.6x5}.pdf}
+	\caption[Size of preference set, $\abs{S}$]{Size of preference set, $l=\abs{S}$, for different trajectory strategies and ranking schemes (where $N_{\text{train}}=500$) }
+	\label{fig:size:trdat}
 \end{figure}
 
 \todo[inline]{Missing MISTA2013 figures}
@@ -219,37 +219,37 @@ Let's inspect the CMA-ES guided training data more closely, in particular the li
 
 
 \begin{figure}\centering
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w1}\caption{$w_1$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w2}\caption{$w_2$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w3}\caption{$w_3$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w4}\caption{$w_4$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w5}\caption{$w_5$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w6}\caption{$w_6$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w7}\caption{$w_7$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w8}\caption{$w_8$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w9}\caption{$w_9$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w10}\caption{$w_{10}$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w11}\caption{$w_{11}$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w12}\caption{$w_{12}$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w13}\caption{$w_{13}$}\end{subfigure}
-\caption{Linear weights for $\mathcal{P_1}$. Weights found via CMA-ES optimisation (red), and weights found via learning classification model based on $S_b^{cma}$ (blue).}\label{fig:weights:p1}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w1}\caption{$w_1$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w2}\caption{$w_2$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w3}\caption{$w_3$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w4}\caption{$w_4$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w5}\caption{$w_5$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w6}\caption{$w_6$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w7}\caption{$w_7$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w8}\caption{$w_8$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w9}\caption{$w_9$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w10}\caption{$w_{10}$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w11}\caption{$w_{11}$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w12}\caption{$w_{12}$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w13}\caption{$w_{13}$}\end{subfigure}
+	\caption{Linear weights for $\mathcal{P_1}$. Weights found via CMA-ES optimisation (red), and weights found via learning classification model based on $S_b^{cma}$ (blue).}\label{fig:weights:p1}
 \end{figure}
 
 \begin{figure}\centering
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w1}\caption{$w_1$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w2}\caption{$w_2$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w3}\caption{$w_3$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w4}\caption{$w_4$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w5}\caption{$w_5$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w6}\caption{$w_6$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w7}\caption{$w_7$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w8}\caption{$w_8$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w9}\caption{$w_9$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w10}\caption{$w_{10}$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w11}\caption{$w_{11}$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w12}\caption{$w_{12}$}\end{subfigure}
-%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w13}\caption{$w_{13}$}\end{subfigure}
-\caption{Linear weights for $\mathcal{P_2}$. Weights found via CMA-ES optimisation in red, and weights found via learning classification model based on $S_b^{cma}$ in blue.}\label{fig:weights:p2}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w1}\caption{$w_1$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w2}\caption{$w_2$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w3}\caption{$w_3$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w4}\caption{$w_4$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w5}\caption{$w_5$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w6}\caption{$w_6$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w7}\caption{$w_7$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w8}\caption{$w_8$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w9}\caption{$w_9$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w10}\caption{$w_{10}$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w11}\caption{$w_{11}$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w12}\caption{$w_{12}$}\end{subfigure}
+	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w13}\caption{$w_{13}$}\end{subfigure}
+	\caption{Linear weights for $\mathcal{P_2}$. Weights found via CMA-ES optimisation in red, and weights found via learning classification model based on $S_b^{cma}$ in blue.}\label{fig:weights:p2}
 \end{figure}
 
 
@@ -282,65 +282,65 @@ Given $N=500$ problem instances of 6-jobs 5-machines \jsp, one can see from \cre
 Moreover, a box-plot for \fullnamerho, for problem spaces considered are depicted in  \cref{fig:stepbystep:boxplot}. Note, figures utilize training set of size $N_{\text{train}}$ in all cases. Main statistics are reported in \cref{tbl:comp:p1p2p3:summary}. 
 
 \begin{figure}\centering 
-%\includegraphics[width=0.8\textwidth]{global_numTrainingUnfiltered}
-\caption{Size of preference set, $l$, for $\zeta_k$ defined by \cref{eq:zetak}, given $N_{\text{train}}=500$ problem instances for problem spaces problem{1} (blue) and problem{2} (red).}
-\label{fig:global:sizeofprefset}
+	%\includegraphics[width=0.8\textwidth]{global_numTrainingUnfiltered}
+	\caption{Size of preference set, $l$, for $\zeta_k$ defined by \cref{eq:zetak}, given $N_{\text{train}}=500$ problem instances for problem spaces problem{1} (blue) and problem{2} (red).}
+	\label{fig:global:sizeofprefset}
 \end{figure}
 
 \begin{figure}\centering
-%\includegraphics[width=0.8\textwidth]{global_trainingacc}
-\caption{Training accuracy for linear ordinal regression model trained on $\zeta_k$ defined by \cref{eq:zetak}, given $N_{\text{train}}=500$ problem instances for problem spaces problem{1} (blue) and problem{2} (red).}
-\label{fig:global:tracc}
+	%\includegraphics[width=0.8\textwidth]{global_trainingacc}
+	\caption{Training accuracy for linear ordinal regression model trained on $\zeta_k$ defined by \cref{eq:zetak}, given $N_{\text{train}}=500$ problem instances for problem spaces problem{1} (blue) and problem{2} (red).}
+	\label{fig:global:tracc}
 \end{figure}
 
 \begin{figure}\centering
-%\subfloat[Training set for $\fjc{6}{5}]{\includegraphics[height=0.8\textheight]{STEPBYSTEPfjc_rp.pdf}}\label{fig:sbs:fjc}
+	%\subfloat[Training set for $\fjc{6}{5}]{\includegraphics[height=0.8\textheight]{STEPBYSTEPfjc_rp.pdf}}\label{fig:sbs:fjc}
 \end{figure}
 
 \begin{figure}\centering
-\ContinuedFloat 
-%\subfloat[Training set for \frnd{6}{5}]{\includegraphics[height=0.8\textheight]{STEPBYSTEPfrnd_rp.pdf}}\label{fig:sbs:frnd}
+	\ContinuedFloat 
+	%\subfloat[Training set for \frnd{6}{5}]{\includegraphics[height=0.8\textheight]{STEPBYSTEPfrnd_rp.pdf}}\label{fig:sbs:frnd}
 \end{figure}
 
 \begin{figure} \centering
-\ContinuedFloat 
-%\subfloat[Training set for \frndn{6}{5}]{\includegraphics[height=0.8\textheight]{STEPBYSTEPfrndn_rp.pdf}}\label{fig:sbs:frndn}
+	\ContinuedFloat 
+	%\subfloat[Training set for \frndn{6}{5}]{\includegraphics[height=0.8\textheight]{STEPBYSTEPfrndn_rp.pdf}}\label{fig:sbs:frndn}
 \end{figure}
 
 \begin{figure}\centering
-\ContinuedFloat 
-%\subfloat[Training set for \jrnd{6}{5}]{\includegraphics[height=0.8\textheight]{STEPBYSTEPjrnd_rp.pdf}}\label{fig:sbs:jrnd}
+	\ContinuedFloat 
+	%\subfloat[Training set for \jrnd{6}{5}]{\includegraphics[height=0.8\textheight]{STEPBYSTEPjrnd_rp.pdf}}\label{fig:sbs:jrnd}
 \end{figure}
 
 \begin{figure}\centering
-\ContinuedFloat 
-%\subfloat[Training set for \jrndn{6}{5}]{\includegraphics[height=0.8\textheight]{STEPBYSTEPjrndn_rp.pdf}}\label{fig:sbs:jrndn}
-\caption{Box-plot of results for linear ordinal regression model trained on $\zeta_k$ defined by \cref{eq:zetak}, given $N=1,000$ problem instances for all considered $6\times5$ problem spaces.}\label{fig:stepbystep:boxplot}
+	\ContinuedFloat 
+	%\subfloat[Training set for \jrndn{6}{5}]{\includegraphics[height=0.8\textheight]{STEPBYSTEPjrndn_rp.pdf}}\label{fig:sbs:jrndn}
+	\caption{Box-plot of results for linear ordinal regression model trained on $\zeta_k$ defined by \cref{eq:zetak}, given $N=1,000$ problem instances for all considered $6\times5$ problem spaces.}\label{fig:stepbystep:boxplot}
 \end{figure}
 
 \todo[inline]{Add  $S_b^{all}$ which uses a separate local model for each step $k$, is shown on the far left for comparison  in \cref{fig:stepbystep:boxplot} ?!?}
 
 
 \begin{figure}\centering
-%\begin{subfigure}[b]{0.49\textwidth}\centering
-%\subfloat[Test set, problem{1}]{\includegraphics[width=0.5\textwidth]{global_p1}}\label{fig:global:p1}
-%\subfloat[Test set, problem{2}]{\includegraphics[width=0.5\textwidth]{global_p1}}\label{fig:global:p2}
-%\subfloat[Test set, problem{3}]{\includegraphics[width=0.5\textwidth]{global_p1}}\label{fig:global:p3}
-\caption{Box-plot of results for global linear ordinal regression model, $\zeta_{14}$, trained on problem spaces problem{1} (blue) and problem{2} (red). Note, the step-by-step $S_b^{all}$ model for corresponding testing set is shown on the far left for comparison.}
-\label{fig:global}
+	%\begin{subfigure}[b]{0.49\textwidth}\centering
+	%\subfloat[Test set, problem{1}]{\includegraphics[width=0.5\textwidth]{global_p1}}\label{fig:global:p1}
+	%\subfloat[Test set, problem{2}]{\includegraphics[width=0.5\textwidth]{global_p1}}\label{fig:global:p2}
+	%\subfloat[Test set, problem{3}]{\includegraphics[width=0.5\textwidth]{global_p1}}\label{fig:global:p3}
+	\caption{Box-plot of results for global linear ordinal regression model, $\zeta_{14}$, trained on problem spaces problem{1} (blue) and problem{2} (red). Note, the step-by-step $S_b^{all}$ model for corresponding testing set is shown on the far left for comparison.}
+	\label{fig:global}
 \end{figure}
 
 \begin{table}\centering
-\caption{Main statistics for \namerho, using problem spaces \Problem{1}, \Problem{2} and \Problem{3} using several scheduling policies}\label{tbl:comp:p1p2p3:summary}
-%\input{tables/globalp1p2p3}
+	\caption{Main statistics for \namerho, using problem spaces \Problem{1}, \Problem{2} and \Problem{3} using several scheduling policies}\label{tbl:comp:p1p2p3:summary}
+	%\input{tables/globalp1p2p3}
 \end{table}
 
 
 %\input{tables/orlib-jssp}
 \clearpage
 \begin{table}\centering
-\caption{Main statistics for \namerho, for OR-Library \jsp\ benchmark problem instances using linear ordinal regression scheduling policies}\label{tbl:comp:orlibjssp:summary}
-%\input{tables/globalpjor}
+	\caption{Main statistics for \namerho, for OR-Library \jsp\ benchmark problem instances using linear ordinal regression scheduling policies}\label{tbl:comp:orlibjssp:summary}
+	%\input{tables/globalpjor}
 \end{table}
 
 In addition, the global linear regression schedule policies $\zeta_{14}(\mathcal{P}_1)$ and $\zeta_{14}(\mathcal{P}_2)$ were tested on synthetic \FSP\ problems subclasses \frnd{6}{5}, \frndn{6}{5},\fjc{6}{5}, \fmc{6}{5} and \fmxc{6}{5} generated by \citet{Whitley} (cf. \cref{sec:data:FSP}). 

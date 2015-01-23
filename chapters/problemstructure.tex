@@ -31,12 +31,12 @@ Moreover, investigation of how sensitive is the difference between two sets of f
 This also, essentially, answers the question of whether  it is in fact feasible to discriminate between \emph{good} and \emph{bad} schedules using the currently selected features as a measure. If results are contradictory, it is an indicator the features selected are not robust enough to capture the essence of the data structure and some key features are missing from the feature set that could be able to discriminate between \emph{good} and \emph{bad} schedules. 
 Additionally, there is also the question of how can one define ``similar'' schedules, and what measures should be used? This \lcnamecref{ch:problemstructure} describes some preliminary experiments with the aim of investigating the feasibility of finding distinguishing features corresponding to \emph{good} and \emph{bad} schedules in \jsp. To summarise:
 \begin{inparaenum}[(a)]
-\item How to define problem difficulty? 
-\item Is there a time of divergence?
-\item What are ``similar'' schedules?
-\item Do similar features yield contradictory outcomes?
-\item Are extra features needed? 
-And \item what can be learned from feature behaviour?
+	\item How to define problem difficulty? 
+	\item Is there a time of divergence?
+	\item What are ``similar'' schedules?
+	\item Do similar features yield contradictory outcomes?
+	\item Are extra features needed? 
+	And \item what can be learned from feature behaviour?
 \end{inparaenum}
 
 Instead of searching through a large set of algorithms  and determining which algorithm is the most suitable for a given subset of the instance space, i.e., creating an algorithm portfolio, as is generally the focus in the current literature \citep{SmithMilesLion3,SmithMilesLion5,Corne10}, the focus of the experimental study in \cref{sec:diff:jrnd,sec:diff:jrndn,sec:diff:frnd,sec:diff:frndn,sec:diff:fjc,sec:diff:fmc,sec:diff:fmxc} 
@@ -62,31 +62,31 @@ Note, when inspecting any statistical difference between data distribution of th
 \section{Defining `easy' versus `hard' schedules}\label{sec:diff:easyhard}
 It's relatively ad-hoc how to define what makes a schedule difficult. Intuitively, it's logical to use the schedule's objective to define it directly, i.e., inspecting \fullnamerho. Moreover, since the SDRs from \cref{sec:SDR} will be used throughout as a benchmark for subsequent models, the quantiles for \namerho, using the SDRs on their training set will be used to differentiate between easy and hard scheduling problems. In particular, the classification is defined as follows, 
 \begin{description}
-\item[Easy] schedules belong to the first quantile, i.e., \hfill \\
-\begin{equation}\label{eq:easy}
-\mathcal{E}(a):=\{\vec{x}\;|\;\rho=Y(a,\vec{x})<\rho^{\text{1st. Qu.}}\}
-\end{equation} 
-\item[Hard] schedules belong to the third quantile, i.e., \hfill \\
-\begin{equation}\label{eq:hard}
-\mathcal{H}(a):=\{\vec{x}\;|\;\rho=Y(a,\vec{x})>\rho^{\text{3rd. Qu.}}\}
-\end{equation} 
+	\item[Easy] schedules belong to the first quantile, i.e., \hfill \\
+	\begin{equation}\label{eq:easy}
+		\mathcal{E}(a):=\{\vec{x}\;|\;\rho=Y(a,\vec{x})<\rho^{\text{1st. Qu.}}\}
+	\end{equation} 
+	\item[Hard] schedules belong to the third quantile, i.e., \hfill \\
+	\begin{equation}\label{eq:hard}
+		\mathcal{H}(a):=\{\vec{x}\;|\;\rho=Y(a,\vec{x})>\rho^{\text{3rd. Qu.}}\}
+	\end{equation} 
 \end{description}
 where $\vec{x}\in\mathcal{P}_{\text{train}}$ for a given dispatching rule $a\in\mathcal{A}:=\{\text{SPT,~LPT,~LWR,~MWR}\}$.
 
 \Cref{tbl:easyhard:quantile} reports the first and third quantiles for each problem space, i.e., the cut-off values that determine the SDRs difficulty, whose division, defined as percentage of problem instances, i.e., 
 \begin{equation}\label{eq:easyhard:cnt}
-\frac{\abs{\mathcal{E}(a)}}{N_{\text{train}}} \cdot 100\%
-\quad \text{and} \quad 
-\frac{\abs{\mathcal{H}(a)}}{N_{\text{train}}}\cdot 100\%
+	\frac{\abs{\mathcal{E}(a)}}{N_{\text{train}}} \cdot 100\%
+	\quad \text{and} \quad 
+	\frac{\abs{\mathcal{H}(a)}}{N_{\text{train}}}\cdot 100\%
 \end{equation}
 for each $a\in\mathcal{A}$, are given in \cref{tbl:easyhard:cnt:6x5,tbl:easyhard:cnt:10x10}, respectively. 
 
 \section{Consistency of problem instances}
 The intersection of pairwise SDRs being simultaneously easy or hard are given in \cref{tbl:easy:cnt:6x5,tbl:easy:cnt:10x10,tbl:hard:cnt:6x5,tbl:hard:cnt:10x10}, i.e., 
 \begin{equation}\label{eq:easyorhard:cnt}
-\frac{\abs{\mathcal{E}(a_i)\cap \mathcal{E}(a_j) }}{N_{\text{train}}} \cdot 100\%
-\quad \text{or} \quad 
-\frac{\abs{\mathcal{H}(a_i)\cap \mathcal{H}(a_j)}}{N_{\text{train}}}\cdot 100\%
+	\frac{\abs{\mathcal{E}(a_i)\cap \mathcal{E}(a_j) }}{N_{\text{train}}} \cdot 100\%
+	\quad \text{or} \quad 
+	\frac{\abs{\mathcal{H}(a_i)\cap \mathcal{H}(a_j)}}{N_{\text{train}}}\cdot 100\%
 \end{equation}
 where $a_i,a_j\in\mathcal{A}$. Note, when $a_i=a_j$ then \cref{eq:easyorhard:cnt} is equivalent to \cref{eq:easyhard:cnt}.
 
@@ -113,9 +113,9 @@ Namely, by exploiting feature behaviour that is considered more favourable. The 
 
 Note, this \lcnamecref{sec:diff:easyhard} gave the definition of what constitutes an `easy' and `hard' schedule. Since these are based on four SDRs, $\mathcal{A}$, the training data for the experiments done in this \lcnamecref{ch:problemstructure} is based on $4N_{\text{train}}$ problem instances, per problem space, therefore,
 \begin{equation}\label{eq:easyhard:all}
-\sum_{a\in\mathcal{A}}\abs{\mathcal{E}(a)} \approx N_{\text{train}}
-\quad\text{and}\quad
-\sum_{a\in\mathcal{A}}\abs{\mathcal{H}(a)} \approx N_{\text{train}}
+	\sum_{a\in\mathcal{A}}\abs{\mathcal{E}(a)} \approx N_{\text{train}}
+	\quad\text{and}\quad
+	\sum_{a\in\mathcal{A}}\abs{\mathcal{H}(a)} \approx N_{\text{train}}
 \end{equation} 
 due to the fact \cref{eq:easy,eq:hard} are based on the first and third quantiles of the entire training set.
 Now, as the SDRs vary greatly in performance, the contribution of a SDR to \cref{eq:easyhard:all} varies, resulting in an unbalanced sample size when restricted to a single SDR. 
@@ -148,17 +148,17 @@ A na\"ive approach would be creating a simple blended dispatching rule which wou
 A reason for this lack of performance of our proposed BDR is perhaps that by starting out with SPT in the beginning, it sets up the schedules in such a way that it's quite greedy and only takes into consideration jobs with shortest immediate processing times. Now, even though it is possible to find optimal schedules from this scenario, as \cref{fig:diff:opt:SDR} shows, the inherent structure is already taking place, and might make it hard to come across optimal moves by simple methods. Therefore it's by no means guaranteed that by simply swapping over to MWR will handle the situation that applying SPT has already created. \Cref{fig:diff:boxplot:BDR} does however show, that by applying MWR instead of SPT in the latter stages, does help the schedule to be more compact w.r.t. SPT. However, in the case of \jrnd{10}{10} and \jrndn{10}{10} the fact remains that the schedules have diverged too far from what MWR would have been able to achieve on its own. Preferably the blended dispatching rule should use  best of both worlds, and outperform all of its inherited DRs, otherwise it goes without saying, one would simply still use the original DR that achieved the best results.
 
 \begin{figure}
-\centering
-\includegraphics[width=1\linewidth]{figures/{boxplotRho.BDR.10x10}.pdf}
-\caption{Box plot for \namerho, for BDR where SPT is applied for the first 40\% of the dispatches, followed by MWR.}
-\label{fig:diff:boxplot:BDR}
+	\centering
+	\includegraphics[width=1\linewidth]{figures/{boxplotRho.BDR.10x10}.pdf}
+	\caption{Box plot for \namerho, for BDR where SPT is applied for the first 40\% of the dispatches, followed by MWR.}
+	\label{fig:diff:boxplot:BDR}
 \end{figure}
 
 \section{Extremal feature}\label{sec:diff:opt:ext}
 The SDRs we've inspected so-far are based on two features from \cref{tbl:features}, namely, 
 \begin{inparaenum}[(i)]
-\item \phiproc\ for SPT and LPT, and
-\item \phiwrmJob\ for LWR and MWR. 
+	\item \phiproc\ for SPT and LPT, and
+	\item \phiwrmJob\ for LWR and MWR. 
 \end{inparaenum}
 By choosing the lowest value for the first SDR, and highest value for the latter SDR, i.e., the extremal values for those given features. Let's apply the same methodology from \cref{sec:diff:opt:sdr} to all varying features\footnote{Note, \phistep, \phimac\ and \phiwrmTotal\ describe the features, not the schedule. For instance, \phistep\, gives us no new information, as that feature is homogeneous for each time step, making it equivalent to random guessing.} described in \cref{tbl:features}. 
 \Cref{fig:diff:opt:minmax}

@@ -15,8 +15,8 @@ The ultimate goal of this dissertation is to automate optimisation heuristics vi
 The focal point will be based on a scheduling processes named \jsp\ scheduling problem, and some of its subclass, e.g., \fsp\ scheduling problem.
 There are two main viewpoints on how to approach scheduling problems,
 \begin{description}
-\item[Local level] by building schedules for one problem instance at a time.
-\item[Global level] by building schedules for all problem instances at once.
+	\item[Local level] by building schedules for one problem instance at a time.
+	\item[Global level] by building schedules for all problem instances at once.
 \end{description}
 For local level construction, a simple construction heuristic is applied, the schedule's features are collected at each dispatch iteration, from which a learning model will inspect the feature set to discriminate which operations are preferred to others via ordinal regression. The focus is essentially on creating a meaningful preference set composed of features and their ranks, as the learning algorithm is only run once to find suitable operators for the value function. 
 However, for global level construction, there is no feature set collected beforehand since the learning model is optimised directly via evolutionary search. This required numerous costly value function evaluations. In fact it involves an indirect method of evaluation whether one learning model is preferable to another, w.r.t. which one yields the better expected mean. 
@@ -28,31 +28,31 @@ The problem is to understand what underlying characteristics of the problem inst
 
 In order to formulate the relationship between problem structure and heuristic efficiency one can utilise \citeauthor{Rice76}'s framework for algorithm selection problem from \citeyear{Rice76}. The framework consists of four fundamental components, namely,
 \begin{description}
-  \item[Problem space or instance space] $\mathcal{P}$, \hfill\\
-  set of problem instances; 
-  \item[Feature space] $\mathcal{F}$, \hfill\\
-  measurable properties of the instances in $\mathcal{P}$;
-  \item[Algorithm space] $\mathcal{A}$, \hfill\\
-  set of all algorithms under inspection;
-  \item[Performance space] $\mathcal{Y}$, \hfill\\
-  the outcome for $\mathcal{P}$ using an algorithm from $\mathcal{A}$.
+	\item[Problem space or instance space] $\mathcal{P}$, \hfill\\
+	set of problem instances; 
+	\item[Feature space] $\mathcal{F}$, \hfill\\
+	measurable properties of the instances in $\mathcal{P}$;
+	\item[Algorithm space] $\mathcal{A}$, \hfill\\
+	set of all algorithms under inspection;
+	\item[Performance space] $\mathcal{Y}$, \hfill\\
+	the outcome for $\mathcal{P}$ using an algorithm from $\mathcal{A}$.
 \end{description}
 For a given problem instance $\vec{x}\in\mathcal{P}$ with $d$ features $\vec{\phi}(\vec{x})=\left[\phi_1(\vec{x}),...,\phi_d( \vec{x})\right]^T\in\mathcal{F}$ and using algorithm $a\in\mathcal{A}$ the performance is $y=Y(a,\vec{\phi}(\vec{x}))\in\mathcal{Y}$, where $Y:\;\mathcal{A}\times\mathcal{F} \mapsto \mathcal{Y}$ is the mapping for algorithm and feature space onto the performance space. This data collection is often referred to as meta-data. 
 
 In the context of Rice's framework, the aforementioned approaches to scheduling problems are to maximise its expected performance: 
 
 \begin{description}
-\item[Local level] 
-\begin{equation}
-\max_{\mathcal{F}'\subset\mathcal{F}} \mathbb{E}\left[Y\left(a,\vphi(\vec{x})\right)\right]
-\end{equation}
-The  focal point is only using  problem instances that represent the problem space, $\vec{x}\in\mathcal{P'}\subset\mathcal{P}$, in addition finding a suitable subset of the feature space, $\mathcal{F}'\subset\mathcal{F}|_{\mathcal{P}'}$. If done effectively, then the resulting learning model $a\in\mathcal{A}$ needs only be run once via ordinal regression.
-%In addition, for global level,
-\item[Global level]
-\begin{equation}
-\max_{a\in\mathcal{A}} \mathbb{E}\left[Y\left(a,\vphi(\vec{x})\right)\right]
-\end{equation}
-This is  straightforward  approach as the algorithm $a\in\mathcal{A}$ is optimised directly given the entire training data $\vec{x}\in\mathcal{P}$. Alas, this comes at a great computational cost.
+	\item[Local level] 
+	\begin{equation}
+		\max_{\mathcal{F}'\subset\mathcal{F}} \mathbb{E}\left[Y\left(a,\vphi(\vec{x})\right)\right]
+	\end{equation}
+	The  focal point is only using  problem instances that represent the problem space, $\vec{x}\in\mathcal{P'}\subset\mathcal{P}$, in addition finding a suitable subset of the feature space, $\mathcal{F}'\subset\mathcal{F}|_{\mathcal{P}'}$. If done effectively, then the resulting learning model $a\in\mathcal{A}$ needs only be run once via ordinal regression.
+	%In addition, for global level,
+	\item[Global level]
+	\begin{equation}
+		\max_{a\in\mathcal{A}} \mathbb{E}\left[Y\left(a,\vphi(\vec{x})\right)\right]
+	\end{equation}
+	This is  straightforward  approach as the algorithm $a\in\mathcal{A}$ is optimised directly given the entire training data $\vec{x}\in\mathcal{P}$. Alas, this comes at a great computational cost.
 \end{description}
 Note, the mappings $\vphi:\mathcal{P}\mapsto\mathcal{F}$ and $Y:\mathcal{A}\mapsto\mathcal{Y}$ are the same for both paradigms.
 

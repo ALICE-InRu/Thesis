@@ -28,15 +28,15 @@ For Kriging models an ``infill sampling criteria'' is implemented by sampling th
 
 When the training accuracy is 100\% one way of evaluating the accuracy of the surrogate is through cross validation. The quality of the surrogate is measured as the rank correlation between the surrogate ranking and the true ranking on training data. Here Kendall's $\tau$ is used for this purpose \citep[cf.][]{Kendall38}.  Kendall's $\tau$ is computed using the relative ordering of the ranks of all $l(l-1)/2$ possible pairs.  A pair is said to be concordant if the relative ranks of $h(\vec{x}_i)$ and $h(\vec{x}_j)$ are the same for $f(\vec{x}_i)$ and $f(\vec{x}_j)$, otherwise they are discordant. Kendall's $\tau$ is the normalised difference in the number of concordant and discordant pairs, defined as follows, %<mætti sleppa>
 \begin{equation}\label{eq:tau}
-\tau = \frac{C-D}{\sqrt{C+D+T(h)}\sqrt{C+D+T(f)}}
+	\tau = \frac{C-D}{\sqrt{C+D+T(h)}\sqrt{C+D+T(f)}}
 \end{equation}
 where $C$ and $D$ denote the number of concordant and discordant pairs, respectively, and $T$ denotes number of ties. %</mætti sleppa>
 Two rankings are the same when $\tau=1$, completely reversed if $\tau = -1$, and uncorrelated for $\tau \approx 0$.
 
 \begin{figure}
-\includegraphics[width=\textwidth]{anova}
-\caption[Box plot for different validation strategies]{Box plot for different validation methods~\cref{sur:val:org,sur:val:pseudo,sur:val:first,sur:val:last,sur:val:mubest} for Rosenbrock function of dimension $d=2$.}
-\label{fig:boxplot}
+	\includegraphics[width=\textwidth]{anova}
+	\caption[Box plot for different validation strategies]{Box plot for different validation methods~\cref{sur:val:org,sur:val:pseudo,sur:val:first,sur:val:last,sur:val:mubest} for Rosenbrock function of dimension $d=2$.}
+	\label{fig:boxplot}
 \end{figure}
 
 The surrogate ranking validation and improvement strategy using ordinal regression is tested using a Covariance Matrix Adaptation Evolution Strategy (CMA-ES) developed by \cite{Hansen01}. CMA-ES is a very efficient numerical optimization technique, however we still expect to reduce the number of function evaluations needed for search. For \cite{Ru06:PPSN} the validation policy had to successfully rank all of the candidate individuals, i.e.,  until $\tau=1$. %<viðbót vegna rýnis>
@@ -53,11 +53,11 @@ Lastly, one should also investigate the frequency by which the model is validate
 
 Preliminary tests were conducted on which validation method deemed fruitful, by implementing  Rosenbrock function of dimension $d=2$, for the following setups, 
 \begin{inparaenum}[{Method} (i)]
- \item the setup presented in \cite{Ru06:PPSN} %\label{sur:val:org}
- \item omitting the worst individuals during the pruning process, instead of the oldest ones; \label{sur:val:first}
- \item initialise the validation process by using a pseudo individual that represents the mean of the new candidate individuals; \label{sur:val:pseudo}
- \item requiring that only the $\mu$ best candidate individuals are correctly ranked; \label{sur:val:mubest}
-\item validating on every other generation. \label{sur:val:last}
+	\item the setup presented in \cite{Ru06:PPSN} %\label{sur:val:org}
+	\item omitting the worst individuals during the pruning process, instead of the oldest ones; \label{sur:val:first}
+	\item initialise the validation process by using a pseudo individual that represents the mean of the new candidate individuals; \label{sur:val:pseudo}
+	\item requiring that only the $\mu$ best candidate individuals are correctly ranked; \label{sur:val:mubest}
+	\item validating on every other generation. \label{sur:val:last}
 \end{inparaenum}
 To summarise, the original method~\cref{sur:val:org} is compared with the aforementioned validation improvements, namely methods~\cref{sur:val:first,sur:val:pseudo,sur:val:mubest,sur:val:last}, which were added one at a time to the original method. 
 
@@ -69,45 +69,45 @@ If the training accuracy is not 100\% then clearly $\tau < 1$. In this case addi
 
 Based on these preliminary tests, a pseudo code for the proposed model validation and improvement strategy is described in~\cref{fig:pseudocode} where it is implemented at the end of each generation of CMA-ES. The algorithm essentially only evaluates the expensive true fitness function when the surrogate is believed to have diverged. During each iteration of the validation process there are two sets of individuals, $\mathcal{Y}$ and $\mathcal{X}$, which are the training individuals  which have been evaluated with the expensive model, and the candidate individuals (of unknown fitness) for the next iteration of CMA-ES, respectively. The test individuals  of interest are those who are believed to become parent individuals  in the next generation of CMA-ES, i.e.,  the $\mu$ best ranked candidate individuals according to the surrogate $h$. The method uses only a simple cross-validation on a single test individual, the one which the surrogate ranks the highest and has not yet been added to the training set. Creating more test individuals  would be too costly, but plausible. Once a test individual has been evaluated it is added to the training set and the surrogate $h$ is updated w.r.t. $\mathcal{Y}$, cf.~\cref{fig:schema}. This is repeated until the surrogate is said to be sufficiently accurate, which occurs if either,
 \begin{description}
-  \item[$\tau$ sufficiently close], i.e.,  Kendall's $\tau$ statistic between the ranking of the training set using the surrogate, $\bar{R}$, and its true ranking, $R$, is higher than $0.999$, or 
-  \item[$\mu$ best ranked] candidate individuals w.r.t. the current surrogate have been added to the training set.
+	\item[$\tau$ sufficiently close], i.e.,  Kendall's $\tau$ statistic between the ranking of the training set using the surrogate, $\bar{R}$, and its true ranking, $R$, is higher than $0.999$, or 
+	\item[$\mu$ best ranked] candidate individuals w.r.t. the current surrogate have been added to the training set.
 \end{description}
 Note that during each update of the surrogate of the ranking of the $\mu$ best candidate individuals can change. Thus it is possible to evaluate more then $\mu$ test individuals  during each validation iteration. 
 
 Once the validation algorithm has completed, the training set is pruned to a size $\bar{l}=\lambda$ by omitting the lowest ranking individuals . \todo{Af hverju þetta gildi á $\bar{l}$?}
 
 \begin{figure}
-\noindent{\footnotesize\begin{tabbing}
-\quad \quad \= 0\;\; \= \emph{Initialization}: Let $\mathcal{Y}$ denote current training set and its \\
-\>   \> corresponding surrogate by $h$. Let $\mathcal{X}$ denote population \\
-\>   \> of $\lambda$ individuals of unknown fitness under inspection.\\
-\>1  \> {\bf for} \= $t := 1$ to $\lambda$ {\bf do} \emph{(validate a test individual )}\\ 
-\>2  \>\> Estimate ranking of $\mathcal{X}$ using $h$; denoted by $\bar{R}_0$. \\
-\>3  \>\> $\vec{x}_B \leftarrow \max_{\vec{x}\in\mathcal{X}\setminus\mathcal{Y}}\left\{\bar{R}_0\right\}$ (\emph{test individual}). \\
-\>4  \>\> Rank $\vec{x}_B$ w.r.t. individuals  in $\mathcal{Y}$ using $h$; denoted by $\bar{R}$. \\
-\>5  \>\> Evaluate $\vec{x}_B$ using true fitness function and evaluate its\\
-\>   \>\> true rank among individuals  in $\mathcal{Y}$; denoted by $R$. \\ 
-% In the case where no explicit fitness function can be defined, the test individual is evaluated by comparing it with selected individuals  in the training set.
-\>6  \>\> $\mathcal{Y}\leftarrow\mathcal{Y}\cup\{\vec{x}_B\}$ \emph{(add to training set)}. \\
-\>7  \>\> Compare the rankings  $\bar{R}$ and $R$ by computing the rank \\
-\>   \>\> correlation $\tau$.\\
-\>8  \>\> {\bf if} \= $\tau>0.999$ {\bf then} \\
-\>9  \>\> \> break (\emph{model is sufficiently accurate}) \\
-\>10 \>\> {\bf fi} \\
-%This is a simple cross-validation on a single test individual. Creating more test individuals  would be too costly, but plausible.
-\>11  \>\> Update the surrogate $h$ using the new training set $\mathcal{Y}$.\\
-\>12  \>\> {\bf if} \= $\mu$ best individuals of $\bar{R}_0$ have been evaluated {\bf then} \\
-\>13  \>\> \> break (\emph{model is sufficiently accurate}). \\
-\>14  \>\> {\bf fi} \\
-\>15  \> {\bf od} %  Repeated the steps 1-9 above until $\tau_t>0.999$ or at least the $\mu$  highest ranking individuals  of unknown fitness have been evaluated. There is no need to evaluate more than the $\mu$ best ranking individuals  since they will be disregarded in the next iteration of CMA-ES.
-\end{tabbing}}
-\caption{Pseudo code}
-\label{fig:schema:pseudocode}
+	\noindent{\footnotesize\begin{tabbing}
+		\quad \quad \= 0\;\; \= \emph{Initialization}: Let $\mathcal{Y}$ denote current training set and its \\
+		\>   \> corresponding surrogate by $h$. Let $\mathcal{X}$ denote population \\
+		\>   \> of $\lambda$ individuals of unknown fitness under inspection.\\
+		\>1  \> {\bf for} \= $t := 1$ to $\lambda$ {\bf do} \emph{(validate a test individual )}\\ 
+		\>2  \>\> Estimate ranking of $\mathcal{X}$ using $h$; denoted by $\bar{R}_0$. \\
+		\>3  \>\> $\vec{x}_B \leftarrow \max_{\vec{x}\in\mathcal{X}\setminus\mathcal{Y}}\left\{\bar{R}_0\right\}$ (\emph{test individual}). \\
+		\>4  \>\> Rank $\vec{x}_B$ w.r.t. individuals  in $\mathcal{Y}$ using $h$; denoted by $\bar{R}$. \\
+		\>5  \>\> Evaluate $\vec{x}_B$ using true fitness function and evaluate its\\
+		\>   \>\> true rank among individuals  in $\mathcal{Y}$; denoted by $R$. \\ 
+		% In the case where no explicit fitness function can be defined, the test individual is evaluated by comparing it with selected individuals  in the training set.
+		\>6  \>\> $\mathcal{Y}\leftarrow\mathcal{Y}\cup\{\vec{x}_B\}$ \emph{(add to training set)}. \\
+		\>7  \>\> Compare the rankings  $\bar{R}$ and $R$ by computing the rank \\
+		\>   \>\> correlation $\tau$.\\
+		\>8  \>\> {\bf if} \= $\tau>0.999$ {\bf then} \\
+		\>9  \>\> \> break (\emph{model is sufficiently accurate}) \\
+		\>10 \>\> {\bf fi} \\
+		%This is a simple cross-validation on a single test individual. Creating more test individuals  would be too costly, but plausible.
+		\>11  \>\> Update the surrogate $h$ using the new training set $\mathcal{Y}$.\\
+		\>12  \>\> {\bf if} \= $\mu$ best individuals of $\bar{R}_0$ have been evaluated {\bf then} \\
+		\>13  \>\> \> break (\emph{model is sufficiently accurate}). \\
+		\>14  \>\> {\bf fi} \\
+		\>15  \> {\bf od} %  Repeated the steps 1-9 above until $\tau_t>0.999$ or at least the $\mu$  highest ranking individuals  of unknown fitness have been evaluated. There is no need to evaluate more than the $\mu$ best ranking individuals  since they will be disregarded in the next iteration of CMA-ES.
+		\end{tabbing}}
+	\caption{Pseudo code}
+	\label{fig:schema:pseudocode}
 \end{figure}
 
 \begin{figure} \centering 
-\includegraphics[width=0.5\textwidth]{schema}
-\caption{Schema for validating and improving surrogate models.}\label{fig:schema} 
+	\includegraphics[width=0.5\textwidth]{schema}
+	\caption{Schema for validating and improving surrogate models.}\label{fig:schema} 
 \end{figure}
 
 
@@ -120,17 +120,17 @@ The first experimental results are presented for the unimodal sphere model of di
 The average fitness versus the number of function evaluations is presented in~\cref{fig:sphereFitness}. A performance edge is achieved by restricting the validation strategy to only having the surrogate correctly rank the $\mu$ highest ranking individuals, and thereby saving the algorithm of evaluating individuals  that would have been disregarded in the next iteration.~\cref{fig:sphereIntmEval} shows the mean intermediate function evaluations that are calculated during the validation process. As one expects, requiring the method to evaluate no more than the $\mu$ best ranked candidate individuals results in a lower intermediate function evaluations, generally saving the method one function evaluation per generation, it also achieves a better mean fitness, as shown in~\cref{tbl:Sphere}.
 
 \begin{figure}
-%\subfloat[Mean fitness values versus number of function evaluation]{\includegraphics[trim = 8mm 10mm 10mm 5mm, clip, width=\textwidth]{sphere_meanFitness_funcEval}}
-\label{fig:sphereFitness}
-\,
-%\subfloat[Mean intermediate function evaluations versus generation]{\includegraphics[trim = 10mm 10mm 10mm 5mm, clip, width=\textwidth]{sphere_intmEvals_gen}}
-\label{fig:sphereIntmEval}
-\caption{Sphere model: Surrogate updated using all (dotted) or $\mu$ best (solid) individuals.}
+	%\subfloat[Mean fitness values versus number of function evaluation]{\includegraphics[trim = 8mm 10mm 10mm 5mm, clip, width=\textwidth]{sphere_meanFitness_funcEval}}
+	\label{fig:sphereFitness}
+	\,
+	%\subfloat[Mean intermediate function evaluations versus generation]{\includegraphics[trim = 10mm 10mm 10mm 5mm, clip, width=\textwidth]{sphere_intmEvals_gen}}
+	\label{fig:sphereIntmEval}
+	\caption{Sphere model: Surrogate updated using all (dotted) or $\mu$ best (solid) individuals.}
 \end{figure}
 
 \begin{table} \centering
-\caption{Main statistics of experimental results for updating surrogate with all or $\mu$ best individuals on sphere model.}\label{tbl:Sphere}
-\input{tables/sphere-main}
+	\caption{Main statistics of experimental results for updating surrogate with all or $\mu$ best individuals on sphere model.}\label{tbl:Sphere}
+	\input{tables/sphere-main}
 \end{table}
 
 \subsection{Rosenbrock function}\label{sec:rosen}
@@ -138,17 +138,17 @@ The first experiment is now repeated for Rosenbrock function.
 The average fitness versus the number of function evaluations is presented in~\cref{fig:rosenFitness} and~\cref{fig:rosenIntmEval} shows the mean intermediate function evaluations that are calculated during the validation process. Despite requiring more generations, the over all function evaluations are significantly lower and yield a better fitness when updating the surrogate on only the $\mu$ best individuals as shown in~\cref{tbl:Rosenbrock}. If all of the candidate individuals have to be ranked correctly, the method will get stuck in local minima for this problem in around 6 out of 100 experiments, however this is not a problem if only the $\mu$ best candidate individuals are ranked consistently, except at high dimensions, and even then the $\mu$ best individuals  policy significantly outperforms evaluating all of the candidate individuals. Clearly the choice of validation policy will influence search performance. 
 
 \begin{figure}
-%\subfloat[Mean fitness values versus number of function evaluation]{\includegraphics[trim = 10mm 10mm 10mm 5mm, clip, width=\textwidth]{rosen_meanFitness_funcEval}}
-\label{fig:rosenFitness}
-\,
-%\subfloat[Mean intermediate function evaluations versus generation]{\includegraphics[trim = 15mm 10mm 15mm 5mm, clip, width=\textwidth]{rosen_intmEvals_gen}}
-\label{fig:rosenIntmEval}
-\caption{Rosenbrock function: Surrogate updated using all (dotted) or $\mu$ best (solid) individuals.}
+	%\subfloat[Mean fitness values versus number of function evaluation]{\includegraphics[trim = 10mm 10mm 10mm 5mm, clip, width=\textwidth]{rosen_meanFitness_funcEval}}
+	\label{fig:rosenFitness}
+	\,
+	%\subfloat[Mean intermediate function evaluations versus generation]{\includegraphics[trim = 15mm 10mm 15mm 5mm, clip, width=\textwidth]{rosen_intmEvals_gen}}
+	\label{fig:rosenIntmEval}
+	\caption{Rosenbrock function: Surrogate updated using all (dotted) or $\mu$ best (solid) individuals.}
 \end{figure}
 
 \begin{table}\centering
-\caption{Main statistics of experimental results for updating surrogate with all or $\mu$ best individuals on Rosenbrock function.} \label{tbl:Rosenbrock}
-\input{tables/rosen-main}
+	\caption{Main statistics of experimental results for updating surrogate with all or $\mu$ best individuals on Rosenbrock function.} \label{tbl:Rosenbrock}
+	\input{tables/rosen-main}
 \end{table}
 
 \section{Discussion and Conclusion}\label{sec:sur:disc}
