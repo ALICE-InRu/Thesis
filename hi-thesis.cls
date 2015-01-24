@@ -36,13 +36,13 @@
 \RequirePackage{hyperref}
 \hypersetup{
 	linktocpage,
-    colorlinks,
-    citecolor=black, % could be themecolor
-    filecolor=black,
-    linkcolor=black,
-    urlcolor=black, % could be themecolor
-    pdfauthor={\@author},
-    pdftitle={\@title}   
+	colorlinks,
+	citecolor=black, % could be themecolor
+	filecolor=black,
+	linkcolor=black,
+	urlcolor=black, % could be themecolor
+	pdfauthor={\@author},
+	pdftitle={\@title}   
 }
 
 \RequirePackage[centertags]{amsmath}
@@ -99,6 +99,8 @@
 \RequirePackage{titling}
 \RequirePackage{setspace} 
 \RequirePackage{booktabs} % for much better looking tables
+\usepackage{enumitem}
+
 \onehalfspacing
 %\raggedright
 
@@ -146,11 +148,8 @@
 %Surprisingly, you may find this setting leaves your floats too high on the page. One can justify a value of 5pt (in place of 0pt) — it’s roughly the difference between \topskip and the height of normal (10pt) text.
 %Note that this is a “global” setting (best established in a class file, or at worst in the document preamble); making the change for a single float page is likely (at the least) to be rather tricky.
 
-
-
-\usepackage{enumitem}
-
 % some definitions
+\makeatletter
 \def\degreeyear#1{\gdef\@degreeyear{#1}}
 \def\degreemonth#1{\gdef\@degreemonth{#1}}
 \def\degree#1{\gdef\@degree{#1}}
@@ -175,36 +174,42 @@
 
 
 \renewcommand{\maketitle}{ 
-
-        \pagestyle{fancy}
+	\pagestyle{fancy}
 	\pagenumbering{roman}
 	\thispagestyle{empty}
+			
+	\vspace{12pt} 
+	\begin{center}
+		\normalsize Dissertation for the degree of \@degree
+    \vspace{12pt}\\
+		\Huge \textcolor{themecolor}{\sc{\@title}}
+    \vspace{24pt}\\
+		\Large \@author
 
-	\vspace{12pt} \begin{center}
-	\normalsize Dissertation for the degree of doctor of philosophy\\ \vspace{12pt}
-	\Huge \textcolor{themecolor}{\sc{\@title}}  \\ \vspace{24pt}
-	\Large \@author \\ 
-        {\vspace*{\fill} { \includegraphics[width=0.5\columnwidth]{frontmatter/HI-logo_transparent2-black-EN} 
-        \par} \vspace*{\fill}}
+		\vspace*{\fill}
+    \includegraphics[width=0.75\columnwidth]
+    {frontmatter/HI-logo_transparent2-black-EN}
+		\vspace*{\fill}
 
-	\normalsize
-	\@department\\
-	\@faculty\\
-        \@universitycity, \@degreemonth\ \@degreeyear
+		\normalsize
+		\@department\\
+		\@faculty\\
+		\@universitycity, \@degreemonth\ \@degreeyear
 	\end{center} 
-
-	\newpage \lhead{} \rhead{} 
-	\cfoot{\thepage}
+			
+	\newpage 
+  \lhead{} \rhead{} \cfoot{\thepage}
 }
 
 % You might also consider licensing your work under Creative Commons (NOTE: this is non-traditional, but a good idea). See: http://creativecommons.org/weblog/entry/12824 for other PhD students who release their work under creative commons.
 
 \newcommand{\copyrightpage}{
 	\newpage \thispagestyle{empty} 
-	\noindent A dissertation presented to the \@university\ \@department\ in candidacy for the degree of doctor of philosophy.\\ 
-
+	\noindent A dissertation presented to the \@university\ \@department\ in 
+	candidacy for the degree of \@degree.\\ 
+			
 	\vspace*{\fill}
-
+			
 	\noindent {\bf Doctoral committee} \\
 	\noindent \@advisor\\
 	\noindent \@advisoraffiliation \\
@@ -214,18 +219,18 @@
 	\\
 	\noindent \@committeeB\\
 	\noindent \@committeeaffiliationB \\
-
+			
 	\vspace*{\fill}
-
+			
 	\noindent{\bf Opponents} \\
 	\noindent \@opponentA\\
 	\noindent \@opponentaffiliationA\\
 	\\
 	\noindent \@opponentB \\
 	\noindent \@opponentaffiliationB \\
-
+			
 	\vspace*{\fill} 
-
+			
 	\noindent \@title \\
 	\noindent \copyright\ \@degreeyear\ \@author\\
 	\noindent Printed in \@universitycountry\ by \@printer \\
@@ -264,7 +269,7 @@
 	\noindent
 	\input{frontmatter/thanks}
 	\vspace*{\fill} 
-
+			
 	\cleardoublepage % setting up for the mainmatter
 	\setcounter{page}{1}
 	\pagenumbering{arabic}
@@ -273,8 +278,8 @@
 	
 % An environment for paragraph-style section
 \providecommand\newthought[1]{%
-   \addvspace{1.0\baselineskip plus 0.5ex minus 0.2ex}%
-   \noindent\textsc{#1}}%
-	
+	\addvspace{1.0\baselineskip plus 0.5ex minus 0.2ex}%
+	\noindent\textsc{#1}
+}
 %Be more forgiving, and stretch word spacing out more so that words don't run out into the margins..
 %\emergencystretch=1.5em

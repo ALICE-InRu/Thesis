@@ -21,13 +21,13 @@
 	  \addcontentsline{toc}{chapter}{Listing of Figures}
 	  \listoftables
 	  \addcontentsline{toc}{chapter}{Listing of Tables}
-	  \include{scripts/nomencl}	  
+	  \include{scripts/nomencl}
 	  \printnomenclature  
 	  \addcontentsline{toc}{chapter}{Nomenclature}
 	  \acknowledgments
   }{}
   \ifthenelse{\equal{#1}{false}}{
-      \pagenumbering{roman}
+    \pagenumbering{roman}
 	  \listoftodos   
 	  
 	  \tableofcontents
@@ -63,14 +63,14 @@
   \include{endmatter/ordinal} 
   \include{endmatter/surrogates}  	
   	
-  \ifthenelse{\equal{#1}{true}}{  	  
-	\include{endmatter/fun} % test function suite
-	\include{endmatter/conf} % published papers etc.
-	\include{endmatter/colophon}  
-  }{}
+  \ifthenelse{\equal{#1}{true}}{
+    \include{endmatter/fun} % test function suite
+    \include{endmatter/conf} % published papers etc.
+    \include{endmatter/colophon}  
+    }{}
   \ifthenelse{\equal{#1}{false}}{}{}
 }
-\newcommand{\printAll}{false} % either true or false
+\newcommand{\printAll}{false} % either true or false CASE-SENSITIVE
 
 \begin{document}
 
