@@ -64,7 +64,6 @@
 \renewcommand\bibname{References}
 \renewcommand\listfigurename{Listing of figures}
 \renewcommand\listtablename{Listing of tables}
-% \raggedright % if you want mainmatter to be rightaligned 
 
 
 \RequirePackage{pdfsync} %do pdf synchronization [andy]
@@ -172,33 +171,27 @@
 \def\opponentB#1{\gdef\@opponentB{#1}}
 \def\opponentaffiliationB#1{\gdef\@opponentaffiliationB{#1}}
 
-
 \renewcommand{\maketitle}{ 
-	\pagestyle{fancy}
-	\pagenumbering{roman}
-	\thispagestyle{empty}
-			
-	\vspace{12pt} 
-	\begin{center}
-		\normalsize Dissertation for the degree of \@degree
-    \vspace{12pt}\\
-		\Huge \textcolor{themecolor}{\sc{\@title}}
-    \vspace{24pt}\\
-		\Large \@author
+    \pagestyle{fancy}
+    \pagenumbering{roman}
+    \thispagestyle{empty}
+    \begin{center}
+        \normalsize Dissertation for the degree of \@degree
+        \vspace{12pt}\\
+        \Huge \textcolor{themecolor}{\sc{\@title}}
+        \vspace{24pt}\\
+        \Large \@author
+        \vspace*{\fill}\\
+        \includegraphics[width=0.5\columnwidth]{frontmatter/HI-logo.pdf}
+        \vspace*{\fill}\\
+        \normalsize
+        \@department\\
+        \@faculty\\
+        \@universitycity, \@degreemonth\ \@degreeyear
+    \end{center} 
 
-		\vspace*{\fill}
-    \includegraphics[width=0.75\columnwidth]
-    {frontmatter/HI-logo_transparent2-black-EN}
-		\vspace*{\fill}
-
-		\normalsize
-		\@department\\
-		\@faculty\\
-		\@universitycity, \@degreemonth\ \@degreeyear
-	\end{center} 
-			
-	\newpage 
-  \lhead{} \rhead{} \cfoot{\thepage}
+    \newpage 
+    \lhead{} \rhead{} \cfoot{\thepage}
 }
 
 % You might also consider licensing your work under Creative Commons (NOTE: this is non-traditional, but a good idea). See: http://creativecommons.org/weblog/entry/12824 for other PhD students who release their work under creative commons.
@@ -283,3 +276,76 @@
 }
 %Be more forgiving, and stretch word spacing out more so that words don't run out into the margins..
 %\emergencystretch=1.5em
+
+% An environment for paragraph-style section
+\providecommand\newthought[1]{%
+    \addvspace{1.0\baselineskip plus 0.5ex minus 0.2ex}%
+    \noindent\textsc{#1}
+}
+
+% my papers page
+\usepackage{pgfkeys}
+\makeatletter
+\pgfkeys{/papers/entities/.cd,
+    authorslist/.initial=\@author,
+    affiliationlist/.initial={\@department, \@university, \@universitycountry},
+    remark/.initial=NA,
+    natbib/.initial=NA,
+    file/.initial=NA,
+    doi/.initial=NA,
+}
+
+\usepackage{keyval}
+\usepackage{usebib}
+\newbibfield{booktitle}
+\newbibfield{doi}
+
+\def\papers@set@keys#1{%%
+    \pgfkeys{/papers/entities/.cd,#1}}
+\def\papers@get#1{%%
+    \pgfkeysvalueof{/papers/entities/#1}}
+\newcommand\paper[1]{%%
+    
+    \bgroup
+    \papers@set@keys{#1}
+    
+    {
+        \normalsize
+        \raggedright
+        \papers@get{authorslist}
+    }
+    {\par\vskip0.5\baselineskip\hrule\vskip0.5\baselineskip}
+    %
+    {
+        \scriptsize
+        \raggedright
+        \papers@get{affiliationlist}
+    }
+    {\par\vskip4ex}
+    %
+    {
+        \begin{spacing}{0.8}
+        \noindent
+        \raggedright
+        \small
+        \usebibentry{\papers@get{natbib}}{booktitle}
+        \ifthenelse{\equal{\papers@get{remark}}{NA}}{}{
+            -- \papers@get{remark}}
+        \ifthenelse{\equal{\papers@get{doi}}{NA}}{}{
+            \\doi: \papers@get{doi}}
+        \end{spacing}
+    }
+    {\par\vskip4ex}
+    %
+    \vfill
+    %
+    \noindent\small
+    Reprinted with permission from 
+    \usebibentry{\papers@get{natbib}}{booktitle}. 
+    Copyright \usebibentry{\papers@get{natbib}}{year}.
+    %
+    \newpage
+    \thispagestyle{empty}
+    \includepdf[pages={-},pagecommand={\thispagestyle{empty}}]{\papers@get{file}}
+    \egroup}
+\makeatother
