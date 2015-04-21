@@ -31,15 +31,16 @@
   \ifthenelse{\equal{#1}{false}}{
     \pagenumbering{roman}
 	  \listoftodos
-	  
-	  \tableofcontents
-	  \listoffigures
-	  \addcontentsline{toc}{chapter}{Listing of Figures}
-	  \listoftables
-	  \addcontentsline{toc}{chapter}{Listing of Tables}
-	  \include{scripts/nomencl}	  
-	  \printnomenclature  
-	  \addcontentsline{toc}{chapter}{Nomenclature}
+
+      \tableofcontents
+      \listoffigures
+      \addcontentsline{toc}{chapter}{Listing of Figures}
+      \listoftables
+      \addcontentsline{toc}{chapter}{Listing of Tables}
+      \include{frontmatter/publications}
+      \include{scripts/nomencl}
+      \printnomenclature  
+      \addcontentsline{toc}{chapter}{Nomenclature}
 	  
 	  % Main matter
 	  \cleardoublepage
@@ -72,7 +73,7 @@
     }{}
   \ifthenelse{\equal{#1}{false}}{}{}
 }
-\newcommand{\printAll}{true} % either true or false CASE-SENSITIVE
+\newcommand{\printAll}{false} % either true or false CASE-SENSITIVE
 
 \begin{document}
 
@@ -84,7 +85,7 @@
 \include{chapters/scheduling}
 \include{chapters/genprobleminstances}
 \include{chapters/problemstructure}
-%\include{chapters/prefmodels}
+\include{chapters/prefmodels}
 \include{chapters/esmodels}
 \include{chapters/experiments}
 \include{chapters/conclusions}

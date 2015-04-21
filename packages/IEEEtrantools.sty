@@ -1,9 +1,9 @@
 %%
-%% IEEEtrantools.sty 2012/12/27 version V1.3
+%% IEEEtrantools.sty 2014/09/17 version V1.4
 %% 
 %% 
 %% This package provides several popular and unique commands from the
-%% IEEEtran.cls class (version 1.8) file.
+%% IEEEtran.cls class (version 1.8a) file.
 %% 
 %% The provided commands include \IEEEPARstart, \IEEEitemize, \IEEEenumerate,
 %% \IEEEdescription as well as the \IEEEeqnarray, \IEEEeqnarraybox family
@@ -19,7 +19,7 @@
 %% http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/
 %%
 %% 
-%% Copyright (c) 2002-2012 by Michael Shell
+%% Copyright (c) 2002-2014 by Michael Shell
 %%                            See: http://www.michaelshell.org/
 %%                            for current contact information.
 %%
@@ -64,7 +64,7 @@
 %%**********************************************************************
 
 
-\ProvidesPackage{IEEEtrantools}[2012/12/27 V1.3 by Michael Shell]
+\ProvidesPackage{IEEEtrantools}[2014/09/17 V1.4 by Michael Shell]
 \typeout{-- See the "IEEEtrantools_doc.txt" manual for usage information.}
 \typeout{-- http://www.michaelshell.org/tex/ieeetran/tools/}
 \NeedsTeXFormat{LaTeX2e}
@@ -72,10 +72,15 @@
 
 % If \@IEEEeqnarray is detected, error.
 {\@ifundefined{@IEEEeqnarray}{\relax}{%
-\PackageError{IEEEtrantools}{The IEEEtrantools package is not for use\MessageBreak
+\PackageError{IEEEtrantools}{The IEEEtrantools package is not for 
+use\MessageBreak
                              with classes that already provide it}%
     {Do not load IEEEtrantools - you don't need it.}%
 }}
+
+
+% hook to allow easy changeover to IEEEtran.cls/tools.sty error reporting
+\def\@IEEEclspkgerror{\PackageError{IEEEtrantools}}
 
 
 % define needed flags to indicate document options
@@ -87,9 +92,11 @@
 % dimen
 \newdimen\@IEEEtrantmpdimenA
 \newdimen\@IEEEtrantmpdimenB
+\newdimen\@IEEEtrantmpdimenC
 % count
 \newcount\@IEEEtrantmpcountA
 \newcount\@IEEEtrantmpcountB
+\newcount\@IEEEtrantmpcountC
 % token list
 \newtoks\@IEEEtrantmptoksA
 
@@ -103,10 +110,857 @@
 \ProcessOptions
 
 
-
 % store the nominal value of jot
 \newdimen\IEEEnormaljot
 \IEEEnormaljot\jot\relax
+% V1.4 allow for other packages that later change \jot
+\AtBeginDocument{\IEEEnormaljot\jot\relax}
+
+
+
+
+%% -- Command Argument Scanning Support Functions --
+%
+
+% usage: \@IEEEstripouterbraces*{}
+% \@IEEEstripouterbraces fully expands its argument (which it then stores
+% in \@IEEEstripouterbracesarg) via \edef, then removes any outer enclosing
+% braces, and finally stores the result in the macro
+% \@IEEEstrippedouterbraces.
+%
+% For example:
+% \@IEEEstripouterbraces{{{{ab}c}}}
+% results in:
+%
+% \@IEEEstripouterbracesarg ==> a macro containing {{{ab}c}}
+% \@IEEEstrippedouterbraces ==> a macro containing {ab}c
+%
+% the *-star form,\@IEEEstripouterbraces*, does not expand the argument
+% contents during processing
+\def\@IEEEstripouterbraces{\@ifstar{\let\@IEEEstripouterbracesdef=\def\@@IEEEstripouterbraces}{\let\@IEEEstripouterbracesdef=\edef\@@IEEEstripouterbraces}}
+
+\def\@@IEEEstripouterbraces#1{\@IEEEstripouterbracesdef\@IEEEstripouterbracesarg{#1}\relax
+% If the macro is unchanged after being acquired as a single delimited
+% argument, we know we have one sequence of tokens without any enclosing
+% braces. Loop until this is true.
+\loop
+  \expandafter\@@@IEEEstripouterbraces\@IEEEstripouterbracesarg\@IEEEgeneralsequenceDELIMITER
+\ifx\@IEEEstrippedouterbraces\@IEEEstripouterbracesarg
+\else
+  \let\@IEEEstripouterbracesarg\@IEEEstrippedouterbraces
+\repeat}
+
+\def\@@@IEEEstripouterbraces#1\@IEEEgeneralsequenceDELIMITER{\def\@IEEEstrippedouterbraces{#1}}
+
+
+
+% usage: \@IEEEextractgroup*{}
+% \@IEEEextractgroup fully expands its argument (which it then stores in
+% \@IEEEextractgrouparg) via \edef and then assigns the first "brace group"
+% of tokens to the macro \@IEEEextractedgroup.
+% The remaining groups, if any, are stored in the macro
+% \@IEEEextractedgroupremain. If the argument does not contain the requisite
+% groups, the respective macros will be defined to be empty.
+% There is an asymmetry in that \@IEEEextractedgroup is stripped of its first
+% outer grouping while \@IEEEextractedgroupremain retains even the outer
+% grouping (if present) that originally identified it as a group.
+%
+% For example:
+% \@IEEEextractgroup{{{ab}}{c{de}}}
+% results in:
+%
+% \@IEEEextractgrouparg       ==> a macro containing {{ab}}{c{de}}
+% \@IEEEextractedgroup        ==> a macro containing {ab}
+% \@IEEEextractedgroupremain  ==> a macro containing {c{de}}
+%
+% The *-star form, \@IEEEextractgroup*, does not expand its argument
+% contents during processing.
+\def\@IEEEextractgroup{\@ifstar{\let\@IEEEextractgroupdef=\def\@@IEEEextractgroup}{\let\@IEEEextractgroupdef=\edef\@@IEEEextractgroup}}
+
+\def\@@IEEEextractgroup#1{\@IEEEextractgroupdef\@IEEEextractgrouparg{#1}\relax
+% trap the case of an empty extracted group as this would cause problems with
+% \@IEEEextractgroupremain's argument acquisition
+\ifx\@IEEEextractgrouparg\@empty
+  \def\@IEEEextractedgroup{}\relax
+  \def\@IEEEextractedgroupremain{}\relax
+\else
+  % We have to use some dirty tricks here. We want to insert {} around
+  % whatever remains after the first group so that TeX's argument scanner
+  % will preserve any originally enclosing braces as well as provide an
+  % empty argument to acquire even if there isn't a second group.
+  % In this first of two dirty tricks, we put a } at the end of the structure
+  % we are going to extract from. The \ifnum0=`{\fi keeps TeX happy to allow
+  % what would otherwise be an unbalanced macro definition for
+  % \@@IEEEextractgroup to be acceptable to it.
+  \ifnum0=`{\fi\expandafter\@IEEEextractgroupremain\@IEEEextractgrouparg}\relax
+\fi}
+
+% In the second part of the dirty tricks, we insert a leading { right after
+% the first group is acquired, but before the remainder is. Again, the
+% \ifnum0=`}\fi keeps TeX happy during definition time, but will disappear
+% during run time.
+\def\@IEEEextractgroupremain#1{\def\@IEEEextractedgroup{#1}\expandafter\@@IEEEextractgroupremain\expandafter{\ifnum0=`}\fi}
+
+\def\@@IEEEextractgroupremain#1{\def\@IEEEextractedgroupremain{#1}}
+
+
+
+% usage: \@IEEEextracttoken*{}
+% \@IEEEextracttoken fully expands its argument (which it then stores in
+% \@IEEEextracttokenarg) via \edef and then the meaning of the first
+% nonbrace (but including the empty group) token found is assigned via \let
+% to \@IEEEextractedtoken as well as stored in the macro
+% \@IEEEextractedtokenmacro. Tokens that would otherwise be discarded during
+% the acquisition of the first are stored in \@IEEEextractedtokensdiscarded,
+% however their original relative brace nesting depths are not guaranteed to
+% be preserved.
+% If the argument is empty, or if a first nonbrace token does not exist (or
+% is an empty group), \@IEEEextractedtoken will be \relax and
+% \@IEEEextractedtokenmacro and \@IEEEextractedtokensdiscarded will be empty.
+%
+% For example:
+% \@IEEEextracttoken{{{ab}{cd}}{{ef}g}}
+% results in:
+%
+% \@IEEEextracttokenarg          ==> a macro containing {{ab}{cd}}{{ef}g}
+% \@IEEEextractedtoken           ==> the letter a
+% \@IEEEextractedtokenmacro      ==> a macro containing a
+% \@IEEEextractedtokensdiscarded ==> a macro containing bcd{ef}g
+%
+% the *-star form, \@IEEEextracttoken*, does not expand its argument
+% contents during processing.
+\def\@IEEEextracttoken{\@ifstar{\let\@IEEEextracttokendef=\def\@@IEEEextracttoken}{\let\@IEEEextracttokendef=\edef\@@IEEEextracttoken}}
+
+\def\@@IEEEextracttoken#1{\@IEEEextracttokendef\@IEEEextracttokenarg{#1}\relax
+\def\@IEEEextractedtokensdiscarded{}\relax % initialize to empty
+% if the macro is unchanged after being acquired as a single undelimited 
+%argument
+% with anything after it being stripped off as a delimited argument
+% we know we have one token without any enclosing braces. loop until this is 
+%true.
+\let\@IEEEextracttokencurgroup\@IEEEextracttokenarg
+\loop
+  % trap case of an empty argument as this would cause a problem with
+  % \@@@IEEEextracttoken's first (nondelimited) argument acquisition
+  \ifx\@IEEEextracttokencurgroup\@empty
+    \def\@IEEEextractedtokenmacro{}\relax
+  \else
+    \expandafter\@@@IEEEextracttoken\@IEEEextracttokencurgroup\@IEEEgeneralsequenceDELIMITER\relax
+  \fi
+  \ifx\@IEEEextractedtokenmacro\@IEEEextracttokencurgroup
+  \else
+    \let\@IEEEextracttokencurgroup=\@IEEEextractedtokenmacro
+\repeat
+% we can safely do a \let= here because there should be at most one token
+% the relax is needed to handle the case of no token found
+\expandafter\let\expandafter\@IEEEextractedtoken\@IEEEextractedtokenmacro\relax}
+
+\def\@@@IEEEextracttoken#1#2\@IEEEgeneralsequenceDELIMITER{\def\@IEEEextractedtokenmacro{#1}\relax
+\def\@@IEEEextractedtokensdiscarded{#2}\expandafter\expandafter\expandafter\def\expandafter\expandafter\expandafter
+\@IEEEextractedtokensdiscarded\expandafter\expandafter\expandafter
+{\expandafter\@@IEEEextractedtokensdiscarded\@IEEEextractedtokensdiscarded}}
+
+
+
+% usage: \@IEEEextracttokengroups*{}
+% \@IEEEextracttokengroups fully expands its argument (which it then stores
+% in \@IEEEextracttokengroupsarg) and then assigns the first "brace group" of
+% tokens (with the outermost braces removed) to the macro
+% \@IEEEextractedfirstgroup.
+% The meaning of the first nonbrace (but including the empty group) token
+% within this first group is assigned via \let to \@IEEEextractedfirsttoken
+% as well as stored in the macro \@IEEEextractedfirsttokenmacro. If a first
+% nonbrace token does not exist (or is an empty group), these will be \relax
+% and empty, respectively.  Tokens that would otherwise be discarded during
+% the acquisition of the first token in the first group are stored in
+% \@IEEEextractedfirsttokensdiscarded, however their original relative brace
+% nesting depths are not guaranteed to be preserved.
+% The first group within this first group is stored in the macro
+% \@IEEEextractedfirstfirstgroup.
+% Likewise for the next group after the first: \@IEEEextractednextgroup,
+% \@IEEEextractednextfirstgroup, \@IEEEextractednextgroupfirsttoken,
+% \@IEEEextractednextgroupfirsttokenmacro, and 
+% \@IEEEextractednextfirsttokensdiscarded.
+% All tokens/groups after the first group, including any enclosing braces,
+% are stored in the macro \@IEEEextractedafterfirstgroupremain which will
+% be empty if none exist.
+%
+% For example:
+% \@IEEEextracttokengroups{{{ab}{cd}}{{ef}g}}
+% will result in:
+%
+% \@IEEEextracttokengroupsarg             ==> a macro containing 
+%{{ab}{cd}}{{ef}g}
+% \@IEEEextractedfirstgroup               ==> a macro containing {ab}{cd}
+% \@IEEEextractedafterfirstgroupremain    ==> a macro containing {{ef}g}
+% \@IEEEextractedfirsttoken               ==> the letter a
+% \@IEEEextractedfirsttokenmacro          ==> a macro containing a
+% \@IEEEextractedfirsttokensdiscarded     ==> a macro containing bcd
+% \@IEEEextractedfirstfirstgroup          ==> a macro containing ab
+% \@IEEEextractednextgroup                ==> a macro containing {ef}g
+% \@IEEEextractednextfirsttoken           ==> the letter e
+% \@IEEEextractednextfirsttokenmacro      ==> a macro containing e
+% \@IEEEextractednextfirsttokensdiscarded ==> a macro containing fg
+% \@IEEEextractednextfirstgroup           ==> a macro containing ef
+%
+% If given an empty argument, \@IEEEextractedfirsttoken and
+% \@IEEEextractednextfirsttoken will be set to \relax
+% and all the macros will be empty.
+% the *-star form, \@IEEEextracttokengroups*, does not expand its argument
+% contents during processing.
+%
+% Depends on: \@IEEEextractgroup, \@IEEEextracttoken
+\def\@IEEEextracttokengroups{\@ifstar{\let\@IEEEextracttokengroupsdef=\def\@@IEEEextracttokengroups}{\let\@IEEEextracttokengroupsdef=\edef\@@IEEEextracttokengroups}}
+\def\@@IEEEextracttokengroups#1{\@IEEEextracttokengroupsdef\@IEEEextracttokengroupsarg{#1}\relax
+% begin extraction, these functions are safe with empty arguments
+% first group
+\expandafter\@IEEEextractgroup\expandafter*\expandafter{\@IEEEextracttokengroupsarg}\relax
+\let\@IEEEextractedfirstgroup\@IEEEextractedgroup
+\let\@IEEEextractedafterfirstgroupremain\@IEEEextractedgroupremain
+\expandafter\@IEEEextracttoken\expandafter*\expandafter{\@IEEEextractedfirstgroup}\relax
+\let\@IEEEextractedfirsttoken\@IEEEextractedtoken
+\let\@IEEEextractedfirsttokenmacro\@IEEEextractedtokenmacro
+\let\@IEEEextractedfirsttokensdiscarded\@IEEEextractedtokensdiscarded
+% first first group
+\expandafter\@IEEEextractgroup\expandafter*\expandafter{\@IEEEextractedfirstgroup}\relax
+\let\@IEEEextractedfirstfirstgroup\@IEEEextractedgroup
+% next group
+\expandafter\@IEEEextractgroup\expandafter*\expandafter{\@IEEEextractedafterfirstgroupremain}\relax
+\let\@IEEEextractednextgroup\@IEEEextractedgroup
+\expandafter\@IEEEextracttoken\expandafter*\expandafter{\@IEEEextractednextgroup}\relax
+\let\@IEEEextractednextfirsttoken\@IEEEextractedtoken
+\let\@IEEEextractednextfirsttokenmacro\@IEEEextractedtokenmacro
+\let\@IEEEextractednextfirsttokensdiscarded\@IEEEextractedtokensdiscarded
+% next first group
+\expandafter\@IEEEextractgroup\expandafter*\expandafter{\@IEEEextractednextgroup}\relax
+\let\@IEEEextractednextfirstgroup\@IEEEextractedgroup}
+
+
+%%
+%% -- End of Command Argument Scanning Support Functions --
+
+
+
+
+% -- page setup commands --
+
+% The default sample text for calculating margins
+\def\IEEEdefaultsampletext{\normalfont\normalsize gT}
+\def\IEEEdefaultheadersampletext{\normalfont\normalsize T}
+\def\IEEEdefaultfootersampletext{\normalfont\normalsize gT}
+
+
+
+% usage: \IEEEsettextwidth{inner margin}{outer margin}
+% Sets \textwidth to allow the specified inner and outer margins
+% for the current \paperwidth.
+\def\IEEEsettextwidth#1#2{\@IEEEtrantmpdimenA\paperwidth
+\@IEEEtrantmpdimenB#1\relax
+\advance\@IEEEtrantmpdimenA by -\@IEEEtrantmpdimenB
+\@IEEEtrantmpdimenB#2\relax
+\advance\@IEEEtrantmpdimenA by -\@IEEEtrantmpdimenB
+\textwidth\@IEEEtrantmpdimenA}
+
+
+
+% usage: \IEEEsetsidemargin{mode: i, o, c, a}{margin/offset}
+% Sets \oddsidemargin and \evensidemargin to yield the specified margin
+% of the given mode.
+% The available modes are:
+% i = inner margin
+% o = outer margin
+% c = centered, with the given offset
+% a = adjust the margins using the given offset
+% For the offsets, positive values increase the inner margin.
+% \textwidth should be set properly for the given margins before calling this
+% function.
+\def\IEEEsetsidemargin#1#2{\@IEEEtrantmpdimenA #2\relax
+\@IEEEextracttoken{#1}\relax
+% check for mode errors
+\ifx\@IEEEextractedtokenmacro\@empty
+  \@IEEEclspkgerror{Empty mode type in \string\IEEEsetsidemargin\space (line 
+  \the\inputlineno).\MessageBreak
+  Defaulting to `i'}{Valid modes for \string\IEEEsetsidemargin\space are: i, o, 
+  c and a.}\relax
+  \let\@IEEEextractedtoken=i\relax
+  \def\@IEEEextractedtokenmacro{i}\relax
+\else
+  \ifx\@IEEEextractedtokensdiscarded\@empty\else
+    \typeout{** WARNING: \string\IEEEsetsidemargin\space mode specifiers after 
+    the first in `\@IEEEextracttokenarg' ignored (line \the\inputlineno).}\relax
+  \fi
+\fi
+% handle each mode
+\if\@IEEEextractedtoken a\relax
+  \advance\oddsidemargin by \@IEEEtrantmpdimenA\relax
+\else
+\if\@IEEEextractedtoken c\relax
+  \oddsidemargin\paperwidth
+  \advance\oddsidemargin by -\textwidth
+  \divide\oddsidemargin by 2\relax
+  \advance\oddsidemargin by -1in\relax
+  \advance\oddsidemargin by \@IEEEtrantmpdimenA\relax
+\else
+\if\@IEEEextractedtoken o\relax
+  \oddsidemargin\paperwidth
+  \advance\oddsidemargin by -\textwidth
+  \advance\oddsidemargin by -\@IEEEtrantmpdimenA
+  \advance\oddsidemargin by -1in\relax
+\else
+  \if\@IEEEextractedtoken i\relax
+  \else
+    \@IEEEclspkgerror{Unknown mode type `\@IEEEextractedtokenmacro' in 
+    \string\IEEEsetsidemargin\space (line \the\inputlineno).\MessageBreak
+    Defaulting to `i'}%
+    {Valid modes for \string\IEEEsetsidemargin\space are: i, o, c  and a.}%
+  \fi
+  \oddsidemargin\@IEEEtrantmpdimenA
+  \advance\oddsidemargin by -1in\relax
+\fi\fi\fi
+% odd and even side margins both mean "inner" for single sided pages
+\evensidemargin\oddsidemargin
+% but are mirrors of each other when twosided is in effect
+\if@twoside
+  \evensidemargin\paperwidth
+  \advance\evensidemargin by -\textwidth
+  \advance\evensidemargin by -\oddsidemargin
+  % have to compensate for both the builtin 1in LaTex offset
+  % and the fact we already subtracted this offset from \oddsidemargin
+  \advance\evensidemargin -2in\relax
+\fi}
+
+
+
+% usage: \IEEEsettextheight[sample text]{top text margin}{bottom text margin}
+% Sets \textheight based on the specified top margin and bottom margin.
+% Takes into consideration \paperheight, \topskip, and (by default) the
+% the actual height and depth of the \IEEEdefaultsampletext text. 
+\def\IEEEsettextheight{\@ifnextchar 
+[{\@IEEEsettextheight}{\@IEEEsettextheight[\IEEEdefaultsampletext]}}
+\def\@IEEEsettextheight[#1]#2#3{\textheight\paperheight\relax
+  \@IEEEtrantmpdimenA #2\relax
+  \advance \textheight by -\@IEEEtrantmpdimenA% subtract top margin
+  \@IEEEtrantmpdimenA #3\relax
+  \advance \textheight by -\@IEEEtrantmpdimenA% subtract bottom margin
+  \advance \textheight by \topskip% add \topskip
+  % subtract off everything above the top, and below the bottom, baselines
+  \settoheight{\@IEEEtrantmpdimenA}{\begingroup 
+  #1\relax\relax\relax\endgroup}\relax
+  \advance \textheight by -\@IEEEtrantmpdimenA
+  \settodepth{\@IEEEtrantmpdimenA}{\begingroup 
+  #1\relax\relax\relax\endgroup}\relax
+  \advance \textheight by -\@IEEEtrantmpdimenA}
+
+
+
+\newdimen\IEEEquantizedlength
+\IEEEquantizedlength 0sp\relax
+\newdimen\IEEEquantizedlengthdiff
+\IEEEquantizedlengthdiff 0sp\relax
+\def\IEEEquantizedlengthint{0}
+
+% usage: \IEEEquantizelength{mode: d, c, i}{base unit}{length}
+% Sets the length \IEEEquantizedlength to be an integer multiple of the given
+% (nonzero) base unit such that \IEEEquantizedlength approximates the given
+% length.
+% \IEEEquantizedlengthdiff is a length equal to the difference between the
+% \IEEEquantizedlength and the given length.
+% \IEEEquantizedlengthint is a macro containing the integer number of base units
+% in \IEEEquantizedlength.
+% i.e., \IEEEquantizedlength =  \IEEEquantizedlengthint * base unit
+% The mode determines how \IEEEquantizedlength is quantized:
+% d = always decrease (always round down \IEEEquantizeint)
+% c = use the closest match
+% i = always increase (always round up \IEEEquantizeint)
+% In anycase, if the given length is already quantized,
+% \IEEEquantizedlengthdiff will be set to zero.
+\def\IEEEquantizelength#1#2#3{\begingroup
+% work in isolation so as not to externally disturb the \@IEEEtrantmp
+% variables
+% load the argument values indirectly via \IEEEquantizedlengthdiff
+% in case the user refers to our \@IEEEtrantmpdimenX, \IEEEquantizedlength,
+% etc. in the arguments. we also will work with these as counters,
+% i.e., in sp units
+% A has the base unit
+\IEEEquantizedlengthdiff #2\relax\relax\relax\relax
+\@IEEEtrantmpcountA\IEEEquantizedlengthdiff
+% B has the input length
+\IEEEquantizedlengthdiff #3\relax\relax\relax\relax
+\@IEEEtrantmpcountB\IEEEquantizedlengthdiff
+\@IEEEtrantmpdimenA\the\@IEEEtrantmpcountA sp\relax
+\@IEEEtrantmpdimenB\the\@IEEEtrantmpcountB sp\relax
+% \@IEEEtrantmpcountC will have the quantized int
+% \IEEEquantizedlength will have the quantized length
+% \@IEEEtrantmpdimenC will have the quantized diff
+% initialize them to zero as this is what will be
+% exported if an error occurs
+\@IEEEtrantmpcountC 0\relax
+\IEEEquantizedlength 0sp\relax
+\@IEEEtrantmpdimenC 0sp\relax
+% extract mode
+\@IEEEextracttoken{#1}\relax
+% check for mode errors
+\ifx\@IEEEextractedtokenmacro\@empty
+  \@IEEEclspkgerror{Empty mode type in \string\IEEEquantizelength\space (line 
+  \the\inputlineno).\MessageBreak
+  Defaulting to `d'}{Valid modes for \string\IEEEquantizelength\space are: d, c 
+  and i.}\relax
+  \let\@IEEEextractedtoken=d\relax
+  \def\@IEEEextractedtokenmacro{d}\relax
+\else
+  \ifx\@IEEEextractedtokensdiscarded\@empty\else
+    \typeout{** WARNING: \string\IEEEquantizelength\space mode specifiers after 
+    the first in `\@IEEEextracttokenarg' ignored (line \the\inputlineno).}\relax
+  \fi
+\fi
+% check for base unit is zero error
+\ifnum\@IEEEtrantmpcountA=0\relax
+\@IEEEclspkgerror{Base unit is zero in \string\IEEEquantizelength\space (line 
+\the\inputlineno).\MessageBreak
+  \string\IEEEquantizedlength\space and \string\IEEEquantizedlengthdiff\space 
+  are set to zero}{Division by zero is not allowed.}\relax
+\else% base unit is nonzero
+  % \@IEEEtrantmpcountC carries the number of integer units
+  % in the quantized length (integer length \ base)
+  \@IEEEtrantmpcountC\@IEEEtrantmpcountB\relax
+  \divide\@IEEEtrantmpcountC by \@IEEEtrantmpcountA\relax
+  % \IEEEquantizedlength has the (rounded down) quantized length
+  % = base * int
+  \IEEEquantizedlength\@IEEEtrantmpdimenA\relax
+  \multiply\IEEEquantizedlength by \@IEEEtrantmpcountC\relax
+  % \@IEEEtrantmpdimenC has the difference
+  % = quantized length - length
+  \@IEEEtrantmpdimenC\IEEEquantizedlength\relax
+  \advance\@IEEEtrantmpdimenC by -\@IEEEtrantmpdimenB\relax
+  % trap special case of length being already quantized
+  % to avoid a roundup under i option
+  \ifdim\@IEEEtrantmpdimenC=0sp\relax
+  \else % length not is already quantized
+    % set dimenA to carry the upper quantized (absolute value) difference:
+    % quantizedlength + base - length
+    \advance\@IEEEtrantmpdimenA by \IEEEquantizedlength\relax
+    \advance\@IEEEtrantmpdimenA by -\@IEEEtrantmpdimenB\relax
+    % set dimenB to carry the lower quantized (absolute value) difference:
+    % length - quantizedlength
+    \advance\@IEEEtrantmpdimenB by -\IEEEquantizedlength\relax
+    % handle each mode
+    \if\@IEEEextractedtoken c\relax
+      % compare upper and lower amounts, select upper if lower > upper
+      \ifdim\@IEEEtrantmpdimenB>\@IEEEtrantmpdimenA\relax
+        % use upper
+        \advance\IEEEquantizedlength by \the\@IEEEtrantmpcountA sp\relax
+        \advance\@IEEEtrantmpcountC by 1\relax
+        \@IEEEtrantmpdimenC\@IEEEtrantmpdimenA
+      \else% <=. uselower
+        % no need to do anything for lower, use output values already setup
+      \fi
+    \else% not mode c
+    \if\@IEEEextractedtoken i\relax
+      % always round up under i mode
+      \advance\IEEEquantizedlength by \the\@IEEEtrantmpcountA sp\relax
+      \advance\@IEEEtrantmpcountC by 1\relax
+      \@IEEEtrantmpdimenC\@IEEEtrantmpdimenA
+    \else
+      \if\@IEEEextractedtoken d\relax
+      \else
+        \@IEEEclspkgerror{Unknown mode type `\@IEEEextractedtokenmacro' in 
+        \string\IEEEquantizelength\space (line \the\inputlineno).\MessageBreak
+        Defaulting to `d'}%
+        {Valid modes for \string\IEEEquantizelength\space are: d, c, and 
+        i.}\relax
+      \fi % if d
+      % no need to do anything for d, use output values already setup
+    \fi\fi % if i, c
+  \fi % if length is already quantized
+\fi% if base unit is zero
+% globally assign the results to macros we use here to escape the enclosing
+% group without needing to call \global on any of the \@IEEEtrantmp variables.
+% \@IEEEtrantmpcountC has the quantized int
+% \IEEEquantizedlength has the quantized length
+% \@IEEEtrantmpdimenC has the quantized diff
+\xdef\@IEEEquantizedlengthintmacro{\the\@IEEEtrantmpcountC}\relax
+\@IEEEtrantmpcountC\IEEEquantizedlength\relax
+\xdef\@IEEEquantizedlengthmacro{\the\@IEEEtrantmpcountC}\relax
+\@IEEEtrantmpcountC\@IEEEtrantmpdimenC\relax
+\xdef\@IEEEquantizedlengthdiffmacro{\the\@IEEEtrantmpcountC}\relax
+\endgroup
+% locally assign the outputs here from the macros
+\expandafter\IEEEquantizedlength\@IEEEquantizedlengthmacro sp\relax
+\expandafter\IEEEquantizedlengthdiff\@IEEEquantizedlengthdiffmacro sp\relax
+\edef\IEEEquantizedlengthint{\@IEEEquantizedlengthintmacro}\relax}
+
+
+
+\newdimen\IEEEquantizedtextheightdiff
+\IEEEquantizedtextheightdiff 0sp\relax
+
+% usage: \IEEEquantizetextheight[base unit]{mode: d, c, i}
+% Sets \textheight to be an integer multiple of the current \baselineskip
+% (or the optionally specified base unit) plus the first (\topskip) line.
+% \IEEEquantizedtextheightdiff is a length equal to the difference between
+% the new quantized and original \textheight.
+% \IEEEquantizedtextheightlpc is a macro containing the integer number of
+% lines per column under the quantized \textheight. i.e.,
+% \textheight = \IEEEquantizedtextheightlpc * \baselineskip + \topskip
+% The mode determines how \textheight is quantized:
+% d = always decrease (always round down the number of lines per column)
+% c = use the closest match
+% i = always increase (always round up the number of lines per column)
+% In anycase, if \textheight is already quantized, it will remain unchanged,
+% and \IEEEquantizedtextheightdiff will be set to zero.
+% Depends on: \IEEEquantizelength
+\def\IEEEquantizetextheight{\@ifnextchar 
+[{\@IEEEquantizetextheight}{\@IEEEquantizetextheight[\baselineskip]}}
+\def\@IEEEquantizetextheight[#1]#2{\begingroup
+% use our \IEEEquantizedtextheightdiff as a scratch pad
+% we need to subtract off \topskip before quantization
+\IEEEquantizedtextheightdiff\textheight
+\advance\IEEEquantizedtextheightdiff by -\topskip\relax
+\IEEEquantizelength{#2}{#1}{\IEEEquantizedtextheightdiff}
+% add back \topskip line
+\advance\IEEEquantizedlength by \topskip
+\@IEEEtrantmpcountC\IEEEquantizedlengthint\relax
+\advance\@IEEEtrantmpcountC by 1\relax
+% globally assign the results to macros we use here to escape the enclosing
+% group without needing to call \global on any of the \@IEEEtrantmp variables.
+\xdef\@IEEEquantizedtextheightlpcmacro{\the\@IEEEtrantmpcountC}\relax
+\@IEEEtrantmpcountC\IEEEquantizedlength\relax
+\xdef\@IEEEquantizedtextheightmacro{\the\@IEEEtrantmpcountC}\relax
+\@IEEEtrantmpcountC\IEEEquantizedlengthdiff\relax
+\xdef\@IEEEquantizedtextheightdiffmacro{\the\@IEEEtrantmpcountC}\relax
+\endgroup
+% locally assign the outputs here from the macros
+\textheight\@IEEEquantizedtextheightmacro sp\relax
+\IEEEquantizedtextheightdiff\@IEEEquantizedtextheightdiffmacro sp\relax
+\edef\IEEEquantizedtextheightlpc{\@IEEEquantizedtextheightlpcmacro}}
+
+
+
+% usage: \IEEEsettopmargin[sample text]{mode: t, b, c, a, q}{margin/offset}
+% Sets \topmargin based on the specified vertical margin.
+% Takes into consideration the base 1in offset, \headheight, \headsep,
+% \topskip, and (by default) the the actual height (or, for the bottom, depth)
+% of the \IEEEdefaultsampletext text.
+% The available modes are:
+% t = top margin
+% b = bottom margin
+% c = vertically centered, with the given offset
+% a = adjust the vertical margins using the given offset
+% q = adjust the margins using \IEEEquantizedtextheightdiff and the given offset
+% For the offsets, positive values increase the top margin.
+% \headheight, \headsep, \topskip and \textheight should be set properly for the
+% given margins before calling this function.
+\def\IEEEsettopmargin{\@ifnextchar 
+[{\@IEEEsettopmargin}{\@IEEEsettopmargin[\IEEEdefaultsampletext]}}
+\def\@IEEEsettopmargin[#1]#2#3{\@IEEEtrantmpdimenA #3\relax
+\@IEEEextracttoken{#2}\relax
+% check for mode errors
+\ifx\@IEEEextractedtokenmacro\@empty
+  \@IEEEclspkgerror{Empty mode type in \string\IEEEsettopmargin\space (line 
+  \the\inputlineno).\MessageBreak
+  Defaulting to `t'}{Valid modes for \string\IEEEsettopmargin\space are: t, b, 
+  c, a and q.}\relax
+  \let\@IEEEextractedtoken=t\relax
+  \def\@IEEEextractedtokenmacro{t}\relax
+\else
+  \ifx\@IEEEextractedtokensdiscarded\@empty\else
+    \typeout{** WARNING: \string\IEEEsettopmargin\space mode specifiers after 
+    the first in `\@IEEEextracttokenarg' ignored (line \the\inputlineno).}\relax
+  \fi
+\fi
+% handle each mode
+\if\@IEEEextractedtoken a\relax
+  \advance\topmargin by \@IEEEtrantmpdimenA\relax
+\else
+\if\@IEEEextractedtoken q\relax
+  % we need to adjust by half the \IEEEquantizedtextheightdiff value
+  \@IEEEtrantmpdimenB\IEEEquantizedtextheightdiff\relax
+  \divide\@IEEEtrantmpdimenB by 2\relax
+  % a positive \IEEEquantizedtextheightdiff means we need to reduce \topmargin
+  % because \textheight has been lenghtened
+  \advance\topmargin by -\@IEEEtrantmpdimenB\relax
+  \advance\topmargin by \@IEEEtrantmpdimenA\relax
+\else
+\if\@IEEEextractedtoken c\relax
+  \topmargin\paperheight
+  \advance\topmargin by -\textheight
+  % \textheight includes \topskip, but we should not count topskip whitespace 
+  %here, backout
+  \advance \topmargin by \topskip
+  \settoheight{\@IEEEtrantmpdimenB}{\begingroup 
+  #1\relax\relax\relax\endgroup}\relax
+  \advance\topmargin by -\@IEEEtrantmpdimenB\relax
+  \settodepth{\@IEEEtrantmpdimenB}{\begingroup 
+  #1\relax\relax\relax\endgroup}\relax
+  \advance\topmargin by -\@IEEEtrantmpdimenB\relax
+  \divide\topmargin by 2\relax
+  \advance\topmargin by \@IEEEtrantmpdimenA\relax
+\else
+\if\@IEEEextractedtoken b\relax
+  \topmargin\paperheight
+  \advance\topmargin by -\textheight
+  % \textheight includes \topskip, but we should not count topskip whitespace 
+  %here, backout
+  \advance \topmargin by \topskip
+  \settodepth{\@IEEEtrantmpdimenB}{\begingroup 
+  #1\relax\relax\relax\endgroup}\relax
+  \advance\topmargin by -\@IEEEtrantmpdimenB\relax
+  \advance\topmargin by -\@IEEEtrantmpdimenA\relax
+\else
+  \if\@IEEEextractedtoken t\relax
+  \else
+    \@IEEEclspkgerror{Unknown mode type `\@IEEEextractedtokenmacro' in 
+    \string\IEEEsettopmargin\space (line \the\inputlineno).\MessageBreak
+    Defaulting to `t'}%
+    {Valid modes for \string\IEEEsettopmargin\space are: t, b, c, a and 
+    q.}\relax
+  \fi
+  \topmargin\@IEEEtrantmpdimenA\relax
+  \settoheight{\@IEEEtrantmpdimenB}{\begingroup 
+  #1\relax\relax\relax\endgroup}\relax
+  \advance\topmargin by \@IEEEtrantmpdimenB\relax
+\fi\fi % if t, b, c
+% convert desired top margin into actual \topmargin
+% this is not done for the q or a modes because they are only adjustments
+\advance \topmargin by -\topskip
+\advance \topmargin by -1in
+\advance \topmargin by -\headheight
+\advance \topmargin by -\headsep
+\fi\fi % if q, a
+}
+
+
+
+% usage: \IEEEsetheadermargin[header sample][text sample]{mode: t, b, c, 
+%a}{margin/offset}
+% Differentially adjusts \topmargin and \headsep (such that their sum is 
+%unchanged)
+% based on the specified header margin.
+% Takes into consideration the base 1in offset, \headheight, \topskip, and (by 
+%default)
+% the actual height (or depth) of the \IEEEdefaultheadersampletext and
+% \IEEEdefaultsampletext text.
+% The available modes are:
+% t = top margin (top of the header text to the top of the page)
+% b = bottom margin (bottom of the header text to the top of the main text)
+% c = vertically centered between the main text and the top of the page,
+%     with the given offset
+% a = adjust the vertical position using the given offset
+% For the offsets, positive values move the header downward.
+% \headheight, \headsep, \topskip and \topmargin should be set properly before
+% calling this function.
+\def\IEEEsetheadermargin{\@ifnextchar 
+[{\@IEEEsetheadermargin}{\@IEEEsetheadermargin[\IEEEdefaultheadersampletext]}}
+\def\@IEEEsetheadermargin[#1]{\@ifnextchar 
+[{\@@IEEEsetheadermargin[#1]}{\@@IEEEsetheadermargin[#1][\IEEEdefaultsampletext]}}
+\def\@@IEEEsetheadermargin[#1][#2]#3#4{\@IEEEtrantmpdimenA #4\relax
+\@IEEEextracttoken{#3}\relax
+% check for mode errors
+\ifx\@IEEEextractedtokenmacro\@empty
+  \@IEEEclspkgerror{Empty mode type in \string\IEEEsetheadermargin\space (line 
+  \the\inputlineno).\MessageBreak
+  Defaulting to `t'}{Valid modes for \string\IEEEsetheadermargin\space are: t, 
+  b, c, and a.}\relax
+  \let\@IEEEextractedtoken=t\relax
+  \def\@IEEEextractedtokenmacro{t}\relax
+\else
+  \ifx\@IEEEextractedtokensdiscarded\@empty\else
+    \typeout{** WARNING: \string\IEEEsetheadermargin\space mode specifiers 
+    after the first in `\@IEEEextracttokenarg' ignored (line 
+    \the\inputlineno).}\relax
+  \fi
+\fi
+% handle each mode
+\if\@IEEEextractedtoken a\relax
+  % No need to do anything here and can pass through the adjustment
+  % value as is. The end adjustment of \topmargin and \headsep will
+  % do all that is needed
+\else
+\if\@IEEEextractedtoken c\relax
+  % get the bottom margin
+  \@IEEEtrantmpdimenB\headsep\relax
+  \settodepth{\@IEEEtrantmpdimenC}{\begingroup 
+  #1\relax\relax\relax\endgroup}\relax
+  \advance\@IEEEtrantmpdimenB by -\@IEEEtrantmpdimenC
+  \advance\@IEEEtrantmpdimenB by \topskip
+  \settoheight{\@IEEEtrantmpdimenC}{\begingroup 
+  #2\relax\relax\relax\endgroup}\relax
+  \advance\@IEEEtrantmpdimenB by -\@IEEEtrantmpdimenC
+  % at this point \@IEEEtrantmpdimenB has the actual header bottom margin
+  % subtract from it the top header margin
+  \advance\@IEEEtrantmpdimenB -1in\relax % take into consideration the system 
+  %1in offset of the top margin
+  \advance\@IEEEtrantmpdimenB by -\topmargin
+  \advance\@IEEEtrantmpdimenB by -\headheight
+  \settoheight{\@IEEEtrantmpdimenC}{\begingroup 
+  #1\relax\relax\relax\endgroup}\relax
+  \advance\@IEEEtrantmpdimenB by \@IEEEtrantmpdimenC
+  % at this point \@IEEEtrantmpdimenB has the difference between the bottom and 
+  %top margins
+  % we need to adjust by half this amount to center the header
+  \divide\@IEEEtrantmpdimenB by 2\relax
+  % and add to offset
+  \advance\@IEEEtrantmpdimenA by \@IEEEtrantmpdimenB
+\else
+\if\@IEEEextractedtoken b\relax
+  \@IEEEtrantmpdimenB\headsep\relax
+  \settodepth{\@IEEEtrantmpdimenC}{\begingroup 
+  #1\relax\relax\relax\endgroup}\relax
+  \advance\@IEEEtrantmpdimenB by -\@IEEEtrantmpdimenC
+  \advance\@IEEEtrantmpdimenB by \topskip
+  \settoheight{\@IEEEtrantmpdimenC}{\begingroup 
+  #2\relax\relax\relax\endgroup}\relax
+  \advance\@IEEEtrantmpdimenB by -\@IEEEtrantmpdimenC
+  % at this point \@IEEEtrantmpdimenB has the actual header bottom margin
+  % get the difference between the actual and the desired
+  \advance\@IEEEtrantmpdimenB by -\@IEEEtrantmpdimenA
+  \@IEEEtrantmpdimenA\@IEEEtrantmpdimenB
+\else
+  \if\@IEEEextractedtoken t\relax
+  \else
+    \@IEEEclspkgerror{Unknown mode type `\@IEEEextractedtokenmacro' in 
+    \string\IEEEsetheadermargin\space (line \the\inputlineno).\MessageBreak
+    Defaulting to `t'}%
+    {Valid modes for \string\IEEEsetheadermargin\space are: t, b, c and 
+    a.}\relax
+  \fi
+  \@IEEEtrantmpdimenB 1in\relax % take into consideration the system 1in offset 
+  %of the top margin
+  \advance\@IEEEtrantmpdimenB by \topmargin
+  \advance\@IEEEtrantmpdimenB by \headheight
+  \settoheight{\@IEEEtrantmpdimenC}{\begingroup 
+  #1\relax\relax\relax\endgroup}\relax
+  \advance\@IEEEtrantmpdimenB by -\@IEEEtrantmpdimenC
+  % at this point \@IEEEtrantmpdimenB has the actual header top margin
+  % get the difference between the desired and the actual
+  \advance\@IEEEtrantmpdimenA by -\@IEEEtrantmpdimenB
+\fi\fi % if t, b, c
+\fi % if a
+% advance \topmargin by the needed amount and reduce \headsep by the same
+% so as not to disturb the location of the main text
+\advance\topmargin by \@IEEEtrantmpdimenA\relax
+\advance\headsep by -\@IEEEtrantmpdimenA\relax
+}
+
+
+
+% usage: \IEEEsetfootermargin[footer sample][text sample]{mode: t, b, c, 
+%a}{margin/offset}
+% Adjusts \footskip based on the specified footer margin.
+% Takes into consideration the base 1in offset, \paperheight, \headheight,
+% \headsep, \textheight and (by default) the actual height (or depth) of the
+% \IEEEdefaultfootersampletext and \IEEEdefaultsampletext text.
+% The available modes are:
+% t = top margin (top of the footer text to the bottom of the main text)
+% b = bottom margin (bottom of the footer text to the bottom of page)
+% c = vertically centered between the main text and the bottom of the page,
+%     with the given offset
+% a = adjust the vertical position using the given offset
+% For the offsets, positive values move the footer downward.
+% \headheight, \headsep, \topskip, \topmargin, and \textheight should be set
+% properly before calling this function.
+\def\IEEEsetfootermargin{\@ifnextchar 
+[{\@IEEEsetfootermargin}{\@IEEEsetfootermargin[\IEEEdefaultfootersampletext]}}
+\def\@IEEEsetfootermargin[#1]{\@ifnextchar 
+[{\@@IEEEsetfootermargin[#1]}{\@@IEEEsetfootermargin[#1][\IEEEdefaultsampletext]}}
+\def\@@IEEEsetfootermargin[#1][#2]#3#4{\@IEEEtrantmpdimenA #4\relax
+\@IEEEextracttoken{#3}\relax
+% check for mode errors
+\ifx\@IEEEextractedtokenmacro\@empty
+  \@IEEEclspkgerror{Empty mode type in \string\IEEEsetfootermargin\space (line 
+  \the\inputlineno).\MessageBreak
+  Defaulting to `t'}{Valid modes for \string\IEEEsetfootermargin\space are: t, 
+  b, c, and a.}\relax
+  \let\@IEEEextractedtoken=t\relax
+  \def\@IEEEextractedtokenmacro{t}\relax
+\else
+  \ifx\@IEEEextractedtokensdiscarded\@empty\else
+    \typeout{** WARNING: \string\IEEEsetfootermargin\space mode specifiers 
+    after the first in `\@IEEEextracttokenarg' ignored (line 
+    \the\inputlineno).}\relax
+  \fi
+\fi
+% handle each mode
+\if\@IEEEextractedtoken a\relax
+  % No need to do anything here and can pass through the adjustment
+  % value as is. The end adjustment of \footskip will do all that
+  % is needed
+\else
+\if\@IEEEextractedtoken c\relax
+  % calculate the bottom margin
+  \@IEEEtrantmpdimenB 1in\relax % system 1in offset
+  \advance\@IEEEtrantmpdimenB\topmargin\relax
+  \advance\@IEEEtrantmpdimenB\headheight\relax
+  \advance\@IEEEtrantmpdimenB\headsep\relax
+  \advance\@IEEEtrantmpdimenB\textheight\relax
+  \advance\@IEEEtrantmpdimenB\footskip\relax
+  \settodepth{\@IEEEtrantmpdimenC}{\begingroup 
+  #1\relax\relax\relax\endgroup}\relax
+  \advance\@IEEEtrantmpdimenC by \@IEEEtrantmpdimenB
+  \@IEEEtrantmpdimenB\paperheight
+  \advance\@IEEEtrantmpdimenB by -\@IEEEtrantmpdimenC
+  % at this point \@IEEEtrantmpdimenB has the actual footer bottom margin
+  % now subtract off the footer top margin
+  \advance\@IEEEtrantmpdimenB -\footskip\relax
+  \settodepth{\@IEEEtrantmpdimenC}{\begingroup 
+  #2\relax\relax\relax\endgroup}\relax
+  \advance\@IEEEtrantmpdimenB by \@IEEEtrantmpdimenC
+  \settoheight{\@IEEEtrantmpdimenC}{\begingroup 
+  #1\relax\relax\relax\endgroup}\relax
+  \advance\@IEEEtrantmpdimenB by \@IEEEtrantmpdimenC
+  % at this point \@IEEEtrantmpdimenB has the difference between the bottom
+  % and top footer margins
+  % our adjustment must be half this value to center the footer
+  \divide\@IEEEtrantmpdimenB by 2\relax
+  % add to the offset
+  \advance\@IEEEtrantmpdimenA by \@IEEEtrantmpdimenB
+\else
+\if\@IEEEextractedtoken b\relax
+  % calculate the bottom margin
+  \@IEEEtrantmpdimenB 1in\relax % system 1in offset
+  \advance\@IEEEtrantmpdimenB\topmargin\relax
+  \advance\@IEEEtrantmpdimenB\headheight\relax
+  \advance\@IEEEtrantmpdimenB\headsep\relax
+  \advance\@IEEEtrantmpdimenB\textheight\relax
+  \advance\@IEEEtrantmpdimenB\footskip\relax
+  \settodepth{\@IEEEtrantmpdimenC}{\begingroup 
+  #1\relax\relax\relax\endgroup}\relax
+  \advance\@IEEEtrantmpdimenC by \@IEEEtrantmpdimenB
+  \@IEEEtrantmpdimenB\paperheight
+  \advance\@IEEEtrantmpdimenB by -\@IEEEtrantmpdimenC
+  % at this point \@IEEEtrantmpdimenB has the actual footer bottom margin
+  % get the difference between the actual and the desired
+  \advance\@IEEEtrantmpdimenB by -\@IEEEtrantmpdimenA
+  \@IEEEtrantmpdimenA\@IEEEtrantmpdimenB
+\else
+  \if\@IEEEextractedtoken t\relax
+  \else
+    \@IEEEclspkgerror{Unknown mode type `\@IEEEextractedtokenmacro' in 
+    \string\IEEEsetfootermargin\space (line \the\inputlineno).\MessageBreak
+    Defaulting to `t'}%
+    {Valid modes for \string\IEEEsetfootermargin\space are: t, b, c and 
+    a.}\relax
+  \fi
+  \@IEEEtrantmpdimenB\footskip\relax
+  \settodepth{\@IEEEtrantmpdimenC}{\begingroup 
+  #2\relax\relax\relax\endgroup}\relax
+  \advance\@IEEEtrantmpdimenB by -\@IEEEtrantmpdimenC
+  \settoheight{\@IEEEtrantmpdimenC}{\begingroup 
+  #1\relax\relax\relax\endgroup}\relax
+  \advance\@IEEEtrantmpdimenB by -\@IEEEtrantmpdimenC
+  % at this point \@IEEEtrantmpdimenB has the actual footer top margin
+  % get the difference between the desired and the actual
+  \advance\@IEEEtrantmpdimenA by -\@IEEEtrantmpdimenB
+\fi\fi % if t, b, c
+\fi % if a
+% advance \footskip by the needed amount
+\advance\footskip by \@IEEEtrantmpdimenA\relax
+}
+
+
+% -- End page setup commands --
+
+
 
 
 % Itemize, Enumerate and Description (IED) List Controls
@@ -234,7 +1088,8 @@
 % A flag which controls whether the IED lists automatically
 % calculate \leftmargin from \IEEElabelindent, \labelwidth and \labelsep
 % Useful if you want to specify your own \leftmargin
-% This flag must be set (\IEEEnocalcleftmargintrue or \IEEEnocalcleftmarginfalse) 
+% This flag must be set (\IEEEnocalcleftmargintrue or 
+%\IEEEnocalcleftmarginfalse) 
 % via the \IEEEiedlistdecl or within the option of the IED list
 % environments to have an effect.
 \newif\ifIEEEnocalcleftmargin
@@ -356,7 +1211,8 @@
                 \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
                 % get the IEEElabelindentfactor for this level
                 \advance\@listdepth\@ne% we need to know what the level WILL be
-                \edef\IEEElabelindentfactor{\csname IEEElabelindentfactor\romannumeral\the\@listdepth\endcsname}%
+                \edef\IEEElabelindentfactor{\csname 
+                IEEElabelindentfactor\romannumeral\the\@listdepth\endcsname}%
                 \advance\@listdepth-\@ne% undo our increment
                 \def\@IEEEiedjustify{2}% right justified labels are default
                 % set other defaults
@@ -374,7 +1230,8 @@
                 % calculate the label width
                 % the user can override this later if
                 % they specified a \labelwidth
-                \settowidth{\labelwidth}{\csname labelitem\romannumeral\the\@itemdepth\endcsname}%
+                \settowidth{\labelwidth}{\csname 
+                labelitem\romannumeral\the\@itemdepth\endcsname}%
                 \@IEEEsavelistparams% save our list parameters
                 \list{\csname\@itemitem\endcsname}{%
                 \@IEEErestorelistparams% override any list{} changes
@@ -407,7 +1264,8 @@
                 \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
                 % get the IEEElabelindentfactor for this level
                 \advance\@listdepth\@ne% we need to know what the level WILL be
-                \edef\IEEElabelindentfactor{\csname IEEElabelindentfactor\romannumeral\the\@listdepth\endcsname}%
+                \edef\IEEElabelindentfactor{\csname 
+                IEEElabelindentfactor\romannumeral\the\@listdepth\endcsname}%
                 \advance\@listdepth-\@ne% undo our increment
                 \def\@IEEEiedjustify{2}% right justified labels are default
                 % set other defaults
@@ -456,7 +1314,8 @@
                 \ifnum\@listdepth>5\relax\@toodeep\else%
                 % get the IEEElabelindentfactor for this level
                 \advance\@listdepth\@ne% we need to know what the level WILL be
-                \edef\IEEElabelindentfactor{\csname IEEElabelindentfactor\romannumeral\the\@listdepth\endcsname}%
+                \edef\IEEElabelindentfactor{\csname 
+                IEEElabelindentfactor\romannumeral\the\@listdepth\endcsname}%
                 \advance\@listdepth-\@ne% undo our increment
                 \def\@IEEEiedjustify{0}% left justified labels are default
                 % set other defaults
@@ -523,7 +1382,8 @@
 % just like LaTeX2e's \@eqnnum
 \def\theequationdis{{\normalfont \normalcolor (\theequation)}}% (1)
 % IEEEsubequation used only by IEEEtran's IEEEeqnarray
-\def\theIEEEsubequationdis{{\normalfont \normalcolor (\theIEEEsubequation)}}% (1a)
+\def\theIEEEsubequationdis{{\normalfont \normalcolor (\theIEEEsubequation)}}% 
+%(1a)
 
 
 
@@ -538,19 +1398,20 @@
 %% I don't make the claim that my work here is even near their calibre. ;)
 
 
-% hook to allow easy changeover to IEEEtran.cls/tools.sty error reporting
-\def\@IEEEclspkgerror{\ClassError{IEEEtran}}
-
-\newif\if@IEEEeqnarrayboxnojot% flag to indicate if the environment was called as the star form
+\newif\if@IEEEeqnarrayboxnojot% flag to indicate if the environment was called 
+%as the star form
 \@IEEEeqnarrayboxnojotfalse
 
-\newif\if@advanceIEEEeqncolcnt% tracks if the environment should advance the col counter
-% allows a way to make an \IEEEeqnarraybox that can be used within an \IEEEeqnarray
+\newif\if@advanceIEEEeqncolcnt% tracks if the environment should advance the 
+%col counter
+% allows a way to make an \IEEEeqnarraybox that can be used within an 
+%\IEEEeqnarray
 % used by IEEEeqnarraymulticol so that it can work properly in both
 \@advanceIEEEeqncolcnttrue
 
 \newcount\@IEEEeqnnumcols % tracks how many IEEEeqnarray cols are defined
-\newcount\@IEEEeqncolcnt  % tracks how many IEEEeqnarray cols the user actually used
+\newcount\@IEEEeqncolcnt  % tracks how many IEEEeqnarray cols the user actually 
+%used
 
 
 % The default math style used by the columns
@@ -577,7 +1438,8 @@
 \newif\if@IEEEsubeqnumpreadv%
 \@IEEEsubeqnumpreadvfalse
 
-\newcount\@IEEEsubeqnnumrollback% saves previous value of IEEEsubequation number in case we need to restore it
+\newcount\@IEEEsubeqnnumrollback% saves previous value of IEEEsubequation 
+%number in case we need to restore it
 
 % \yesnumber is the opposite of \nonumber
 % a novel concept with the same def as the equationarray package
@@ -607,30 +1469,39 @@
 
 \def\IEEEyessubnumber{\@ifstar{\global\@IEEEsubeqnumpersisttrue\@IEEEyessubnumber}{\@IEEEyessubnumber}}
 %
-\def\@IEEEyessubnumber{\if@IEEEeqnarrayISinner% alter counters and label only inside an IEEEeqnarray
-  \ifnum\c@IEEEsubequation>0\relax% if it already is a subequation, we are good to go as-is
+\def\@IEEEyessubnumber{\if@IEEEeqnarrayISinner% alter counters and label only 
+%inside an IEEEeqnarray
+  \ifnum\c@IEEEsubequation>0\relax% if it already is a subequation, we are good 
+  %to go as-is
   \else% if we are a regular equation we have to watch out for two cases
-    \if@IEEEeqnumpreadv% if this equation is the result of a preadvance, backout and bump the sub eqnnum
+    \if@IEEEeqnumpreadv% if this equation is the result of a preadvance, 
+    %backout and bump the sub eqnnum
        \global\advance\c@equation\m@ne\global\c@IEEEsubequation=\@IEEEsubeqnnumrollback\addtocounter{IEEEsubequation}{1}\relax
-    \else% non-preadvanced equations just need initialization of their sub eqnnum
+    \else% non-preadvanced equations just need initialization of their sub 
+    %eqnnum
        \setcounter{IEEEsubequation}{1}\relax
     \fi
   \fi% fi already is subequation
   \gdef\@currentlabel{\p@IEEEsubequation\theIEEEsubequation}\relax
   \gdef\@currentHref{\@IEEEtheHrefsubequation}% setup hyperref label
-  \global\@IEEEeqnumpreadvfalse\global\@IEEEsubeqnumpreadvfalse% no longer a preadv anymore
+  \global\@IEEEeqnumpreadvfalse\global\@IEEEsubeqnumpreadvfalse% no longer a 
+  %preadv anymore
   \global\@eqnswtrue
 \fi}
 
 
 \def\IEEEnosubnumber{\@ifstar{\global\@IEEEsubeqnumpersistfalse\@IEEEnosubnumber}{\@IEEEnosubnumber}}
 %
-\def\@IEEEnosubnumber{\if@IEEEeqnarrayISinner% alter counters and label only inside an IEEEeqnarray
-  \if@eqnsw % we do nothing unless we know we will display because we play with the counters here
-    % if it currently is a subequation, bump up to the next equation number and turn off the subequation
+\def\@IEEEnosubnumber{\if@IEEEeqnarrayISinner% alter counters and label only 
+%inside an IEEEeqnarray
+  \if@eqnsw % we do nothing unless we know we will display because we play with 
+  %the counters here
+    % if it currently is a subequation, bump up to the next equation number and 
+    %turn off the subequation
     \ifnum\c@IEEEsubequation>0\relax\addtocounter{equation}{1}\setcounter{IEEEsubequation}{0}\relax
     \fi
-    \global\@IEEEeqnumpreadvfalse\global\@IEEEsubeqnumpreadvfalse% no longer a preadv anymore
+    \global\@IEEEeqnumpreadvfalse\global\@IEEEsubeqnumpreadvfalse% no longer a 
+    %preadv anymore
     \gdef\@currentlabel{\p@equation\theequation}\relax
     \gdef\@currentHref{\@IEEEtheHrefequation}% setup hyperref label
   \fi
@@ -638,7 +1509,8 @@
 
 
 
-% allows users to "push away" equations that get too close to the equation numbers
+% allows users to "push away" equations that get too close to the equation 
+%numbers
 \def\IEEEeqnarraynumspace{\hphantom{\ifnum\c@IEEEsubequation>0\relax\theIEEEsubequationdis\else\theequationdis\fi}}
 
 % provides a way to span multiple columns within IEEEeqnarray environments
@@ -656,10 +1528,12 @@
 % incomplete \ifx error.
 % So, here we use separate checks for the pre and post parts in order to keep
 % the #3 outside of all conditionals.
-\relax\expandafter\ifx\csname @IEEEeqnarraycolDEF#2\endcsname\@IEEEeqnarraycolisdefined\relax
+\relax\expandafter\ifx\csname 
+@IEEEeqnarraycolDEF#2\endcsname\@IEEEeqnarraycolisdefined\relax
 \csname @IEEEeqnarraycolPRE#2\endcsname
 \else% if not, error and use default type
-\@IEEEclspkgerror{Invalid column type "#2" in \string\IEEEeqnarraymulticol.\MessageBreak
+\@IEEEclspkgerror{Invalid column type "#2" in 
+\string\IEEEeqnarraymulticol.\MessageBreak
 Using a default centering column instead}%
 {You must define IEEEeqnarray column types before use.}%
 \csname @IEEEeqnarraycolPRE@IEEEdefault\endcsname
@@ -668,7 +1542,8 @@ Using a default centering column instead}%
 % accidently inserted a macro that tries to acquire additional arguments.
 #3\relax\relax\relax\relax\relax\relax\relax\relax\relax\relax
 % check if column is defined for the postcolumn definition
-\expandafter\ifx\csname @IEEEeqnarraycolDEF#2\endcsname\@IEEEeqnarraycolisdefined\relax
+\expandafter\ifx\csname 
+@IEEEeqnarraycolDEF#2\endcsname\@IEEEeqnarraycolisdefined\relax
 \csname @IEEEeqnarraycolPOST#2\endcsname
 \else% if not, use the default type
 \csname @IEEEeqnarraycolPOST@IEEEdefault\endcsname
@@ -677,28 +1552,34 @@ Using a default centering column instead}%
 \if@advanceIEEEeqncolcnt\global\advance\@IEEEeqncolcnt by #1\relax\fi}
 
 % like \omit, but maintains track of the column counter for \IEEEeqnarray
-\def\IEEEeqnarrayomit{\omit\if@advanceIEEEeqncolcnt\global\advance\@IEEEeqncolcnt by 1\relax\fi}
+\def\IEEEeqnarrayomit{\omit\if@advanceIEEEeqncolcnt\global\advance\@IEEEeqncolcnt
+ by 1\relax\fi}
 
 
 % provides a way to define a letter referenced column type
-% usage: \IEEEeqnarraydefcol{col. type letter/name}{pre insertion text}{post insertion text}
-\def\IEEEeqnarraydefcol#1#2#3{\expandafter\def\csname @IEEEeqnarraycolPRE#1\endcsname{#2}%
+% usage: \IEEEeqnarraydefcol{col. type letter/name}{pre insertion text}{post 
+%insertion text}
+\def\IEEEeqnarraydefcol#1#2#3{\expandafter\def\csname 
+@IEEEeqnarraycolPRE#1\endcsname{#2}%
 \expandafter\def\csname @IEEEeqnarraycolPOST#1\endcsname{#3}%
 \expandafter\def\csname @IEEEeqnarraycolDEF#1\endcsname{1}}
 
 
 % provides a way to define a numerically referenced inter-column glue types
 % usage: \IEEEeqnarraydefcolsep{col. glue number}{glue definition}
-\def\IEEEeqnarraydefcolsep#1#2{\expandafter\def\csname @IEEEeqnarraycolSEP\romannumeral #1\endcsname{#2}%
+\def\IEEEeqnarraydefcolsep#1#2{\expandafter\def\csname 
+@IEEEeqnarraycolSEP\romannumeral #1\endcsname{#2}%
 \expandafter\def\csname @IEEEeqnarraycolSEPDEF\romannumeral #1\endcsname{1}}
 
 
-\def\@IEEEeqnarraycolisdefined{1}% just a macro for 1, used for checking undefined column types
+\def\@IEEEeqnarraycolisdefined{1}% just a macro for 1, used for checking 
+%undefined column types
 
 
 % expands and appends the given argument to the \@IEEEtrantmptoksA token list
 % used to build up the \halign preamble
-\def\@IEEEappendtoksA#1{\edef\@@IEEEappendtoksA{\@IEEEtrantmptoksA={\the\@IEEEtrantmptoksA #1}}%
+\def\@IEEEappendtoksA#1{\edef\@@IEEEappendtoksA{\@IEEEtrantmptoksA={\the\@IEEEtrantmptoksA
+ #1}}%
 \@@IEEEappendtoksA}
 
 % also appends to \@IEEEtrantmptoksA, but does not expand the argument
@@ -722,14 +1603,19 @@ Using a default centering column instead}%
 
 % vertical rules
 \IEEEeqnarraydefcol{v}{}{\vrule width\arrayrulewidth}
-\IEEEeqnarraydefcol{vv}{\vrule width\arrayrulewidth\hfil}{\hfil\vrule width\arrayrulewidth}
-\IEEEeqnarraydefcol{V}{}{\vrule width\arrayrulewidth\hskip\doublerulesep\vrule width\arrayrulewidth}
-\IEEEeqnarraydefcol{VV}{\vrule width\arrayrulewidth\hskip\doublerulesep\vrule width\arrayrulewidth\hfil}%
-{\hfil\vrule width\arrayrulewidth\hskip\doublerulesep\vrule width\arrayrulewidth}
+\IEEEeqnarraydefcol{vv}{\vrule width\arrayrulewidth\hfil}{\hfil\vrule 
+width\arrayrulewidth}
+\IEEEeqnarraydefcol{V}{}{\vrule width\arrayrulewidth\hskip\doublerulesep\vrule 
+width\arrayrulewidth}
+\IEEEeqnarraydefcol{VV}{\vrule width\arrayrulewidth\hskip\doublerulesep\vrule 
+width\arrayrulewidth\hfil}%
+{\hfil\vrule width\arrayrulewidth\hskip\doublerulesep\vrule 
+width\arrayrulewidth}
 
 % horizontal rules
 \IEEEeqnarraydefcol{h}{}{\leaders\hrule height\arrayrulewidth\hfil}
-\IEEEeqnarraydefcol{H}{}{\leaders\vbox{\hrule width\arrayrulewidth\vskip\doublerulesep\hrule width\arrayrulewidth}\hfil}
+\IEEEeqnarraydefcol{H}{}{\leaders\vbox{\hrule 
+width\arrayrulewidth\vskip\doublerulesep\hrule width\arrayrulewidth}\hfil}
 
 % plain
 \IEEEeqnarraydefcol{x}{}{}
@@ -745,24 +1631,30 @@ Using a default centering column instead}%
 \def\@IEEEeqnarraycolSEPcenter{1000pt plus 0pt minus 1000pt}
 
 % top level default tabskip glues for the start, end, and inter-column
-% may be reset within environments not always at the top level, e.g., \IEEEeqnarraybox
-\edef\@IEEEeqnarraycolSEPdefaultstart{\@IEEEeqnarraycolSEPcenter}% default start glue
-\edef\@IEEEeqnarraycolSEPdefaultend{\@IEEEeqnarraycolSEPcenter}% default end glue
-\edef\@IEEEeqnarraycolSEPdefaultmid{\@IEEEeqnarraycolSEPzero}% default inter-column glue
+% may be reset within environments not always at the top level, e.g., 
+%\IEEEeqnarraybox
+\edef\@IEEEeqnarraycolSEPdefaultstart{\@IEEEeqnarraycolSEPcenter}% default 
+%start glue
+\edef\@IEEEeqnarraycolSEPdefaultend{\@IEEEeqnarraycolSEPcenter}% default end 
+%glue
+\edef\@IEEEeqnarraycolSEPdefaultmid{\@IEEEeqnarraycolSEPzero}% default 
+%inter-column glue
 
 
 
 % creates a vertical rule that extends from the bottom to the top a a cell
 % Provided in case other packages redefine \vline some other way.
 % usage: \IEEEeqnarrayvrule[rule thickness]
-% If no argument is provided, \arrayrulewidth will be used for the rule thickness. 
+% If no argument is provided, \arrayrulewidth will be used for the rule 
+%thickness. 
 \newcommand\IEEEeqnarrayvrule[1][\arrayrulewidth]{\vrule\@width#1\relax}
 
 % creates a blank separator row
 % usage: \IEEEeqnarrayseprow[separation length][font size commands]
 % default is \IEEEeqnarrayseprow[0.25\normalbaselineskip][\relax]
 % blank arguments inherit the default values
-% uses \skip5 as a scratch register - calls \@IEEEeqnarraystrutsize which uses more scratch registers
+% uses \skip5 as a scratch register - calls \@IEEEeqnarraystrutsize which uses 
+%more scratch registers
 \def\IEEEeqnarrayseprow{\relax\@ifnextchar[{\@IEEEeqnarrayseprow}{\@IEEEeqnarrayseprow[0.25\normalbaselineskip]}}
 \def\@IEEEeqnarrayseprow[#1]{\relax\@ifnextchar[{\@@IEEEeqnarrayseprow[#1]}{\@@IEEEeqnarrayseprow[#1][\relax]}}
 \def\@@IEEEeqnarrayseprow[#1][#2]{\def\@IEEEeqnarrayseprowARGONE{#1}%
@@ -780,10 +1672,12 @@ Using a default centering column instead}%
 % usage: \IEEEeqnarrayseprowcut[separation length][font size commands]
 % default is \IEEEeqnarrayseprowcut[0.25\normalbaselineskip][\relax]
 % blank arguments inherit the default values
-% uses \skip5 as a scratch register - calls \@IEEEeqnarraystrutsize which uses more scratch registers
+% uses \skip5 as a scratch register - calls \@IEEEeqnarraystrutsize which uses 
+%more scratch registers
 \def\IEEEeqnarrayseprowcut{\multispan{\@IEEEeqnnumcols}\relax% span all the cols
 % advance column counter only if the IEEEeqnarray environment wants it
-\if@advanceIEEEeqncolcnt\global\advance\@IEEEeqncolcnt by \@IEEEeqnnumcols\relax\fi%
+\if@advanceIEEEeqncolcnt\global\advance\@IEEEeqncolcnt by 
+\@IEEEeqnnumcols\relax\fi%
 \@ifnextchar[{\@IEEEeqnarrayseprowcut}{\@IEEEeqnarrayseprowcut[0.25\normalbaselineskip]}}
 \def\@IEEEeqnarrayseprowcut[#1]{\relax\@ifnextchar[{\@@IEEEeqnarrayseprowcut[#1]}{\@@IEEEeqnarrayseprowcut[#1][\relax]}}
 \def\@@IEEEeqnarrayseprowcut[#1][#2]{\def\@IEEEeqnarrayseprowARGONE{#1}%
@@ -805,21 +1699,27 @@ Using a default centering column instead}%
 % usage: \IEEEeqnarrayrulerow[rule line thickness]
 \def\IEEEeqnarrayrulerow{\multispan{\@IEEEeqnnumcols}\relax% span all the cols
 % advance column counter only if the IEEEeqnarray environment wants it
-\if@advanceIEEEeqncolcnt\global\advance\@IEEEeqncolcnt by \@IEEEeqnnumcols\relax\fi%
+\if@advanceIEEEeqncolcnt\global\advance\@IEEEeqncolcnt by 
+\@IEEEeqnnumcols\relax\fi%
 \@ifnextchar[{\@IEEEeqnarrayrulerow}{\@IEEEeqnarrayrulerow[\arrayrulewidth]}}
-\def\@IEEEeqnarrayrulerow[#1]{\leaders\hrule height#1\hfil\relax% put in our rule 
+\def\@IEEEeqnarrayrulerow[#1]{\leaders\hrule height#1\hfil\relax% put in our 
+%rule 
 % turn off any struts
 \IEEEeqnarraystrutsize{0pt}{0pt}[\relax]\relax}
 
 
 % draws a double rule by using a single rule row, a separator row, and then
 % another single rule row 
-% first optional argument determines the rule thicknesses, \arrayrulewidth is the default
-% second optional argument determines the rule spacing, \doublerulesep is the default
+% first optional argument determines the rule thicknesses, \arrayrulewidth is 
+%the default
+% second optional argument determines the rule spacing, \doublerulesep is the 
+%default
 % usage: \IEEEeqnarraydblrulerow[rule line thickness][rule spacing]
-\def\IEEEeqnarraydblrulerow{\multispan{\@IEEEeqnnumcols}\relax% span all the cols
+\def\IEEEeqnarraydblrulerow{\multispan{\@IEEEeqnnumcols}\relax% span all the 
+%cols
 % advance column counter only if the IEEEeqnarray environment wants it
-\if@advanceIEEEeqncolcnt\global\advance\@IEEEeqncolcnt by \@IEEEeqnnumcols\relax\fi%
+\if@advanceIEEEeqncolcnt\global\advance\@IEEEeqncolcnt by 
+\@IEEEeqnnumcols\relax\fi%
 \@ifnextchar[{\@IEEEeqnarraydblrulerow}{\@IEEEeqnarraydblrulerow[\arrayrulewidth]}}
 \def\@IEEEeqnarraydblrulerow[#1]{\relax\@ifnextchar[{\@@IEEEeqnarraydblrulerow[#1]}%
 {\@@IEEEeqnarraydblrulerow[#1][\doublerulesep]}}
@@ -838,7 +1738,8 @@ Using a default centering column instead}%
 \fi%
 \\\multispan{\@IEEEeqnnumcols}%
 % advance column counter only if the IEEEeqnarray environment wants it
-\if@advanceIEEEeqncolcnt\global\advance\@IEEEeqncolcnt by \@IEEEeqnnumcols\relax\fi%
+\if@advanceIEEEeqncolcnt\global\advance\@IEEEeqncolcnt by 
+\@IEEEeqnnumcols\relax\fi%
 \def\@IEEEeqnarraydblrulerowARG{#1}%
 \ifx\@IEEEeqnarraydblrulerowARG\@empty%
 \@IEEEeqnarrayrulerow[\arrayrulewidth]%
@@ -847,14 +1748,19 @@ Using a default centering column instead}%
 \fi%
 }
 
-% draws a double rule by using a single rule row, a separator (cutting) row, and then
+% draws a double rule by using a single rule row, a separator (cutting) row, 
+%and then
 % another single rule row 
-% first optional argument determines the rule thicknesses, \arrayrulewidth is the default
-% second optional argument determines the rule spacing, \doublerulesep is the default
+% first optional argument determines the rule thicknesses, \arrayrulewidth is 
+%the default
+% second optional argument determines the rule spacing, \doublerulesep is the 
+%default
 % usage: \IEEEeqnarraydblrulerow[rule line thickness][rule spacing]
-\def\IEEEeqnarraydblrulerowcut{\multispan{\@IEEEeqnnumcols}\relax% span all the cols
+\def\IEEEeqnarraydblrulerowcut{\multispan{\@IEEEeqnnumcols}\relax% span all the 
+%cols
 % advance column counter only if the IEEEeqnarray environment wants it
-\if@advanceIEEEeqncolcnt\global\advance\@IEEEeqncolcnt by \@IEEEeqnnumcols\relax\fi%
+\if@advanceIEEEeqncolcnt\global\advance\@IEEEeqncolcnt by 
+\@IEEEeqnnumcols\relax\fi%
 \@ifnextchar[{\@IEEEeqnarraydblrulerowcut}{\@IEEEeqnarraydblrulerowcut[\arrayrulewidth]}}
 \def\@IEEEeqnarraydblrulerowcut[#1]{\relax\@ifnextchar[{\@@IEEEeqnarraydblrulerowcut[#1]}%
 {\@@IEEEeqnarraydblrulerowcut[#1][\doublerulesep]}}
@@ -873,7 +1779,8 @@ Using a default centering column instead}%
 \fi%
 \\\multispan{\@IEEEeqnnumcols}%
 % advance column counter only if the IEEEeqnarray environment wants it
-\if@advanceIEEEeqncolcnt\global\advance\@IEEEeqncolcnt by \@IEEEeqnnumcols\relax\fi%
+\if@advanceIEEEeqncolcnt\global\advance\@IEEEeqncolcnt by 
+\@IEEEeqnnumcols\relax\fi%
 \def\@IEEEeqnarraydblrulerowARG{#1}%
 \ifx\@IEEEeqnarraydblrulerowARG\@empty%
 \@IEEEeqnarrayrulerow[\arrayrulewidth]%
@@ -910,7 +1817,8 @@ Using a default centering column instead}%
 \edef\@IEEEeqnarrayTHEmasterstrutHSAVE{0pt} % saved master strut height
 \edef\@IEEEeqnarrayTHEmasterstrutDSAVE{0pt} % and depth
 
-\newif\if@IEEEeqnarrayusemasterstrut % flag to indicate that the master strut value
+\newif\if@IEEEeqnarrayusemasterstrut % flag to indicate that the master strut 
+%value
 \@IEEEeqnarrayusemasterstruttrue     % is to be used
 
 
@@ -1011,7 +1919,8 @@ Using a default centering column instead}%
 \fi}
 
 
-% usage: \IEEEeqnarraystrutsizeadd{added height}{added depth}[font size commands]
+% usage: \IEEEeqnarraystrutsizeadd{added height}{added depth}[font size 
+%commands]
 % If called outside the lines of an IEEEeqnarray, adds the given height
 % and depth to both the master and local struts.
 % If called inside an IEEEeqnarray line, adds the given height and depth
@@ -1155,7 +2064,8 @@ Using a default centering column instead}%
    \else% not the star form
    \global\@eqnswfalse
    \fi% if star form
-   % provide a basic hyperref \theHequation if this has not already been setup (hyperref not loaded, or no section counter)
+   % provide a basic hyperref \theHequation if this has not already been setup 
+   %(hyperref not loaded, or no section counter)
    \@ifundefined{theHequation}{\def\theHequation{\arabic{equation}}}{}\relax
    % provide dummy hyperref commands in case hyperref is not loaded
    \providecommand{\Hy@raisedlink}[1]{}\relax
@@ -1174,30 +2084,39 @@ Using a default centering column instead}%
    \baselineskip=\normalbaselineskip\relax%
    \jot=\IEEEnormaljot\relax%
    \mathsurround\z@\relax% no extra spacing around math
-   \@advanceIEEEeqncolcnttrue% advance the col counter for each col the user uses, 
-                             % used in \IEEEeqnarraymulticol and in the preamble build
+   \@advanceIEEEeqncolcnttrue% advance the col counter for each col the user 
+   %uses, 
+                             % used in \IEEEeqnarraymulticol and in the 
+                             %preamble build
    %V1.8 Here we preadvance to the next equation number.
    % If the user later wants a continued subequation, we can roll back.
    \global\@IEEEsubeqnnumrollback=\c@IEEEsubequation%
-   \stepcounter{equation}\@IEEEeqnumpreadvtrue% advance equation counter before first line
+   \stepcounter{equation}\@IEEEeqnumpreadvtrue% advance equation counter before 
+   %first line
    \setcounter{IEEEsubequation}{0}% no subequation yet
-   \let\@IEEEcurrentlabelsave\@currentlabel% save current label as we later change it globally
-   \let\@IEEEcurrentHrefsave\@currentHref% save current href label as we later change it globally
+   \let\@IEEEcurrentlabelsave\@currentlabel% save current label as we later 
+   %change it globally
+   \let\@IEEEcurrentHrefsave\@currentHref% save current href label as we later 
+   %change it globally
    \def\@currentlabel{\p@equation\theequation}% redefine the ref label
    \def\@currentHref{\@IEEEtheHrefequation}% setup hyperref label
    \IEEEeqnarraydecl\relax% allow a way for the user to make global overrides
    #1\relax% allow user to override defaults
    \let\\\@IEEEeqnarraycr% replace newline with one that can put in eqn. numbers
    \global\@IEEEeqncolcnt\z@% col. count = 0 for first line
-   \@IEEEbuildpreamble #2\end\relax% build the preamble and put it into \@IEEEtrantmptoksA 
+   \@IEEEbuildpreamble{#2}\relax% build the preamble and put it into 
+   %\@IEEEtrantmptoksA 
    % put in the column for the equation number
-   \ifnum\@IEEEeqnnumcols>0\relax\@IEEEappendtoksA{&}\fi% col separator for those after the first
+   \ifnum\@IEEEeqnnumcols>0\relax\@IEEEappendtoksA{&}\fi% col separator for 
+   %those after the first
    \toks0={##}%
-   % advance the \@IEEEeqncolcnt for the isolation col, this helps with error checking
+   % advance the \@IEEEeqncolcnt for the isolation col, this helps with error 
+   %checking
    \@IEEEappendtoksA{\global\advance\@IEEEeqncolcnt by 1\relax}%
    % add the isolation column
    \@IEEEappendtoksA{\tabskip\z@skip\bgroup\the\toks0\egroup}%
-   % advance the \@IEEEeqncolcnt for the equation number col, this helps with error checking
+   % advance the \@IEEEeqncolcnt for the equation number col, this helps with 
+   %error checking
    \@IEEEappendtoksA{&\global\advance\@IEEEeqncolcnt by 1\relax}%
    % add the equation number col to the preamble
    \@IEEEappendtoksA{\tabskip\z@skip\hb@xt@\z@\bgroup\hss\the\toks0\egroup}%
@@ -1211,8 +2130,10 @@ Using a default centering column instead}%
    \span\the\@IEEEtrantmptoksA\cr}
 
 % enter isolation/strut column (or the next column if the user did not use
-% every column), record the strut status, complete the columns, do the strut if needed,
-% restore counters (to backout any equation setup for a next line that was never used)
+% every column), record the strut status, complete the columns, do the strut if 
+%needed,
+% restore counters (to backout any equation setup for a next line that was 
+%never used)
 % to their correct values and exit
 \def\end@IEEEeqnarray{\@IEEEeqnarrayglobalizestrutstatus&\@@IEEEeqnarraycr\egroup
 \if@IEEEsubeqnumpreadv\global\advance\c@IEEEsubequation\m@ne\fi
@@ -1228,7 +2149,8 @@ $$\@ignoretrue}
 % the {\ifnum0=`} braces must be kept away from the last column to avoid
 % altering spacing of its math, so we use & to advance to the next column
 % as there is an isolation/strut column after the user's columns
-\def\@IEEEeqnarraycr{\@IEEEeqnarrayglobalizestrutstatus&% save strut status and advance to next column
+\def\@IEEEeqnarraycr{\@IEEEeqnarrayglobalizestrutstatus&% save strut status and 
+%advance to next column
    {\ifnum0=`}\fi
    \@ifstar{%
       \global\@eqpen\@M\@IEEEeqnarrayYCR
@@ -1245,11 +2167,13 @@ $$\@ignoretrue}
    \noalign{\penalty\@eqpen\vskip\jot\vskip #1\relax}}%
 
 \def\@@IEEEeqnarraycr{\@IEEEtrantmptoksA={}% clear token register
-    \advance\@IEEEeqncolcnt by -1\relax% adjust col count because of the isolation column
+    \advance\@IEEEeqncolcnt by -1\relax% adjust col count because of the 
+    %isolation column
     \ifnum\@IEEEeqncolcnt>\@IEEEeqnnumcols\relax
     \@IEEEclspkgerror{Too many columns within the IEEEeqnarray\MessageBreak
                           environment}%
-    {Use fewer \string &'s or put more columns in the IEEEeqnarray column\MessageBreak 
+    {Use fewer \string &'s or put more columns in the IEEEeqnarray 
+    column\MessageBreak 
      specifications.}\relax%
     \else
     \loop% add cols if the user did not use them all
@@ -1263,22 +2187,33 @@ $$\@ignoretrue}
     \the\@IEEEtrantmptoksA%
     % handle the strut/isolation column
     \@IEEEeqnarrayinsertstrut% do the strut if needed
-    \@IEEEeqnarraystrutreset% reset the strut system for next line or IEEEeqnarray
+    \@IEEEeqnarraystrutreset% reset the strut system for next line or 
+    %IEEEeqnarray
     &% and enter the equation number column
     \if@eqnsw% only if we display something
       \Hy@raisedlink{\hyper@anchorstart{\@currentHref}}% start a hyperref anchor
       \global\@IEEEeqnumpreadvfalse\relax% displaying an equation number means
-      \global\@IEEEsubeqnumpreadvfalse\relax% the equation counters point to valid equations
-      % V1.8 Here we setup the counters, currentlabel and status for what would be the *next*
-      % equation line as would be the case under the current settings. However, there are two problems.
-      % One problem is that there might not ever be a next line. The second problem is that the user
-      % may later alter the meaning of a line with commands such as \IEEEyessubnumber. So, to handle
-      % these cases we have to record the current values of the (sub)equation counters and revert back
-      % to them if the next line is changed or never comes. The \if@IEEEeqnumpreadv, \if@IEEEsubeqnumpreadv
+      \global\@IEEEsubeqnumpreadvfalse\relax% the equation counters point to 
+      %valid equations
+      % V1.8 Here we setup the counters, currentlabel and status for what would 
+      %be the *next*
+      % equation line as would be the case under the current settings. However, 
+      %there are two problems.
+      % One problem is that there might not ever be a next line. The second 
+      %problem is that the user
+      % may later alter the meaning of a line with commands such as 
+      %\IEEEyessubnumber. So, to handle
+      % these cases we have to record the current values of the (sub)equation 
+      %counters and revert back
+      % to them if the next line is changed or never comes. The 
+      %\if@IEEEeqnumpreadv, \if@IEEEsubeqnumpreadv
       % and \@IEEEsubeqnnumrollback stuff tracks this.
-      % The logic to handle all this is surprisingly complex, but a nice feature of the approach here is
-      % that the equation counters and labels remain valid for what the line would be unless a
-      % \IEEEyessubnumber et al. later changes it. So, any hyperref links are always correct.
+      % The logic to handle all this is surprisingly complex, but a nice 
+      %feature of the approach here is
+      % that the equation counters and labels remain valid for what the line 
+      %would be unless a
+      % \IEEEyessubnumber et al. later changes it. So, any hyperref links are 
+      %always correct.
       \ifnum\c@IEEEsubequation>0\relax% handle subequation
          \theIEEEsubequationdis\relax
          \if@IEEEsubeqnumpersist% setup for default type of next line
@@ -1286,7 +2221,8 @@ $$\@ignoretrue}
             \gdef\@currentlabel{\p@IEEEsubequation\theIEEEsubequation}\relax
             \gdef\@currentHref{\@IEEEtheHrefsubequation}% setup hyperref label
          \else
-             % if no subeqnum persist, go ahead and setup for a new equation number
+             % if no subeqnum persist, go ahead and setup for a new equation 
+             %number
              \global\@IEEEsubeqnnumrollback=\c@IEEEsubequation
              \stepcounter{equation}\global\@IEEEeqnumpreadvtrue\relax
              \setcounter{IEEEsubequation}{0}\gdef\@currentlabel{\p@equation\theequation}\relax
@@ -1296,12 +2232,14 @@ $$\@ignoretrue}
         \theequationdis\relax
         \setcounter{IEEEsubequation}{0}\relax% not really needed
         \if@IEEEsubeqnumpersist% setup for default type of next line
-           % subequations that follow plain equations carry the same equation number e.g, 5, 5a rather than 5, 6a
+           % subequations that follow plain equations carry the same equation 
+           %number e.g, 5, 5a rather than 5, 6a
            \stepcounter{IEEEsubequation}\global\@IEEEsubeqnumpreadvtrue\relax
            \gdef\@currentlabel{\p@IEEEsubequation\theIEEEsubequation}\relax
            \gdef\@currentHref{\@IEEEtheHrefsubequation}% setup hyperref label
          \else
-             % if no subeqnum persist, go ahead and setup for a new equation number
+             % if no subeqnum persist, go ahead and setup for a new equation 
+             %number
              \global\@IEEEsubeqnnumrollback=\c@IEEEsubequation
              \stepcounter{equation}\global\@IEEEeqnumpreadvtrue\relax
              \setcounter{IEEEsubequation}{0}\gdef\@currentlabel{\p@equation\theequation}\relax
@@ -1310,7 +2248,8 @@ $$\@ignoretrue}
       \fi%
       \Hy@raisedlink{\hyper@anchorend}% end hyperref anchor
     \fi% fi only if we display something
-    % reset the flags to indicate the default preferences of the display of equation numbers
+    % reset the flags to indicate the default preferences of the display of 
+    %equation numbers
     \if@IEEEeqnumpersist\global\@eqnswtrue\else\global\@eqnswfalse\fi
     \if@IEEEsubeqnumpersist\global\@eqnswtrue\fi% ditto for the subequation flag
     % reset the number of columns the user actually used
@@ -1354,7 +2293,8 @@ $$\@ignoretrue}
 \@IEEEeqnarraybox}
 \@namedef{endIEEEeqnarraybox*}{\end@IEEEeqnarraybox}
 
-% flag to indicate if the \IEEEeqnarraybox needs to put things into an hbox{$ $} 
+% flag to indicate if the \IEEEeqnarraybox needs to put things into an hbox{$ 
+%$} 
 % for \vcenter in non-math mode
 \newif\if@IEEEeqnarrayboxHBOXSW%
 \@IEEEeqnarrayboxHBOXSWfalse
@@ -1364,7 +2304,8 @@ $$\@ignoretrue}
 \def\@@@IEEEeqnarraybox[#1][#2]{\relax\@ifnextchar[{\@@@@IEEEeqnarraybox[#1][#2]}{\@@@@IEEEeqnarraybox[#1][#2][\relax]}}
 
 % #1 = decl; #2 = t,b,c; #3 = width, #4 = col specs
-\def\@@@@IEEEeqnarraybox[#1][#2][#3]#4{\@IEEEeqnarrayISinnerfalse % not yet within the lines of the halign
+\def\@@@@IEEEeqnarraybox[#1][#2][#3]#4{\@IEEEeqnarrayISinnerfalse % not yet 
+%within the lines of the halign
    \@IEEEeqnarraymasterstrutsave% save current master strut values
    \@IEEEeqnarraystrutsize{0pt}{0pt}[\relax]% turn off struts by default
    \@IEEEeqnarrayusemasterstruttrue% use master strut till user asks otherwise
@@ -1376,17 +2317,26 @@ $$\@ignoretrue}
    \jot=\IEEEnormaljot\relax%
    \mathsurround\z@\relax% no extra spacing around math
    % the default end glues are zero for an \IEEEeqnarraybox
-   \edef\@IEEEeqnarraycolSEPdefaultstart{\@IEEEeqnarraycolSEPzero}% default start glue
-   \edef\@IEEEeqnarraycolSEPdefaultend{\@IEEEeqnarraycolSEPzero}% default end glue
-   \edef\@IEEEeqnarraycolSEPdefaultmid{\@IEEEeqnarraycolSEPzero}% default inter-column glue
-   \@advanceIEEEeqncolcntfalse% do not advance the col counter for each col the user uses, 
-                              % used in \IEEEeqnarraymulticol and in the preamble build
+   \edef\@IEEEeqnarraycolSEPdefaultstart{\@IEEEeqnarraycolSEPzero}% default 
+   %start glue
+   \edef\@IEEEeqnarraycolSEPdefaultend{\@IEEEeqnarraycolSEPzero}% default end 
+   %glue
+   \edef\@IEEEeqnarraycolSEPdefaultmid{\@IEEEeqnarraycolSEPzero}% default 
+   %inter-column glue
+   \@advanceIEEEeqncolcntfalse% do not advance the col counter for each col the 
+   %user uses, 
+                              % used in \IEEEeqnarraymulticol and in the 
+                              %preamble build
    \IEEEeqnarrayboxdecl\relax% allow a way for the user to make global overrides
    #1\relax% allow user to override defaults
-   \let\\\@IEEEeqnarrayboxcr% replace newline with one that allows optional spacing
-   \@IEEEbuildpreamble #4\end\relax% build the preamble and put it into \@IEEEtrantmptoksA
-   % add an isolation column to the preamble to stop \\'s {} from getting into the last col
-   \ifnum\@IEEEeqnnumcols>0\relax\@IEEEappendtoksA{&}\fi% col separator for those after the first
+   \let\\\@IEEEeqnarrayboxcr% replace newline with one that allows optional 
+   %spacing
+   \@IEEEbuildpreamble{#4}\relax% build the preamble and put it into 
+   %\@IEEEtrantmptoksA
+   % add an isolation column to the preamble to stop \\'s {} from getting into 
+   %the last col
+   \ifnum\@IEEEeqnnumcols>0\relax\@IEEEappendtoksA{&}\fi% col separator for 
+   %those after the first
    \toks0={##}%
    % add the isolation column to the preamble
    \@IEEEappendtoksA{\tabskip\z@skip\bgroup\the\toks0\egroup}% 
@@ -1395,16 +2345,16 @@ $$\@ignoretrue}
    % begin the alignment
    \everycr{}%
    % use only the very first token to determine the positioning
-   % this stops some problems when the user uses more than one letter,
-   % but is probably not worth the effort
-   % \noindent is used as a delimiter
-   \def\@IEEEgrabfirstoken##1##2\noindent{\let\@IEEEgrabbedfirstoken=##1}%
-   \@IEEEgrabfirstoken#2\relax\relax\noindent
-   % \@IEEEgrabbedfirstoken has the first token, the rest are discarded
+   \@IEEEextracttoken{#2}\relax
+   \ifx\@IEEEextractedtokensdiscarded\@empty\else
+     \typeout{** WARNING: IEEEeqnarraybox position specifiers after the first 
+     in `\@IEEEextracttokenarg' ignored (line \the\inputlineno).}\relax
+   \fi
+   % \@IEEEextractedtoken has the first token, the rest are ignored
    % if we need to put things into and hbox and go into math mode, do so now
    \if@IEEEeqnarrayboxHBOXSW \leavevmode \hbox \bgroup $\fi%
    % use the appropriate vbox type
-   \if\@IEEEgrabbedfirstoken t\relax\vtop\else\if\@IEEEgrabbedfirstoken c\relax%
+   \if\@IEEEextractedtoken t\relax\vtop\else\if\@IEEEextractedtoken c\relax%
    \vcenter\else\vbox\fi\fi\bgroup%
    \@IEEEeqnarrayISinnertrue% commands are now within the lines
    \ifx#3\relax\halign\else\halign to #3\relax\fi%
@@ -1433,7 +2383,8 @@ $$\@ignoretrue}
 % This "cr" macros are modified versions those for LaTeX2e's eqnarray
 % For IEEEeqnarraybox, \\* is the same as \\
 % the {\ifnum0=`} braces must be kept away from the last column to avoid
-% altering spacing of its math, so we use & to advance to the isolation/strut column
+% altering spacing of its math, so we use & to advance to the isolation/strut 
+%column
 % carry strut status into isolation/strut column
 \def\@IEEEeqnarrayboxcr{\@IEEEeqnarrayglobalizestrutstatus% carry strut status
 &% enter isolation/strut column
@@ -1452,8 +2403,10 @@ $$\@ignoretrue}
 
 
 
-% starts the halign preamble build
-\def\@IEEEbuildpreamble{\@IEEEtrantmptoksA={}% clear token register
+% usage: \@IEEEbuildpreamble{column specifiers}
+% starts the halign preamble build 
+% the assembled preamble is put in \@IEEEtrantmptoksA
+\def\@IEEEbuildpreamble#1{\@IEEEtrantmptoksA={}% clear token register
 \let\@IEEEBPcurtype=u%current column type is not yet known
 \let\@IEEEBPprevtype=s%the previous column type was the start
 \let\@IEEEBPnexttype=u%next column type is not yet known
@@ -1469,17 +2422,21 @@ $$\@ignoretrue}
 % record the default end glues
 \edef\@IEEEBPstartglue{\@IEEEeqnarraycolSEPdefaultstart}%
 \edef\@IEEEBPendglue{\@IEEEeqnarraycolSEPdefaultend}%
+\edef\@IEEEedefMACRO{#1}\relax% fully expand the preamble to support macro 
+%containers
 % now parse the user's column specifications
-\@@IEEEbuildpreamble}
+% \ignorespaces is used as a delimiter, need at least one trailing \relax 
+%because
+% \@@IEEEbuildpreamble looks into the future 
+\expandafter\@@IEEEbuildpreamble\@IEEEedefMACRO\ignorespaces\relax\relax}
 
 
+% usage: \@@IEEEbuildpreamble{current column}{next column}
 % parses and builds the halign preamble
 \def\@@IEEEbuildpreamble#1#2{\let\@@nextIEEEbuildpreamble=\@@IEEEbuildpreamble%
 % use only the very first token to check the end
-% \noindent is used as a delimiter as \end can be present here
-\def\@IEEEgrabfirstoken##1##2\noindent{\let\@IEEEgrabbedfirstoken=##1}%
-\@IEEEgrabfirstoken#1\relax\relax\noindent
-\ifx\@IEEEgrabbedfirstoken\end\let\@@nextIEEEbuildpreamble=\@@IEEEfinishpreamble\else%
+\@IEEEextracttokengroups{#1}\relax
+\ifx\@IEEEextractedfirsttoken\ignorespaces\let\@@nextIEEEbuildpreamble=\@@IEEEfinishpreamble\else%
 % identify current and next token type
 \@IEEEgetcoltype{#1}{\@IEEEBPcurtype}{1}% current, error on invalid
 \@IEEEgetcoltype{#2}{\@IEEEBPnexttype}{0}% next, no error on invalid next
@@ -1499,8 +2456,10 @@ $$\@ignoretrue}
 \fi\@@nextIEEEbuildpreamble{#2}}
 
 
+% usage: \@@IEEEfinishpreamble{discarded}
 % executed just after preamble build is completed
 % warn about zero cols, and if prevtype type = u, put in end tabskip glue
+% argument is not used
 \def\@@IEEEfinishpreamble#1{\ifnum\@IEEEeqnnumcols<1\relax
 \@IEEEclspkgerror{No column specifiers declared for IEEEeqnarray}%
 {At least one column type must be declared for each IEEEeqnarray.}%
@@ -1509,51 +2468,59 @@ $$\@ignoretrue}
 \if\@IEEEBPprevtype u\@IEEEappendtoksA{\tabskip=\@IEEEBPendglue}\fi}
 
 
-% Identify and return the column specifier's type code
-\def\@IEEEgetcoltype#1#2#3{%
-% use only the very first token to determine the type
-% \noindent is used as a delimiter as \end can be present here
-\def\@IEEEgrabfirstoken##1##2\noindent{\let\@IEEEgrabbedfirstoken=##1}%
-\@IEEEgrabfirstoken#1\relax\relax\noindent
-% \@IEEEgrabfirstoken has the first token, the rest are discarded
+% usage: \@IEEEgetcoltype{col specifier}{\output}{error more}
+% Identify and return the column specifier's type code in the given
+% \output macro:
 % n = number
 % g = glue (any other char in catagory 12)
 % c = letter
-% e = \end
+% e = \ignorespaces (end of sequence)
 % u = undefined
-% third argument: 0 = no error message, 1 = error on invalid char
+% error mode: 0 = no error message, 1 = error on invalid char
+\def\@IEEEgetcoltype#1#2#3{%
+% use only the very first token to determine the type
+\@IEEEextracttoken{#1}\relax
+% \@IEEEextractedtoken has the first token, the rest are discarded
 \let#2=u\relax% assume invalid until know otherwise
-\ifx\@IEEEgrabbedfirstoken\end\let#2=e\else
-\ifcat\@IEEEgrabbedfirstoken\relax\else% screen out control sequences
-\if0\@IEEEgrabbedfirstoken\let#2=n\else
-\if1\@IEEEgrabbedfirstoken\let#2=n\else
-\if2\@IEEEgrabbedfirstoken\let#2=n\else
-\if3\@IEEEgrabbedfirstoken\let#2=n\else
-\if4\@IEEEgrabbedfirstoken\let#2=n\else
-\if5\@IEEEgrabbedfirstoken\let#2=n\else
-\if6\@IEEEgrabbedfirstoken\let#2=n\else
-\if7\@IEEEgrabbedfirstoken\let#2=n\else
-\if8\@IEEEgrabbedfirstoken\let#2=n\else
-\if9\@IEEEgrabbedfirstoken\let#2=n\else
-\ifcat,\@IEEEgrabbedfirstoken\let#2=g\relax
-\else\ifcat a\@IEEEgrabbedfirstoken\let#2=c\relax\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+\ifx\@IEEEextractedtoken\ignorespaces\let#2=e\else
+\ifcat\@IEEEextractedtoken\relax\else% screen out control sequences
+\if0\@IEEEextractedtoken\let#2=n\else
+\if1\@IEEEextractedtoken\let#2=n\else
+\if2\@IEEEextractedtoken\let#2=n\else
+\if3\@IEEEextractedtoken\let#2=n\else
+\if4\@IEEEextractedtoken\let#2=n\else
+\if5\@IEEEextractedtoken\let#2=n\else
+\if6\@IEEEextractedtoken\let#2=n\else
+\if7\@IEEEextractedtoken\let#2=n\else
+\if8\@IEEEextractedtoken\let#2=n\else
+\if9\@IEEEextractedtoken\let#2=n\else
+\ifcat,\@IEEEextractedtoken\let#2=g\relax
+\else\ifcat 
+a\@IEEEextractedtoken\let#2=c\relax\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
 \if#2u\relax
-\if0\noexpand#3\relax\else\@IEEEclspkgerror{Invalid character in column specifications}%
+\if0\noexpand#3\relax\else\@IEEEclspkgerror{Invalid character in column 
+specifications}%
 {Only letters, numerals and certain other symbols are allowed \MessageBreak
 as IEEEeqnarray column specifiers.}\fi\fi}
 
 
-% identify the current letter referenced column
-% if invalid, use a default column
-\def\@IEEEgetcurcol#1{\expandafter\ifx\csname @IEEEeqnarraycolDEF#1\endcsname\@IEEEeqnarraycolisdefined%
+% usage: \@IEEEgetcurcol{col specifier}
+% verify the letter referenced column exists
+% and return its name in \@IEEEBPcurcolname
+% if column specifier is invalid, use the default column @IEEEdefault
+\def\@IEEEgetcurcol#1{\expandafter\ifx\csname 
+@IEEEeqnarraycolDEF#1\endcsname\@IEEEeqnarraycolisdefined%
 \def\@IEEEBPcurcolname{#1}\else% invalid column name
-\@IEEEclspkgerror{Invalid column type "#1" in column specifications.\MessageBreak
+\@IEEEclspkgerror{Invalid column type "#1" in column 
+specifications.\MessageBreak
 Using a default centering column instead}%
 {You must define IEEEeqnarray column types before use.}%
 \def\@IEEEBPcurcolname{@IEEEdefault}\fi}
 
 
-% identify and return the predefined (punctuation) glue value
+% usage: \@IEEEgetcurglue{glue specifier}{\output}
+% identify the predefined (punctuation) glue value
+% and return it in the given output macro
 \def\@IEEEgetcurglue#1#2{%
 % ! = \! (neg small)  -0.16667em (-3/18 em)
 % , = \, (small)       0.16667em ( 3/18 em)
@@ -1571,10 +2538,12 @@ Using a default centering column instead}%
 % value for 1em.
 % 
 % use only the very first token to determine the type
-% this prevents errant tokens from getting in the main text
-% \noindent is used as a delimiter here
-\def\@IEEEgrabfirstoken##1##2\noindent{\let\@IEEEgrabbedfirstoken=##1}%
-\@IEEEgrabfirstoken#1\relax\relax\noindent
+\@IEEEextracttoken{#1}\relax
+\ifx\@IEEEextractedtokensdiscarded\@empty\else
+  \typeout{** WARNING: IEEEeqnarray predefined inter-column glue type 
+  specifiers after the first in `\@IEEEextracttokenarg' ignored (line 
+  \the\inputlineno).}\relax
+\fi
 % get the math font 1em value
 % LaTeX2e's NFSS2 does not preload the fonts, but \IEEEeqnarray needs
 % to gain access to the math (\textfont2) font's spacing parameters.
@@ -1587,18 +2556,18 @@ Using a default centering column instead}%
 \@IEEEtrantmpdimenA=\fontdimen6\textfont2\relax%
 % identify the glue value based on the first token
 % we discard anything after the first
-\if!\@IEEEgrabbedfirstoken\@IEEEtrantmpdimenA=-0.16667\@IEEEtrantmpdimenA\edef#2{\the\@IEEEtrantmpdimenA}\else
-\if,\@IEEEgrabbedfirstoken\@IEEEtrantmpdimenA=0.16667\@IEEEtrantmpdimenA\edef#2{\the\@IEEEtrantmpdimenA}\else
-\if:\@IEEEgrabbedfirstoken\@IEEEtrantmpdimenA=0.22222\@IEEEtrantmpdimenA\edef#2{\the\@IEEEtrantmpdimenA}\else
-\if;\@IEEEgrabbedfirstoken\@IEEEtrantmpdimenA=0.27778\@IEEEtrantmpdimenA\edef#2{\the\@IEEEtrantmpdimenA}\else
-\if'\@IEEEgrabbedfirstoken\@IEEEtrantmpdimenA=1\@IEEEtrantmpdimenA\edef#2{\the\@IEEEtrantmpdimenA}\else
-\if"\@IEEEgrabbedfirstoken\@IEEEtrantmpdimenA=2\@IEEEtrantmpdimenA\edef#2{\the\@IEEEtrantmpdimenA}\else
-\if.\@IEEEgrabbedfirstoken\@IEEEtrantmpdimenA=0.5\arraycolsep\edef#2{\the\@IEEEtrantmpdimenA}\else
-\if/\@IEEEgrabbedfirstoken\edef#2{\the\arraycolsep}\else
-\if?\@IEEEgrabbedfirstoken\@IEEEtrantmpdimenA=2\arraycolsep\edef#2{\the\@IEEEtrantmpdimenA}\else
-\if *\@IEEEgrabbedfirstoken\edef#2{0pt plus 1fil minus 0pt}\else
-\if+\@IEEEgrabbedfirstoken\edef#2{\@IEEEeqnarraycolSEPcenter}\else
-\if-\@IEEEgrabbedfirstoken\edef#2{\@IEEEeqnarraycolSEPzero}\else
+\if!\@IEEEextractedtoken\@IEEEtrantmpdimenA=-0.16667\@IEEEtrantmpdimenA\edef#2{\the\@IEEEtrantmpdimenA}\else
+\if,\@IEEEextractedtoken\@IEEEtrantmpdimenA=0.16667\@IEEEtrantmpdimenA\edef#2{\the\@IEEEtrantmpdimenA}\else
+\if:\@IEEEextractedtoken\@IEEEtrantmpdimenA=0.22222\@IEEEtrantmpdimenA\edef#2{\the\@IEEEtrantmpdimenA}\else
+\if;\@IEEEextractedtoken\@IEEEtrantmpdimenA=0.27778\@IEEEtrantmpdimenA\edef#2{\the\@IEEEtrantmpdimenA}\else
+\if'\@IEEEextractedtoken\@IEEEtrantmpdimenA=1\@IEEEtrantmpdimenA\edef#2{\the\@IEEEtrantmpdimenA}\else
+\if"\@IEEEextractedtoken\@IEEEtrantmpdimenA=2\@IEEEtrantmpdimenA\edef#2{\the\@IEEEtrantmpdimenA}\else
+\if.\@IEEEextractedtoken\@IEEEtrantmpdimenA=0.5\arraycolsep\edef#2{\the\@IEEEtrantmpdimenA}\else
+\if/\@IEEEextractedtoken\edef#2{\the\arraycolsep}\else
+\if?\@IEEEextractedtoken\@IEEEtrantmpdimenA=2\arraycolsep\edef#2{\the\@IEEEtrantmpdimenA}\else
+\if *\@IEEEextractedtoken\edef#2{0pt plus 1fil minus 0pt}\else
+\if+\@IEEEextractedtoken\edef#2{\@IEEEeqnarraycolSEPcenter}\else
+\if-\@IEEEextractedtoken\edef#2{\@IEEEeqnarraycolSEPzero}\else
 \edef#2{\@IEEEeqnarraycolSEPzero}%
 \@IEEEclspkgerror{Invalid predefined inter-column glue type "#1" in\MessageBreak
 column specifications. Using a default value of\MessageBreak
@@ -1607,12 +2576,14 @@ column specifications. Using a default value of\MessageBreak
 IEEEeqnarray column specifications.}\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi}
 
 
-
+% usage: \@IEEEprocessNcol{digit}
 % process a numerical digit from the column specification
 % and look up the corresponding user defined glue value
-% can transform current type from n to g or a as the user defined glue is acquired
+% can transform current type from n to g or a as the user defined glue is 
+%acquired
 \def\@IEEEprocessNcol#1{\if\@IEEEBPprevtype g%
-\@IEEEclspkgerror{Back-to-back inter-column glue specifiers in column\MessageBreak
+\@IEEEclspkgerror{Back-to-back inter-column glue specifiers in 
+column\MessageBreak
 specifications. Ignoring consecutive glue specifiers\MessageBreak
 after the first}%
 {You cannot have two or more glue types next to each other\MessageBreak 
@@ -1620,25 +2591,33 @@ in the IEEEeqnarray column specifications.}%
 \let\@IEEEBPcurtype=a% abort this glue, future digits will be discarded
 \@IEEEBPcurnum=0\relax%
 \else% if we previously aborted a glue
-\if\@IEEEBPprevtype a\@IEEEBPcurnum=0\let\@IEEEBPcurtype=a%maintain digit abortion
+\if\@IEEEBPprevtype a\@IEEEBPcurnum=0\let\@IEEEBPcurtype=a%maintain digit 
+%abortion
 \else%acquire this number
 % save the previous type before the numerical digits started
 \if\@IEEEBPprevtype n\else\let\@IEEEBPprevsavedtype=\@IEEEBPprevtype\fi%
 \multiply\@IEEEBPcurnum by 10\relax%
-\advance\@IEEEBPcurnum by #1\relax% add in number, \relax is needed to stop TeX's number scan
+\advance\@IEEEBPcurnum by #1\relax% add in number, \relax is needed to stop 
+%TeX's number scan
 \if\@IEEEBPnexttype n\else%close acquisition
-\expandafter\ifx\csname @IEEEeqnarraycolSEPDEF\expandafter\romannumeral\number\@IEEEBPcurnum\endcsname\@IEEEeqnarraycolisdefined%
-\edef\@IEEEBPcurglue{\csname @IEEEeqnarraycolSEP\expandafter\romannumeral\number\@IEEEBPcurnum\endcsname}%
+\expandafter\ifx\csname 
+@IEEEeqnarraycolSEPDEF\expandafter\romannumeral\number\@IEEEBPcurnum\endcsname\@IEEEeqnarraycolisdefined%
+\edef\@IEEEBPcurglue{\csname 
+@IEEEeqnarraycolSEP\expandafter\romannumeral\number\@IEEEBPcurnum\endcsname}%
 \else%user glue not defined
-\@IEEEclspkgerror{Invalid user defined inter-column glue type "\number\@IEEEBPcurnum" in\MessageBreak
+\@IEEEclspkgerror{Invalid user defined inter-column glue type 
+"\number\@IEEEBPcurnum" in\MessageBreak
 column specifications. Using a default value of\MessageBreak
 0pt instead}%
-{You must define all IEEEeqnarray numerical inter-column glue types via\MessageBreak
-\string\IEEEeqnarraydefcolsep \space before they are used in column specifications.}%
+{You must define all IEEEeqnarray numerical inter-column glue types 
+via\MessageBreak
+\string\IEEEeqnarraydefcolsep \space before they are used in column 
+specifications.}%
 \edef\@IEEEBPcurglue{\@IEEEeqnarraycolSEPzero}%
 \fi% glue defined or not
 \let\@IEEEBPcurtype=g% change the type to reflect the acquired glue
-\let\@IEEEBPprevtype=\@IEEEBPprevsavedtype% restore the prev type before this number glue
+\let\@IEEEBPprevtype=\@IEEEBPprevsavedtype% restore the prev type before this 
+%number glue
 \@IEEEBPcurnum=0\relax%ready for next acquisition
 \fi%close acquisition, get glue
 \fi%discard or acquire number
@@ -1648,25 +2627,29 @@ column specifications. Using a default value of\MessageBreak
 
 % process an acquired glue
 % add any acquired column/glue pair to the preamble
-\def\@IEEEprocessGcol{\if\@IEEEBPprevtype a\let\@IEEEBPcurtype=a%maintain previous glue abortions
+\def\@IEEEprocessGcol{\if\@IEEEBPprevtype a\let\@IEEEBPcurtype=a%maintain 
+%previous glue abortions
 \else
 % if this is the start glue, save it, but do nothing else 
 % as this is not used in the preamble, but before
 \if\@IEEEBPprevtype s\edef\@IEEEBPstartglue{\@IEEEBPcurglue}%
 \else%not the start glue
 \if\@IEEEBPprevtype g%ignore if back to back glues
-\@IEEEclspkgerror{Back-to-back inter-column glue specifiers in column\MessageBreak
+\@IEEEclspkgerror{Back-to-back inter-column glue specifiers in 
+column\MessageBreak
 specifications. Ignoring consecutive glue specifiers\MessageBreak
 after the first}%
 {You cannot have two or more glue types next to each other\MessageBreak 
 in the IEEEeqnarray column specifications.}%
 \let\@IEEEBPcurtype=a% abort this glue
 \else% not a back to back glue
-\if\@IEEEBPprevtype c\relax% if the previoustype was a col, add column/glue pair to preamble
+\if\@IEEEBPprevtype c\relax% if the previoustype was a col, add column/glue 
+%pair to preamble
 \ifnum\@IEEEeqnnumcols>0\relax\@IEEEappendtoksA{&}\fi
 \toks0={##}%
 % make preamble advance col counter if this environment needs this
-\if@advanceIEEEeqncolcnt\@IEEEappendtoksA{\global\advance\@IEEEeqncolcnt by 1\relax}\fi
+\if@advanceIEEEeqncolcnt\@IEEEappendtoksA{\global\advance\@IEEEeqncolcnt by 
+1\relax}\fi
 % insert the column defintion into the preamble, being careful not to expand
 % the column definition
 \@IEEEappendtoksA{\tabskip=\@IEEEBPcurglue}%
@@ -1681,7 +2664,8 @@ in the IEEEeqnarray column specifications.}%
 \relax\relax\relax\relax\relax\endgroup}%
 \advance\@IEEEeqnnumcols by 1\relax%one more column in the preamble
 \else% error: non-start glue with no pending column
-\@IEEEclspkgerror{Inter-column glue specifier without a prior column\MessageBreak
+\@IEEEclspkgerror{Inter-column glue specifier without a prior 
+column\MessageBreak
 type in the column specifications. Ignoring this glue\MessageBreak 
 specifier}%
 {Except for the first and last positions, glue can be placed only\MessageBreak
@@ -1694,17 +2678,22 @@ between column types.}%
 }
 
 
-% process an acquired letter referenced column and, if necessary, add it to the preamble
+% process an acquired letter referenced column and, if necessary, add it to the 
+%preamble
 \def\@IEEEprocessCcol{\if\@IEEEBPnexttype g\else
 \if\@IEEEBPnexttype n\else
 % we have a column followed by something other than a glue (or numeral glue)
 % so we must add this column to the preamble now
-\ifnum\@IEEEeqnnumcols>0\relax\@IEEEappendtoksA{&}\fi%col separator for those after the first
-\if\@IEEEBPnexttype e\@IEEEappendtoksA{\tabskip=\@IEEEBPendglue\relax}\else%put in end glue
-\@IEEEappendtoksA{\tabskip=\@IEEEeqnarraycolSEPdefaultmid\relax}\fi% or default mid glue
+\ifnum\@IEEEeqnnumcols>0\relax\@IEEEappendtoksA{&}\fi%col separator for those 
+%after the first
+\if\@IEEEBPnexttype e\@IEEEappendtoksA{\tabskip=\@IEEEBPendglue\relax}\else%put 
+%in end glue
+\@IEEEappendtoksA{\tabskip=\@IEEEeqnarraycolSEPdefaultmid\relax}\fi% or default 
+%mid glue
 \toks0={##}%
 % make preamble advance col counter if this environment needs this
-\if@advanceIEEEeqncolcnt\@IEEEappendtoksA{\global\advance\@IEEEeqncolcnt by 1\relax}\fi
+\if@advanceIEEEeqncolcnt\@IEEEappendtoksA{\global\advance\@IEEEeqncolcnt by 
+1\relax}\fi
 % insert the column definition into the preamble, being careful not to expand
 % the column definition
 \@IEEEappendNOEXPANDtoksA{\begingroup\csname @IEEEeqnarraycolPRE}%
@@ -1779,7 +2768,8 @@ between column types.}%
 % V1.7 any additional, non-font related commands needed to modify
 % the rest of the word, can take zero or one argument.
 \providecommand{\IEEEPARstartWORDCAPSTYLE}{\MakeUppercase}
-% This is the horizontal separation distance from the drop letter to the main text.
+% This is the horizontal separation distance from the drop letter to the main 
+%text.
 % Lengths that depend on the font (e.g., ex, em, etc.) will be referenced
 % to the font that is active when \IEEEPARstart is called. 
 \providecommand{\IEEEPARstartSEP}{0.15em}
@@ -1819,7 +2809,8 @@ between column types.}%
 \xdef\@IEEEPARstartFONTNAME{\expandafter\@IEEEPARstartGETFIRSTWORD\@IEEEPARstartFONTNAMESPACE\relax}}}%
 % define a font based on this name with a point size equal to the desired
 % height of the drop letter
-\font\@IEEEPARstartsubfont\@IEEEPARstartFONTNAME\space at \@IEEEtrantmpdimenA\relax%
+\font\@IEEEPARstartsubfont\@IEEEPARstartFONTNAME\space at 
+\@IEEEtrantmpdimenA\relax%
 % save this value as a counter (integer) value (sp points)
 \@IEEEtrantmpcountA=\@IEEEtrantmpdimenA%
 % now get the height of the actual letter produced by this font size
@@ -1827,7 +2818,8 @@ between column types.}%
 % If something bogus happens like the first argument is empty or the
 % current font is strange, do not allow a zero height.
 \ifdim\@IEEEtrantmpdimenB=0pt\relax%
-\typeout{** WARNING: IEEEPARstart drop letter has zero height! (line \the\inputlineno)}%
+\typeout{** WARNING: IEEEPARstart drop letter has zero height! (line 
+\the\inputlineno)}%
 \typeout{ Forcing the drop letter font size to 10pt.}%
 \@IEEEtrantmpdimenB=10pt%
 \fi%
@@ -1851,7 +2843,8 @@ between column types.}%
 % \@IEEEPARstartfont is globaly set to the calculated font of the big letter
 % We need to carry this out of the local calculation area to to create the
 % big letter.
-\global\font\@IEEEPARstartfont\@IEEEPARstartFONTNAME\space at \@IEEEtrantmpdimenB%
+\global\font\@IEEEPARstartfont\@IEEEPARstartFONTNAME\space at 
+\@IEEEtrantmpdimenB%
 % Now set \@IEEEtrantmpdimenA to the width of the big letter
 % We need to carry this out of the local calculation area to set the
 % hanging indent
@@ -1885,7 +2878,8 @@ between column types.}%
 
 % determines if the space remaining on a given page is equal to or greater
 % than the specified space of argument one
-% if not, execute argument two (only if the remaining space is greater than zero)
+% if not, execute argument two (only if the remaining space is greater than 
+%zero)
 % and issue a \newpage
 % 
 % example: \@IEEEtranneedspace{2in}{\vfill}
@@ -1905,9 +2899,11 @@ between column types.}%
 
 
 % \IEEEauthorrefmark
-\DeclareRobustCommand*{\IEEEauthorrefmark}[1]{\raisebox{0pt}[0pt][0pt]{\textsuperscript{\footnotesize\ensuremath{\ifcase#1\or *\or \dagger\or \ddagger\or%
+\DeclareRobustCommand*{\IEEEauthorrefmark}[1]{\raisebox{0pt}[0pt][0pt]{\textsuperscript{\footnotesize\ensuremath{\ifcase#1\or
+ *\or \dagger\or \ddagger\or%
     \mathsection\or \mathparagraph\or \|\or **\or \dagger\dagger%
-    \or \ddagger\ddagger \else\textsuperscript{\expandafter\romannumeral#1}\fi}}}}
+    \or \ddagger\ddagger 
+    \else\textsuperscript{\expandafter\romannumeral#1}\fi}}}}
 
 
 % V1.3 IEEEQED and IEEEproof
@@ -1919,11 +2915,13 @@ between column types.}%
 
 %V1.8 flag to indicate if QED symbol is to be shown
 \newif\if@IEEEQEDshow  \@IEEEQEDshowtrue
-\def\IEEEproofindentspace{2\parindent}% V1.8 allow user to change indentation amount if desired
+\def\IEEEproofindentspace{2\parindent}% V1.8 allow user to change indentation 
+%amount if desired
 % v1.7 name change to avoid namespace collision with amsthm. Also add support
 % for an optional argument.
 \def\IEEEproof{\@ifnextchar[{\@IEEEproof}{\@IEEEproof[\IEEEproofname]}}
-\def\@IEEEproof[#1]{\@IEEEQEDshowtrue\par\noindent\hspace{\IEEEproofindentspace}{\itshape #1: }}
+\def\@IEEEproof[#1]{\@IEEEQEDshowtrue\par\noindent\hspace{\IEEEproofindentspace}{\itshape
+ #1: }}
 \def\endIEEEproof{\if@IEEEQEDshow\hspace*{\fill}\nobreakspace\IEEEQED\fi\par}
 % qedhere for equation environments, similar to AMS \qedhere
 \def\IEEEQEDhereeqn{\global\@IEEEQEDshowfalse\eqno\let\eqno\relax\let\leqno\relax
@@ -1944,7 +2942,8 @@ between column types.}%
 \def\@bstctlcite[#1]#2{\@bsphack
   \@for\@citeb:=#2\do{%
     \edef\@citeb{\expandafter\@firstofone\@citeb}%
-    \if@filesw\immediate\write\csname #1\endcsname{\string\citation{\@citeb}}\fi}%
+    \if@filesw\immediate\write\csname 
+    #1\endcsname{\string\citation{\@citeb}}\fi}%
   \@esphack}
 
 
@@ -1955,20 +2954,26 @@ between column types.}%
 
 
 % hook to allow easy disabling of all legacy warnings
-\def\@IEEElegacywarn#1#2{\typeout{** ATTENTION: \@IEEEbackslash #1 is deprecated (line \the\inputlineno).
+\def\@IEEElegacywarn#1#2{\typeout{** ATTENTION: \@IEEEbackslash #1 is 
+deprecated (line \the\inputlineno).
 Use \@IEEEbackslash #2 instead.}}
 
-% provide for legacy commands
-\def\PARstart{\@IEEElegacywarn{PARstart}{IEEEPARstart}\IEEEPARstart}
 
-% V1.3 no longer support legacy IED list commands
+% V1.4 no longer support these legacy commands
+% \def\PARstart{\@IEEElegacywarn{PARstart}{IEEEPARstart}\IEEEPARstart}
 % \let\labelindent\IEEElabelindent
-% \def\calcleftmargin{\@IEEElegacywarn{calcleftmargin}{IEEEcalcleftmargin}\IEEEcalcleftmargin}
-% \def\setlabelwidth{\@IEEElegacywarn{setlabelwidth}{IEEEsetlabelwidth}\IEEEsetlabelwidth}
-% \def\usemathlabelsep{\@IEEElegacywarn{usemathlabelsep}{IEEEusemathlabelsep}\IEEEusemathlabelsep}
-% \def\iedlabeljustifyc{\@IEEElegacywarn{iedlabeljustifyc}{IEEEiedlabeljustifyc}\IEEEiedlabeljustifyc}
-% \def\iedlabeljustifyl{\@IEEElegacywarn{iedlabeljustifyl}{IEEEiedlabeljustifyl}\IEEEiedlabeljustifyl}
-% \def\iedlabeljustifyr{\@IEEElegacywarn{iedlabeljustifyr}{IEEEiedlabeljustifyr}\IEEEiedlabeljustifyr}
+% 
+%\def\calcleftmargin{\@IEEElegacywarn{calcleftmargin}{IEEEcalcleftmargin}\IEEEcalcleftmargin}
+% 
+%\def\setlabelwidth{\@IEEElegacywarn{setlabelwidth}{IEEEsetlabelwidth}\IEEEsetlabelwidth}
+% 
+%\def\usemathlabelsep{\@IEEElegacywarn{usemathlabelsep}{IEEEusemathlabelsep}\IEEEusemathlabelsep}
+% 
+%\def\iedlabeljustifyc{\@IEEElegacywarn{iedlabeljustifyc}{IEEEiedlabeljustifyc}\IEEEiedlabeljustifyc}
+% 
+%\def\iedlabeljustifyl{\@IEEElegacywarn{iedlabeljustifyl}{IEEEiedlabeljustifyl}\IEEEiedlabeljustifyl}
+% 
+%\def\iedlabeljustifyr{\@IEEElegacywarn{iedlabeljustifyr}{IEEEiedlabeljustifyr}\IEEEiedlabeljustifyr}
 
 
 \endinput
