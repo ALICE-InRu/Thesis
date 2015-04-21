@@ -234,15 +234,15 @@
 \newcommand{\abstractpage}{
 	\chapter*{Abstract}
 	\input{frontmatter/abstract}
-	\cleardoublepage
+	\newpage
 	\chapter*{Ágrip}
 	\input{frontmatter/abstract_is}
 	\cleardoublepage
 }
 
-\newcommand{\dedicationpage}{
+\newcommand{\dedicationpage}[1]{
 	\newpage \thispagestyle{empty} \vspace*{\fill}
-	\noindent {\sc \input{frontmatter/dedication}}
+	\noindent \centerline{\emph{#1}}
 	\vspace*{\fill} %\emptypage \newpage \rm
 	\cleardoublepage
 }
@@ -262,11 +262,6 @@
 	\noindent
 	\input{frontmatter/thanks}
 	\vspace*{\fill} 
-			
-	\cleardoublepage % setting up for the mainmatter
-	\setcounter{page}{1}
-	\pagenumbering{arabic}
-	\normalsize
 }
 	
 % An environment for paragraph-style section
@@ -346,6 +341,63 @@
     %
     \newpage
     \thispagestyle{empty}
-    \includepdf[pages={-},pagecommand={\thispagestyle{empty}}]{\papers@get{file}}
+    \includepdf[pages={-},pagecommand={\thispagestyle{fancy}}]{\papers@get{file}}
     \egroup}
 \makeatother
+
+
+\newcommand*\blankpage{%
+    \newpage
+    \topskip0pt
+    \vspace*{\fill}
+    \centerline{This page is intentionally left blank.}
+    \vspace{\fill}
+}
+
+\newcommand*\prologue[1]{%
+    
+    % setting up for the mainmatter
+    \cleardoublepage
+    \setcounter{page}{1}
+    \pagenumbering{arabic}
+    \normalsize    
+    
+    \thispagestyle{empty}
+    \topskip0pt
+    \vspace*{\fill}
+    \centerline{\Huge \textcolor{themecolor}{\sc{prologue}}}
+    \addcontentsline{toc}{chapter}{Prologue}    
+    \vspace{\fill}    
+    \ifthenelse{\equal{#1}{false}}{
+        \cfoot{Draft -- \today}
+    }{}
+}
+
+\newcommand*\papers{%
+        
+    \cleardoublepage
+    \setcounter{chapter}{0}
+    \renewcommand\appendixname{Paper}
+    \renewcommand\chaptername{Paper}
+    \renewcommand{\thechapter}{\Roman{chapter}}
+
+    \thispagestyle{empty}
+    \newpage
+    \topskip0pt
+    \vspace*{\fill}
+    \centerline{\Huge \textcolor{themecolor}{\sc{papers}}}
+    \addcontentsline{toc}{chapter}{Papers}    
+    \vspace{\fill}
+}
+
+\newcommand*\colophon{
+    \cleardoublepage
+    \newpage % odd page
+    \pagestyle{empty}
+    \thispagestyle{empty}    
+    {\Huge \hfill Colophon}
+    \vspace*{18pt}
+    \begin{center}
+        \parbox{200pt}{\raggedright \include{endmatter/colophon}}
+    \end{center}
+}
