@@ -292,8 +292,13 @@
 
 \usepackage{keyval}
 \usepackage{usebib}
+\newbibfield{title}
+\newbibfield{author}
 \newbibfield{booktitle}
 \newbibfield{doi}
+\newbibfield{month}
+\newbibfield{year}
+\newbibfield{publisher}
 
 \def\papers@set@keys#1{%%
     \pgfkeys{/papers/entities/.cd,#1}}
@@ -335,9 +340,11 @@
     \vfill
     %
     \noindent\small
-    Reprinted with permission from 
-    \usebibentry{\papers@get{natbib}}{booktitle}. 
-    Copyright \usebibentry{\papers@get{natbib}}{year}.
+    Reprinted, with permission, from 
+    \emph{\usebibentry{\papers@get{natbib}}{booktitle}} 
+    (\usebibentry{\papers@get{natbib}}{year}).
+    Copyright \usebibentry{\papers@get{natbib}}{year} 
+    by \usebibentry{\papers@get{natbib}}{publisher}. 
     %
     \newpage
     \thispagestyle{empty}
