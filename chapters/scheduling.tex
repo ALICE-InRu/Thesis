@@ -12,7 +12,13 @@ Many other scheduling problems can be reformulated as \JSP.
 For instance the widely studied \textit{Travelling Salesman Problem} can be contrived as \jsp\ with the salesman as a single machine in use and the cities to be visited are the jobs to be processed.
 Moreover, the general form of \JSP\ assumes that each job can have its own distinctive flow pattern through the machines, which is independent of the other jobs. 
 In the case where all jobs share the same permutation route, \jsp\ is reduced to a permutation \fsp\ scheduling problem (\FSP) \citep{Guinet1998,Tay08}. 
-Therefore, without loss of generality, this dissertation is structured around \JSP. 
+Therefore, without loss of generality, this dissertation is structured around 
+\JSP. 
+
+\emph{Remark:} Throughout the dissertation the \FSP\ variation will \emph{not} 
+be a conventional flow-shop: jobs have to be processed in the same machine 
+order, however, machines do not necessarily need to process jobs in the same 
+order, as is implied in permutation \FSP. 
 
 \section{\Jsp\ scheduling problem}
 \JSP\ considered for this dissertation is where $n$ jobs, $\mathcal{J}=\{J_j\}_{j=1}^n$, are scheduled on a finite set, $\mathcal{M}=\{M_a\}_{a=1}^m$, of $m$ machines, subject to the constraint that each job $J_j$ must follow a predefined machine order (a chain or sequence of $m$ operations, $\vsigma_j=[\sigma_{j1},\sigma_{j2},\dotsc,\sigma_{jm}]$) and that a machine can handle at most one job at a time. 
@@ -205,13 +211,6 @@ CDRs can deal with greater number of features and more complicated form, in shor
 \end{equation}
 where $w_i>0$ and $\sum_{i=0}^d w_i = 1$, then $w_i$ gives the \emph{weight} of the influence of $\text{DR}^i$ (which could be SDR or another CDR) to CDR. Note, each $\text{DR}^i$ is a function of the job $J_j$'s feature state $\vphi_j$.
 
-\subsection{Blended dispatching rules}
-Since each DR yield a priority index $I^{DR}$ then it is easy to translate its index as a  performance measure $a$, i.e., $a:~I^{DR}\mapsto \mathcal{Y}$. Then it is possible to combine several performance measures into a single DR, these are referred to as \emph{blended dispatching rules} (BDR), where an overall blended priority index $P$ is defined as 
-\begin{equation}
-	P_j = \sum_{i=1}^d w_i \cdot a_i 
-\end{equation}
-where $w_i>0$ and $\sum_{i=0}^d w_i = 1$, then $w_i$ gives the weight of the proportional influence of performance measure $a_i$ (based on some SDR or CDR) to the overall priority. 
-
 Generally the weights $\vec{w}$ chosen by the algorithm designer a priori. 
 A more sophisticated approach would to learn have the algorithm discover these weights autonomously, for instance via evolutionary search or ordinal regression, to be discussed in \cref{ch:esmodels} and \cref{ch:prefmodels}, respectively.
 
@@ -237,20 +236,26 @@ Their method is straightforward, and thus easy to implement and more importantly
 Similarly, \citet{Lu13} investigate eleven SDRs for \JSP\ to create a pool of thirty three CDRs that strongly outperformed the ones they were based on, which is intuitive since where one SDR might be failing, another could be excelling, hence combining them should yield a better CDR. \citeauthor{Lu13} create their CDRs with \textit{multi-contextual functions} based either on machine idle time or job waiting time, so one can say that the CDRs are a combination of those two key features of the schedule and then the basic DRs. However, there are no combinations of the basic DR explored, only machine idle time and job waiting time.  
 \citet{Yu13} used priority rules to combine twelve existing DRs from the literature, in their approach they had forty eight priority rules combinations, yielding forty eight different models to implement and test. This is a fairly ad hoc solution and there is no guarantee the optimal combination of DRs is found. 
 
-\clearpage
 \section{Rice's framework for \jsp}\label{sec:rice:jsp}
-\citeauthor{Rice76}'s framework for algorithm selection (discussed in \cref{sec:rice}) has already been formulated for \jsp\ \citep[cf.][]{SmithMilesLion3,SmithMilesLion5,InRu12}, as follows, 
+\citeauthor{Rice76}'s framework for algorithm selection (discussed in 
+\cref{sec:rice}) has already been formulated for \jsp\ (cf. 
+\citet{SmithMilesLion3,SmithMilesLion5} and \cref{InRu12}), as follows, 
 \begin{description} 
 	\item[Problem space] $\mathcal{P}$ is defined as the union of $N$ problem instances consisting of processing time and ordering matrices,
 	\begin{equation} 
 		\mathcal{P}=\left\{(p_{ja}^{(i)},\vsigma_j^{(i)})\;\big|\;J_j\in\mathcal{J},\;M_a\in\mathcal{M}\right\}_{i=1}^{N}
 	\end{equation}
 	Problem generators for $\mathcal{P}$ are given in \cref{ch:genprobleminstances}.
-	\item[Feature space] $\mathcal{F}$ which is outlined in \cref{sec:features}. Note, these are not the only possible set of features, however, the local feature, \phiLocalRelated, are built on the work by \cite{InRu11a,SmithMilesLion3} and deemed successful in capturing the essence of a \jsp\ data structure;
+	\item[Feature space] $\mathcal{F}$ which is outlined in 
+	\cref{sec:features}. Note, these are not the only possible set of features, 
+	however, the local feature, \phiLocalRelated, are built on the work by 
+	\cite{SmithMilesLion3} and \cref{InRu11a} and deemed successful in 
+	capturing the essence of a \jsp\ data structure;
 	\item[Algorithm space] $\mathcal{A}$ is simply the scheduling policies under consideration, e.g., SDRs from \cref{sec:SDR},
 	\begin{equation}
 		\mathcal{A}=\left\{\text{SPT,~LPT,~LWR,~MWR,~}\dotsc\right\}
 	\end{equation} 
+    \newpage
 	\item[Performance space] $\mathcal{Y}$ is based on the resulting $C_{\max}$, defined by \cref{eq:makespan}. The optimum makespan is denoted $C_{\max}^{\text{opt}}$, and the makespan obtained from the scheduling policy $A\in\mathcal{A}$ under inspection by $C_{\max}^{A}$. Since the optimal makespan varies between problem instances the performance measure is the following, 
 	\begin{equation}\label{eq:rho}
 		\rho=\frac{C_{\max}^{A}-C_{\max}^{opt}}{C_{\max}^{\text{opt}}}\cdot 100\%

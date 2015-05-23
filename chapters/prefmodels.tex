@@ -122,7 +122,10 @@ If $l$ is too large, than sampling needs to be done in order for the ordinal reg
 
 %Due to the nature of the sequence representation, the earlier stages of the dispatching are more or less equivalent (and thus irrelevant), hence it is appropriate to follow some random optimal path to begin with and then go after some (if not all possible) optimal paths until completion at step $\ell$. 
 
-The strategy approached in  \cite{InRu11a} was to follow some optimal job $J_j\in\mathcal{O}^{(k)}$ (chosen at random), thus creating $\abs{\mathcal{O}^{(k)}}\cdot\abs{\mathcal{S}^{(k)}}$ feature pairs at each dispatch $k$, resulting in a training size of,
+The strategy approached in  \cref{InRu11a} was to follow some optimal job 
+$J_j\in\mathcal{O}^{(k)}$ (chosen at random), thus creating 
+$\abs{\mathcal{O}^{(k)}}\cdot\abs{\mathcal{S}^{(k)}}$ feature pairs at each 
+dispatch $k$, resulting in a training size of,
 \begin{equation}\label{eq:sizeS_b}
 	l =  \sum_{i=1}^{N_{\text{train}}} \left(2 \abs{\mathcal{O}^{(k)}_i}\cdot \abs{\mathcal{S}^{(k)}_i} \right)
 \end{equation}
@@ -152,9 +155,12 @@ To summarise, one needs to consider two main aspects of the generation of the tr
 
 \subsection{Ranking strategies}
 The following ranking strategies were implemented for adding preference pairs 
-to $S$ defined by \cref{eq:S:jsp}, they were first reported in \citet{InRu15a},
+to $S$ defined by \cref{eq:S:jsp}, they were first reported in \cref{InRu15a},
 \begin{description}
-	\item[Basic ranking, $S_b$,] i.e., all optimum rankings $r_1$ versus all possible suboptimum rankings $r_i$, $i\in\{2,\ldots,n'\}$, preference pairs are added -- same basic set-up introduced in \cite{InRu11a}. Note, $|S_b|$ is defined in \cref{eq:sizeS_b}.
+	\item[Basic ranking, $S_b$,] i.e., all optimum rankings $r_1$ versus all 
+	possible suboptimum rankings $r_i$, $i\in\{2,\ldots,n'\}$, preference pairs 
+	are added -- same basic set-up introduced in \cref{InRu11a}. Note, $|S_b|$ 
+	is defined in \cref{eq:sizeS_b}.
 	\item[Full subsequent rankings, $S_f$,] i.e., all possible combinations of $r_i$ and $r_{i+1}$ for $i\in\{1,\ldots,n'\}$, preference pairs are added.
 	\item[Partial subsequent rankings, $S_p$,] i.e., sufficient set of combinations of $r_i$ and $r_{i+1}$ for $i\in\{1,\ldots,n'\}$, are added to the training set -- e.g. in the cases that there are more than one operation with the same ranking, only one of that rank is needed to compared to the subsequent rank. Note that $S_p\subset S_f$.
 	\item[All rankings, $S_a$,] denotes that all possible rankings were explored, i.e.,
@@ -180,7 +186,7 @@ The following trajectory strategies were explored for adding preference pairs to
 \end{description}
 In the case of the SDR-based and $S^{CMA-ES}$ trajectories it is sufficient to explore each trajectory exactly once for each problem instance. Whereas, for $S^{OPT}$ and $S^{RND}$ there can be several trajectories worth exploring, however, only one is chosen (at random). It is noted that since the number of problem instances, $N_{\text{train}}$, is relatively large, it is deemed sufficient to explore one trajectory for each instance, in those cases as well.
 
-These trajectory strategies were initially introduced in \citet{InRu15a}, save 
+These trajectory strategies were initially introduced in \cref{InRu15a}, save 
 for $S^{CMA}$ and the SDR-based ones, however the latter are currently 
 addressed since, e.g., LWR is considered more favourable for \fsp\ rather than 
 MWR (cf. \cref{ch:problemstructure}). 
@@ -208,7 +214,12 @@ From the figures it is apparent there can be a performance edge gained by implem
 \todo[inline]{Missing MISTA2013 figures}
 
 \subsubsection{Ranking strategies}
-There is no statistical difference between $S_f$ and $S_p$ ranking-schemes across all disciplines (cf. \cref{fig:track:boxplot:p1,fig:track:boxplot:p2}), which is expected since $S_f$ is designed to contain the same preference information as $S_f$. However neither of the Pareto ranking-schemes outperform the original $S_b$ set-up from \cite{InRu11a}. The results hold for the test set as well. 
+There is no statistical difference between $S_f$ and $S_p$ ranking-schemes 
+across all disciplines (cf. \cref{fig:track:boxplot:p1,fig:track:boxplot:p2}), 
+which is expected since $S_f$ is designed to contain the same preference 
+information as $S_f$. However neither of the Pareto ranking-schemes outperform 
+the original $S_b$ set-up from \cref{InRu11a}. The results hold for the test 
+set as well. 
 
 Combining the ranking schemes, $S_{all}$, improves the individual ranking-schemes across all disciplines, except in the case of $S_b^{opt}\big|_{\mathcal{P_1}}$ and $S_b^{rnd}\big|$\!\Problem{2}, in which case there were no statistical difference. Now, for the test set, the results hold, however there is no statistical difference between $S_b$ and $S_{all}$ for most trajectories $\{S^{opt},S^{cma},S^{rnd}\}\big|$\!\Problem{1} and  $\{S^{opt},S^{rnd}\}\big|$\!\Problem{2}. Now, whereas a smaller preference set is preferred, its opted to use the $S^{b}$ ranking scheme henceforth. 
 
@@ -269,7 +280,17 @@ Unlike \citep{Siggi10,Malik08,Russell09}, learning only on optimal training data
 
 
 \section{Time independent dispatching rules}\label{sec:pref:scalability}
-As stated in \cref{sec:S:strategies}, a separate data set is deliberately created for each dispatch iteration, as it is initially assumed that dispatch rules used in the schedule building might differ in the beginning, the middle or towards the end of the process. As a result there is a local linear model for each dispatch; a total of $\ell$ linear models for solving $n\times m$ \jsp. Now, if we were to create a global rule, then there would have to be one model for all dispatches iterations. The approach in \cite{InRu11a} was to take the mean weight for all stepwise linear models, i.e., $\bar{w}_i=\frac{1}{\ell}\sum_{k=1}^{\ell}w_i^{(k)}$ where $\vec{w}^{(k)}$ is the linear weight resulting from learning preference set $S^{(k)}$ at dispatch $k$. 
+As stated in \cref{sec:S:strategies}, a separate data set is deliberately 
+created for each dispatch iteration, as it is initially assumed that dispatch 
+rules used in the schedule building might differ in the beginning, the middle 
+or towards the end of the process. As a result there is a local linear model 
+for each dispatch; a total of $\ell$ linear models for solving $n\times m$ 
+\jsp. Now, if we were to create a global rule, then there would have to be one 
+model for all dispatches iterations. The approach in \cref{InRu11a} was to take 
+the mean weight for all stepwise linear models, i.e., 
+$\bar{w}_i=\frac{1}{\ell}\sum_{k=1}^{\ell}w_i^{(k)}$ where $\vec{w}^{(k)}$ is 
+the linear weight resulting from learning preference set $S^{(k)}$ at dispatch 
+$k$. 
 
 A more sophisticated way, would be to create a \emph{new} linear model, where the preference set, $S$, is the union of the preference pairs across the $\ell$ dispatches. This would amount to a substantial training set, and for $S$ to be computationally feasible to learn, $S$ has to be filtered to size $l_{\max}$.
 

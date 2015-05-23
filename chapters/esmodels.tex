@@ -21,7 +21,19 @@ As previously discussed in \cref{ch:introduction}, there are two main viewpoints
 	\item local level by building schedules for one problem instance at a time;
 	and \item global level by building schedules for all problem instances at once.
 \end{inparaenum}
-\tcr{For local level construction a simple construction heuristic is applied, the schedule's features are collected at each dispatch iteration, from which a learning model will inspect the feature set to discriminate which operations are preferred to others via ordinal regression. The focus is essentially on creating a meaningful preference set composed of features and their ranks, as the learning algorithm is only run once to find suitable operators for the value function. This is the approach taken in \cite{InRu11a}.} Expanding on that  work, this study will explore global level construction viewpoint, where there is no feature set collected beforehand since the learning model is optimised directly via evolutionary search. This requires numerous costly value function evaluations. In fact it involves an indirect method of evaluation whether one learning model is preferable to another, w.r.t. which one yields a better expected mean. 
+\tcr{For local level construction a simple construction heuristic is applied, 
+the schedule's features are collected at each dispatch iteration, from which a 
+learning model will inspect the feature set to discriminate which operations 
+are preferred to others via ordinal regression. The focus is essentially on 
+creating a meaningful preference set composed of features and their ranks, as 
+the learning algorithm is only run once to find suitable operators for the 
+value function. This is the approach taken in \cref{InRu11a}.} Expanding on 
+that  work, this study will explore global level construction viewpoint, where 
+there is no feature set collected beforehand since the learning model is 
+optimised directly via evolutionary search. This requires numerous costly value 
+function evaluations. In fact it involves an indirect method of evaluation 
+whether one learning model is preferable to another, w.r.t. which one yields a 
+better expected mean. 
 
 
 
@@ -30,7 +42,12 @@ Inspired by DRGA, the approach taken in this study is to optimise the weights $\
 Using standard set-up of parameters of the CMA-ES optimisation, the runtime was limited to 288 hours on a cluster for each $6\times5$ training set given in \cref{sec:data:JSP,sec:data:FSP}, and in every case the optimisation reached its maximum walltime.
 
 \section{Performance measures}\label{sec:es:measure}
-Generally, evolutionary search only needs to minimise the expected fitness value, however the  approach in \cite{InRu11a} was to use the known optimum to correctly label which operations' features were indeed optimal compared to other possible operations, then it would be of interest to inspect if there is any performance edge gained in incorporating optimal labelling in evolutionary search. Therefore, two objective functions will be considered, namely, 
+Generally, evolutionary search only needs to minimise the expected fitness 
+value, however the  approach in \cref{InRu11a} was to use the known optimum to 
+correctly label which operations' features were indeed optimal compared to 
+other possible operations, then it would be of interest to inspect if there is 
+any performance edge gained in incorporating optimal labelling in evolutionary 
+search. Therefore, two objective functions will be considered, namely, 
 \begin{equation}
 	ES_{C_{\max}} := \min \Exp[C_{\max}] \label{eq:cma:makespan}
 \end{equation}
@@ -86,7 +103,8 @@ Furthermore, the  evolution of the decision variables, $\vec{w}$, are depicted i
 
 
 \subsection{Robustness and  scalability}\label{sec:expr:robust} 
-As a benchmark, the linear ordinal regression model (PREF) from \cite{InRu11a} was created.
+As a benchmark, the linear ordinal regression model (PREF) from \cref{InRu11a} 
+was created.
 Using the weights obtained from optimising \cref{eq:cma:rho} and applying them on their  $6\times5$ training data, their main statistics of \cref{eq:rho} are reported in \cref{tbl:results:train}, for all training sets described in \cref{tbl:data}. Moreover, the best SDR, from which the features in \cref{tbl:features} were inspired by, are also reported for comparison, i.e., most work remaining (MWR) for all \JSP\ problem spaces, and least work remaining (LWR) for all \FSP\ problem spaces.
 
 To explore the scalability of the learning methods, a similar comparison to \cref{sec:expr:robust} is made for the applying the learning models on their corresponding $10\times10$ testing data, results are reported in \cref{tbl:results:test}. Note that only resulting $C_{\max}$ is reported, as the optimum makespan is not known. 
@@ -97,16 +115,53 @@ To explore the scalability of the learning methods, a similar comparison to \cre
 
 \section{Discussion and conclusions}\label{sec:disc}
 Data distributions considered in this study either varied 
-w.r.t. the processing times distributions, continuing the preliminary experiments in  \cite{InRu11a} , or 
+w.r.t. the processing times distributions, continuing the preliminary 
+experiments in  \cref{InRu11a} , or 
 w.r.t. the job ordering permutations, i.e., homogeneous $\sigma$ matrices in \FSP\ versus heterogeneous $\sigma$ matrices in \JSP . 
-From the results based on $6\times5$ training data, given  in \cref{tbl:results:train}, it's obvious that CMA-ES optimisation substantially outperforms the previous PREF methods from \cite{InRu11a}, for all problem spaces considered. Furthermore, the results hold when testing on $10\times10$, (cf. \cref{tbl:results:test}), suggesting the method is indeed  scalable for higher dimensions. 
+From the results based on $6\times5$ training data, given  in 
+\cref{tbl:results:train}, it's obvious that CMA-ES optimisation substantially 
+outperforms the previous PREF methods from \cref{InRu11a}, for all problem 
+spaces considered. Furthermore, the results hold when testing on $10\times10$, 
+(cf. \cref{tbl:results:test}), suggesting the method is indeed  scalable for 
+higher dimensions. 
 
-Moreover, the study showed that the choice of objective function  for evolutionary search is worth investigating. There was no statistical difference from minimising the fitness function directly and its normalisation w.r.t. true optimum (cf. \cref{eq:cma:makespan,eq:cma:rho}), save for \frndn{6}{5}. Implying, even though ES doesn't rely on optimal solutions, there are some problem spaces where it can be of great benefit. This is due to the fact that the problem instances can vary greatly within the same problem space \cite{InRu12}, thus normalising the objective function would help the evolutionary search to deviate the from giving too much weight for problematic problem instances for the greater good.
+Moreover, the study showed that the choice of objective function  for 
+evolutionary search is worth investigating. There was no statistical difference 
+from minimising the fitness function directly and its normalisation w.r.t. true 
+optimum (cf. \cref{eq:cma:makespan,eq:cma:rho}), save for \frndn{6}{5}. 
+Implying, even though ES doesn't rely on optimal solutions, there are some 
+problem spaces where it can be of great benefit. This is due to the fact that 
+the problem instances can vary greatly within the same problem space 
+\cref{InRu12}, thus normalising the objective function would help the 
+evolutionary search to deviate the from giving too much weight for problematic 
+problem instances for the greater good.
 
-The weights for \cref{eq:jssp:linweights} in \cite{InRu11a} were found using supervised learning, where the training data was created from optimal solutions of randomly generated problem instances. As an alternative, this study showed  that minimising the mean makespan directly using a brute force search via CMA-ES actually results in a better CDRs. The nature of CMA-ES is to explore suboptimal routes until it converges to an optimal one. Implying that the previous approach of only looking into one optimal route may not produce a sufficiently rich training set. That is, the training set should incorporate a more complete knowledge on \emph{all} possible preferences, i.e., make also the distinction between suboptimal and sub-suboptimal features, etc.  This would require a Pareto ranking of preferences which can be used to make the distinction to which feature sets are equivalent, better or worse -- and to what degree, i.e., by giving a weight to the preference. This would result in a very large training set, which of course could be re-sampled in order to make it computationally feasible to learn.
+The weights for \cref{eq:jssp:linweights} in \cref{InRu11a} were found using 
+supervised learning, where the training data was created from optimal solutions 
+of randomly generated problem instances. As an alternative, this study showed  
+that minimising the mean makespan directly using a brute force search via 
+CMA-ES actually results in a better CDRs. The nature of CMA-ES is to explore 
+suboptimal routes until it converges to an optimal one. Implying that the 
+previous approach of only looking into one optimal route may not produce a 
+sufficiently rich training set. That is, the training set should incorporate a 
+more complete knowledge on \emph{all} possible preferences, i.e., make also the 
+distinction between suboptimal and sub-suboptimal features, etc.  This would 
+require a Pareto ranking of preferences which can be used to make the 
+distinction to which feature sets are equivalent, better or worse -- and to 
+what degree, i.e., by giving a weight to the preference. This would result in a 
+very large training set, which of course could be re-sampled in order to make 
+it computationally feasible to learn.
 
 The main drawback of using evolutionary search for learning optimal weights for \cref{eq:jssp:linweights} is how computationally expensive it is to evaluate the mean expected fitness. Even for a low problem dimension, 6-job 5-machine \JSP , each optimisation run reached their walltime of 288hrs, without converging. Now, $6\times5$ \JSP\ requires 30 sequential dispatches, where at each time step there are up to $6$ jobs to choose from, i.e., its complexity is $\mathcal{O}(n^{n\cdot m})$, making it computationally infeasible to apply this framework for higher dimensions as is. 
-However, evolutionary search only requires the rank of the candidates, and therefore it is appropriate to retain a sufficiently accurate surrogate for the value function during evolution in order to reduce the number of costly true value function evaluations, such as the approach in \cite{InRu11b}. This could reduce the computational cost of the evolutionary search considerably, making it feasible to conduct the experiments from \cref{sec:es:measure} for problems of higher dimensions, e.g., with these adjustments it is possible to train on $10\times10$ and test on for example $14\times14$ to verify whether scalability holds for even higher dimensions.  
+However, evolutionary search only requires the rank of the candidates, and 
+therefore it is appropriate to retain a sufficiently accurate surrogate for the 
+value function during evolution in order to reduce the number of costly true 
+value function evaluations, such as the approach in \cref{InRu11b}. This could 
+reduce the computational cost of the evolutionary search considerably, making 
+it feasible to conduct the experiments from \cref{sec:es:measure} for problems 
+of higher dimensions, e.g., with these adjustments it is possible to train on 
+$10\times10$ and test on for example $14\times14$ to verify whether scalability 
+holds for even higher dimensions.  
 
 
 

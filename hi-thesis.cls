@@ -35,7 +35,7 @@
 
 \RequirePackage{hyperref}
 \hypersetup{
-	linktocpage,
+    linktocpage,
 	colorlinks,
 	citecolor=black, % could be themecolor
 	filecolor=black,
@@ -44,6 +44,7 @@
 	pdfauthor={\@author},
 	pdftitle={\@title}   
 }
+%\usepackage[all]{hypcap}
 
 \RequirePackage[centertags]{amsmath}
 \RequirePackage{amssymb}
@@ -348,7 +349,7 @@
     %
     \newpage
     \thispagestyle{empty}
-    \includepdf[pages={-},pagecommand={\thispagestyle{fancy}}]{\papers@get{file}}
+    \includepdf[fitpaper,pages={-},pagecommand={\thispagestyle{fancy}}]{\papers@get{file}}
     \egroup}
 \makeatother
 

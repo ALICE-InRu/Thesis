@@ -1,30 +1,57 @@
 \HeaderQuote{Begin at the beginning and go on till you come to the end: then stop.}{The King}
 
 
-\chapter{Introduction}\label{ch:introduction} \todo[color=green!40,noline]{\cref{ch:introduction} Unfinished}
+\chapter{Introduction}\label{ch:introduction} 
 %\section{Motivation and research objectives}
 
 \FirstSentence{H}{and crafting heuristics} for NP-hard problems is a time consuming trial-and-error process, requiring inductive reasoning or problem specific insights from their human designers. Furthermore, within a problems class, such as scheduling, it is possible to construct problem instances where one heuristic would outperform another. 
 
 Depending on the underlying data distribution of the problem instances, different heuristics perform differently. This is due to the fact that any algorithm which has superior performance in one class of problems is inevitably inferior over another class, i.e., \emph{no free lunch} theorem \citep{Wolpert97nofree}. 
 %  number of “no free lunch” (NFL) theorems are presented which establish that for any algorithm, any elevated performance over one class of problems is offset by performance over another class. 
-The success of a heuristic is how it manages to deal with and manipulate the characteristics of its given problem instance. Thus in order to understand more fully how a heuristic will eventually perform, one needs to look into what kind of problem instances are being introduced to the system. What defines a problem instance, e.g., what are its key features? And how can they help with designing better heuristics? Once the problem instances are fully understood, an appropriate learning algorithm can be implemented in order to create heuristics that are  self-adapting to its problem instances.
+The success of a heuristic is how it manages to deal with and manipulate the 
+characteristics of its given problem instance. Thus, in order to understand 
+more fully how a heuristic will eventually perform, one needs to look into what 
+kind of problem instances are being introduced to the system. What defines a 
+problem instance, e.g., what are its key features? And how can they help with 
+designing better heuristics? Once the problem instances are fully understood, 
+an appropriate learning algorithm can be implemented in order to create 
+heuristics that are  self-adapting to its problem instances.
 
-Given the ad-hoc nature of the heuristic design process there is clearly room for improving the process. Recently a number of attempts have been made to automate the heuristic design process. 
+Given the ad-hoc nature of the heuristic design process there is clearly room 
+for improvement. Recently a number of attempts have been made to automate the 
+heuristic design process. 
 The ultimate goal of this dissertation is to automate optimisation heuristics via ordinal regression. 
 The focal point will be based on a scheduling processes named \jsp\ scheduling problem, and some of its subclass, e.g., \fsp\ scheduling problem.
-There are two main viewpoints on how to approach scheduling problems,
+There are two main viewpoints on how to approach scheduling problems, namely,	
 \begin{description}
 	\item[Local level] by building schedules for one problem instance at a time.
 	\item[Global level] by building schedules for all problem instances at once.
 \end{description}
-For local level construction, a simple construction heuristic is applied, the schedule's features are collected at each dispatch iteration, from which a learning model will inspect the feature set to discriminate which operations are preferred to others via ordinal regression. The focus is essentially on creating a meaningful preference set composed of features and their ranks, as the learning algorithm is only run once to find suitable operators for the value function. 
+For local level construction, a simple construction heuristic is applied, the 
+schedule's features are collected at each dispatch iteration, from which a 
+learning model will inspect the feature set to discriminate which operations 
+are preferred to others via ordinal regression. The focus is essentially on 
+creating a meaningful preference set composed of features and their ranks, as 
+the learning algorithm is only run once to find suitable operators for the 
+value function. 
 However, for global level construction, there is no feature set collected beforehand since the learning model is optimised directly via evolutionary search. This required numerous costly value function evaluations. In fact it involves an indirect method of evaluation whether one learning model is preferable to another, w.r.t. which one yields the better expected mean. 
-Evolutionary search only requires the rank of the candidates, and therefore it is appropriate to retain a sufficiently accurate surrogate for the value function during evolution in order to reduce the number of costly true value function evaluations. In this paradigm, ordinal regression is used for surrogate assisted evolutionary optimisation, where models are ranked -- whereas on local level features were ranked. 
+Evolutionary search only requires the rank of the candidates, and therefore it 
+is appropriate to retain a sufficiently accurate surrogate for the value 
+function during evolution in order to reduce the number of costly true value 
+function evaluations. In this paradigm, ordinal regression can be used for 
+surrogate assisted evolutionary optimisation, where models are ranked -- 
+whereas on local level features were ranked. 
 
 %\section{Relationship between problem structure and heuristic efficiency}
 \section{Rice's framework for algorithm selection}\label{sec:rice}
-The problem is to understand what underlying characteristics of the problem instances distinguishes \emph{good} and on the other hand \emph{bad} solutions when implementing a particular algorithm. \citet{SmithMilesLion5} were interested in discovering whether synthetic instances were in fact similar to real-world instances for timetabling problems. Moreover \citeauthor{SmithMilesLion5} were interested in how varying algorithms perform on different data distributions. Hence the investigation of heuristic efficiency is closely intertwined to problem generation. 
+The problem is to understand what underlying characteristics of the problem 
+instances distinguishes \emph{good} and on the other hand \emph{bad} solutions 
+when implementing a particular algorithm. \citet{SmithMilesLion5} were 
+interested in discovering whether synthetic instances were in fact similar to 
+real-world instances for timetabling problems. Moreover,  
+\citeauthor{SmithMilesLion5} focused on how varying algorithms perform 
+on different data distributions. Hence, the investigation of heuristic 
+efficiency is closely intertwined to problem generation. 
 
 In order to formulate the relationship between problem structure and heuristic efficiency one can utilise \citeauthor{Rice76}'s framework for algorithm selection problem from \citeyear{Rice76}. The framework consists of four fundamental components, namely,
 \begin{description}
@@ -57,11 +84,26 @@ In the context of Rice's framework, the aforementioned approaches to scheduling 
 Note, the mappings $\vphi:\mathcal{P}\mapsto\mathcal{F}$ and $Y:\mathcal{A}\mapsto\mathcal{Y}$ are the same for both paradigms.
 
 \section{Previous work}
-In order to find an optimal (or near optimal) solution for scheduling problems one could either use exact methods or heuristics methods. Exact methods guarantee an optimal solution, however, \jsp\ scheduling is strongly NP-hard \citep{Garey76:NPhard}. Any exact algorithm generally suffers from the curse of dimensionality, which impedes the application in finding the global optimum in a reasonable amount of time. Heuristics are generally more time efficient but do not necessarily attain the global optimum. Therefore \jsp\ scheduling 
+In order to find an optimal (or near optimal) solution for scheduling problems 
+one could either use exact methods or heuristics methods. Exact methods 
+guarantee an optimal solution, however, \jsp\ scheduling is strongly NP-hard 
+\citep{Garey76:NPhard}. Any exact algorithm generally suffers from the curse of 
+dimensionality, which impedes the application in finding the global optimum in 
+a reasonable amount of time. Heuristics are generally more time efficient but 
+do not necessarily attain the global optimum. Therefore, \jsp\ scheduling 
 has the reputation of being notoriously difficult to solve. As a result, it's been widely studied in deterministic scheduling theory and its class of problems has been tested on a plethora of different solution methodologies from various research fields \citep{Meeran12}, all from simple and straight forward dispatching rules to highly sophisticated frameworks.
 
-\todo[inline]{MORE CITATIONS OF PREVIOUS TECHNIQUES} 
-As \cite{Meeran12} point out, in the field of Artificial Intelligence, then despite their `intelligent' solutions the effectiveness of finding the optimum has been rather limited. However, combined with local-search methodologies, they can be improved upon significantly, as \citeauthor{Meeran12} showed with the use of a hybrid method using Genetic Algorithms (GA) and Tabu Search (TS). Therefore getting the best of both worlds, namely, the diverse global search obtained from GA and being complemented with the intensified local search capabilities of TS. Now, hybridisation of global and local methodologies is non-trivial. In general combination of the two improves performance, however, they often come at a great computational cost.  
+In the field of Artificial Intelligence, \cite{Meeran12} point out that despite 
+their `intelligent' solutions, the effectiveness of finding the optimum has 
+been rather limited. However, combined with local-search methodologies, they 
+can be improved upon significantly, as \citeauthor{Meeran12} showed with the 
+use of a hybrid method using Genetic Algorithms (GA) and Tabu Search (TS). 
+Therefore, getting the best of both worlds, namely, the diverse global search 
+obtained from GA and being complemented with the intensified local search 
+capabilities of TS. 
+Now, hybridisation of global and local methodologies is non-trivial. In 
+general combination of the two improves performance, however, they often come 
+at a great computational cost.  
 
 Various \emph{learning} approaches have been applied to solving \jsp, such as reinforcement learning \citep{Zhang95}, evolutionary learning \citep{Tay08}, and supervised learning \citep{Siggi05,Malik08}. The approach taken in this dissertation is a supervised learning classifier using ordinal regression. 
 
@@ -70,7 +112,14 @@ A common way of finding a good feasible solution for \jsp\ scheduling is applyin
 A summary of over $100$ classical dispatching rules for scheduling can be found in \citet{Panwalkar77}, and it is noted that these classical dispatching rules are continually used in research.  
 There is no dominant rule, but the most effective have been single priority dispatching rules based on job processing attributes \citep{Haupt89}. \citet{Tay08} showed that combining dispatching rules, with the aid of genetic programming, is promising, however, there is large number of rules to choose from, thus its combinations require expert knowledge or extensive trial-and-error process. 
 
-The current literature in scheduling focuses on different objectives, e.g., \citet{Chang96} minimises the due-date tightness and \citet{Drobouchevitch2000,Gao2007} look into solving for bottleneck machines. In this dissertation only minimisation of the makespan will be considered, thus ignoring all due-date constraints. \todo{This is not `current'}
+The current literature in scheduling focuses on different objectives, e.g., 
+\citet{Chang96} minimises the due-date tightness and 
+\citet{Drobouchevitch2000,Gao2007} look into solving for bottleneck machines. 
+In this dissertation only minimisation of the makespan will be considered, thus 
+ignoring all due-date constraints. \citet{Brandimarte1993,Xia2005,Pezzella2008} 
+extend the classical \JSP\ set-up, called flexible \jsp, by allowing tasks to 
+be processed by any machine from a given set, i.e., adding assignment of 
+operations to the constraints.
 
 Model assumptions can also vary, e.g., \citet{Thiagarajan05} incorporate different earliness, tardiness and holding costs. 
 Moreover, it is possible to reduce \jsp\  to \fsp\ problem, since in practice most jobs in \jsp\ use the machines in the same order \citep{Guinet1998,Ho2007}.
@@ -90,7 +139,14 @@ The approach in this dissertation differs from previous studies, as it uses a si
 An approach based on supervised learning on optimal schedules will be investigated and its effectiveness illustrated by improving upon well known dispatch rules for \jsp\ scheduling in \cref{ch:prefmodels}. The method of generating training data is shown to be critical for the success of the method, as shown in \cref{sec:gentrainingdata}. Moreover the choice of problem instances under consideration is worth considering, as discussed in \cref{ch:genprobleminstances}, and will be used throughout in the subsequent \lcnamecref{ch:problemstructure}s. 
 
 
-The preliminary experiments done in \citet{InRu12} investigated the characteristics of difficult \jsp\ schedules for a single heuristic, continuing with that research, \cref{ch:problemstructure} compares a set of widely used dispatching rules on different problem spaces in the hopes of extrapolating where an algorithm excels in order to aid its failing aspects, which will be beneficial information for the creation of learning models in \cref{ch:prefmodels}, as they are dependant  on features based on those same dispatching rules under investigation.
+The preliminary experiments done in \cref{InRu12} investigated the 
+characteristics of difficult \jsp\ schedules for a single heuristic, continuing 
+with that research, \cref{ch:problemstructure} compares a set of widely used 
+dispatching rules on different problem spaces in the hopes of extrapolating 
+where an algorithm excels in order to aid its failing aspects, which will be 
+beneficial information for the creation of learning models in 
+\cref{ch:prefmodels}, as they are dependant  on features based on those same 
+dispatching rules under investigation.
 
 
 \todo[inline]{Update outline once draft is ready...}\hfill\\\vspace{3cm}
