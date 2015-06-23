@@ -306,17 +306,15 @@
 \def\papers@get#1{%%
     \pgfkeysvalueof{/papers/entities/#1}}
 \newcommand\paper[1]{%%
-    
+    \thumbindex{\value{chapter}}{\Roman{chapter}}
     \bgroup
-    \papers@set@keys{#1}
-    
+    \papers@set@keys{#1}    
     {
         \normalsize
         \raggedright
         \papers@get{authorslist}
     }
     {\par\vskip0.5\baselineskip\hrule\vskip0.5\baselineskip}
-    %
     {
         \scriptsize
         \raggedright
@@ -349,9 +347,10 @@
     %
     \newpage
     \thispagestyle{empty}
-    \includepdf[fitpaper,pages={-},pagecommand={\thispagestyle{fancy}}]{\papers@get{file}}
+    \includepdf[pages={-},pagecommand={\thispagestyle{fancy}}]{\papers@get{file}}
     \egroup}
 \makeatother
+
 
 
 \newcommand*\blankpage{%
@@ -408,4 +407,34 @@
     \begin{center}
         \parbox{200pt}{\raggedright \include{endmatter/colophon}}
     \end{center}
+}
+
+%******** Thumb-index ************
+\usepackage{tikz}
+\usetikzlibrary{calc}\usetikzlibrary{calc,arrows,shapes} % 'arrows,shapes' to 
+%use in a schematic figure...
+
+\newlength{\thumbwidth}
+\setlength{\thumbwidth}{1.2cm}
+
+\newlength{\thumbheight}
+\setlength{\thumbheight}{1.5cm}
+
+\tikzset{
+    thumb/.append style={
+        fill=black,
+        text=white,
+        minimum height=\thumbheight,
+        text width=\thumbwidth,
+        outer sep=0pt,
+        execute at begin node=\sffamily\bfseries\Huge,
+    }
+}
+\newcommand{\thumbindex}[2] {
+    \begin{tikzpicture}[remember picture, overlay]
+    \node [thumb,align=center,anchor=north east] at ($%
+    (current page.north east)-%
+    (0,{1cm+(#1-1)*\thumbheight})%
+    $) {#2};
+    \end{tikzpicture}
 }
