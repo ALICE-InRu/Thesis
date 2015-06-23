@@ -307,14 +307,17 @@
     \pgfkeysvalueof{/papers/entities/#1}}
 \newcommand\paper[1]{%%
     \thumbindex{\value{chapter}}{\Roman{chapter}}
+    
     \bgroup
-    \papers@set@keys{#1}    
+    \papers@set@keys{#1}
+    
     {
         \normalsize
         \raggedright
         \papers@get{authorslist}
     }
     {\par\vskip0.5\baselineskip\hrule\vskip0.5\baselineskip}
+    %
     {
         \scriptsize
         \raggedright
@@ -324,14 +327,14 @@
     %
     {
         \begin{spacing}{0.8}
-        \noindent
-        \raggedright
-        \small
-        \usebibentry{\papers@get{natbib}}{booktitle}
-        \ifthenelse{\equal{\papers@get{remark}}{NA}}{}{
-            -- \papers@get{remark}}
-        \ifthenelse{\equal{\papers@get{doi}}{NA}}{}{
-            \\doi: \papers@get{doi}}
+            \noindent
+            \raggedright
+            \small
+            \usebibentry{\papers@get{natbib}}{booktitle}
+            \ifthenelse{\equal{\papers@get{remark}}{NA}}{}{
+                -- \papers@get{remark}}
+            \ifthenelse{\equal{\papers@get{doi}}{NA}}{}{
+                \\doi: \papers@get{doi}}
         \end{spacing}
     }
     {\par\vskip4ex}
