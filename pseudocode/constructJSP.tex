@@ -1,21 +1,25 @@
-\begin{figure}[p]\centering 
-	\noindent{\footnotesize\begin{tabbing}
-		\quad \quad \= 0\;\; \= \emph{Initialization}: Let $\vchi=\emptyset$ 
-		denote \\
-		\>  \> the current dispatching sequence. \\
-		\>1 \> {\bf for} \= $k := 1$ to $\ell=n\cdot m$ {\bf do} \emph{(at each 
-		dispatch iteration)}\\ 
-		\>2 \>\> {\bf for} \= $J_j\in \mathcal{L}^{(k)}\subset \mathcal{J}$ 
-		{\bf do} \emph{(inspect ready-list)} \\
-		\>3 \>\>\>  $I_j^{DR}\leftarrow \text{DR}\left([\vchi,j],Y\right)$ 
-		\emph{(priority $J_j$)}\\
-		\>4 \>\> {\bf od} \\
-		\>5 \>\> $j^*\leftarrow \argmax_{j\in \mathcal{L}^{(k)}}\{I_j^{DR}\}$ 
-		\emph{(choose highest priority)} \\
-		\>6 \>\> $\chi_k \leftarrow j^*$ \emph{(dispatch $j^*$)}\\
-		\>7 \> {\bf od} \\
-		\>8 \> $C_{max} \leftarrow Y(\vchi)$ \emph{(makespan)}
-		\end{tabbing}}
-\caption{Pseudo code for constructing a \JSP\ sequence using a dispatching 
-rule  (DR) for a fixed construction heuristic (Y).}\label{pseudo:constructJSP}
-\end{figure}
+\begin{algorithm}
+    \caption{Pseudo code for constructing a \JSP\ sequence using a dispatching 
+    rule (DR) for a fixed construction heuristic (Y).} 
+    \label{pseudo:constructJSP}
+    \begin{algorithmic}[1]
+        \Procedure{Constructing \JSP}{DR,Y}
+        \State $\vchi \gets \emptyset$ current dispatching sequence  
+        \Comment{initialization}
+        \For{$k:=1~\textbf{to}~l=n\cdot m$} 
+        \Comment{at each dispatch iteration}
+        \ForAll{$J_j\in \mathcal{L}^{(k)}\subset \mathcal{J}$} 
+        \Comment{inspect job-list}
+        \State $I_j^{DR}\leftarrow \text{DR}\left([\vchi,j],Y\right)$ 
+        \Comment{priority $J_j$}
+        \EndFor
+        \State $j^* \gets \argmax_{j\in \mathcal{L}^{(k)}}\{I_j^{DR}\}$ 
+        \Comment{choose highest priority}
+        \State $\chi_k \gets j^*$ 
+        \Comment{dispatch $j^*$}
+        \EndFor
+        \State \Return $C_{max} \gets Y(\vchi)$ 
+        \Comment{makespan and final schedule}
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
