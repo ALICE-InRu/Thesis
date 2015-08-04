@@ -244,14 +244,22 @@ WSPT (SPT weighted w.r.t. $\mathcal{J}$), ``which is optimal when all release da
 and minimum slack first (MS), ``which is optimal when all due dates are sufficiently loose and spread out,'' 
 one gets the CDR apparent tardiness cost (ATC) which can work well on a broader set of problem instances than the original SDRs by themselves.
 
-CDRs can deal with greater number of features and more complicated form, in short, CDR are a combination of several SDRs. For instance let CDR be comprised of $d$ SDRs, then the index $I$ for job $J_j$ using CDR is, 
+CDRs can deal with greater number of features and more complicated form, in 
+short, CDR are a combination of several SDRs. For instance let $\pi$ be a CDR 
+comprised of $d$ DRs (which could be SDR or another CDR), then the index $I$ 
+for job $J_j$ using CDR is, 
 \begin{equation}
-	I_j^{CDR} = \sum_{i=1}^d w_i \cdot \text{DR}^i(\vphi_j)
+	I_j^{\pi} = \sum_{i=1}^d w_i \cdot \pi_i(\vphi_j)
 \end{equation}
-where $w_i>0$ and $\sum_{i=0}^d w_i = 1$, then $w_i$ gives the \emph{weight} of the influence of $\text{DR}^i$ (which could be SDR or another CDR) to CDR. Note, each $\text{DR}^i$ is a function of the job $J_j$'s feature state $\vphi_j$.
+where $w_i>0$ and $\sum_{i=0}^d w_i = 1$, then $w_i$ gives the \emph{weight} of 
+the influence of $\pi_i$ to $\pi$. Note, 
+each $\pi_i$ is a function of the job $J_j$'s feature state $\vphi_j$.
 
-Generally the weights $\vec{w}$ chosen by the algorithm designer a priori. 
-A more sophisticated approach would to learn have the algorithm discover these weights autonomously, for instance via evolutionary search or ordinal regression, to be discussed in \cref{ch:esmodels} and \cref{ch:prefmodels}, respectively.
+Generally the weights $\vec{w}$ are chosen by the algorithm designer a priori. 
+A more sophisticated approach would to learn have the algorithm discover these 
+weights autonomously, for instance via evolutionary search or preference-based 
+imitation learning, to be discussed in \cref{ch:esmodels} and 
+\cref{ch:prefmodels}, respectively.
 
 \subsection{Automated discovery of dispatching rules}
 \citet{Monch13} stress the importance of automated discovery of DRs and named several of successful implementations in the field of semiconductor wafer fabrication facilities. 
@@ -280,9 +288,11 @@ Similarly, \citet{Lu13} investigate eleven SDRs for \JSP\ to create a pool of th
 \cref{sec:rice}) has already been formulated for \jsp\ (cf. 
 \citet{SmithMilesLion3,SmithMilesLion5} and \cref{InRu12}), as follows, 
 \begin{description} 
-	\item[Problem space] $\mathcal{P}$ is defined as the union of $N$ problem instances consisting of processing time and ordering matrices,
+	\item[Problem space] $\mathcal{P}$ is defined as the union of $N$ problem 
+	instances consisting of processing time and ordering matrices, 
+	$\vec{x}=(\vec{p},\vsigma)$, for $n$-jobs and $m$-machines, namely,
 	\begin{equation} 
-		\mathcal{P}=\left\{(p_{ja}^{(i)},\vsigma_j^{(i)})\;\big|\;J_j\in\mathcal{J},\;M_a\in\mathcal{M}\right\}_{i=1}^{N}
+		\mathcal{P}=\condset{\vec{x}_i}{n\times m~}_{i=1}^{N}
 	\end{equation}
 	Problem generators for $\mathcal{P}$ are given in \cref{ch:genprobleminstances}.
 	\item[Feature space] $\mathcal{F}$ which is outlined in 
@@ -295,9 +305,16 @@ Similarly, \citet{Lu13} investigate eleven SDRs for \JSP\ to create a pool of th
 		\mathcal{A}=\left\{\text{SPT,~LPT,~LWR,~MWR,~}\dotsc\right\}
 	\end{equation} 
     \newpage
-	\item[Performance space] $\mathcal{Y}$ is based on the resulting $C_{\max}$, defined by \cref{eq:makespan}. The optimum makespan is denoted $C_{\max}^{\text{opt}}$, and the makespan obtained from the scheduling policy $A\in\mathcal{A}$ under inspection by $C_{\max}^{A}$. Since the optimal makespan varies between problem instances the performance measure is the following, 
+	\item[Performance space] $\mathcal{Y}$ is based on the resulting 
+	$C_{\max}$, defined by \cref{eq:makespan}. The optimum makespan is denoted 
+	$C_{\max}^{\pi_\star}$, i.e., following the expert policy $\pi_\star$, and 
+	the makespan obtained from the scheduling policy $\pi\in\mathcal{A}$ under 
+	inspection by $C_{\max}^{\pi}$. 
+    Since the optimal makespan varies between problem instances the performance 
+    measure is the following, 
 	\begin{equation}\label{eq:rho}
-		\rho=\frac{C_{\max}^{A}-C_{\max}^{opt}}{C_{\max}^{\text{opt}}}\cdot 100\%
+		\rho=\frac{C_{\max}^{\pi}-C_{\max}^{\pi_\star}}{C_{\max}^{\pi_\star}}\cdot
+		 100\%
 	\end{equation}
 	which indicates the \namerho. Thus $\mathcal{Y}$ is the following, 
 	\begin{equation}

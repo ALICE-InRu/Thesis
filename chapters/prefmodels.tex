@@ -10,34 +10,52 @@ Note, a negative example is only created as long as $J_s$ actually results in a 
 
 The preference learning problem is specified by a set of preference pairs,
 \begin{equation}\label{eq:S:jsp}
-	S := \left\{\left\{\vec{z}_o,+1\right\},\left\{\vec{z}_s,-1\right\}
-	\;|\;\forall (o,s) \in \mathcal{O}^{(k)} \times \mathcal{S}^{(k)}
-	\right\}_{k=1}^{\ell} \subset \Phi\times Y 
+	S := \bigcup_{\{\vec{x}_i\}_{i=1}^{N_{\text{train}}}}
+    \condset{
+        \left\{\vec{z}_o,+1\right\},\left\{\vec{z}_s,-1\right\}}{\forall (o,s) 
+        \in \mathcal{O}^{(k)} \times \mathcal{S}^{(k)}}_{k=1}^{\ell} 
+    \subset \Phi\times Y 
 \end{equation}
-where $\Phi\subset\mathcal{F}$ is the training set of $d$ features, $Y=\{-1,+1\}$ is the outcome space, $\ell$ is the total number of optimal dispatches, $o\in\mathcal{O}^{(k)}$, and suboptimal dispatches $s\in \mathcal{S}^{(k)}$, at dispatch $k$. Note, $\mathcal{O}^{(k)}\cup\mathcal{S}^{(k)}=\mathcal{R}^{(k)}$, and $\mathcal{O}^{(k)}\cap\mathcal{S}^{(k)}=\emptyset$. 
+where $\Phi\subset\mathcal{F}$ is the training set of $d$ features, 
+$Y=\{-1,+1\}$ is the outcome space, and at dispatch $k\in\{1,..,\ell\}$, 
+$o\in\mathcal{O}^{(k)},~s\in \mathcal{S}^{(k)}$
+are optimal and suboptimal dispatches, respectively.
+Note, $\mathcal{O}^{(k)}\cup\mathcal{S}^{(k)}=\mathcal{L}^{(k)}$, and 
+$\mathcal{O}^{(k)}\cap\mathcal{S}^{(k)}=\emptyset$. 
 
 For \jsp\ there are $d=\NrFeatTotal$ features (cf. the step-by-step varying features from \cref{tbl:features}), and the training set is created in the manner described in \cref{sec:gentrainingdata}.
 
 \todo{Which is being used, ordinal or logistic regression?}
 Logistic regression makes decisions regarding optimal dispatches and at the same time efficiently estimates a posteriori probabilities. When using linear classification model (cf. \cref{sec:ord:linpref}), i.e., 
 \begin{equation}\label{eq:jsp:linweights}
-	h(\vec{x})=\sum_{i=1}^d w_i\phi_i(\vec{x})=\inner{\vec{w}}{\vphi(\vec{x})},
+	\hat{\pi}(\vchi)=\sum_{i=1}^d 
+	w_i\phi_i(\vchi)=\inner{\vec{w}}{\vphi(\vchi)},
 \end{equation}
-the optimal $\vec{w}^*$ obtained from the preference set can be used on any new data point, $\vphi$, and their inner product is proportional to probability estimate \cref{eq:prob}. 
+the optimal $\vec{w}^*$ obtained from the preference set can be used on any new 
+data point (i.e. partial schedule), $\vchi$, and their inner product is 
+proportional to probability estimate \cref{eq:prob}. 
 %Similarly for non-linear classification models. 
-Hence, for each job on the ready-list, $J_j\in\mathcal{R}$, let $\vphi_j$ denote its corresponding  post-decision state. Then the job chosen to be dispatched, $J_{j^*}$, is the one corresponding to the highest preference estimate, i.e.,
+Hence, for each job on the job-list, $J_j\in\mathcal{L}$, let $\vphi_j$ denote 
+its corresponding  post-decision state. Then the job chosen to be dispatched, 
+$J_{j^*}$, is the one corresponding to the highest preference estimate, i.e.,
 \begin{equation}\label{eq:lin}
-	J_{j^*}=\argmax_{J_j\in \mathcal{R}}\; h(\vphi_j)
+	J_{j^*}=\argmax_{J_j\in \mathcal{L}}\; \hat{\pi}(\vphi_j)
 \end{equation}
-where $h(\cdot)$ is the classification model obtained by the preference set, $S$, defined by \cref{eq:S:jsp}. 
+where $\hat{\pi}(\cdot)$ is the classification model obtained by the preference 
+set, $S$, defined by \cref{eq:S:jsp}. 
 
 
 \section{Interpreting linear classification models}
+
+When using a feature space based on SDRs, the linear classification models can 
+very easily be interpreted as composite dispatching rules with predetermined 
+weights. 
+%Similarly for non-linear classification models, however, they are harder to 
+%visualise since the features have to be projected on a kernel.
 Looking at the features description in \cref{tbl:features} it is possible for 
 the ordinal regression to `discover' the weights $\vec{w}$ in order for 
-\cref{eq:jsp:linweights} corresponding applying a single priority dispatching 
-rules from \cref{sec:SDR}. For instance, 
-
+\cref{eq:jsp:linweights} corresponding applying a \sdr~from \cref{sec:SDR}. 
+For instance, 
 \begin{IEEEeqnarray*}{s"rCl} 
 	SPT:& w_i&=&\bigg\{ \begin{array}{rl}-1&\text{if 
         }i=1\\0&\text{otherwise}\end{array} \\
@@ -48,10 +66,7 @@ rules from \cref{sec:SDR}. For instance,
     LWR:& w_i&=&\bigg\{ \begin{array}{rl}-1&\text{if 
         }i=7\\0&\text{otherwise}\end{array}
 \end{IEEEeqnarray*}
-
 where $i\in\{1,\ldots,d\}$.
-When using a feature space based on single priority dispatching rules, the linear classification models can very easily be interpreted as composite dispatching rules with predetermined weights. 
-%Similarly for non-linear classification models, however, they are harder to visualise since the features have to be projected on a kernel.
 
 
 \section{Generating training data}\label{sec:gentrainingdata} 
@@ -66,7 +81,9 @@ Unfinished jobs are dispatched one at a time according to some heuristic.
 After each dispatch\footnote{The terms dispatch (iteration) and time step are used interchangeably.} the schedule's current features (cf. \cref{tbl:features}) are updated based on the half-finished schedule. 
 These collected features are denoted $\Phi$, where, 
 \begin{eqnarray}\label{eq:Phi}
-	\Phi:= \bigcup_{i=1}^{N_{\text{train}}} \bigcup_{k=1}^\ell\bigcup_{J_j\in\mathcal{R}^{(k)}} \left\{ \vphi_j  \;\Big|\; (\vec{p}_i,\vsigma_i)\in\mathcal{P}^{n\times m} \right\}.
+	\Phi:= \bigcup_{i=1}^{N_{\text{train}}} 
+	\bigcup_{k=1}^\ell\bigcup_{J_j\in\mathcal{L}^{(k)}} 
+    \condset{\vphi_j}{\vec{x}_i\in\mathcal{P}^{n\times m} }.
 \end{eqnarray}
 
 Continuing with the example from \cref{sec:jsp:example}, \cref{fig:jssp:gametree} shows how the first two dispatches could be executed for a six-job five-machine \jsp\ scheduling problem, with the machines, $a\in\{M_1,...,M_5\}$, on the vertical axis and the horizontal axis yields the current makespan. The next possible dispatches are denoted as dashed boxes with the job index $j$ within and its length corresponding to $p_{ja}$.
@@ -88,7 +105,15 @@ In addition, varying permutations of the dispatching sequence (however given the
 Care must be taken in this case that neither resulting features are labelled as undesirable. 
 Only the features from a dispatch yielding a truly suboptimal solution should be labelled undesirable. 
 
-The creation of the game tree for \jsp\ can be done recursively for all possible permutation of dispatches, in the manner described above, resulting in a full \mbox{$n$-ary} tree (since $|\mathcal{R}|\leq n$) of height $\ell$. Such an exhaustive search would yield at the most $n^{\ell}$ leaf nodes (worst case scenario being that no sub-trees merge). Now, since the internal vertices, i.e., partial schedules, are only of interest to learn,\footnote{The root is the empty initial schedule and for the last dispatch there is only one option left to choose from, so there is no preferred `choice' to learn.} the number of those can be at the most \mbox{${}^{n^{\ell}-1}/_{n-1}$}.
+The creation of the game tree for \jsp\ can be done recursively for all 
+possible permutation of dispatches, in the manner described above, resulting in 
+a full \mbox{$n$-ary} tree (since $|\mathcal{L}|\leq n$) of height $\ell$. Such 
+an exhaustive search would yield at the most $n^{\ell}$ leaf nodes (worst case 
+scenario being that no sub-trees merge). Now, since the internal vertices, 
+i.e., partial schedules, are only of interest to learn,\footnote{The root is 
+the empty initial schedule and for the last dispatch there is only one option 
+left to choose from, so there is no preferred `choice' to learn.} the number of 
+those can be at the most \mbox{${}^{n^{\ell}-1}/_{n-1}$}.
 Even for small dimensions of $n$ and $m$ the number of internal vertices are quite substantial and thus computationally expensive to investigate them all. Not to mention that this is done iteratively for all $N_{\text{train}}$ problem instances.
 
 \begin{figure}
@@ -104,7 +129,9 @@ Even for small dimensions of $n$ and $m$ the number of internal vertices are qui
 The optimum makespan is known for each problem instance. 
 At each time step (i.e. layer of the game tree) a number of feature pairs are created. 
 They consist of the features $\vphi_o$ resulting from optimal dispatches $o\in\mathcal{O}^{(k)}$, versus features $\vphi_s$ resulting from suboptimal dispatches $s\in\mathcal{S}^{(k)}$ at time $k$. 
-In particular, each job is compared against another job of the ready-list, $\mathcal{R}^{(k)}$, and if the makespan differs, i.e., $C_{\max}^{(s)}\gneq C_{\max}^{(o)}$, an optimal/suboptimal pair is created. 
+In particular, each job is compared against another job of the job-list, 
+$\mathcal{L}^{(k)}$, and if the makespan differs, i.e., $C_{\max}^{(s)}\gneq 
+C_{\max}^{(o)}$, an optimal/suboptimal pair is created. 
 However if the makespan would be unaltered, the pair is omitted since they give the same optimal makespan. 
 This way, only features from a dispatch resulting in a suboptimal solution is labelled undesirable.
 
@@ -137,7 +164,9 @@ So the question put forth is, why was the ordinal regression not able to detect 
 The nature of the CMA-ES is to explore suboptimal routes until it converges to an optimal one. 
 Implying that the previous approach of only looking into one optimal route is not sufficient information. 
 Suggesting that the training set should incorporate a more complete knowledge about \emph{all} possible preferences, i.e., make also the distinction between suboptimal and sub-suboptimal features, etc.  
-This would require a Pareto ranking for the ready-list, $\mathcal{R}$, which can be used to make the distinction to which feature sets are equivalent, better or worse, and to what degree (i.e. giving a weight to the preference)? 
+This would require a Pareto ranking for the job-list, $\mathcal{L}$, which can 
+be used to make the distinction to which feature sets are equivalent, better or 
+worse, and to what degree (i.e. giving a weight to the preference)? 
 By doing so, the training set becomes much greater, which of course would again need to be sampled in order to be computationally feasible to learn. 
 
 For instance \cite{Siggi05} used decision trees to `rediscover' LPT by using the dispatching rule to create its training data. The limitations of using heuristics to label the training data is that the learning algorithm will mimic the original heuristic (both when it works poorly and well on the problem instances) and does not consider the real optimum. In order to learn new heuristics that can outperform existing heuristics then the training data needs to be correctly labelled. This drawback is confronted in \citep{Malik08,Russell09,Siggi10} by using an optimal scheduler, computed off-line. 
@@ -166,25 +195,47 @@ to $S$ defined by \cref{eq:S:jsp}, they were first reported in \cref{InRu15a},
 	\item[All rankings, $S_a$,] denotes that all possible rankings were explored, i.e.,
 	$r_i$ versus $r_j$ for $i,j\in\{1,\ldots,n'\}$ and $i\neq j$, preference pairs are added.
 \end{description}
-where $r_1>r_2>\ldots>r_{n'}$ ($n'\leq n$) are the rankings of the ready-list, $\mathcal{R}^{(k)}$, at time step $k$.
+where $r_1>r_2>\ldots>r_{n'}$ ($n'\leq n$) are the rankings of the job-list, 
+$\mathcal{L}^{(k)}$, at time step $k$.
 
 
 \subsection{Trajectory strategies}
 The following trajectory strategies were explored for adding preference pairs to $S$ defined by \cref{eq:S:jsp},
 \begin{description}
-	\item[SPT trajectory, $S^{SPT}$,] at each dispatch the task corresponding to shortest processing time is dispatched, i.e., following the simple dispatching rule SPT.
-	\item[LPT trajectory, $S^{LPT}$,] at each dispatch the task corresponding to largest processing time is dispatched, i.e., following the simple dispatching rule LPT.
-	\item[LWR trajectory, $S^{LWR}$,] at each dispatch the task corresponding to least work remaining is dispatched, i.e., following the simple dispatching rule LWR.
-	\item[MWR trajectory, $S^{MWR}$,] at each dispatch the task corresponding to most work remaining is dispatched, i.e., following the simple dispatching rule MWR.
-	\item[Optimum trajectory, $S^{OPT}$,] at each dispatch some (random) optimal task is dispatched.
-	\item[Random trajectory, $S^{RND}$,] at each dispatch some random task is dispatched.
-	\item[CMA-ES trajectory, $S^{CMA}$,] at each dispatch the task corresponding to highest priority, computed with fixed weights $\vec{w}$, which were obtained by optimising the mean for \fullnamerho, with CMA-ES. 
-	\item[All trajectories, $S^{ALL}$,] denotes all aforementioned trajectories were explored, i.e., 
+	\item[Optimum trajectory, $\Phi^{OPT}$,] at each dispatch some (random) 
+    optimal task is dispatched. This is also referred to following the expert 
+    policy, $\pi_\star$.	\item[SPT trajectory, $\Phi^{SPT}$,] at each 
+    dispatch 
+    the task 
+	corresponding to shortest processing time is dispatched, i.e., following 
+	\sdr~SPT.
+	\item[LPT trajectory, $\Phi^{LPT}$,] at each dispatch the task 
+	corresponding to largest processing time is dispatched, i.e., following 
+	\sdr~LPT.
+	\item[LWR trajectory, $\Phi^{LWR}$,] at each dispatch the task 
+	corresponding to least work remaining is dispatched, i.e., following 
+	\sdr~LWR.
+	\item[MWR trajectory, $\Phi^{MWR}$,] at each dispatch the task 
+	corresponding to most work remaining is dispatched, i.e., following 
+	\sdr~MWR.
+	\item[Random trajectory, $\Phi^{RND}$,] at each dispatch some random task 
+	is dispatched.
+	\item[CMA-ES trajectory, $\Phi^{CMA}$,] at each dispatch the task 
+	corresponding to highest priority, computed with fixed weights $\vec{w}$, 
+	which were obtained by optimising the mean for \fullnamerho, with CMA-ES. 
+	\item[All trajectories, $\Phi^{ALL}$,] denotes all aforementioned 
+	trajectories were explored, i.e., 
 	\begin{equation}
-		S^{ALL}:=S^{OPT}\cup S^{CMA}\cup S^{MWR}\cup S^{LWR} \cup S^{RND}.
+		\Phi^{ALL}:=\condset{\Phi^{A}}{\forall A \in \{OPT,CMA,MWR,LWR,RND\}}.
 	\end{equation}
 \end{description}
-In the case of the SDR-based and $S^{CMA-ES}$ trajectories it is sufficient to explore each trajectory exactly once for each problem instance. Whereas, for $S^{OPT}$ and $S^{RND}$ there can be several trajectories worth exploring, however, only one is chosen (at random). It is noted that since the number of problem instances, $N_{\text{train}}$, is relatively large, it is deemed sufficient to explore one trajectory for each instance, in those cases as well.
+In the case of the $\Phi^{\langle SDR \rangle}$ and $\Phi^{CMA}$ trajectories 
+it is sufficient to explore each trajectory exactly once for each problem 
+instance. Whereas, for $\Phi^{OPT}$ and $\Phi^{RND}$ there can be several 
+trajectories worth exploring, however, only one is chosen (at random). It is 
+noted that since the number of problem instances, $N_{\text{train}}$, is 
+relatively large, it is deemed sufficient to explore one trajectory for each 
+instance, in those cases as well.
 
 These trajectory strategies were initially introduced in \cref{InRu15a}, save 
 for $S^{CMA}$ and the SDR-based ones, however the latter are currently 
