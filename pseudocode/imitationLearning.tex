@@ -1,0 +1,44 @@
+% pi_i = beta_i*pi_star + (1-beta_i)*pi_i^hat
+% i: ith iteration of imitation learning
+% pi_star is expert policy (i.e. optimal)
+% pi_i^hat: is pref model from prev. iteration
+
+\begin{algorithm}
+    \caption[Imitation learning]{Pseudo code for choosing job 
+    $J_{j^*}$ using imitation learning (dependent on iteration $i$) to collect 
+    training set $\Phi^{\text{IL}i}$; either by following optimal trajectory, 
+    $\pi_\star$, or preference model 
+    %based on aggregated preference sets, $\bigcup_{i'=0}^{i-1}S^{\text{IL}i'}$,
+    from previous iterations, $\hat{\pi}_{i-1}$.}
+    \label{pseudo:imitationLearning}
+    \begin{algorithmic}[1]
+        \Require $i\geq0$ 
+        \Require Ranking $r_1 \succ r_2 \succ \cdots > r_{n'} ~ (n' \leq n)$ of 
+                the job-list, $\mathcal{L}$ \Comment{query $\pi_\star$}
+        \Procedure{ImitationLearning}{$i,\hat{\pi}_{i-1},\pi_\star$}
+        \State $p \gets \mathcal{U}(0,1)\in [0,1]$
+        \Comment{uniform probability}
+        \If{$i>0$} 
+        \If{unsupervised} \State $\beta_i \gets 0$ 
+        \Comment{always apply imitiation}
+        \ElsIf{decreasing supervision} \State $\beta_i \gets 0.5^i$
+        \Comment{liklier to choose imitation with each iteration}
+        \Else ~ (fixed supervision) \State $\beta_i \gets 0.5$
+        \Comment{equally likely to choose optimal vs. imitation} 
+        \EndIf
+        \Else ~ (fixed supervision)  \State $\beta_i \gets 1$ 
+        \Comment{always follow expert policy (i.e. optimal)}
+        \EndIf
+        \If {$p > \beta_i$} 
+        \State \Return $j^* \gets \argmax_{j\in 
+        \mathcal{L}}\{I_j^{\hat{\pi}_{i-1}}\}$
+        \Comment{best job based on $\hat{\pi}_{i-1}$, 
+        cf.~\cref{pseudo:constructJSP}}
+        \Else 
+        \State $\mathcal{O} \gets \condset{j\in\mathcal{L}}{r_j=r_1}$ 
+        \Comment{optimal job-list}
+        \State \Return $j^* \in\mathcal{O}$ \Comment{any optimal job}
+        \EndIf
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}

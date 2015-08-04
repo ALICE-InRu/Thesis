@@ -1,24 +1,24 @@
 \begin{algorithm}
-    \caption{Pseudo code for constructing a \JSP\ sequence using a dispatching 
-    rule (DR) for a fixed construction heuristic (Y).} 
+    \caption{Pseudo code for constructing a \JSP\ sequence using a given policy 
+    rule, $\pi$, for a fixed construction heuristic (Y).} 
     \label{pseudo:constructJSP}
     \begin{algorithmic}[1]
-        \Procedure{Constructing \JSP}{DR,Y}
-        \State $\vchi \gets \emptyset$ current dispatching sequence  
-        \Comment{initialization}
-        \For{$k:=1~\textbf{to}~l=n\cdot m$} 
+        \Procedure{Construct\JSP}{$\pi$,Y}
+        \State $\vchi \gets \emptyset$  
+        \Comment{initial current dispatching sequence}
+        \For{k}{1}{l=n\cdot m} 
         \Comment{at each dispatch iteration}
         \ForAll{$J_j\in \mathcal{L}^{(k)}\subset \mathcal{J}$} 
         \Comment{inspect job-list}
-        \State $I_j^{DR}\leftarrow \text{DR}\left([\vchi,j],Y\right)$ 
+        \State $I_j^{\pi} \leftarrow \pi \left([\vchi,j],Y\right)$ 
         \Comment{priority $J_j$}
         \EndFor
-        \State $j^* \gets \argmax_{j\in \mathcal{L}^{(k)}}\{I_j^{DR}\}$ 
+        \State $j^* \gets \argmax_{j\in \mathcal{L}^{(k)}}\{I_j^{\pi}\}$ 
         \Comment{choose highest priority}
         \State $\chi_k \gets j^*$ 
         \Comment{dispatch $j^*$}
         \EndFor
-        \State \Return $C_{max} \gets Y(\vchi)$ 
+        \State \Return $C_{\max}^{\pi} \gets Y(\vchi)$ 
         \Comment{makespan and final schedule}
         \EndProcedure
     \end{algorithmic}

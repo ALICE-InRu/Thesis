@@ -1,0 +1,24 @@
+\begin{algorithm}
+    \caption[Perturbed leader]{Pseudo code for choosing job 
+    $J_{j^*}$ following a perturbed leader.}
+    \label{pseudo:perturbedLeader}
+    \begin{algorithmic}[1]
+        \Require Ranking $r_1 \succ r_2 \succ \cdots > r_{n'} ~ (n' \leq n)$ of 
+        the job-list, $\mathcal{L}$ \Comment{query $\pi_\star$}
+        \Procedure{PerturbedLeader}{$\mathcal{L},\pi_\star$}
+        \State $\epsilon \gets 0.1$ \Comment{likelihood factor}
+        \State $p \gets \mathcal{U}(0,1)\in [0,1]$
+        \Comment{uniform probability}
+        \State $\mathcal{O} \gets \condset{j\in\mathcal{L}}{r_j=r_1}$ 
+        \Comment{optimal job-list}
+        \State $\mathcal{S} \gets \condset{j\in\mathcal{L}}{r_j>r_1}$
+        \Comment{sub-optimal job-list}
+        \If {$p < \epsilon \algorithmicand n'>1$} 
+        \State \Return $j^* \in \condset{j\in\mathcal{S}}{r_j=r_2}$ 
+        \Comment{any second best job}
+        \Else 
+        \State \Return $j^* \in\mathcal{O}$ \Comment{any optimal job}
+        \EndIf
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}

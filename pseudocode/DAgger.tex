@@ -1,0 +1,29 @@
+\begin{algorithm}
+    \caption{DAgger: Dataset Aggregation for \JSP}
+    \label{pseudo:DAgger}
+    \begin{algorithmic}[1]
+        \Require $T\geq1$
+        \Procedure{DAgger}{$\pi_\star,\Phi^\text{OPT},T$}
+        \State $\Phi^{\text{IL}0} \gets \Phi^{\text{OPT}}$ \Comment{initialize 
+        dataset}
+        \State $\hat{\pi}_0 \gets$ \Call{Train}{$\Phi^{\text{IL}0}$}
+        \Comment{initial model, equivalent to \cref{sec:expertPolicy}}
+        \For{i}{1}{T} \Comment{at each imitation learning iteration}
+        \State Let $\pi_i = \beta_i\pi_\star + (1-\beta_i)\hat{\pi}_{i-1}$
+        \Comment{\cref{eq:il}}
+        \State Sample $\ell$-step trajectories using $\pi_i$
+        \Comment{cf. \cref{pseudo:imitationLearning}: 
+        \Call{ImitationLearning}{$i,\hat{\pi}_{i-1},\pi_\star$}}
+        \State $\Phi^{\text{IL}i} = \{(s,\pi_\star(s))\}$ 
+        \Comment{visited states by $\pi_i$ and actions given by expert}
+        \State $\Phi^{\text{DA}i} \gets \Phi^{\text{DA}i-1} \cup 
+        \Phi^{\text{IL}i}$ 
+        \Comment{aggregate datasets, cf. \cref{eq:DAgger}}
+        \State $\hat{\pi}_{i+1} \gets$ \Call{Train}{$\Phi^{\text{DA}i}$}
+        \Comment{preference model from \cref{eq:jssp:linweights}}
+        \EndFor
+        \State \Return best $\hat{\pi}_i$ on validation \Comment{best 
+        preference model}
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
