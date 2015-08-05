@@ -225,10 +225,25 @@ Some features are directly observed from the partial schedule, such as the job- 
 In addition there are flow-related, \phiFlowRelated, which measure the influence of idle time on the schedule, 
 and current makespan-related, \phiScheduleRelated.
 
-Note that \phiLocalRelated\ are only based on the current step of the schedule, i.e., schedule's \emph{local features}, and might not give an accurate indication of how it will effect the schedule in the long run. Therefore, a set of features are needed to estimate the schedule's overall performance, referred to as its \emph{global features}. The approach here is to use well known SDRs, \phiSDRRelated, as a benchmark by retrieving what would the resulting $C_{\max}$ would be given if that SDR would be implemented from that point forward. Moreover, random completion of the partial schedule are implemented, here \phiRND\ corresponds to 100 random rollouts, which can be used to identify which features $\vphi$ are promising on a long-term basis.  
+Note that \phiLocalRelated\ are only based on the current step of the schedule, 
+i.e., schedule's \emph{local features}, and might not give an accurate 
+indication of how it will effect the schedule in the long run. Therefore, a set 
+of features are needed to estimate the schedule's overall performance, referred 
+to as its \emph{global features}. The approach here is to use well known SDRs, 
+\phiSDRRelated, as a benchmark by retrieving what would the resulting 
+$C_{\max}$ would be given if that SDR would be implemented from that point 
+forward. Moreover, random completion of the partial schedule are implemented, 
+here \phiRND\ corresponds to 100 random roll-outs, which can be used to 
+identify which features $\vphi$ are promising on a long-term basis.  
 
-All of the features vary throughout the scheduling process, w.r.t. operation belonging to the same time step $k$, save for \phitotalProc\ which varies between jobs; \phistep\ to keep track of features' evolution w.r.t. the scheduling process; and \phiwrmTotal\ which is static for a given problem instance, but used for normalising other features, such as work-remaining based (\phiwrmJob\ and \phiwrmMac) or makespan-based (\phiGlobalRelated) ones.
-In addition, \phimac, is reported in order to distinguish which features are in conflict with each other.
+%All of the features vary throughout the scheduling process, w.r.t. operation 
+%belonging to the same time step $k$, save for \phitotalProc\ which varies 
+%between jobs; \phistep\ to keep track of features' evolution w.r.t. the 
+%scheduling process; and \phiwrmTotal\ which is static for a given problem 
+%instance, but used for normalising other features, such as work-remaining 
+%based (\phiwrmJob\ and \phiwrmMac) or makespan-based (\phiGlobalRelated) ones.
+%In addition, \phimac, is reported in order to distinguish which features are 
+%in conflict with each other.
 
 \begin{table} \centering 
 	\caption[Feature space $\mathcal{F}$ for \JSP]{Feature space $\mathcal{F}$ for \JSP\ where job $J_j$ on machine $M_a$ given the resulting temporal schedule after dispatching $(j,a)$.}

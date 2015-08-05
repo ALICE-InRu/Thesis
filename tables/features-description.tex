@@ -18,8 +18,8 @@ $\vphi$ & Feature description & Mathematical formulation& Shorthand\\
   \phijobOps & number of assigned operations for job & $|\mathcal{M}_j|$ & jobOps\\ 
 \midrule
  \multicolumn{4}{c}{\textbf{machine related}}\\
- \phimac & machine ID  & $ a$ & mac \\ 
-  \phimacFree & when machine is next free & $\max_{j'\in \mathcal{J}_a} \{x_f(j',a)\}$& macFree\\
+  \phimacFree & when machine is next free & $\max_{j'\in \mathcal{J}_a} 
+  \{x_f(j',a)\}$& macFree\\
   \phiwrmMac & total work remaining for machine &$\sum_{j'\in\mathcal{J}\setminus \mathcal{J}_{a}}p_{j'a} $ & wrmMac\\
   \phimacOps & number of assigned operations for machine & $|\mathcal{J}_a|$ & macOps\\
 \midrule
@@ -30,8 +30,6 @@ $\vphi$ & Feature description & Mathematical formulation& Shorthand\\
 \midrule
  \multicolumn{4}{c}{\textbf{current makespan related}}\\
   \phimakespan & current makespan & $\max_{(j',a')\in \mathcal{J} \times \mathcal{M}_{j'}}\{x_f(j',a')\}$ & makespan \\
- \phiwrmTotal & total work remaining for all jobs/mac& $\sum_{j'\in\mathcal{J}}\sum_{a'\in\mathcal{M}\setminus \mathcal{M}_{j'}}p_{j'a'}$ & wrmTotal \\
-  \phistep & current step in the dispatching process & $|\vchi|$ & step \\
 \midrule
  \multicolumn{4}{c}{\textbf{final makespan related}}\\
 \phiSPT & final makespan using SPT & $ C_{\max}|\text{DR}=\text{SPT}$ & SPT \\
