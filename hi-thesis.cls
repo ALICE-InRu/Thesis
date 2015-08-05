@@ -350,7 +350,8 @@
     %
     \newpage
     \thispagestyle{empty}
-    \includepdf[pages={-},pagecommand={\thispagestyle{fancy}}]{\papers@get{file}}
+    \includepdf[pages={-},width=\textwidth,
+    pagecommand={\thispagestyle{fancy}}]{\papers@get{file}}
     \egroup}
 \makeatother
 
