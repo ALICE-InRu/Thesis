@@ -350,10 +350,18 @@
     %
     \newpage
     \thispagestyle{empty}
-    \includepdf[pages={-},width=\textwidth,
-    pagecommand={\thispagestyle{fancy}}]{\papers@get{file}}
+    
+    \includepdf[pages={-}, % all pages
+    width=\textwidth, % full text-width
+    frame=true, % when debugging    
+    pagecommand={\thispagestyle{fancy}} % continue 
+    %page 
+    %numbering
+    ]{\papers@get{file}}
     \egroup}
 \makeatother
+
+\usepackage{stackengine}
 
 
 
