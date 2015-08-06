@@ -1,3 +1,151 @@
+%\renewcommand{\rho}{\varrho}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\vphi}{{\mathbf{\phi}}}
+\newcommand{\vchi}{{\mathbf{\chi}}}
+\newcommand{\vsigma}{{\mathbf{\sigma}}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\Exp}[1]{{\mathbb E}\left(#1\right)}
+\newcommand{\Prob}[1]{{\mathcal P}\left(#1\right)}
+\newcommand{\strng}[1]{{\mbox{\tt #1}}}
+\newcommand{\inner}[2]{\big<{#1}\cdot{#2}\big>}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\norm}[1]{\lVert#1\rVert}
+\newcommand{\argmax}{\mathop{\rm argmax}}
+\newcommand{\argmin}{\mathop{\rm argmin}}
+\newcommand{\nchoosek}[2]{\tiny \left(\begin{array}{c}#1\\#2\end{array}\right)}
+\newcommand{\condset}[2]{\left\{#1\;\middle|\;#2\right\}}
+\newcommand{\limit}[3]{\lim_{#2}#1=#3}
+\newcommand{\bigOh}[1]{{O}\left(#1\right)}
+
+% percentage relative deviation from optimality
+\newcommand{\Namerho}{Deviation from optimality, $\rho$}
+\newcommand{\namerho}{deviation from optimality, $\rho$}
+\newcommand{\fullnamerho}{\namerho, defined by~\cref{eq:rho}}
+\newcommand{\Problem}[2][ ]{$\mathcal{P}_{#2}^{#1}$}
+\newcommand{\jrnd}[2]{\Problem[#1 \times #2]{j.rnd}}
+\newcommand{\jrndJ}[2]{\Problem[#1 \times #2]{j.rnd,J_1}}
+\newcommand{\jrndM}[2]{\Problem[#1 \times #2]{j.rnd,M_1}}
+\newcommand{\jrndn}[2]{\Problem[#1 \times #2]{j.rndn}}
+\newcommand{\frnd}[2]{\Problem[#1 \times #2]{f.rnd}}
+\newcommand{\frndn}[2]{\Problem[#1 \times #2]{f.rndn}}
+\newcommand{\fjc}[2]{\Problem[#1 \times #2]{f.jc}}
+\newcommand{\fmc}[2]{\Problem[#1 \times #2]{f.mc}}
+\newcommand{\fmxc}[2]{\Problem[#1 \times #2]{f.mxc}}
+\newcommand{\sdr}{single priority dispatching rule}
+\newcommand{\sdrs}{\sdr s}
+\newcommand{\Fsp}{Flow-shop}
+\newcommand{\Jsp}{Job-shop}
+\newcommand{\fsp}{flow-shop}
+\newcommand{\jsp}{job-shop}
+\newcommand{\FSP}{FSP}
+\newcommand{\JSP}{JSP}
+\newcommand{\Jrnd}{\JSP~random}
+\newcommand{\JrndJ}{\JSP~random with job variation}
+\newcommand{\JrndM}{\JSP~random with machine variation}
+\newcommand{\Jrndn}{\JSP~random-narrow}
+\newcommand{\Frnd}{\FSP~random}
+\newcommand{\Frndn}{\FSP~random narrow}
+\newcommand{\Fjc}{\FSP~job-correlated}
+\newcommand{\Fmc}{\FSP~machine-correlated}
+\newcommand{\Fmxc}{\FSP~mixed-correlated}
+
+\newcounter{FeatCounter}
+% job-related
+\newcommand{\phiproc}{$\phi_1$}
+\newcommand{\phistartTime}{$\phi_2$}
+\newcommand{\phiendTime}{$\phi_3$}
+\newcommand{\phiarrivalTime}{$\phi_4$}
+\newcommand{\phitotalProc}{$\phi_5$}
+\newcommand{\phiwait}{$\phi_6$}
+\newcommand{\phiwrmJob}{$\phi_7$}
+\newcommand{\phijobOps}{$\phi_8$}
+\newcommand{\phiJobRelated}{\phiproc\!-\phijobOps}
+% mac-related
+\newcommand{\phimacFree}{$\phi_{9}$}
+\newcommand{\phiwrmMac}{$\phi_{10}$}
+\newcommand{\phimacOps}{$\phi_{11}$}
+\newcommand{\phiMacRelated}{\phimacFree\!-\phimacOps}
+% flow-related
+\newcommand{\phislotsReduced}{$\phi_{12}$} 
+\newcommand{\phislots}{$\phi_{13}$}
+\newcommand{\phislotsTotal}{$\phi_{14}$} 
+\newcommand{\phiFlowRelated}{\phislotsReduced\!-\phislotsTotal}
+% schedule related
+\newcommand{\phimakespan}{$\phi_{15}$}
+\newcommand{\phiScheduleRelated}{\phimakespan}
+% global
+\newcommand{\phiSPT}{$\phi_{16}$}
+\newcommand{\phiLPT}{$\phi_{17}$}
+\newcommand{\phiLWR}{$\phi_{18}$}
+\newcommand{\phiMWR}{$\phi_{19}$}
+\newcommand{\phiRND}{$\phi_{20}$}
+\newcommand{\phiSDRRelated}{\phiSPT\!-\phiMWR}
+\newcommand{\phiGlobalRelated}{\phiMWR\!-\phiRND}
+\newcommand{\phiLocalRelated}{\phiproc\!-\phimakespan}
+\newcommand{\NrFeatLocal}{15}
+\newcommand{\NrFeatGlobal}{5}
+\newcommand{\NrFeatTotal}{20}
+
+\hyphenpenalty=800
+\hbadness=2500
+
+\hyphenation{heur-ist-ics}
+\hyphenation{algo-rithm}
+
+\usepackage{amsmath,amssymb}
+
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{rotating}
+\newcommand{\rot}[1]{\begin{sideways}#1\end{sideways}}
+
+\usepackage{paralist}
+
+\usepackage{booktabs} % \toprule \midrule \bottomrule
+
+\usepackage[colorinlistoftodos, textwidth=\marginparwidth]{todonotes}
+\usepackage{comment}
+
+%\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{aliascnt}
+\usepackage[capitalise,nameinlink]{cleveref} % must come last! 
+% provide singular and plural names of the categories "paper"
+\crefname{paper}{Paper}{Papers}
+\Crefname{paper}{Paper}{Papers}
+
+% Nomenclature
+\usepackage{nomencl}
+\makenomenclature
+\renewcommand\nomgroup[1]{
+  \ifthenelse{\equal{#1}{F}}{\item[\textbf{Rice's Framework}]}{
+    \ifthenelse{\equal{#1}{J}}{\item[\textbf{\Jsp\ Scheduling}]}{ 
+      \ifthenelse{\equal{#1}{O}}{\item[\textbf{Ordinal Regression}]}{ 
+        \ifthenelse{\equal{#1}{S}}{\item[\textbf{Surrogate Modelling}]}{ 
+          \ifthenelse{\equal{#1}{X}}{\item[\textbf{Experimental Settings}]}{ 
+            \ifthenelse{\equal{#1}{Y}}{\item[\textbf{Subscripts and 
+                Superscripts}]}{
+              \ifthenelse{\equal{#1}{Z}}{\item[\textbf{Acronyms}]}{ 
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+\usepackage{xifthen}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+\algnewcommand\algorithmicto{~\textbf{to}~}
+\algnewcommand\algorithmicand{~\textbf{and}~}
+\algrenewtext{For}[3]%
+{\algorithmicfor\ $#1 \gets #2 \algorithmicto\ #3$~\algorithmicdo}
 \usepackage{ifthen}
 \usepackage{float}
 \usepackage{morefloats}

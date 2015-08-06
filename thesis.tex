@@ -7,8 +7,7 @@
 \documentclass{hi-thesis} 
 
 \input{scripts/shorthand} % put your own shorthand declarations in this document
-\input{../shorthandCommon}
-\bibinput{../papers} % put only *your* publications here
+\bibinput{papers/papers} % put only *your* publications here
 
 \newcommand{\printFrontMatter}[1]{
   \ifthenelse{\equal{#1}{true}}{
@@ -51,7 +50,7 @@
   \HeaderQuote{A cat may look at a king. I've read that in some book, but I 
   don't remember where.}{Alice}
   \bibliographystyle{abbrvnat} 
-  \bibliography{../references}
+  \bibliography{papers/references}
   \addcontentsline{toc}{chapter}{References}
   \appendix
   \include{endmatter/problemstructure}
