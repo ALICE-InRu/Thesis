@@ -353,10 +353,9 @@
     
     \includepdf[pages={-}, % all pages
     width=\textwidth, % full text-width
-    frame=true, % when debugging    
-    pagecommand={\thispagestyle{fancy}} % continue 
-    %page 
-    %numbering
+    pagecommand={\thispagestyle{fancy},
+        \thumbindex{\value{chapter}}{\Roman{chapter}}
+        } % continue page numbering
     ]{\papers@get{file}}
     \egroup}
 \makeatother
