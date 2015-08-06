@@ -15,6 +15,6 @@ Status
 
 Contact: hei2@hi.is / helga85@gmail.com / @tungufoss
 
-> Note: Source code and raw data is contained in the repo https://github.com/tungufoss/alice. 
-> Moreover, most figures can be inspected interactively on a R-shiny server run at http://tgax89.rhi.hi.is:3838/alice/
+> Note: [Source code](https://github.com/tungufoss/alice.code) and [raw data](https://github.com/tungufoss/alice.data) is contained in their own repo. 
+> Moreover, most figures can be inspected interactively on a [R-shiny server](http://tgax89.rhi.hi.is:3838/alice/)
 
