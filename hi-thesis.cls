@@ -407,16 +407,27 @@
     \vspace{\fill}
 }
 
+\usepackage[percent]{overpic}
 \newcommand*\colophon{
     \cleardoublepage
     \newpage % odd page
     \pagestyle{empty}
-    \thispagestyle{empty}    
-    {\Huge \hfill Colophon}
-    \vspace*{18pt}
-    \begin{center}
-        \parbox{200pt}{\raggedright \include{endmatter/colophon}}
-    \end{center}
+    \thispagestyle{empty}
+    \IfFileExists{figures/alice-cheshire.eps}{ %true-branch
+        \begin{overpic}[width=\textwidth]{alice-cheshire}
+        \put (31,30) {
+        \parbox{200pt}{ 
+            {\Huge \hfill Colophon}
+            \vspace*{18pt} \raggedright 
+            \include{endmatter/colophon}}}
+        \end{overpic}
+    }{ %false-branch
+        {\Huge \hfill Colophon}
+        \vspace*{18pt} 
+        \begin{center}
+            \parbox{200pt}{\raggedright \include{endmatter/colophon}}
+        \end{center}    
+    }
 }
 
 %******** Thumb-index ************
