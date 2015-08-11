@@ -16,11 +16,12 @@ A prevalent approach to solving \JSP\ is to combine several relatively simple di
 Moreover, \cref{sec:es:measure} shows that the choice of objective function  for evolutionary search is worth investigating. Since the optimisation is based on minimising the expected mean of the fitness function over a large set of problem instances, which can vary within. Then normalising the objective function can stabilise the optimisation process away from local minima. 
 
 \section{Introduction}
-As previously discussed in \cref{ch:introduction}, there are two main viewpoints on how to approach scheduling problems,
-\begin{inparaenum}[\itshape a\upshape)] 
-	\item local level by building schedules for one problem instance at a time;
-	and \item global level by building schedules for all problem instances at once.
-\end{inparaenum}
+As previously discussed in \cref{ch:introduction}, there are two main 
+viewpoints on how to approach scheduling problems
+\begin{enumerate*}
+	\item local level by building schedules for one problem instance at a time
+    \item global level by building schedules for all problem instances at once
+\end{enumerate*}
 \tcr{For local level construction a simple construction heuristic is applied, 
 the schedule's features are collected at each dispatch iteration, from which a 
 learning model will inspect the feature set to discriminate which operations 

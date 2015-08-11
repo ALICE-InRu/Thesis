@@ -99,7 +99,7 @@
 \RequirePackage{titling}
 \RequirePackage{setspace} 
 \RequirePackage{booktabs} % for much better looking tables
-\usepackage{enumitem}
+%\usepackage{enumitem}
 
 \onehalfspacing
 %\raggedright
@@ -138,7 +138,6 @@
 \captionsetup[subtable]{textfont=sf,aboveskip=3pt,belowskip=9pt}
 \captionsetup[figure]{position=bottom}
 \captionsetup[subfigure]{textfont=sf}
-
 
 %Vertical layout of float pages : http://www.tex.ac.uk/cgi-bin/texfaq2html?label=floatpages+vertposfp
 %By default, LaTeX vertically centres the floats on a float page; the present author is not alone in not liking this arrangement. Unfortunately, the control of the positioning is “buried” in LaTeX-internal commands, so some care is needed to change the layout.

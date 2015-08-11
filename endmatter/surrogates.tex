@@ -51,14 +51,18 @@ Furthermore, the validation is only done on the candidate individuals for the cu
 % Validating on every other generation
 Lastly, one should also investigate the frequency by which the model is validated, e.g., at each generation or every $K>1$ generations or even have the need for validating adapt with time.
 
-Preliminary tests were conducted on which validation method deemed fruitful, by implementing  Rosenbrock function of dimension $d=2$, for the following setups, 
-\begin{inparaenum}[{Method} (i)]
-	\item the setup presented in \cite{Ru06:PPSN} %\label{sur:val:org}
-	\item omitting the worst individuals during the pruning process, instead of the oldest ones; \label{sur:val:first}
-	\item initialise the validation process by using a pseudo individual that represents the mean of the new candidate individuals; \label{sur:val:pseudo}
-	\item requiring that only the $\mu$ best candidate individuals are correctly ranked; \label{sur:val:mubest}
-	\item validating on every other generation. \label{sur:val:last}
-\end{inparaenum}
+Preliminary tests were conducted on which validation method deemed fruitful, by 
+implementing  Rosenbrock function of dimension $d=2$, for the following setups 
+\begin{enumerate*}[label=Method \emph{\roman*})]
+    \item \label{sur:val:org} the setup presented in \cite{Ru06:PPSN}
+    \item \label{sur:val:first} omitting the worst individuals during the 
+    pruning process, instead of the oldest ones
+    \item \label{sur:val:pseudo} initialise the validation process by using a 
+    pseudo individual that represents the mean of the new candidate individuals
+    \item \label{sur:val:mubest} requiring that only the $\mu$ best candidate 
+    individuals are correctly ranked
+    \item \label{sur:val:last} validating on every other generation
+\end{enumerate*}
 To summarise, the original method~\cref{sur:val:org} is compared with the aforementioned validation improvements, namely methods~\cref{sur:val:first,sur:val:pseudo,sur:val:mubest,sur:val:last}, which were added one at a time to the original method. 
 
 

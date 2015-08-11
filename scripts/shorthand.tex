@@ -100,7 +100,13 @@
 \usepackage{rotating}
 \newcommand{\rot}[1]{\begin{sideways}#1\end{sideways}}
 
-\usepackage{paralist}
+\usepackage[inline]{enumitem}
+\setlist[enumerate,1]{
+    label=\textit{\roman*)},
+    before=\unskip{: }, 
+    itemjoin={{; }}, itemjoin*={{, and }},
+    after={{. }}
+    }
 
 \usepackage{booktabs} % \toprule \midrule \bottomrule
 
