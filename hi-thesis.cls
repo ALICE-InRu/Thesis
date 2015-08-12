@@ -407,27 +407,36 @@
     \vspace{\fill}
 }
 
-\usepackage[percent]{overpic}
 \newcommand*\colophon{
     \cleardoublepage
     \newpage % odd page
     \pagestyle{empty}
     \thispagestyle{empty}
+    \begin{center}
     \IfFileExists{figures/alice-cheshire.eps}{ %true-branch
-        \begin{overpic}[width=\textwidth]{alice-cheshire}
-        \put (31,30) {
-        \parbox{200pt}{ 
-            {\Huge \hfill Colophon}
-            \vspace*{18pt} \raggedright 
-            \include{endmatter/colophon}}}
-        \end{overpic}
+    \begin{tikzpicture}
+    \node[anchor=south west] (image) at (0,0,0) 
+    {\includegraphics[width=0.9\textwidth]{alice-cheshire}};
+    \begin{scope}[x={(image.south east)},y={(image.north west)}]
+     %% next four lines will help you to locate the point needed by forming a 
+     %%grid. comment these four lines in the final picture.↓
+     %\draw[help lines,xstep=.1,ystep=.1] (0,0) grid (1,1);
+     %\draw[help lines,xstep=.05,ystep=.05] (0,0) grid (1,1);
+     %\foreach \x in {0,1,...,9} { \node [anchor=north] at (\x/10,0) {0.\x}; }
+     %\foreach \y in {0,1,...,9} { \node [anchor=east] at (0,\y/10) {0.\y};}
+     %% upto here↑
+    \node[text width=180pt] (c) at (0.72,0.28) {
+        {\Huge \hfill Colophon}
+        \include{endmatter/colophon}
+        };
+    \end{scope}
+    \end{tikzpicture}
     }{ %false-branch
         {\Huge \hfill Colophon}
         \vspace*{18pt} 
-        \begin{center}
-            \parbox{200pt}{\raggedright \include{endmatter/colophon}}
-        \end{center}    
+        \parbox{200pt}{\raggedright \include{endmatter/colophon}}
     }
+    \end{center}
 }
 
 %******** Thumb-index ************

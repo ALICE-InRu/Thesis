@@ -121,8 +121,39 @@ those can be at the most \mbox{${}^{n^{\ell}-1}/_{n-1}$}.
 Even for small dimensions of $n$ and $m$ the number of internal vertices are quite substantial and thus computationally expensive to investigate them all. Not to mention that this is done iteratively for all $N_{\text{train}}$ problem instances.
 
 \begin{figure}
-	\includegraphics[width=\linewidth]{gametree}
-	\caption[Partial Game Tree for \jsp]{Partial Game Tree for \jsp\ for the first two dispatches. 
+    \begin{tikzpicture}
+    \node[anchor=south west,inner sep=0] (image) at (0,0,0) 
+    {\includegraphics[width=\textwidth]{gametree}};
+    \begin{scope}[x={(image.south east)},y={(image.north west)}]
+    %% next four lines will help you to locate the point needed by forming a 
+    %%grid. comment these four lines in the final picture.↓
+    %\draw[help lines,xstep=.1,ystep=.1] (0,0) grid (1,1);
+    %\draw[help lines,xstep=.05,ystep=.05] (0,0) grid (1,1);
+    %\foreach \x in {0,1,...,9} { \node [anchor=north] at (\x/10,0) {0.\x}; }
+    %\foreach \y in {0,1,...,9} { \node [anchor=east] at (0,\y/10) {0.\y};}
+    %% upto here↑
+    \node (J0) at (0.5,0.72) {};
+    \node (J1) at (0.19,0.65) {};
+    \node (J2) at (0.42,0.65) {};
+    \node (J3) at (0.65,0.65) {};
+    \node (J4) at (0.85,0.65) {};
+    \draw[-latex] (J0) to[out=-20,in=+20] (J1);
+    \draw[-latex] (J0) to[out=-20,in=+20] (J2);
+    \draw[-latex] (J0) to[out=-20,in=+20] (J3);
+    \draw[-latex] (J0) to[out=-20,in=+20] (J4);
+    \node (J4) at (0.83,0.38) {};
+    \node (J4J1) at (0.19,0.31) {};
+    \node (J4J2) at (0.42,0.31) {};
+    \node (J4J3) at (0.65,0.31) {};
+    \node (J4J4) at (0.85,0.31) {};
+    \draw[-latex] (J4) to[out=-20,in=+20] (J4J1);
+    \draw[-latex] (J4) to[out=-20,in=+20] (J4J2);
+    \draw[-latex] (J4) to[out=-20,in=+20] (J4J3);
+    \draw[-latex] (J4) to[out=-20,in=+20] (J4J4);
+    \end{scope}
+    \end{tikzpicture}
+	\caption[Partial Game Tree for \jsp]{Partial Game Tree for \jsp\ for the 
+	first two dispatches. 
 		Top layer depicts all possible dispatches (dashed) for an empty schedule. 
 		Middle layer depicts all possible dispatches given that one of the dispatches from the layer above has been executed (solid). 
 	Bottom layer depicts when job $J_4$ on machine $M_2$ has been chosen to be dispatched from the previous layer, moreover it depicts all possible next dispatches from that scenario.}
