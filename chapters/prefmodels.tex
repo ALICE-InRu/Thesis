@@ -176,11 +176,19 @@ All problem instances are correctly labelled w.r.t. their optimum makespan, foun
 In order to create training instances (and subsequently preference pairs) both a features resulting in optimal solutions are gathered (following optimal trajectories) and features that would have been chosen if a dispatching rule had been implemented (following DR trajectories). 
 In the latter case, the trajectories pursued here, will be the SDRs from \cref{sec:SDR} as well as randomly dispatching operations.
 
-To summarise, one needs to consider two main aspects of the generation of the training data, 
-\begin{inparaenum}[(a)]
-	\item what sort of rankings should be compared during each step? 
-	\item Which path(s) should be investigated? Pursuing solely optimal trajectories? Creating random dispatches? Following other means: CMA-ES computed weights, single priority dispatching rules, etc. 
-\end{inparaenum}
+To summarise, one needs to consider two main aspects of the generation of the 
+training data
+\begin{enumerate*}[label={\emph{\Roman*})},
+        itemjoin={{? }}, itemjoin*={{? And }}, after={{}}]
+    \item what sort of rankings should be compared during each step
+    \item which path(s) should be investigated
+    \begin{enumerate*}[label=\textit{\Roman{enumi}.\roman*)}, before={{? }},
+        itemjoin={{? }}, itemjoin*={{? Or }}, after={{}}]
+    \item Pursuing solely optimal trajectories
+    \item Creating random dispatches
+    \item following other means: CMA-ES computed weights, \sdr s, etc.
+    \end{enumerate*}
+\end{enumerate*}
 
 \subsection{Ranking strategies}
 The following ranking strategies were implemented for adding preference pairs 

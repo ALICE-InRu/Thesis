@@ -23,21 +23,35 @@ On the other hand, \citeauthor{SmithMilesLion5} use a completely automated appro
 Going back to the \jsp\ paradigm, then the interaction between processing time distribution and its permutation is extremely important, because it introduces hidden properties in the data structure making it \emph{easy} or \emph{hard} to schedule for the given algorithm. These underlying characteristics, i.e., features, define its data structure. A more sophisticated way of discretising the instance space is grouping together problem instances that show the same kind of feature behaviour, especially given the fact the learning models in \cref{ch:prefmodels} will be heavily based on feature pairs. Thereby making it possible to infer what sort of feature behaviour distinguishes  between \emph{good} and \emph{bad} schedules. 
 
 In \citet{InRu12}, a single problem generator was used to create  $N=1,500$ synthetic $6\times6$ \jsp\ problem instances, where $\vec{p}\sim\mathcal{U}(1,200)$ and $\vsigma$ was a random permutation. The experimental study showed that MWR works either well or poorly on a subset of the instances, in fact 18\% and 16\% of the instances were classified as \emph{easy} and \emph{hard} for MWR, respectively. 
-Since the problem instances were na\"{i}vely generated, not to mention given the high variance of the data distribution, it is intuitive that there are some inherent structural qualities that could explain this difference in performance. The experimental study investigated the feature behaviours for these two subsets, namely, the easy and hard problem instances. For some features, the trend was more or less the same, which are explained by the common denominating factor, that all instances were sampled from the same problem generator. Whereas, those features that were highly correlated with the end-result, i.e., the final makespan, which determined if an instance was labelled easy or hard, then the significant features varied greatly between the two difficulties, which imply the inherent difference in data structure. 
+Since the problem instances were na\"{i}vely generated, not to mention given 
+the high variance of the data distribution, it is intuitive that there are some 
+inherent structural qualities that could explain this difference in 
+performance. The experimental study investigated the feature behaviours for 
+these two subsets, namely, the easy and hard problem instances. For some 
+features, the trend was more or less the same, which are explained by the 
+common denominating factor, that all instances were sampled from the same 
+problem generator. Whereas, those features that were highly correlated with the 
+end-result, i.e., the final makespan, which determined if an instance was 
+labelled easy or hard, then the significant features varied greatly between the 
+two difficulties, which imply the inherent differenmce in data structure. 
 Moreover, the study in gives support to that random problem instance generators are \emph{too} general and might not suit real-world applications. \citet{Whitley} argue that problem instance generator should be more structured, since real-world manufacturing environment is not completely random, but rather structured, e.g.,  job's tasks can be correlated or machines in the shop. \citeauthor{Whitley} propose a problem instance generator that relates to real-world \fsp\ attributes, albeit not directly modelled after real-world \fsp\ due to the fact that deterministic $Fm||C_{\max}$ is seldom directly applicable in practice \citep{Dudek92}. This is why \fjc{n}{m}, \fmc{n}{m} and \fmxc{n}{m} are also taken into consideration in \cref{ch:genprobleminstances} as they are an attempt to mimic the real-world characteristics of \fsp.
 
 It is interesting to know if the difference in the structure of the schedule is time dependent, e.g.,  is there a clear time of divergence within the scheduling process? 
 Moreover, investigation of how sensitive is the difference between two sets of features, e.g.,  can two schedules with similar feature values yield completely contradictory outcomes (i.e. one poor and one good schedule)? Or will they more or less follow the their predicted trend? If the latter is the prevalent case, then these instances need to be segregated and each having their own learning algorithm implemented, for a meaningful outcome overall.  
 This also, essentially, answers the question of whether  it is in fact feasible to discriminate between \emph{good} and \emph{bad} schedules using the currently selected features as a measure. If results are contradictory, it is an indicator the features selected are not robust enough to capture the essence of the data structure and some key features are missing from the feature set that could be able to discriminate between \emph{good} and \emph{bad} schedules. 
-Additionally, there is also the question of how can one define ``similar'' schedules, and what measures should be used? This \lcnamecref{ch:problemstructure} describes some preliminary experiments with the aim of investigating the feasibility of finding distinguishing features corresponding to \emph{good} and \emph{bad} schedules in \jsp. To summarise:
-\begin{inparaenum}[(a)]
-	\item How to define problem difficulty? 
-	\item Is there a time of divergence?
-	\item What are ``similar'' schedules?
-	\item Do similar features yield contradictory outcomes?
-	\item Are extra features needed? 
-	And \item what can be learned from feature behaviour?
-\end{inparaenum}
+Additionally, there is also the question of how can one define ``similar'' 
+schedules, and what measures should be used? This 
+\lcnamecref{ch:problemstructure} describes some preliminary experiments with 
+the aim of investigating the feasibility of finding distinguishing features 
+corresponding to \emph{good} and \emph{bad} schedules in \jsp. To summarise
+\begin{enumerate*}[itemjoin={{? }}, itemjoin*={{? And }}, after={{? }}]
+	\item How to define problem difficulty
+	\item Is there a time of divergence
+	\item What are ``similar'' schedules
+	\item Do similar features yield contradictory outcomes
+	\item Are extra features needed
+	And \item what can be learned from feature behaviour
+\end{enumerate*}
 
 Instead of searching through a large set of algorithms  and determining which algorithm is the most suitable for a given subset of the instance space, i.e., creating an algorithm portfolio, as is generally the focus in the current literature \citep{SmithMilesLion3,SmithMilesLion5,Corne10}, the focus of the experimental study in \cref{sec:diff:jrnd,sec:diff:jrndn,sec:diff:frnd,sec:diff:frndn,sec:diff:fjc,sec:diff:fmc,sec:diff:fmxc} 
 (each corresponding to a given problem space from \cref{ch:genprobleminstances})
@@ -155,11 +169,12 @@ A reason for this lack of performance of our proposed BDR is perhaps that by sta
 \end{figure}
 
 \section{Extremal feature}\label{sec:diff:opt:ext}
-The SDRs we've inspected so-far are based on two features from \cref{tbl:features}, namely, 
-\begin{inparaenum}[(i)]
-	\item \phiproc\ for SPT and LPT, and
-	\item \phiwrmJob\ for LWR and MWR. 
-\end{inparaenum}
+The SDRs we've inspected so-far are based on two features from 
+\cref{tbl:features}, namely
+\begin{enumerate*}
+	\item \phiproc\ for SPT and LPT
+	\item \phiwrmJob\ for LWR and MWR 
+\end{enumerate*}
 By choosing the lowest value for the first SDR, and highest value for the 
 latter SDR, i.e., the extremal values for those given features. Let's apply the 
 same methodology from \cref{sec:diff:opt:sdr} to all varying features described 
