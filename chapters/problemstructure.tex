@@ -208,7 +208,16 @@ From the experimental study it is apparent that features have different %impact
 correlation with the resulting schedule depending in what stage it is in the scheduling process, implying that their influence varies over the dispatching sequencing. Moreover, features constant throughout the scheduling process are not correlated with the end-result.
 There are some common features for both difficulties considered which define \jsp\ on a whole. However the significant features are quite different across the two difficulties, implying there is a clear difference in their data structure. The amount of significant features were considerably more for easy problems, indicating their key elements had been found. However, the features distinguishing hard problems were scarce. Most likely due to their more complex data structure their key features are of a more composite nature. As a result, new `global' features were introduced. 
 
-It is possible for a \JSP\ schedule to have more than one sequential dispatching representation. It is especially w.r.t. the initial dispatches. Visiting \cref{fig:example} again, if jobs $J_j\in\{J_1,J_2,J_6\}$ were to be dispatched first, then all permutations yield the same equivalent temporal schedule, this is because they don't create a conflict for one another (as is the case for jobs $J_4$ and $J_5$). This drawback of non-uniqueness of sequential dispatching representation explains why there is hardly any significant feature for the initial steps of the scheduling process (cf. \cref{tbl:JSP:feat:easy} and \cref{tbl:JSP:feat:hard}). 
+It is possible for a \JSP\ schedule to have more than one sequential 
+dispatching representation. It is especially w.r.t. the initial dispatches. 
+Revisiting \cref{fig:example:midway}, if we were to dispatch $J_2$ 
+first and then $J_4$, then that would be the same equivalent
+temporal schedule if we did it the other way around. 
+This is because they don't create a conflict for one another 
+(as is the case for jobs $J_2$ and $J_3$). This drawback of non-uniqueness of 
+sequential dispatching representation explains why there is hardly any 
+significant feature for the initial steps of the scheduling process (cf. 
+\cref{tbl:JSP:feat:easy} and \cref{tbl:JSP:feat:hard}). 
 
 Since feature selection is of paramount importance in order for algorithms to become successful, one needs to give great thought to how features are selected. What kind of features yield \emph{bad} schedules? And can they be steered onto the path of more promising feature characteristics. This sort of investigation can be an indicator how to create meaningful problem generators. On the account that real-world problem instances are scarce, their hidden properties need be drawn forth in order to generate artificial problem instances from the same data distribution. 
 

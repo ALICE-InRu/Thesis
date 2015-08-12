@@ -92,9 +92,13 @@ In the middle layer one of the possible dispatches from the layer above is fixed
 
 This sort of tree representation is similar to \emph{game trees} \citep[cf.][]{Rosen03} where the root node denotes the initial (i.e. empty) schedule and the leaf nodes denote the complete schedule (resulting after $n\cdot m$ dispatches, thus height of the tree is $\ell$), therefore the distance $k$ from an internal node to the root yields the number of operations already dispatched. Traversing from root to leaf node one can obtain a sequence of dispatches that yielded the resulting schedule, i.e., the sequence indicates in which order the tasks should be dispatched for that particular schedule. 
 
-However one can easily see that this sequence of task assignments is by no means unique. 
-Inspecting a partial schedule further along in the dispatching process such as in \cref{fig:example}, then let's say $J_1$ would be dispatched next, and in the next iteration $J_2$. 
-Now this sequence would yield the same schedule as if $J_2$ would have been dispatched first and then $J_1$ in the next iteration. 
+However one can easily see that this sequence of task assignments is by no 
+means unique. 
+Inspecting a partial schedule further along in the dispatching process such as 
+in \cref{fig:example:midway}, then let's say $J_2$ would be dispatched next, 
+and in the next iteration $J_4$. 
+Now this sequence would yield the same schedule as if $J_4$ would have been 
+dispatched first and then $J_2$ in the next iteration. 
 This is due to the fact these are non-conflicting jobs, which indicates that some of the nodes in game tree can merge. 
 In the meantime the states of the schedule are different and thus their features, although they manage to yield with the same (partial) schedule at a later date.  % ATHUGASEMD 1 -- SEQ. REP NON-UNIQUE
 In this particular instance one can not infer that choosing $J_1$ is better and $J_2$ is worse (or vice versa) since they can both yield the same solution.
