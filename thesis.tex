@@ -17,28 +17,22 @@
       \dedicationpage{Allt fyrir móður mína}
       \abstractpage % both in English and Icelandic
       \tableofcontents
-      \listoffigures
-      \addcontentsline{toc}{chapter}{Listing of Figures}
-      \listoftables
-      \addcontentsline{toc}{chapter}{Listing of Tables}
-      \include{frontmatter/publications}
+      \listoffigures \addcontentsline{toc}{chapter}{\listfigurename}
+      \listoftables  \addcontentsline{toc}{chapter}{\listtablename}
+      \listofpublications
       \include{scripts/nomencl}
-      \printnomenclature  
-      \addcontentsline{toc}{chapter}{Nomenclature}
+      \printnomenclature \addcontentsline{toc}{chapter}{Nomenclature}
       \acknowledgments
   }{}
   \ifthenelse{\equal{#1}{false}}{
       \pagenumbering{roman}
       \listoftodos
       \tableofcontents
-      \listoffigures
-      \addcontentsline{toc}{chapter}{Listing of Figures}
-      \listoftables
-      \addcontentsline{toc}{chapter}{Listing of Tables}
-      \include{frontmatter/publications}
+      \listoffigures \addcontentsline{toc}{chapter}{\listfigurename}
+      \listoftables  \addcontentsline{toc}{chapter}{\listtablename}
+      \listofpublications
       \include{scripts/nomencl}
-      \printnomenclature
-      \addcontentsline{toc}{chapter}{Nomenclature}
+      \printnomenclature \addcontentsline{toc}{chapter}{Nomenclature}
   }{}
   \onehalfspacing
 }
@@ -53,9 +47,9 @@
   \bibliography{papers/references}
   \addcontentsline{toc}{chapter}{References}
   \appendix
-  \include{endmatter/problemstructure}
-  \include{endmatter/ordinal} 
-  \include{endmatter/surrogates}  
+%  \include{endmatter/problemstructure}
+%  \include{endmatter/ordinal} 
+%  \include{endmatter/surrogates}  
   
   \ifthenelse{\equal{#1}{true}}{
 %    \include{endmatter/fun} % test function suite
@@ -64,26 +58,25 @@
     }{}
   \ifthenelse{\equal{#1}{false}}{}{}
 }
-\newcommand{\printAll}{true} % either true or false CASE-SENSITIVE
+\newcommand{\printAll}{false} % either true or false CASE-SENSITIVE
 
 \begin{document}
 
 % Front matter
-\printFrontMatter{\printAll}
+\printFrontMatter{\printAll} 
 
 % Main matter, include each chapter...
-\prologue{\printAll}
+\prologue{\printAll} 
 \include{chapters/introduction}
 \include{chapters/scheduling}
-\include{chapters/genprobleminstances}
-\include{chapters/problemstructure}
-\include{chapters/prefmodels}
-\include{chapters/esmodels}
-\include{chapters/experiments}
-\include{chapters/conclusions}
+%\include{chapters/genprobleminstances}
+%\include{chapters/problemstructure}
+%\include{chapters/prefmodels}
+%\include{chapters/esmodels}
+%\include{chapters/experiments}
+%\include{chapters/conclusions}
 
 % Back matter
-\printBackMatter{\printAll}
-
+\printBackMatter{true} % either true or false CASE-SENSITIVE
 
 \end{document}

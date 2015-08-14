@@ -5,7 +5,7 @@
 \newcommand{\vsigma}{{\mathbf{\sigma}}}
 \newcommand{\mat}[1]{\mathbf{#1}}
 \newcommand{\R}{{\mathbb R}}
-\newcommand{\Exp}[1]{{\mathbb E}\left(#1\right)}
+\newcommand{\Exp}[1]{{\mathbb E}\left[#1\right]}
 \newcommand{\Prob}[1]{{\mathcal P}\left(#1\right)}
 \newcommand{\strng}[1]{{\mbox{\tt #1}}}
 \newcommand{\inner}[2]{\big<{#1}\cdot{#2}\big>}
@@ -32,8 +32,10 @@
 \newcommand{\fjc}[2]{\Problem[#1 \times #2]{f.jc}}
 \newcommand{\fmc}[2]{\Problem[#1 \times #2]{f.mc}}
 \newcommand{\fmxc}[2]{\Problem[#1 \times #2]{f.mxc}}
-\newcommand{\sdr}{single priority dispatching rule}
-\newcommand{\sdrs}{\sdr s}
+
+\newcommand{\dr}{dispatching rule}
+\newcommand{\cdr}{composite priority \dr}
+\newcommand{\sdr}{single priority \dr}
 \newcommand{\Fsp}{Flow-shop}
 \newcommand{\Jsp}{Job-shop}
 \newcommand{\fsp}{flow-shop}
@@ -50,42 +52,45 @@
 \newcommand{\Fmc}{\FSP~machine-correlated}
 \newcommand{\Fmxc}{\FSP~mixed-correlated}
 
-\newcounter{FeatCounter}
 % job-related
 \newcommand{\phiproc}{$\phi_1$}
 \newcommand{\phistartTime}{$\phi_2$}
 \newcommand{\phiendTime}{$\phi_3$}
 \newcommand{\phiarrivalTime}{$\phi_4$}
-\newcommand{\phitotalProc}{$\phi_5$}
-\newcommand{\phiwait}{$\phi_6$}
-\newcommand{\phiwrmJob}{$\phi_7$}
+\newcommand{\phiwait}{$\phi_5$}
+\newcommand{\phijobTotProcTime}{$\phi_6$}
+\newcommand{\phijobWrm}{$\phi_7$}
 \newcommand{\phijobOps}{$\phi_8$}
 \newcommand{\phiJobRelated}{\phiproc\!-\phijobOps}
 % mac-related
 \newcommand{\phimacFree}{$\phi_{9}$}
-\newcommand{\phiwrmMac}{$\phi_{10}$}
-\newcommand{\phimacOps}{$\phi_{11}$}
-\newcommand{\phiMacRelated}{\phimacFree\!-\phimacOps}
-% flow-related
-\newcommand{\phislotsReduced}{$\phi_{12}$} 
-\newcommand{\phislots}{$\phi_{13}$}
-\newcommand{\phislotsTotal}{$\phi_{14}$} 
-\newcommand{\phiFlowRelated}{\phislotsReduced\!-\phislotsTotal}
-% schedule related
-\newcommand{\phimakespan}{$\phi_{15}$}
-\newcommand{\phiScheduleRelated}{\phimakespan}
+\newcommand{\phimacTotProcTime}{$\phi_{10}$}
+\newcommand{\phimacWrm}{$\phi_{11}$}
+\newcommand{\phimacOps}{$\phi_{12}$}
+\newcommand{\phireducedSlack}{$\phi_{13}$} 
+\newcommand{\phimacSlack}{$\phi_{14}$}
+\newcommand{\phiallSlack}{$\phi_{15}$}
+\newcommand{\phiSlackRelated}{\phireducedSlack\!-\phiallSlack}
+\newcommand{\phimakespan}{$\phi_{16}$}
+\newcommand{\phiMacRelated}{\phimacFree\!-\phimakespan}
 % global
-\newcommand{\phiSPT}{$\phi_{16}$}
-\newcommand{\phiLPT}{$\phi_{17}$}
-\newcommand{\phiLWR}{$\phi_{18}$}
-\newcommand{\phiMWR}{$\phi_{19}$}
-\newcommand{\phiRND}{$\phi_{20}$}
+\newcommand{\phiSPT}{$\phi_{17}$}
+\newcommand{\phiLPT}{$\phi_{18}$}
+\newcommand{\phiLWR}{$\phi_{19}$}
+\newcommand{\phiMWR}{$\phi_{20}$}
 \newcommand{\phiSDRRelated}{\phiSPT\!-\phiMWR}
-\newcommand{\phiGlobalRelated}{\phiMWR\!-\phiRND}
+\newcommand{\phiRND}{\phi_{\text{RND}}}
+\newcommand{\phiRNDmean}{$\phi_{21}$}
+\newcommand{\phiRNDstd}{$\phi_{22}$}
+\newcommand{\phiRNDmin}{$\phi_{23}$}
+\newcommand{\phiRNDmax}{$\phi_{24}$}
+\newcommand{\phiRNDRelated}{\phiRNDmean\!-\phiRNDmax}
+\newcommand{\phiGlobalRelated}{\phiMWR\!-\phiRNDmax}
 \newcommand{\phiLocalRelated}{\phiproc\!-\phimakespan}
-\newcommand{\NrFeatLocal}{15}
-\newcommand{\NrFeatGlobal}{5}
-\newcommand{\NrFeatTotal}{20}
+% feature count
+\newcommand{\NrFeatLocal}{16}
+\newcommand{\NrFeatGlobal}{4}
+\newcommand{\NrFeatTotal}{24}
 
 \hyphenpenalty=800
 \hbadness=2500
@@ -156,8 +161,8 @@
 \usepackage{float}
 \usepackage{morefloats}
 
-\usepackage{footnote}
-\usepackage[bottom,perpage,symbol*]{footmisc}
+%\usepackage{footnote}
+%\usepackage[bottom,perpage,symbol*]{scripts/footmisc}
 
 \newcommand{\tcr}[1]{{\color{red} #1}}
 \newcommand{\tcb}[1]{{\color{blue} #1}}
@@ -167,6 +172,6 @@
 
 \usepackage[retainorgcmds]{packages/IEEEtrantools}
 
-\usetikzlibrary{angles} % gametree
+%\usetikzlibrary{angles} % gametree
 
 \setlist[description]{leftmargin=1cm,labelindent=1cm}

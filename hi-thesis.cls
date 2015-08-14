@@ -2,11 +2,12 @@
 %  @LaTeX-class-file{
 %     filename        = "hi-thesis.cls",
 %     version         = "0.1",
-%     date            = "11 May 2012",
+%     date            = "14 August 2015",
 %     codetable       = "ISO/ASCII",
 %     keywords        = "LaTeX, hi-thesis",
 %     supported       = "send email to hei2@hi.is",
-%     docstring       = "A thesis class for a University of Iceland dissertation.",
+%     docstring       = "A thesis class for a University of Iceland
+%                        dissertation.",
 %     note            = "Based on the Harvard dissertation class by Jordan Suchow (suchow@fas.harvard.edu)"
 % --------------------------------------------------------------------
 
@@ -53,9 +54,7 @@
 \RequirePackage[comma, sort&compress]{natbib}
 \RequirePackage[small, md, sc]{titlesec}
 \RequirePackage[tight,nice]{units}
-\RequirePackage{verbatim}
 
-\RequirePackage{url}
 \RequirePackage[titles]{tocloft}
 \setcounter{tocdepth}{2}
 \setcounter{lofdepth}{2}
@@ -65,7 +64,6 @@
 \renewcommand\bibname{References}
 \renewcommand\listfigurename{Listing of figures}
 \renewcommand\listtablename{Listing of tables}
-
 
 \RequirePackage{pdfsync} %do pdf synchronization [andy]
 \RequirePackage[closeFloats, noSeparatorLine]{packages/fltpage2} %use the custom modified fltpage package
@@ -86,23 +84,21 @@
 \RequirePackage{fancyhdr} 
 \pagestyle{fancy} % options: empty , plain , fancy
 \renewcommand{\headrulewidth}{0pt}
-\lhead[\fancyplain{}{\thepage}]{\fancyplain{}{\rightmark}}
-\rhead[\fancyplain{}{\leftmark}]{\fancyplain{}{\thepage}}
-\cfoot{}
+\lhead[\fancyplain{}{}]{\fancyplain{}{\rightmark}}
+\rhead[\fancyplain{}{\leftmark}]{\fancyplain{}{}}
+\cfoot{\fancyplain{}{\thepage}}
 \setlength\headheight{14pt}
 
 \newcommand{\HeaderQuote}[2]{ \begin{savequote}[75mm] #1 \qauthor{#2} \end{savequote}}
 
 \RequirePackage[palatino]{quotchap} % for quotes at top of chapters
-%\definecolor{chaptergrey}{rgb}{0.6,0,0} % color for the chapter numbers reddish 
-\definecolor{chaptergrey}{RGB}{0,69,124} % color for the chapter numbers blueish 
+\definecolor{chaptergrey}{RGB}{0,69,124} % blue color for the chapter numbers 
+
 \RequirePackage{titling}
 \RequirePackage{setspace} 
 \RequirePackage{booktabs} % for much better looking tables
-%\usepackage{enumitem}
 
 \onehalfspacing
-%\raggedright
 
 \parindent 12pt
 \RequirePackage{mathspec}
@@ -291,7 +287,7 @@
 }
 
 \usepackage{keyval}
-\usepackage{usebib}
+\usepackage{scripts/usebib}
 \newbibfield{title}
 \newbibfield{author}
 \newbibfield{booktitle}
@@ -359,9 +355,7 @@
     \egroup}
 \makeatother
 
-\usepackage{stackengine}
-
-
+\usepackage{scripts/stackengine}
 
 \newcommand*\blankpage{%
     \newpage
@@ -375,6 +369,8 @@
     
     % setting up for the mainmatter
     \cleardoublepage
+    \setcounter{chapter}{0}
+    
     \setcounter{page}{1}
     \pagenumbering{arabic}
     \normalsize    
@@ -388,6 +384,8 @@
     \ifthenelse{\equal{#1}{false}}{
         \cfoot{Draft -- \today}
     }{}
+    \newpage
+    \thispagestyle{empty} % empty page before actual chapters
 }
 
 \newcommand*\papers{%
@@ -407,12 +405,29 @@
     \vspace{\fill}
 }
 
+\newcommand*\listofpublications{ %
+  \chapter*{Listing of Publications}
+  \addcontentsline{toc}{chapter}{Listing of Publications}
+  \pagestyle{fancy}
+  \rhead{LISTING OF PUBLICATIONS}
+  \input{frontmatter/publications}
+  \cleardoublepage
+  \rhead[\fancyplain{}{\leftmark}]{\fancyplain{}{}}
+}
+
+\usepackage{changepage}
 \newcommand*\colophon{
+  \strictpagecheck
+  \checkoddpage
+  \ifoddpage
+    % nothing done
+  \else
     \cleardoublepage
     \newpage % odd page
-    \pagestyle{empty}
-    \thispagestyle{empty}
-    \begin{center}
+  \fi
+  \pagestyle{empty}
+  \thispagestyle{empty}
+  \begin{center}
     \IfFileExists{figures/alice-cheshire.eps}{ %true-branch
     \begin{tikzpicture}
     \node[anchor=south west] (image) at (0,0,0) 
@@ -436,13 +451,13 @@
         \vspace*{18pt} 
         \parbox{200pt}{\raggedright \include{endmatter/colophon}}
     }
-    \end{center}
+  \end{center}
 }
 
 %******** Thumb-index ************
 \usepackage{tikz}
-\usetikzlibrary{calc}\usetikzlibrary{calc,arrows,shapes} % 'arrows,shapes' to 
-%use in a schematic figure...
+\usetikzlibrary{calc}
+\usetikzlibrary{calc,arrows,shapes} % 'arrows,shapes' to use in a schematic fig
 
 \newlength{\thumbwidth}
 \setlength{\thumbwidth}{1.2cm}
@@ -468,3 +483,4 @@
     $) {#2};
     \end{tikzpicture}
 }
+
