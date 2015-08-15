@@ -145,6 +145,7 @@
 
 % some definitions
 \makeatletter
+\def\printmode#1{\gdef\@printmode{#1}}
 \def\degreeyear#1{\gdef\@degreeyear{#1}}
 \def\degreemonth#1{\gdef\@degreemonth{#1}}
 \def\degree#1{\gdef\@degree{#1}}
@@ -238,7 +239,7 @@
 
 \newcommand{\dedicationpage}[1]{
 	\newpage \thispagestyle{empty} \vspace*{\fill}
-	\noindent \centerline{#1}
+	\noindent \centerline{\emph{#1}}
 	\vspace*{\fill} %\emptypage \newpage \rm
 	\cleardoublepage
 }
@@ -344,14 +345,14 @@
     by \usebibentry{\papers@get{natbib}}{publisher}. 
     %
     \newpage
-    \thispagestyle{empty}
-    
-    \includepdf[pages={-}, % all pages
-    width=\textwidth, % full text-width
-    pagecommand={\thispagestyle{plain}
-        \thumbindex{\value{chapter}}{\Roman{chapter}}
-        } % continue page numbering
-    ]{\papers@get{file}}
+    \ifthenelse{\equal{\@printmode}{draft}}{\blankpage}{
+        \includepdf[pages={-}, % all pages
+            width=\textwidth, % full text-width
+            pagecommand={\thispagestyle{plain} % continue page numbering
+                \thumbindex{\value{chapter}}{\Roman{chapter}} % paper Roman ID
+            } 
+            ]{\papers@get{file}}
+    }
     \egroup}
 \makeatother
 
@@ -365,7 +366,7 @@
     \vspace{\fill}
 }
 
-\newcommand*\prologue[1]{%
+\newcommand*\prologue{%
     % setting up for the mainmatter
     \cleardoublepage
     \setcounter{chapter}{0}
@@ -380,7 +381,7 @@
     \centerline{\Huge \textcolor{themecolor}{\sc{prologue}}}
     \addcontentsline{toc}{chapter}{Prologue}    
     \vspace{\fill}    
-    \ifthenelse{\equal{#1}{draft}}{
+    \ifthenelse{\equal{\@printmode}{draft}}{
         \lfoot{Draft -- \today}
     }{}
     \newpage
@@ -494,25 +495,26 @@
 
 \newcommand{\printFrontMatter}[1]{
     \input{frontmatter/coverpage}
+    
     \ifthenelse{\equal{#1}{draft}}{
         \pagenumbering{roman}
         \listoftodos
         \listofpublications
     }{
-    \maketitle
-    \copyrightpage
-    \dedicationpage{\include{frontmatter/dedication}}
-    \abstractpage % both in English and Icelandic
-    \tableofcontents
-    \listoffigures
-    \addcontentsline{toc}{chapter}{\listfigurename}
-    \listoftables
-    \addcontentsline{toc}{chapter}{\listtablename}
-    \listofpublications
-    \include{scripts/nomencl}
-    \printnomenclature  
-    \addcontentsline{toc}{chapter}{Nomenclature}
-    \acknowledgments
-}
-\onehalfspacing
+        \maketitle
+        \copyrightpage
+        \dedicationpage{#1}
+        \abstractpage % both in English and Icelandic
+        \tableofcontents
+        \listoffigures
+        \addcontentsline{toc}{chapter}{\listfigurename}
+        \listoftables
+        \addcontentsline{toc}{chapter}{\listtablename}
+        \listofpublications
+        \include{scripts/nomencl}
+        \printnomenclature  
+        \addcontentsline{toc}{chapter}{Nomenclature}
+        \acknowledgments
+    }
+    \onehalfspacing
 }

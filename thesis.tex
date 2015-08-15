@@ -5,17 +5,17 @@
 %! makeindex thesis.nlo -s nomencl.ist -o thesis.nls
 
 \documentclass{hi-thesis} 
-
 \input{scripts/shorthand} % put your own shorthand declarations in this document
 \bibinput{papers/papers} % put only *your* publications here
+\printmode{draft} % or final 
 
 \begin{document}
+% Front matter and dependencies defined
 
-% Front matter
-\printFrontMatter{draft}
+\printFrontMatter{draft} % Use either 'draft' or < your dedication >
 
 % Main matter, include each chapter...
-\prologue{draft}
+\prologue
 \include{chapters/introduction}
 \include{chapters/scheduling}
 %\include{chapters/genprobleminstances}
