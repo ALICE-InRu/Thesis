@@ -419,8 +419,6 @@
   \rhead[\fancyplain{}{\leftmark}]{\fancyplain{}{}}
 }
 
-
-
 \usepackage{changepage}
 \newcommand*\colophon{
   \strictpagecheck
