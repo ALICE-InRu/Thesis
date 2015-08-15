@@ -9,64 +9,13 @@
 \input{scripts/shorthand} % put your own shorthand declarations in this document
 \bibinput{papers/papers} % put only *your* publications here
 
-\newcommand{\printFrontMatter}[1]{
-  \ifthenelse{\equal{#1}{true}}{
-      \input{frontmatter/coverpage}
-      \maketitle
-      \copyrightpage
-      \dedicationpage{Allt fyrir móður mína}
-      \abstractpage % both in English and Icelandic
-      \tableofcontents
-      \listoffigures \addcontentsline{toc}{chapter}{\listfigurename}
-      \listoftables  \addcontentsline{toc}{chapter}{\listtablename}
-      \listofpublications
-      \include{scripts/nomencl}
-      \printnomenclature \addcontentsline{toc}{chapter}{Nomenclature}
-      \acknowledgments
-  }{}
-  \ifthenelse{\equal{#1}{false}}{
-      \pagenumbering{roman}
-      \listoftodos
-      \tableofcontents
-      \listoffigures \addcontentsline{toc}{chapter}{\listfigurename}
-      \listoftables  \addcontentsline{toc}{chapter}{\listtablename}
-      \listofpublications
-      \include{scripts/nomencl}
-      \printnomenclature \addcontentsline{toc}{chapter}{Nomenclature}
-  }{}
-  \onehalfspacing
-}
-\newcommand{\printBackMatter}[1]{
-  % Back matter
-  \singlespacing
-  \clearpage
-  
-  \HeaderQuote{A cat may look at a king. I've read that in some book, but I 
-  don't remember where.}{Alice}
-  \bibliographystyle{abbrvnat} 
-  \bibliography{papers/references}
-  \addcontentsline{toc}{chapter}{References}
-  \appendix
-%  \include{endmatter/problemstructure}
-%  \include{endmatter/ordinal} 
-%  \include{endmatter/surrogates}  
-  
-  \ifthenelse{\equal{#1}{true}}{
-%    \include{endmatter/fun} % test function suite
-    \include{endmatter/articles} % published papers etc.
-    \colophon
-    }{}
-  \ifthenelse{\equal{#1}{false}}{}{}
-}
-\newcommand{\printAll}{false} % either true or false CASE-SENSITIVE
-
 \begin{document}
 
 % Front matter
-\printFrontMatter{\printAll} 
+\printFrontMatter{draft}
 
 % Main matter, include each chapter...
-\prologue{\printAll} 
+\prologue{draft}
 \include{chapters/introduction}
 \include{chapters/scheduling}
 %\include{chapters/genprobleminstances}
@@ -74,9 +23,27 @@
 %\include{chapters/prefmodels}
 %\include{chapters/esmodels}
 %\include{chapters/experiments}
-%\include{chapters/conclusions}
+\include{chapters/conclusions}
 
 % Back matter
-\printBackMatter{true} % either true or false CASE-SENSITIVE
+\singlespacing
+\clearpage
 
+\HeaderQuote{A cat may look at a king. I've read that in some book, but I don't 
+remember where.}{Alice}
+
+\bibliographystyle{abbrvnat} 
+\bibliography{papers/references}
+\addcontentsline{toc}{chapter}{References}
+
+\appendix
+\include{endmatter/problemstructure}
+\include{endmatter/ordinal} 
+\include{endmatter/surrogates}  
+% \include{endmatter/fun} % test function suite
+
+\papers
+% this includes all our published papers from endmatter/papers
+
+\colophon
 \end{document}

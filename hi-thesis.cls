@@ -238,7 +238,7 @@
 
 \newcommand{\dedicationpage}[1]{
 	\newpage \thispagestyle{empty} \vspace*{\fill}
-	\noindent \centerline{\emph{#1}}
+	\noindent \centerline{#1}
 	\vspace*{\fill} %\emptypage \newpage \rm
 	\cleardoublepage
 }
@@ -348,7 +348,7 @@
     
     \includepdf[pages={-}, % all pages
     width=\textwidth, % full text-width
-    pagecommand={\thispagestyle{fancy},
+    pagecommand={\thispagestyle{plain}
         \thumbindex{\value{chapter}}{\Roman{chapter}}
         } % continue page numbering
     ]{\papers@get{file}}
@@ -366,7 +366,6 @@
 }
 
 \newcommand*\prologue[1]{%
-    
     % setting up for the mainmatter
     \cleardoublepage
     \setcounter{chapter}{0}
@@ -381,8 +380,8 @@
     \centerline{\Huge \textcolor{themecolor}{\sc{prologue}}}
     \addcontentsline{toc}{chapter}{Prologue}    
     \vspace{\fill}    
-    \ifthenelse{\equal{#1}{false}}{
-        \cfoot{Draft -- \today}
+    \ifthenelse{\equal{#1}{draft}}{
+        \lfoot{Draft -- \today}
     }{}
     \newpage
     \thispagestyle{empty} % empty page before actual chapters
@@ -403,6 +402,10 @@
     \centerline{\Huge \textcolor{themecolor}{\sc{papers}}}
     \addcontentsline{toc}{chapter}{Papers}    
     \vspace{\fill}
+    \newpage
+    \thispagestyle{empty} % empty page before actual papers
+    \pagestyle{plain}
+    \include{endmatter/papers} 
 }
 
 \newcommand*\listofpublications{ %
@@ -414,6 +417,8 @@
   \cleardoublepage
   \rhead[\fancyplain{}{\leftmark}]{\fancyplain{}{}}
 }
+
+
 
 \usepackage{changepage}
 \newcommand*\colophon{
@@ -484,3 +489,30 @@
     \end{tikzpicture}
 }
 
+\usepackage[colorinlistoftodos, textwidth=\marginparwidth]{todonotes} % useful 
+%for comments and such
+
+\newcommand{\printFrontMatter}[1]{
+    \input{frontmatter/coverpage}
+    \ifthenelse{\equal{#1}{draft}}{
+        \pagenumbering{roman}
+        \listoftodos
+        \listofpublications
+    }{
+    \maketitle
+    \copyrightpage
+    \dedicationpage{\include{frontmatter/dedication}}
+    \abstractpage % both in English and Icelandic
+    \tableofcontents
+    \listoffigures
+    \addcontentsline{toc}{chapter}{\listfigurename}
+    \listoftables
+    \addcontentsline{toc}{chapter}{\listtablename}
+    \listofpublications
+    \include{scripts/nomencl}
+    \printnomenclature  
+    \addcontentsline{toc}{chapter}{Nomenclature}
+    \acknowledgments
+}
+\onehalfspacing
+}
