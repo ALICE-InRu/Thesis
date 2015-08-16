@@ -13,26 +13,13 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{hi-thesis}[2012/05/11 v0.1 University of Iceland Thesis Class]
-\LoadClass[11pt,b5paper,twoside]{book} % UGthesis
+\LoadClass[11pt,b5paper,twoside,openany]{book} % UGthesis
 
 % Required packages
 \RequirePackage{pdfpages}
 \RequirePackage{graphicx}
 \DeclareGraphicsExtensions{.eps, .ps, .pdf}
 \graphicspath{{figures/EPS/}{figures/}}
-
-% Colors
-\RequirePackage{color} 
-% official color definitions at the University of Iceland:
-\definecolor{blue}{RGB}{0, 69, 124}
-\definecolor{gray}{RGB}{90,91,94}
-\definecolor{bluegreen}{RGB}{0,152,170}
-\definecolor{red}{RGB}{172,26,64}
-\definecolor{green}{RGB}{113,149,0}
-\definecolor{yellow}{RGB}{245,207,71}
-\definecolor{orange}{RGB}{235, 113, 37}
-
-\definecolor{themecolor}{RGB}{0, 69, 124} % <- for Blue PhD theme, such at UI
 
 \RequirePackage{hyperref}
 \hypersetup{
@@ -66,7 +53,8 @@
 \renewcommand\listtablename{Listing of tables}
 
 \RequirePackage{pdfsync} %do pdf synchronization [andy]
-\RequirePackage[closeFloats, noSeparatorLine]{packages/fltpage2} %use the custom modified fltpage package
+\RequirePackage[closeFloats, noSeparatorLine]{packages/fltpage2} %use the 
+%custom modified fltpage package
 
 \synctex=1 % turn synctex on automatically to sync between pdf viewer [andy]
 
@@ -89,20 +77,31 @@
 \cfoot{\fancyplain{}{\thepage}}
 \setlength\headheight{14pt}
 
+
+\RequirePackage[palatino]{quotchap} % for quotes at top of chapters
 \newcommand{\HeaderQuote}[2]{ 
     \begin{savequote}[75mm] #1 \qauthor{#2} \end{savequote}
     }
 
-\RequirePackage[palatino]{quotchap} % for quotes at top of chapters
-\definecolor{chaptergrey}{RGB}{0,69,124} % blue color for the chapter numbers 
+% Colors
+\RequirePackage{color} 
+% official color definitions at the University of Iceland:
+\definecolor{blue}{RGB}{0, 69, 124}
+\definecolor{gray}{RGB}{90,91,94}
+\definecolor{bluegreen}{RGB}{0,152,170}
+\definecolor{red}{RGB}{172,26,64}
+\definecolor{green}{RGB}{113,149,0}
+\definecolor{yellow}{RGB}{245,207,71}
+\definecolor{orange}{RGB}{235, 113, 37}
+\definecolor{themecolor}{RGB}{0, 69, 124} % <- for Blue PhD theme, such at UI
+\definecolor{chaptergrey}{RGB}{0, 69, 124} % blue color for the chapter numbers 
 
-\RequirePackage{titling}
+%\RequirePackage{titling}
 \RequirePackage{setspace} 
-\RequirePackage{booktabs} % for much better looking tables
-
 \onehalfspacing
-
 \parindent 12pt
+%\RequirePackage{booktabs} % for much better looking tables
+
 \RequirePackage{mathspec}
 
 % use fonttype Arno Pro (a copy is located in subdirectory fonts/) instead of standard LaTeX fonts,
@@ -136,7 +135,6 @@
 \captionsetup[subtable]{textfont=sf,aboveskip=3pt,belowskip=9pt}
 \captionsetup[figure]{position=bottom}
 \captionsetup[subfigure]{textfont=sf}
-
 
 %Vertical layout of float pages : http://www.tex.ac.uk/cgi-bin/texfaq2html?label=floatpages+vertposfp
 %By default, LaTeX vertically centres the floats on a float page; the present author is not alone in not liking this arrangement. Unfortunately, the control of the positioning is “buried” in LaTeX-internal commands, so some care is needed to change the layout.
@@ -264,19 +262,10 @@
 	\vspace*{\fill} 
 }
 	
-% An environment for paragraph-style section
-\providecommand\newthought[1]{%
-	\addvspace{1.0\baselineskip plus 0.5ex minus 0.2ex}%
-	\noindent\textsc{#1}
-}
-%Be more forgiving, and stretch word spacing out more so that words don't run out into the margins..
-%\emergencystretch=1.5em
+%Be more forgiving, and stretch word spacing out more so that words don't run 
+%out into the margins..
+\emergencystretch=1.5em
 
-% An environment for paragraph-style section
-\providecommand\newthought[1]{%
-    \addvspace{1.0\baselineskip plus 0.5ex minus 0.2ex}%
-    \noindent\textsc{#1}
-}
 
 % my papers page
 \usepackage{pgfkeys}
