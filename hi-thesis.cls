@@ -193,6 +193,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     \ifthenelse{\equal{\@printmode}{draft}}{
         \pagenumbering{roman}
         \listoftodos
+        \setcounter{page}{0}
         \listofpublications
     }{
         \maketitle
