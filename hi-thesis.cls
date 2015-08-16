@@ -89,7 +89,9 @@
 \cfoot{\fancyplain{}{\thepage}}
 \setlength\headheight{14pt}
 
-\newcommand{\HeaderQuote}[2]{ \begin{savequote}[75mm] #1 \qauthor{#2} \end{savequote}}
+\newcommand{\HeaderQuote}[2]{ 
+    \begin{savequote}[75mm] #1 \qauthor{#2} \end{savequote}
+    }
 
 \RequirePackage[palatino]{quotchap} % for quotes at top of chapters
 \definecolor{chaptergrey}{RGB}{0,69,124} % blue color for the chapter numbers 
@@ -134,6 +136,7 @@
 \captionsetup[subtable]{textfont=sf,aboveskip=3pt,belowskip=9pt}
 \captionsetup[figure]{position=bottom}
 \captionsetup[subfigure]{textfont=sf}
+
 
 %Vertical layout of float pages : http://www.tex.ac.uk/cgi-bin/texfaq2html?label=floatpages+vertposfp
 %By default, LaTeX vertically centres the floats on a float page; the present author is not alone in not liking this arrangement. Unfortunately, the control of the positioning is “buried” in LaTeX-internal commands, so some care is needed to change the layout.
@@ -345,18 +348,28 @@
     by \usebibentry{\papers@get{natbib}}{publisher}. 
     %
     \newpage
-    \ifthenelse{\equal{\@printmode}{draft}}{\blankpage}{
+    \ifthenelse{\equal{\@printmode}{draft}}{
+        }{
         \includepdf[pages={-}, % all pages
             width=\textwidth, % full text-width
             pagecommand={\thispagestyle{plain} % continue page numbering
-                \thumbindex{\value{chapter}}{\Roman{chapter}} % paper Roman ID
+                \thumbindex{\value{chapter}}{\Roman{chapter}} % paper ID
             } 
             ]{\papers@get{file}}
     }
+    
+    \strictpagecheck
+    \checkoddpage
+    \ifoddpage
+        % do nothing
+    \else
+        \newpage
+        \blankpage
+        \thumbindex{\value{chapter}}{\Roman{chapter}}
+    \fi
+
     \egroup}
 \makeatother
-
-\usepackage{scripts/stackengine}
 
 \newcommand*\blankpage{%
     \newpage
@@ -480,12 +493,23 @@
     }
 }
 \newcommand{\thumbindex}[2] {
-    \begin{tikzpicture}[remember picture, overlay]
-    \node [thumb,align=center,anchor=north east] at ($%
-    (current page.north east)-%
-    (0,{1cm+(#1-1)*\thumbheight})%
-    $) {#2};
-    \end{tikzpicture}
+    \strictpagecheck
+    \checkoddpage
+    \ifoddpage
+        \begin{tikzpicture}[remember picture, overlay]
+        \node [thumb,align=center,anchor=north east] at ($%
+        (current page.north east)-%
+        (0,{1cm+(#1-1)*\thumbheight})%
+        $) {#2};
+        \end{tikzpicture}
+    \else
+        \begin{tikzpicture}[remember picture, overlay]
+        \node [thumb,align=center,anchor=north west] at ($%
+        (current page.north west)-%
+        (0,{1cm+(#1-1)*\thumbheight})%
+        $) {#2};
+        \end{tikzpicture}
+    \fi
 }
 
 \usepackage[colorinlistoftodos, textwidth=\marginparwidth]{todonotes} % useful 
