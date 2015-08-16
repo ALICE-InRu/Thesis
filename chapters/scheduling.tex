@@ -10,7 +10,7 @@ Furthermore, its formulation can be applied on a wide variety of practical probl
 
 Deterministic \JSP\ is the most \emph{general} case for classical scheduling problems \citep{Jain99}. 
 Many other scheduling problems can be reformulated as \JSP. 
-For instance, the Travelling Salesman Problem can be contrived as \jsp
+For instance, the \textit{travelling salesman problem} can be contrived as \jsp
 \begin{enumerate*}[label={{}}]
     \item with the salesman as a single machine in use 
     \item the cities to be visited are the jobs to be processed
@@ -358,7 +358,8 @@ basis.
 \citet{Jayamohan04} showed that a careful combination of dispatching rules can perform significantly better. These are referred to as \emph{composite dispatching rules} (CDR), where the priority ranking is an expression of several SDRs. For instance, optimising \JSP\ w.r.t. $L_{max}$ for one machine\ \cite[see. chapter 14.2]{Pinedo08}, one can combine SDRs that are optimal for a different criteria of problem instances, which complement each other as a CDR, e.g., combining the SDRs 
 WSPT (SPT weighted w.r.t. $\mathcal{J}$), ``which is optimal when all release dates and due dates are zero,'' 
 and minimum slack first (MS), ``which is optimal when all due dates are sufficiently loose and spread out,'' 
-one gets the CDR apparent tardiness cost (ATC) which can work well on a broader set of problem instances than the original SDRs by themselves.
+one gets the CDR apparent tardiness cost which can work well on a broader set 
+of problem instances than the original SDRs by themselves.
 
 CDRs can deal with greater number of features and more complicated form, in 
 short, CDR are a combination of several SDRs. For instance let $\pi$ be a CDR 
@@ -377,7 +378,7 @@ weights autonomously, for instance via evolutionary search or preference-based
 imitation learning, to be discussed in \cref{ch:esmodels} and 
 \cref{ch:prefmodels}, respectively.
 
-\subsection{Automated discovery of dispatching rules}
+\subsection*{Automated discovery of dispatching rules}
 \citet{Monch13} stress the importance of automated discovery of DRs and named several of successful implementations in the field of semiconductor wafer fabrication facilities. 
 However, \citeauthor{Monch13} note that this sort of investigation is still in its infancy and subject for future research.
 
@@ -387,17 +388,40 @@ A recent editorial of the state-of-the-art approaches in advanced dispatching ru
 \end{quote}
 implying that there has not been much automation in the process of discovering new dispatching rules, which is the ultimate goal of this dissertation, i.e., automate creating optimisation heuristics for scheduling. 
 
-With meta heuristics one can use existing DRs and use for example \textit{portfolio-based algorithm selection} \citep{Rice76,Gomes01}, either based on a single instance or class of instances \citep{Xu07} to determine which DR to choose from. 
+With meta heuristics one can use existing DRs and use for example 
+\emph{portfolio-based algorithm selection} \citep{Rice76,Gomes01}, either based 
+on a single instance or class of instances \citep{Xu07} to determine which DR 
+to choose from. 
 Instead of optimising which algorithm to use under what data distributions, such as the case of portfolio algorithms, the approach taken in this dissertation is more similar to that of \emph{meta learning} \citep{Vilalta02} which is the study of how learning algorithms can be improved, i.e., exploiting their strengths and remedy their failings, in order for a better algorithm design. Thus creating an adaptable learning algorithm that dynamically finds the appropriate dispatching rule  to the data distribution at hand. 
 
 \citet{Kalyanakrishnan11} point out that meta learning can be very fruitful in reinforcement learning, and in their experiments they discovered some key discriminants between competing algorithms for their particular problem instances, which provided them with a hybrid algorithm which combines the strengths of the algorithms.
 
-\citet{Nguyen13} proposed a novel \textit{iterative dispatching rules} for \JSP\ which learns from completed schedules in order to iteratively improve new ones. At each dispatching step, the method can utilise the current feature space to `correctify' some possible `bad' dispatch made previously (sort of reverse lookahead).
+\citet{Nguyen13} proposed a novel \emph{iterative dispatching rules} for \JSP\ 
+which learns from completed schedules in order to iteratively improve new ones. 
+At each dispatching step, the method can utilise the current feature space to 
+`correctify' some possible `bad' dispatch made previously (sort of reverse 
+lookahead).
 Their method is straightforward, and thus easy to implement and more importantly, computationally inexpensive, although \citeauthor{Nguyen13} stress that there still remains room for improvement. 
 
-\citet{Korytkowski13} implemented \textit{Ant Colony Optimisation} to select the best DR from a selection of nine DRs for \JSP\ and their experiments showed that the choice of DR do affect the results and that for all performance measures considered it was better to have all of the DRs to choose from rather than just a single DR at a time. 
-Similarly, \citet{Lu13} investigate eleven SDRs for \JSP\ to create a pool of thirty three CDRs that strongly outperformed the ones they were based on, which is intuitive since where one SDR might be failing, another could be excelling, hence combining them should yield a better CDR. \citeauthor{Lu13} create their CDRs with \textit{multi-contextual functions} based either on machine idle time or job waiting time, so one can say that the CDRs are a combination of those two key features of the schedule and then the basic DRs. However, there are no combinations of the basic DR explored, only machine idle time and job waiting time.  
-\citet{Yu13} used priority rules to combine twelve existing DRs from the literature, in their approach they had forty eight priority rules combinations, yielding forty eight different models to implement and test. This is a fairly ad hoc solution and there is no guarantee the optimal combination of DRs is found. 
+\citet{Korytkowski13} implemented \emph{ant colony optimisation} to select the 
+best DR from a selection of nine DRs for \JSP\ and their experiments showed 
+that the choice of DR do affect the results and that for all performance 
+measures considered it was better to have all of the DRs to choose from rather 
+than just a single DR at a time. 
+Similarly, \citet{Lu13} investigate eleven SDRs for \JSP\ to create a pool of 
+thirty three CDRs that strongly outperformed the ones they were based on, which 
+is intuitive since where one SDR might be failing, another could be excelling, 
+hence combining them should yield a better CDR. \citeauthor{Lu13} create their 
+CDRs with \emph{multi-contextual functions} based either on machine idle time 
+or job waiting time, so one can say that the CDRs are a combination of those 
+two key features of the schedule and then the basic DRs. However, there are no 
+combinations of the basic DR explored, only machine idle time and job waiting 
+time.  
+\citet{Yu13} used priority rules to combine twelve existing DRs from the 
+literature, in their approach they had forty eight priority rules combinations, 
+yielding forty eight different models to implement and test. This is a fairly 
+ad-hoc solution and there is no guarantee the optimal combination of DRs is 
+found. 
 
 \section{Rice's framework for \jsp}\label{sec:rice:jsp}
 \citeauthor{Rice76}'s framework for algorithm selection (discussed in 
@@ -418,9 +442,8 @@ Similarly, \citet{Lu13} investigate eleven SDRs for \JSP\ to create a pool of th
 	capturing the essence of a \jsp\ data structure;
 	\item[Algorithm space] $\mathcal{A}$ is simply the scheduling policies under consideration, e.g., SDRs from \cref{sec:SDR},
 	\begin{equation}
-		\mathcal{A}=\left\{\text{SPT,~LPT,~LWR,~MWR,~}\dotsc\right\}
+		\mathcal{A}=\left\{\text{SPT,~LPT,~LWR,~MWR,~RND,~}\dotsc\right\}.
 	\end{equation} 
-    \newpage
 	\item[Performance space] $\mathcal{Y}$ is based on the resulting 
 	$C_{\max}$, defined by \cref{eq:makespan}. The optimum makespan is denoted 
 	$C_{\max}^{\pi_\star}$, i.e., following the expert policy $\pi_\star$, and 
@@ -437,4 +460,5 @@ Similarly, \citet{Lu13} investigate eleven SDRs for \JSP\ to create a pool of th
 		\mathcal{Y}=\left\{\rho_i\right\}_{i=1}^{N}
 	\end{equation}
 \end{description}
-The mapping $Y:\;\mathcal{A}\times\mathcal{F} \mapsto \mathcal{Y}$ is the step-by-step construction heuristic introduced in \cref{sec:CH}.
+The mapping $Y:\;\mathcal{A}\times\mathcal{F} \mapsto \mathcal{Y}$ is the 
+step-by-step construction heuristic in \cref{pseudo:constructJSP}.
