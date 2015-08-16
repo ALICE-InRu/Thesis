@@ -1,6 +1,6 @@
 \HeaderQuote{Read the directions and directly you will be directed in the right direction.}{Doorknob} 
 
-\chapter{Scheduling}\label{ch:scheduling}
+\chapter{\Jsp\ Scheduling Problem}\label{ch:scheduling}
 \FirstSentence{S}{cheduling problems}, which occur frequently in practice, are a category within combinatorial optimisation problems. 
 A subclass of scheduling problems is the \jsp\ scheduling problem (\JSP), which 
 is widely studied in operations research. 
@@ -30,8 +30,7 @@ Here, the jobs have to be processed in the same machine order, however,
 machines do not necessarily need to process jobs in the same order, as is 
 implied in P\FSP.
 
-
-\section{\Jsp\ scheduling problem}
+\section{Mathematical formulation}
 \Jsp\ considered for this dissertation is when $n$ jobs, 
 $\mathcal{J}=\{J_j\}_{j=1}^n$, are scheduled on a finite set, 
 $\mathcal{M}=\{M_a\}_{a=1}^m$, of $m$ machines, subject to the constraint that 
@@ -49,8 +48,9 @@ will denote the time step of the operation. Note that once an operation is
 started, it must be completed uninterrupted, i.e., pre-emption is not allowed. 
 Moreover, there are no sequence dependent set-up times.
 
-\section{Mathematical formulation}
-For any given \JSP, which consists of $n$ jobs for $m$ machines, then each job $J_j$ has an indivisible operation time (or cost) on machine $M_a$, $p_{ja}$, which is assumed to be integral and finite. 
+For any given \JSP, which consists of $n$ jobs for $m$ machines, then each job 
+$J_j$ has an indivisible operation time (or cost) on machine $M_a$, $p_{ja}$, 
+which is assumed to be integral and finite. 
 Starting time of job $J_j$ on machine $M_a$ is denoted $x_s(j,a)$ and its 
 completion or end time is denoted $x_e(j,a)$ where, 
 \begin{equation}  x_e(j,a):=x_s(j,a)+p_{ja} \end{equation} 
@@ -83,7 +83,10 @@ not a variable directly needed to construct a schedule for \JSP, it is a key
 attribute in order to measure the quality of the schedule. 
 
 \section{Construction heuristics}\label{sec:CH}
-Construction heuristics are designed in such a way that it limits the search space in a logical manner, respecting not to exclude the optimum. Here, the construction heuristic is to schedule the dispatches as closely together as possible, i.e., minimise the schedule's flow. 
+Construction heuristics are designed in such a way that it limits the search 
+space in a logical manner, respecting not to exclude the optimum. Here, the 
+construction heuristic is to schedule the dispatches as closely together as 
+possible, i.e., minimise the schedule's idle times. 
 More specifically, once an operation $(j,a)$ has been chosen from the job-list, 
 $\mathcal{L}$, by some dispatching rule, it can placed immediately after (but 
 not prior) $x_e(j,\vsigma_j(a-1))$ on machine $M_a$ due to constraint 
@@ -115,8 +118,6 @@ implementing the pseudo code in \cref{pseudo:constructJSP}, however, only
 $97\%$ of the instances when choosing the smallest slot.} and henceforth will 
 be used throughout the dissertation.
 
-\input{pseudocode/constructJSP.tex}
-
 Note that the choice of slot is an intrinsic heuristic within the construction heuristic.
 Construction heuristics are designed in such a manner that they limit the 
 search space. Preferably without excluding the true optimum. The focus of this 
@@ -128,6 +129,21 @@ between which slot from $\tilde{S}_{ja}$ is the most effective. Instead,
 hopefully, the learning algorithm will be able to spot these problematic 
 situations, should they arise, by inspecting the schedule's features and 
 translate that into the jobs' priorities.
+
+To summarise, in order to create a schedule for \JSP, a construction heuristic 
+is chosen with some DR to determine the priority of the jobs on the job-list, 
+$\mathcal{L}$. 
+\Cref{pseudo:constructJSP} outlines the pseudo code for the 
+dispatching process of a \JSP\ problem instance.
+
+\input{pseudocode/constructJSP.tex}
+
+Henceforth, a \emph{sequence} will refer to the sequential ordering of the 
+dispatches of tasks to machines, i.e., $(j,a)$; the collective set of allocated 
+tasks to machines, which is interpreted by its sequence, is referred to as a 
+\emph{schedule}; a \emph{scheduling policy} $\pi$ will pertain to the manner in 
+which the sequence is manufactured for an (near) optimal schedule: be it a SDR 
+such as SPT or via evolutionary search, etc. 
 
 \section{Example}\label{sec:jsp:example}
 There are many examples of \jsp\ for real-world application. 
@@ -159,14 +175,7 @@ different amount of time.
 Let's assume that their processing times and permutation ordering are given in 
 \cref{tbl:example}.
 
-\begin{figure}[b!]
-    \includegraphics[width=\textwidth]{alice-mad-tea-party}
-    \caption{The Mad Hatter's Tea Party, from Alice's Adventures in Wonderland 
-        by \citet{alice}. Illustration by John Tenniel 
-        (1820-1914).}\label{fig:teaparty}
-\end{figure}
-
-\begin{table}[h]\centering
+\begin{table}[t]\centering
 %j.rnd.4x5.train.csv => instance problem.1
 \caption{Example of $4\times5$ \JSP}\label{tbl:example}
 \begin{tabular}{lc|ccccc|ccccc} \toprule
@@ -191,6 +200,13 @@ Mad Hatter & \ref{guest:madhatter} & \textit{4} & \textit{3} & \textbf{1} & 5 &
 \end{tabular}
 \end{table}
 
+\begin{figure}[b!]\centering 
+    \includegraphics[width=0.9\textwidth]{alice-mad-tea-party}
+    \caption{The Mad Hatter's Tea Party, from Alice's Adventures in Wonderland 
+        by \citet{alice}. Illustration by John Tenniel 
+        (1820-1914).}\label{fig:teaparty}
+\end{figure}
+
 Unfortunately, Alice can't stay long. She must leave as soon as possible to 
 play croquet with the Red Queen, 
 and she mustn't be late for that very important date. Otherwise, it's off with 
@@ -199,7 +215,7 @@ table until everyone has finished their tasks.
 How should the guests go about their tea-party, in order for Alice to be 
 on-time?
 
-Now we know that this fits perfectly to a six-job and five-machine \jsp\ 
+Now we know that this fits perfectly to a four-job and five-machine \jsp\ 
 problem, where our guests are the jobs and the tasks are the machines and our 
 objective is to minimize the makespan, i.e., the release time for Alice. 
 Let's assume we've come to the party, after 10 operations have already been 
@@ -208,10 +224,11 @@ job sequence,
 \begin{eqnarray}
 	\vchi=\left[ J_4,J_2,J_3,J_3,J_1,J_1,J_1,J_1,J_1,J_4 \right]
 \end{eqnarray}
-hence the job-list is currently $\mathcal{L}^{(11)}=\{J_2,J_3,J_4\}$ (note that 
-\ref{guest:alice}) Alice is quite anxious to leave, and has already completed 
-everything) indicating the 3 potential jobs to be dispatched at step $k=11$ 
-(i.e. denoted in bold in \cref{tbl:example}).
+hence the job-list is currently $\mathcal{L}^{(11)}=\{J_2,J_3,J_4\}$  
+indicating the 3 potential\footnote{Alice is quite anxious to leave, so she has 
+already completed everything, and therefore 
+\ref{guest:alice}$\notin\mathcal{L}^{(11)}$.} jobs to be dispatched at step 
+$k=11$ (i.e. denoted in bold in \cref{tbl:example}).
  
 \Cref{fig:example:midway} illustrates the temporal partial schedule of the 
 dispatching process as a Gantt-chart
@@ -234,6 +251,7 @@ dispatching process as a Gantt-chart
     \label{fig:example:midway}
 \end{figure}
 
+\clearpage
 If the job with the shortest processing time were to be scheduled next, i.e., 
 implementing the SPT heuristic, then $J_4$ would be dispatched. Similarly, for 
 the LPT (largest processing time) heuristic then $J_2$ would be dispatched. 
@@ -241,18 +259,6 @@ Other DRs use features not directly observable from looking at the current
 partial schedule (but easy to keep record of), for example by assigning jobs 
 with most or least total processing time remaining, i.e., MWR and LWR 
 heuristics, who would yield $J_2$ and $J_4$, respectively.
-
-To summarise, in order to create a schedule for \JSP, a construction heuristic 
-is chosen with some DR to determine the priority of the jobs on the job-list, 
-$\mathcal{L}$. \Cref{pseudo:constructJSP} outlines the pseudo code for the 
-dispatching process of a \JSP\ problem instance.
-
-Henceforth, a \emph{sequence} will refer to the sequential ordering of the 
-dispatches of tasks to machines, i.e., $(j,a)$; the collective set of allocated 
-tasks to machines, which is interpreted by its sequence, is referred to as a 
-\emph{schedule}; a \emph{scheduling policy} will pertain to the manner in which 
-the sequence is manufactured for an (near) optimal schedule: be it a SDR such 
-as SPT or via evolutionary search, etc. 
 
 \section{Single-based priority dispatching rules}\label{sec:SDR}
 \emph{Dispatching rules} (DR) are of a construction heuristics, where one 
@@ -389,37 +395,46 @@ A recent editorial of the state-of-the-art approaches in advanced dispatching ru
 implying that there has not been much automation in the process of discovering new dispatching rules, which is the ultimate goal of this dissertation, i.e., automate creating optimisation heuristics for scheduling. 
 
 With meta heuristics one can use existing DRs and use for example 
-\emph{portfolio-based algorithm selection} \citep{Rice76,Gomes01}, either based 
+{portfolio-based algorithm selection} \citep{Rice76,Gomes01}, either based 
 on a single instance or class of instances \citep{Xu07} to determine which DR 
 to choose from. 
-Instead of optimising which algorithm to use under what data distributions, such as the case of portfolio algorithms, the approach taken in this dissertation is more similar to that of \emph{meta learning} \citep{Vilalta02} which is the study of how learning algorithms can be improved, i.e., exploiting their strengths and remedy their failings, in order for a better algorithm design. Thus creating an adaptable learning algorithm that dynamically finds the appropriate dispatching rule  to the data distribution at hand. 
-
-\citet{Kalyanakrishnan11} point out that meta learning can be very fruitful in reinforcement learning, and in their experiments they discovered some key discriminants between competing algorithms for their particular problem instances, which provided them with a hybrid algorithm which combines the strengths of the algorithms.
-
-\citet{Nguyen13} proposed a novel \emph{iterative dispatching rules} for \JSP\ 
+Instead of optimising which algorithm to use under what data distributions, 
+such as the case of portfolio algorithms, the approach taken in this 
+dissertation is more similar to that of \emph{meta learning} \citep{Vilalta02} 
+which is the study of how learning algorithms can be improved, i.e., exploiting 
+their strengths and remedy their failings, in order for a better algorithm 
+design. Thus creating an adaptable learning algorithm that dynamically finds 
+the appropriate dispatching rule  to the data distribution at hand. 
+\citet{Kalyanakrishnan11} point out that meta learning can be very fruitful in 
+reinforcement learning, and in their experiments they discovered some key 
+discriminants between competing algorithms for their particular problem 
+instances, which provided them with a hybrid algorithm which combines the 
+strengths of the algorithms.
+\citet{Nguyen13} proposed a novel {iterative dispatching rules} for \JSP\ 
 which learns from completed schedules in order to iteratively improve new ones. 
 At each dispatching step, the method can utilise the current feature space to 
 `correctify' some possible `bad' dispatch made previously (sort of reverse 
-lookahead).
-Their method is straightforward, and thus easy to implement and more importantly, computationally inexpensive, although \citeauthor{Nguyen13} stress that there still remains room for improvement. 
-
-\citet{Korytkowski13} implemented \emph{ant colony optimisation} to select the 
-best DR from a selection of nine DRs for \JSP\ and their experiments showed 
+lookahead). Their method is straightforward, and thus easy to implement and 
+more importantly, computationally inexpensive, although \citeauthor{Nguyen13} 
+stress that there still remains room for improvement. 
+\citet{Korytkowski13} implemented {ant colony optimisation} to select the 
+best DR from a selection of 9 DRs for \JSP\ and their experiments showed 
 that the choice of DR do affect the results and that for all performance 
 measures considered it was better to have all of the DRs to choose from rather 
 than just a single DR at a time. 
-Similarly, \citet{Lu13} investigate eleven SDRs for \JSP\ to create a pool of 
-thirty three CDRs that strongly outperformed the ones they were based on, which 
+Similarly, \citet{Lu13} investigate 11 SDRs for \JSP\ to create a pool of 
+33 CDRs that strongly outperformed the ones they were based on, which 
 is intuitive since where one SDR might be failing, another could be excelling, 
 hence combining them should yield a better CDR. \citeauthor{Lu13} create their 
-CDRs with \emph{multi-contextual functions} based either on machine idle time 
-or job waiting time, so one can say that the CDRs are a combination of those 
+CDRs with {multi-contextual functions} based either on machine idle time 
+or job waiting time (similar to \phiwait\ and \phimacSlack\ in 
+\cref{tbl:features}), creating CDRs thate are a combination of those 
 two key features of the schedule and then the basic DRs. However, there are no 
 combinations of the basic DR explored, only machine idle time and job waiting 
 time.  
-\citet{Yu13} used priority rules to combine twelve existing DRs from the 
-literature, in their approach they had forty eight priority rules combinations, 
-yielding forty eight different models to implement and test. This is a fairly 
+\citet{Yu13} used priority rules to combine 12 existing DRs from the 
+literature, in their approach they had 48 priority rules combinations, 
+yielding 48 different models to implement and test. This is a fairly 
 ad-hoc solution and there is no guarantee the optimal combination of DRs is 
 found. 
 
