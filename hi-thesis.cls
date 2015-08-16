@@ -386,7 +386,7 @@
     
     \setcounter{page}{1}
     \pagenumbering{arabic}
-    \normalsize    
+    \normalsize
     
     \thispagestyle{empty}
     \topskip0pt
@@ -398,26 +398,21 @@
         \lfoot{Draft -- \today}
     }{}
     \newpage
-    \thispagestyle{empty} % empty page before actual chapters
+    \thispagestyle{plain} % empty page before actual chapters
 }
 
 \newcommand*\papers{%
-        
-    \cleardoublepage
     \setcounter{chapter}{0}
     \renewcommand\appendixname{Paper}
     \renewcommand\chaptername{Paper}
     \renewcommand{\thechapter}{\Roman{chapter}}
-
+    \cleardoublepage
     \thispagestyle{empty}
-    \newpage
     \topskip0pt
     \vspace*{\fill}
     \centerline{\Huge \textcolor{themecolor}{\sc{papers}}}
     \addcontentsline{toc}{chapter}{Papers}    
     \vspace{\fill}
-    \newpage
-    \thispagestyle{empty} % empty page before actual papers
     \pagestyle{plain}
     \include{endmatter/papers} 
 }
