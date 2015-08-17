@@ -147,8 +147,9 @@ such as SPT or via evolutionary search, etc.
 
 \section{Example}\label{sec:jsp:example}
 There are many examples of \jsp\ for real-world application. 
-However, for demonstration purposes, let's assume we are invited to the Mad 
-Hatter's Tea Party in Wonderland (cf. \cref{fig:teaparty}). 
+However, for demonstration purposes, let's examine a problem from the 18th 
+century. Assume we are invited to the Mad Hatter's Tea Party in Wonderland (cf. 
+\cref{fig:teaparty}). 
 There are four guests attending, namely
 \begin{enumerate*}[label={$J_\arabic*$)}, ref={{$J_\arabic*$}}, 
     itemjoin*={{, and our host }}]
@@ -168,11 +169,12 @@ to perform, they all have to
     a song to the group
 \end{enumerate*}
 Our guests are very particular creatures, and would like to do these task in a 
-very specific order, e.g., \ref{guest:marchhare} March Hare insists on doing 
-them in alphabetical order. 
+very specific order, e.g., \ref{guest:marchhare}--March Hare insists on doing 
+them in alphabetical order. And each would rather wait than breaking their 
+habit.
 Moreover, they tend to be very absent-minded so each task takes them a 
 different amount of time. 
-Let's assume that their processing times and permutation ordering are given in 
+Let's assume that their processing times and ordering are given in 
 \cref{tbl:example}.
 
 \begin{table}[t]\centering
@@ -201,7 +203,7 @@ Mad Hatter & \ref{guest:madhatter} & \textit{4} & \textit{3} & \textbf{1} & 5 &
 \end{table}
 
 \begin{figure}[b!]\centering 
-    \includegraphics[width=0.9\textwidth]{alice-mad-tea-party}
+    \includegraphics[width=0.8\textwidth]{alice-mad-tea-party}
     \caption{The Mad Hatter's Tea Party, from Alice's Adventures in Wonderland 
         by \citet{alice}. Illustration by John Tenniel 
         (1820-1914).}\label{fig:teaparty}
@@ -215,8 +217,10 @@ table until everyone has finished their tasks.
 How should the guests go about their tea-party, in order for Alice to be 
 on-time?
 
-Now we know that this fits perfectly to a four-job and five-machine \jsp\ 
-problem, where our guests are the jobs and the tasks are the machines and our 
+The problem faced by Alice and her new friends is in what order should they 
+rotate their tasks between themselves so that they all finish as soon as 
+possible. This is a typical four-job and five-machine \jsp\ problem, where our 
+guests are the jobs and the tasks are the machines and our 
 objective is to minimize the makespan, i.e., the release time for Alice. 
 Let's assume we've come to the party, after 10 operations have already been 
 made (i.e. the italic entries in \cref{tbl:example}), by using the following 
