@@ -11,8 +11,14 @@
 \FirstSentence{P}{roblem structure and heuristic effectiveness} are closely intertwined. When investigating the relation between the two, one can research what \citet{Corne10} call \emph{footprints} in instance space, which is an indicator how an algorithm generalises over a given instance space. This sort of investigation has also been conducted by \citet{Pfahringer00} under the alias \emph{landmarking}. 
 % quote Corne10: ``such a footprint indicates how an algorithm's comparative performance generalises in instance space''
 % quote Katie2009: ``Landmarking tries to directly characterise a domain by relating the performance to some learners -- the landmarkers -- to the performance of some other algorithm.''
-From experiments performed by \citeauthor{Corne10}, it is evident that one-algorithm-for-all problem instances is not ideal, in accordance with no free lunch theorem \citep{Wolpert97nofree}. An algorithm may be favoured for its best overall performance, however it is rarely the best algorithm available over various subspaces of the instance space.
+From experiments performed by \citeauthor{Corne10}, it is evident that 
+one-algorithm-for-all problem instances is not ideal, in accordance with no 
+free lunch theorem \citep{Wolpert97nofree}. An algorithm may be favoured for 
+its best overall performance, however, it is rarely the best algorithm 
+available over various subspaces of the instance space.
 Therefore, when comparing different algorithms one needs to explore how they perform w.r.t. the instance space, i.e., their footprint. That is to say, one can look at it as finding which footprints correspond to a subset of the instance space that works \emph{well} for a given algorithm, and similarly finding which footprints correspond to a subset of the instance space that works \emph{poorly} for a given algorithm. 
+
+\clearpage
 
 In the context of \jsp\ this corresponds to finding \emph{good} (makespan close to its optimum)  and \emph{bad} (makespan far off its optimum) schedules. Note, good and bad schedules are interchangeably referred to as \emph{easy} and \emph{hard} schedules (pertaining to the manner they are achieved), respectively. 
 
@@ -22,7 +28,12 @@ On the other hand, \citeauthor{SmithMilesLion5} use a completely automated appro
 
 Going back to the \jsp\ paradigm, then the interaction between processing time distribution and its permutation is extremely important, because it introduces hidden properties in the data structure making it \emph{easy} or \emph{hard} to schedule for the given algorithm. These underlying characteristics, i.e., features, define its data structure. A more sophisticated way of discretising the instance space is grouping together problem instances that show the same kind of feature behaviour, especially given the fact the learning models in \cref{ch:prefmodels} will be heavily based on feature pairs. Thereby making it possible to infer what sort of feature behaviour distinguishes  between \emph{good} and \emph{bad} schedules. 
 
-In \citet{InRu12}, a single problem generator was used to create  $N=1,500$ synthetic $6\times6$ \jsp\ problem instances, where $\vec{p}\sim\mathcal{U}(1,200)$ and $\vsigma$ was a random permutation. The experimental study showed that MWR works either well or poorly on a subset of the instances, in fact 18\% and 16\% of the instances were classified as \emph{easy} and \emph{hard} for MWR, respectively. 
+In \cref{InRu12}, a single problem generator was used to create  $N=1,500$ 
+synthetic $6\times6$ \jsp\ problem instances, where 
+$\vec{p}\sim\mathcal{U}(1,200)$ and $\vsigma$ was a random permutation. The 
+experimental study showed that MWR works either well or poorly on a subset of 
+the instances, in fact 18\% and 16\% of the instances were classified as 
+\emph{easy} and \emph{hard} for MWR, respectively. 
 Since the problem instances were na\"{i}vely generated, not to mention given 
 the high variance of the data distribution, it is intuitive that there are some 
 inherent structural qualities that could explain this difference in 
@@ -50,7 +61,7 @@ corresponding to \emph{good} and \emph{bad} schedules in \jsp. To summarise
 	\item What are ``similar'' schedules
 	\item Do similar features yield contradictory outcomes
 	\item Are extra features needed
-	And \item what can be learned from feature behaviour
+	\item what can be learned from feature behaviour
 \end{enumerate*}
 
 Instead of searching through a large set of algorithms  and determining which algorithm is the most suitable for a given subset of the instance space, i.e., creating an algorithm portfolio, as is generally the focus in the current literature \citep{SmithMilesLion3,SmithMilesLion5,Corne10}, the focus of the experimental study in \cref{sec:diff:jrnd,sec:diff:jrndn,sec:diff:frnd,sec:diff:frndn,sec:diff:fjc,sec:diff:fmc,sec:diff:fmxc} 
@@ -73,7 +84,8 @@ Furthermore, in order to find defining characteristics for easy or hard problems
 
 Note, when inspecting any statistical difference between data distribution of the features on a step by step basis, the features at step $k+1$ are of course dependant on all previous $k$ steps. This results in repetitive statistical testing, therefore a Bonferroni adjustment is used to counteract the multiple comparisons, i.e., each stepwise comparison has the significant level $\alpha_k=\frac{\alpha}{\ell}$, and thus maintaining the $\sum_{k=1}^{\ell}\alpha_k=\alpha$ significance level.
 
-\section{Defining `easy' versus `hard' schedules}\label{sec:diff:easyhard}
+\section{Defining \emph{easy} versus \emph{hard} schedules} 
+\label{sec:diff:easyhard}
 It's relatively ad-hoc how to define what makes a schedule difficult. Intuitively, it's logical to use the schedule's objective to define it directly, i.e., inspecting \fullnamerho. Moreover, since the SDRs from \cref{sec:SDR} will be used throughout as a benchmark for subsequent models, the quantiles for \namerho, using the SDRs on their training set will be used to differentiate between easy and hard scheduling problems. In particular, the classification is defined as follows, 
 \begin{description}
 	\item[Easy] schedules belong to the first quantile, i.e., \hfill \\
@@ -85,7 +97,12 @@ It's relatively ad-hoc how to define what makes a schedule difficult. Intuitivel
 		\mathcal{H}(a):=\{\vec{x}\;|\;\rho=Y(a,\vec{x})>\rho^{\text{3rd. Qu.}}\}
 	\end{equation} 
 \end{description}
-where $\vec{x}\in\mathcal{P}_{\text{train}}$ for a given dispatching rule $a\in\mathcal{A}:=\{\text{SPT,~LPT,~LWR,~MWR}\}$.
+where $\vec{x}\in\mathcal{P}_{\text{train}}$ for a given $a\in\mathcal{A}$, 
+which is currently a set of \sdr s,
+\begin{equation}
+\mathcal{A}:=\{\text{SPT,~LPT,~LWR,~MWR}\}.
+\end{equation} 
+
 
 \Cref{tbl:easyhard:quantile} reports the first and third quantiles for each problem space, i.e., the cut-off values that determine the SDRs difficulty, whose division, defined as percentage of problem instances, i.e., 
 \begin{equation}\label{eq:easyhard:cnt}
@@ -110,7 +127,10 @@ For the corresponding $10\times10$ training set (cf. \cref{tbl:easy:cnt:10x10,tb
 However, by going to a higher dimension, the performance edge between SDRs becomes more apparent, e.g., in \JSP\ when there was a slight possibility of LWR being simultaneously easy as other SDRs ($5\%<$ chance), it becomes almost impossible for $10\times10$. 
 Making LWR a clear underdog. 
 Despite that, for \FSP\ the tables turn; now LWR has the performance edge. 
-For instance, for \frndn{6}{5} the second  best option is to apply LPT (13.22\%), however there is a quite high overlap with LWR (11.74\%), and since LWR is easier significantly more often (85.18\%), the choice of SDR is quite obvious. 
+For instance, for \frndn{6}{5} the second  best option is to apply LPT 
+(13.22\%), however, there is a quite high overlap with LWR (11.74\%), and since 
+LWR is easier significantly more often (85.18\%), the choice of SDR is quite 
+obvious. 
 Although, it goes to show that there is the possibility of improving LWR by sometimes applying LPT-based insight; by seeing what sets apart the intersection of their easy training sets. 
 
 Similarly for every $10\times10$ \JSP\ (cf. \cref{tbl:easy:cnt:10x10}), almost all easy LPT schedules are also easy  for MWR ($<1\%$ difference), as is to be expected as MWR is the more sophisticated counterpart for LPT (like LWR is for SPT). 
@@ -153,13 +173,35 @@ However, for \FSP, the case is the exact opposite. Under those circumstances it'
 \section{Optimality of simple priority dispatching rules}\label{sec:diff:opt:sdr}
 The probability of optimality of the aforementioned SDRs from \cref{sec:SDR}, yet still maintaining our optimal trajectory, i.e., the probability of a job chosen by a SDR being able to yield an optimal makespan on a step by step basis, is depicted  in   \cref{fig:diff:opt:SDR}. Moreover, the dashed line represents the benchmark of randomly guessing the optimum (cf. \cref{fig:diff:opt}).
 
-Now, let's bare in mind \namerho, of applying SDRs throughout the dispatching process (cf. box-plots of which in \cref{fig:SDR:boxplot}), then there is a some correspondence between high probability of stepwise optimality and low $\rho$. Alas, this isn't always the case, for \jrnd{10}{10} SPT always outperforms LPT w.r.t. stepwise optimality, however this does not transcend to SPT having a lower $\rho$ value than LPT. Hence, it's not enough to just learn optimal behaviour, one needs to investigate what happens once we encounter suboptimal state spaces.
+Now, let's bare in mind \namerho, of applying SDRs throughout the dispatching 
+process (cf. box-plots of which in \cref{fig:SDR:boxplot}), then there is a 
+some correspondence between high probability of stepwise optimality and low 
+$\rho$. Alas, this isn't always the case, for \jrnd{10}{10} SPT always 
+outperforms LPT w.r.t. stepwise optimality, however, this does not transcend to 
+SPT having a lower $\rho$ value than LPT. Hence, it's not enough to just learn 
+optimal behaviour, one needs to investigate what happens once we encounter 
+suboptimal state spaces.
 
 \section{Simple blended dispatching rule}\label{sec:diff:opt:bdr}
 As stated before, the goal of this \lcnamecref{ch:problemstructure} is to utilise feature behaviour to motivate new, and \emph{hopefully} better, dispatching rules. 
 A na\"ive approach would be creating a simple blended dispatching rule which would be for instance switch between two SDRs at a predetermined time point. Hence, going back to \cref{fig:diff:opt:SDR} a presumably good BDR for \jrnd{10}{10}  would be starting with SPT and then switching over to MWR at around time step $k=40$, where the SDRs change places in outperforming one another. A box-plot for \namerho, for all $10\times10$ problem spaces is depicted in \cref{fig:diff:boxplot:BDR}. This little manipulation between SDRs does outperform SPT immensely, yet doesn't manage to gain the performance edge of MWR, save for \frnd{10}{10}. This gives us insight that for \jsp, the attribute based on MWR is quite fruitful for good dispatches, whereas the same cannot be said about SPT -- a more sophisticated BDR is needed to improve upon MWR. 
 
-A reason for this lack of performance of our proposed BDR is perhaps that by starting out with SPT in the beginning, it sets up the schedules in such a way that it's quite greedy and only takes into consideration jobs with shortest immediate processing times. Now, even though it is possible to find optimal schedules from this scenario, as \cref{fig:diff:opt:SDR} shows, the inherent structure is already taking place, and might make it hard to come across optimal moves by simple methods. Therefore it's by no means guaranteed that by simply swapping over to MWR will handle the situation that applying SPT has already created. \Cref{fig:diff:boxplot:BDR} does however show, that by applying MWR instead of SPT in the latter stages, does help the schedule to be more compact w.r.t. SPT. However, in the case of \jrnd{10}{10} and \jrndn{10}{10} the fact remains that the schedules have diverged too far from what MWR would have been able to achieve on its own. Preferably the blended dispatching rule should use  best of both worlds, and outperform all of its inherited DRs, otherwise it goes without saying, one would simply still use the original DR that achieved the best results.
+A reason for this lack of performance of our proposed BDR is perhaps that by 
+starting out with SPT in the beginning, it sets up the schedules in such a way 
+that it's quite greedy and only takes into consideration jobs with shortest 
+immediate processing times. Now, even though it is possible to find optimal 
+schedules from this scenario, as \cref{fig:diff:opt:SDR} shows, the inherent 
+structure is already taking place, and might make it hard to come across 
+optimal moves by simple methods. Therefore it's by no means guaranteed that by 
+simply swapping over to MWR will handle the situation that applying SPT has 
+already created. \Cref{fig:diff:boxplot:BDR} does however, show, that by 
+applying MWR instead of SPT in the latter stages, does help the schedule to be 
+more compact w.r.t. SPT. However, in the case of \jrnd{10}{10} and 
+\jrndn{10}{10} the fact remains that the schedules have diverged too far from 
+what MWR would have been able to achieve on its own. Preferably the blended 
+dispatching rule should use  best of both worlds, and outperform all of its 
+inherited DRs, otherwise it goes without saying, one would simply still use the 
+original DR that achieved the best results.
 
 \begin{figure}
 	\centering
@@ -173,7 +215,7 @@ The SDRs we've inspected so-far are based on two features from
 \cref{tbl:features}, namely
 \begin{enumerate*}
 	\item \phiproc\ for SPT and LPT
-	\item \phiwrmJob\ for LWR and MWR 
+	\item \phijobWrm\ for LWR and MWR 
 \end{enumerate*}
 By choosing the lowest value for the first SDR, and highest value for the 
 latter SDR, i.e., the extremal values for those given features. Let's apply the 
@@ -206,7 +248,14 @@ By using schedules obtained by applying SDRs we have the ability to get some ins
 
 From the experimental study it is apparent that features have different %impact 
 correlation with the resulting schedule depending in what stage it is in the scheduling process, implying that their influence varies over the dispatching sequencing. Moreover, features constant throughout the scheduling process are not correlated with the end-result.
-There are some common features for both difficulties considered which define \jsp\ on a whole. However the significant features are quite different across the two difficulties, implying there is a clear difference in their data structure. The amount of significant features were considerably more for easy problems, indicating their key elements had been found. However, the features distinguishing hard problems were scarce. Most likely due to their more complex data structure their key features are of a more composite nature. As a result, new `global' features were introduced. 
+There are some common features for both difficulties considered which define 
+\jsp\ on a whole. However, the significant features are quite different across 
+the two difficulties, implying there is a clear difference in their data 
+structure. The amount of significant features were considerably more for easy 
+problems, indicating their key elements had been found. However, the features 
+distinguishing hard problems were scarce. Most likely due to their more complex 
+data structure their key features are of a more composite nature. As a result, 
+new `global' features were introduced. 
 
 It is possible for a \JSP\ schedule to have more than one sequential 
 dispatching representation. It is especially w.r.t. the initial dispatches. 
@@ -223,7 +272,10 @@ Since feature selection is of paramount importance in order for algorithms to be
 
 The feature attributes need to be based on statistical or theoretical grounds. 
 Scrutiny in understanding the nature of problem instances therefore becomes of paramount importance in feature engineering for learning, as it yields feedback into what features are important to devote more attention to, i.e., features that result in a failing algorithm. 
-For instance, in \cref{tbl:JSP:feat:same} the slack features have the same distribution in the initial stages of the scheduling process, however there is a clear point of divergence which needs to be investigate why the sudden change? 
+For instance, in \cref{tbl:JSP:feat:same} the slack features have the same 
+distribution in the initial stages of the scheduling process, however, there is 
+a clear point of divergence which needs to be investigate why the sudden 
+change? 
 In general, this sort of investigation can undoubtedly be used in better algorithm design which is more equipped to deal with varying problem instances and tailor to individual problem instance's needs, i.e., a footprint-oriented algorithm. 
 
 Although this methodology was only implemented on a set of simple single-priority dispatching rules, the methodology is easily adaptable for more complex algorithms, such as the learned preference models in \cref{sec:pref:problemstructure}. The main objective of this work is to illustrate the interaction of a specific algorithm on a given problem structure and its properties. 

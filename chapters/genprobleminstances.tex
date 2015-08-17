@@ -19,7 +19,18 @@ Two different processing times distributions were explored, namely,
 The machine ordering is a random permutation of all of the machines in the \jsp. 
 For each \JSP\ class $N_{\text{train}}$  and $N_{\text{test}}$ instances were generated for training and testing, respectively. Values for $N$ are given in \cref{tbl:data}. 
 
-Although in the case of \jrnd{n}{m}\ this may be an excessively large range for the uniform distribution, it is however chosen in accordance with the literature \citep{Demirkol98} for creating synthesised $Jm||C_{\max}$ problem instances. In addition, w.r.t. the machine ordering, one could look into a subset of \JSP\ where the machines are partitioned into two (or more) sets, where all jobs must be processed on the machines from the first set (in some random order) before being processed on any machine in the second set, commonly denoted as $Jm|2\textrm{sets}|C_{\max}$ problems, but as discussed in \cite{orlib_swv} this family of \JSP\ is considered ``hard'' (w.r.t. relative error from best known solution) in comparison with the ``easy'' or ``unchallenging'' family with the general $Jm||C_{\max}$ setup. % ath. Holtsclaw96 vitnar í orlib_swv um easy-hard pælinguna
+Although in the case of \jrnd{n}{m}\ this may be an excessively large range for 
+the uniform distribution, it is however, chosen in accordance with the 
+literature \citep{Demirkol98} for creating synthesised $Jm||C_{\max}$ problem 
+instances. In addition, w.r.t. the machine ordering, one could look into a 
+subset of \JSP\ where the machines are partitioned into two (or more) sets, 
+where all jobs must be processed on the machines from the first set (in some 
+random order) before being processed on any machine in the second set, commonly 
+denoted as $Jm|2\textrm{sets}|C_{\max}$ problems, but as discussed in 
+\cite{orlib_swv} this family of \JSP\ is considered ``hard'' (w.r.t. relative 
+error from best known solution) in comparison with the ``easy'' or 
+``unchallenging'' family with the general $Jm||C_{\max}$ setup. % ath. 
+%Holtsclaw96 vitnar í orlib_swv um easy-hard pælinguna
 This is in stark contrast to \citet{Whitley} whose findings showed that structured $Fm||C_{\max}$ were much easier to solve than completely random structures. 
 Intuitively, an inherent structure in machine ordering should be exploitable for a better performance.  However, for the sake of generality, a random structure is preferred as they correspond to difficult problem instances in the case of \JSP. Whereas, structured problem subclasses will be explored for \FSP.  
 
@@ -48,9 +59,11 @@ In the \JSP\ context \frnd{n}{m}\ and \frndn{n}{m}\ are analogous to \jrnd{n}{m}
 Secondly, there are three structured problem classes of \FSP\  which are modelled after real-world \emph{characteristics} in \fsp\ manufacturing, namely, 
 \begin{description}
 	\item[\Fjc] \fjc{n}{m} \hfill \\
-	job processing times are dependent on job index, however independent of machine index. Job-correlation can be of degree $0\leq\alpha\leq1$;
+	job processing times are dependent on job index, however, independent of 
+	machine index. Job-correlation can be of degree $0\leq\alpha\leq1$;
 	\item[\Fmc]  \fmc{n}{m} \hfill \\
-	job processing times are dependent on machine index, however independent of job index. Machine-correlation can be of degree $0\leq\alpha\leq1$; 
+	job processing times are dependent on machine index, however, independent of 
+	job index. Machine-correlation can be of degree $0\leq\alpha\leq1$; 
 	\item[\Fmxc]  \fmxc{n}{m} \hfill \\
 	job processing times are dependent on machine and job indices. Mixed-correlation can be of a degree $0\leq\alpha\leq1$.
 \end{description} 
@@ -102,45 +115,80 @@ For each \FSP\  class $N_{\text{train}}$  and $N_{\text{test}}$ instances were g
 
 
 \section{Benchmark problem suite}\label{sec:data:orlib}
-A total of 62 and 31 benchmark problems for \JSP\ and \FSP, respectively, were obtained from the Operations Research Library (OR-Library) maintained by \citet{ORlibrary} and summarised in \cref{tbl:data:orlib}. 
-Given the high problem dimensions of some problems, the optimum is not known, hence in those instances \cref{eq:rho} will be reporting  deviation from the latest best known solution (BKS) from the literature. For \JSP, they are reported by \citet{jsspBESTsofar} save for \Problem{swv} which can be found in % \citet{CITATION_NEEDED}, and for \FSP\  consult \citet{CITATION_NEEDED}.
-.\todo[inline]{Ekki fundið BKS fyrir jsp swv and fsp OR-LIBRARY}
+A total of 82 and 31 benchmark problems for \JSP\ and \FSP, respectively, were 
+obtained from the Operations Research Library (OR-Library) maintained by 
+\citet{ORlibrary} and summarised in \cref{tbl:data:orlib}. 
+Given the high problem dimensions of some problems, the optimum is not known, 
+hence in those instances \cref{eq:rho} will be reporting  deviation from the 
+latest best known solution (BKS) from the literature, reported by 
+\citet{jsspBESTsofar} save for \Problem{swv} which can be found 
+in \citet{CITATION_NEEDED}, and for \FSP\  consult \citet{CITATION_NEEDED}.
+\todo{Ekki fundið BKS fyrir jsp swv and fsp OR-LIBRARY}
 
-\citet{orlib_ft} had one of the more notorious benchmark problems for \JSP, and computationally expensive, however, now these instances have been solved to optimality. \todo[inline]{Check with gurobi if that's accurate, and figure out which ones haven't yet been solved. Then report BKS.}
+\subsection*{\Jsp\ OR-Library}
+\citet{orlib_ft} had one of the more notorious benchmark problems for \JSP, and 
+computationally expensive, however, now these instances have been solved to 
+optimality. 
+Similar to the synthetic \JSP\ problem spaces discussed earlier, 
+\citet{orlib_abz} introduce five \JSP\ instances with a random permutation of 
+machine ordering and processing times following uniform distribution,  
+$\vec{p}\sim\mathcal{U}(50,100)$, for  dimensions $10\times10$ and 
+$20\times15$. Likewise, \citet{orlib_yn} consists of four $20\times20$ random 
+problem instances, where $\vec{p}\sim\mathcal{U}(10,50)$.
+\citet{orlib_swv} introduce a set of \JSP\ problems where the job processing 
+times following a uniform distribution, $\vec{p}\sim\mathcal{U}(1,100)$. There 
+are a total of five problems in four dimension classes 
+\begin{enumerate*}
+  \item $20\times10$ (\texttt{swv01-swv05})
+  \item $20\times15$ (\texttt{swv06-swv10})
+  \item $50\times10$ (\texttt{swv11-swv15})
+  \item $50\times10$ (\texttt{swv16-swv20})
+\end{enumerate*}
+Where the first three classes are considered `{hard}' and the last one as 
+`{easy}'. Easy problems are ones corresponding to random machine ordering, 
+whereas hard problems are partitioned in such a way the jobs must be processed 
+on the first half of the machines before starting on the second half, i.e., 
+$Jm|\text{2sets}|C_{\max}$.
+\citet{orlib_orb} introduced ten problem instances of $10\times10$ \JSP\ where 
+generated such that the machine ordering was chosen by random users in order to 
+make them `difficult.' Moreover, the processing times were drawn at random, 
+and the distribution that had the greater gap between its optimal value and 
+standard lower bound was chosen. 
 
-\todo[inline]{\citet{orlib_la} info -- la01--la40 }
+\subsection*{\Fsp\ OR-Library}
+For the \FSP\ benchmarks, \citet{orlib_hel} introduces two deterministic 
+instances based on `many-machine version of book-printing,' where processing 
+times for $n\in\{20,100\}$ jobs and $m=10$ machines are relatively short, 
+i.e., $p_{ja}\in\{0,..,9\}$. \citet{orlib_car} however, comprises of eight 
+problems (of various dimension) where there is high variance in processing 
+times, presumably $\vec{p}\sim\mathcal{U}(1,1000)$. 
+\citet{orlib_rec} argue that completely random problem instances are unlikely 
+to occur in practice, however, only the random instances used are reported in 
+the OR-Library;\footnote{Only odd-numbered instances in \texttt{rec01-rec42}
+  are given, since the even-numbered instances are obtained from the previous 
+  instance by just reversing the processing order of each job; the optimal 
+  value of each odd-numbered instance and its even-numbered counterpart is the 
+  same.} 
+for a total of 42 problem instances with processing times 
+following a uniform distribution, $\vec{p}\sim\mathcal{U}(1,100)$, of 
+dimensions varying from $20\times5$ to $75\times20$. 
 
-Similar to the synthetic \JSP\ problem spaces discussed earlier, \citet{orlib_abz} introduce five \JSP\ instances with a random permutation of machine ordering and processing times following uniform distribution,  $\vec{p}\sim\mathcal{U}(50,100)$, for  dimensions $10\times10$ and $20\times15$. Likewise, \citet{orlib_yn} consists of four $20\times20$ random problem instances, where $\vec{p}\sim\mathcal{U}(10,50)$.
-\citet{orlib_swv} introduce a set of \JSP\ problems where the job processing times following a uniform distribution, $\vec{p}\sim\mathcal{U}(1,100)$. There are a total of  five problems in four dimension classes, namely, $20\times10$ (swv01--swv05), $20\times15$ (swv06--swv10), $50\times10$ (swv11--swv15) and $50\times10$ (swv16--swv20), where the first three classes are considered ``{hard}'' and the last one as ``{easy}''. Easy problems are ones corresponding to random machine ordering, whereas hard problems are partitioned in such a way the jobs must be processed on the first half of the machines before starting on the second half, i.e., $Jm|\text{2sets}|C_{\max}$.
-
-\citet{orlib_orb} introduced 10 problem instances of $10\times10$ \JSP\ where generated such that the machine ordering was chosen by random users in order to make them ``difficult.'' Moreover, the processing times were drawn at random, and the distribution that had the greater gap between its optimal value and standard lower bound was chosen. 
-
-For the \FSP\  benchmarks, \citet{orlib_hel} introduces two deterministic instances based on ``many-machine version of book-printing,'' where processing times for $n\in\{20,100\}$ jobs and $m=10$ machines are relatively short, i.e., $p_{ja}\in\{0,..,9\}$. \citet{orlib_car} however comprises of eight problems (of various dimension) where there is high variance in processing times, presumably $\vec{p}\sim\mathcal{U}(1,1000)$. 
-
-\citet{orlib_rec} argue that completely random problem instances are unlikely to occur in practice, however, only the random instances used are reported in the OR-Library; for a total of 42 problem instances with processing times following a uniform distribution, $\vec{p}\sim\mathcal{U}(1,100)$, of dimensions varying from $20\times5$ to $75\times20$. 
-
-% (Only odd-numbered instances are given, since the even-numbered instances are obtained from the previous instance by just reversing the processing order of each job; the optimal value of each odd-numbered instance and its even-numbered counterpart is the same.)
-
-%\begin{savenotes}
-	
-	\begin{table}\centering
-		\caption[Benchmark problems from OR-Library used in experimental studies.]{Benchmark problems from OR-Library used in experimental studies. }\label{tbl:data:orlib}
-		\begin{tabular}{llrrll}\toprule
-			type & name          & size ($n\times m$) & $N_{\text{test}}$ & 
-			note              &                                                       
-			       \\ \midrule
-			\multirow{6}{*}{\rot{\JSP}}
-			     & \Problem{abz} & various            & 5                 & \citet{orlib_abz} & abz05--abz09 \footnote{Best known solutions reported in \citet{jsspBESTsofar}.}                                                                                                                                                                                                            \\
-			     & \Problem{ft}  & various            & 3                 & \citet{orlib_ft}  & ft06,ft10,ft20 \textsuperscript{*}                                                                                                                                                                                                                                                         \\
-			     & \Problem{la}  & various            & 40                & \citet{orlib_la}  & la01--la40 \textsuperscript{*}                                                                                                                                                                                                                                                             \\
-			     & \Problem{orb} & $10\times10$       & 10                & \citet{orlib_orb} & orb01--orb10 \textsuperscript{*}                                                                                                                                                                                                                                                           \\
-			     & \Problem{swv} & various            & 20                & \citet{orlib_swv} & swv01--swv20                                                                                                                                                                                                                                                                               \\
-			     & \Problem{yn}  & $20\times20$       & 4                 & \citet{orlib_yn}  & yn01--yn04  \textsuperscript{*}                                                                                                                                                                                                                                                            \\
-			\midrule
-			\multirow{3}{*}{\rot{\FSP}}
-			     & \Problem{car} & various            & 8                 & \citet{orlib_car} & car1--car8                                                                                                                                                                                                                                                                                 \\
-			     & \Problem{hel} & various            & 2                 & \citet{orlib_hel} & hel1,hel2                                                                                                                                                                                                                                                                                  \\
-			     & \Problem{rec} & various            & 21                & \citet{orlib_rec} & rec01-rec41 \footnote{Only odd-numbered instances are given, since the even-numbered instances are obtained from the previous instance by just reversing the processing order of each job; the optimal value of each odd-numbered instance and its even-numbered counterpart is the same.} \\ \bottomrule
-		\end{tabular}
-	\end{table}
-%\end{savenotes}
+\begin{table}\centering
+  \caption{Benchmark problems from OR-Library used in experimental studies.}
+  \label{tbl:data:orlib}
+  \begin{tabular}{llrrll}\toprule
+    type & name & size ($n\times m$) & $N_{\text{test}}$ & note & shorthand  \\
+    \midrule \multirow{6}{*}{\rot{\JSP}}
+    &\Problem{ft} & various &  3 &\citet{orlib_ft} & \texttt{ft06,ft10,ft20}\\
+    &\Problem{la} & various & 40 &\citet{orlib_la} & \texttt{la01-la40}     \\
+    &\Problem{abz}& various &  5 &\citet{orlib_abz}& \texttt{abz05-abz09}   \\
+    &\Problem{orb}& $10\times10$& 10 &\citet{orlib_orb}& \texttt{orb01-orb10}\\
+    &\Problem{swv}& various & 20 &\citet{orlib_swv}&\texttt{swv01-swv20}\\
+    & \Problem{yn} & $20\times20$& 4  &\citet{orlib_yn} & \texttt{yn01-yn04}\\
+    \midrule \multirow{3}{*}{\rot{\FSP}}
+    &\Problem{car}& various &  8 & \citet{orlib_car} & \texttt{car1-car8} \\
+    &\Problem{hel}& various &  2 & \citet{orlib_hel} & \texttt{hel1,hel2}  \\
+    &\Problem{rec}& various & 21 & \citet{orlib_rec} & \texttt{rec01-rec42}\\
+    \bottomrule
+  \end{tabular}
+\end{table}
