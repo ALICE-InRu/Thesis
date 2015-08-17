@@ -6,80 +6,83 @@ Figures and tables within this \lcnamecref{app:problemstructure} pertain to
 \cref{ch:problemstructure}. 
 \Cref{fig:diff:opt:unique,fig:diff:opt,fig:diff:opt:SDR,fig:diff:opt:minmax} 
 depict the mean over all the training data, which are quite noisy 
-functions.\footnote{\citet{InRu15b} depicts the mean as is, albeit only for 
-	$10\times10$ problem spaces.} Thus, for clarity purposes, they are fitted with 
-local polynomial regression, making the boundary points sometimes biased. 
+functions.\footnote{\Cref{InRu15b} depicts the mean as is, albeit only for 
+	$10\times10$ problem spaces.} 
+Thus, for clarity purposes, they are fitted with local polynomial regression, 
+making the boundary points sometimes biased. 
 However, \cref{fig:diff:case,fig:diff:opt:evol} depict the mean as is.
 
-\blankpage
-\input{tables/quartiles.EasyHard} 
-{\setlength{\tabcolsep}{3pt}
-	\input{tables/quartiles.6x5.EasyHard}
-	\input{tables/quartiles.10x10.EasyHard}
-	\input{tables/quartiles.6x5.Easy}
-	\input{tables/quartiles.10x10.Easy}
-	\input{tables/quartiles.6x5.Hard}
-	\input{tables/quartiles.10x10.Hard}
-}
+\begin{figure}
+  \subcaptionbox{$6\times5$\label{fig:SDR:boxplot:6x5}}{
+    \includegraphics[width=\textwidth]{{boxplotRho.SDR.6x5}.pdf}}
+  \caption[Box-plots of \namerho, when applying SDRs]{Box-plots of \namerho, 
+    when applying SDRs for all problem spaces in \cref{ch:genprobleminstances}.}
+  \label{fig:SDR:boxplot}
+\end{figure}
+\begin{figure}
+  \ContinuedFloat 
+  \subcaptionbox{$10\times10$\label{fig:SDR:boxplot:10x10}}{
+    \includegraphics[width=\textwidth]{{boxplotRho.SDR.10x10}.pdf}}
+  \caption{Continued.}
+\end{figure}
 
-\begin{figure}[p]
-	\subcaptionbox{$6\times5$\label{fig:SDR:boxplot:6x5}}{\includegraphics[width=\textwidth]{{boxplotRho.SDR.6x5}.pdf}}
-	\caption[Box-plots of \namerho, when applying SDRs]{Box-plots of \namerho, when applying SDRs for all problem spaces in \cref{ch:genprobleminstances}.}\label{fig:SDR:boxplot}
-\end{figure}
-\begin{figure}[p]
-	\ContinuedFloat
-	\subcaptionbox{$10\times10$\label{fig:SDR:boxplot:10x10}}{\includegraphics[width=\textwidth]{{boxplotRho.SDR.10x10}.pdf}}
-\end{figure}
+{ \setlength{\tabcolsep}{3pt} 
+  \input{tables/quartiles.EasyHard} 
+  \input{tables/quartiles.6x5.EasyHard}
+  \input{tables/quartiles.10x10.EasyHard}
+
+  \input{tables/quartiles.6x5.Easy}
+  \input{tables/quartiles.6x5.Hard}
+
+  \input{tables/quartiles.10x10.Easy}
+  \input{tables/quartiles.10x10.Hard}
+}
 
 \begin{figure}
 	\centering
-	\begin{subfigure}{\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{figures/{stepwise.6x5.OPT.unique}.pdf}
-		\caption{$6\times5$}\label{fig:diff:opt:unique:6x5}
-	\end{subfigure}   
+  \subcaptionbox{$6\times5$\label{fig:diff:opt:unique:6x5}}{
+    \includegraphics[width=\textwidth]{figures/{stepwise.6x5.OPT.unique}.pdf}}
 	\\
-	\begin{subfigure}{\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{figures/{stepwise.10x10.OPT.unique}.pdf}
-		\caption{$10\times10$}\label{fig:diff:opt:unique:10x10}
-	\end{subfigure}   
+  \subcaptionbox{$10\times10$\label{fig:diff:opt:unique:10x10}}{
+      \includegraphics[width=\textwidth]{figures/{stepwise.10x10.OPT.unique}.pdf}}
 	\caption[Number of unique optimal dispatches]{Number of unique optimal 
 	dispatches (lower bound).}
 	\label{fig:diff:opt:unique}
 \end{figure}
 
-\begin{figure}
-	\centering
-	\subcaptionbox{$6\times5$\label{fig:diff:opt:6x5}}{\includegraphics[width=\textwidth]{figures/{stepwise.6x5.OPT}.pdf}}
+\begin{figure}\centering
+	\subcaptionbox{$6\times5$\label{fig:diff:opt:6x5}}{
+    \includegraphics[width=\textwidth]{figures/{stepwise.6x5.OPT}.pdf}}
 	\\
-	\subcaptionbox{$10\times10$\label{fig:diff:opt:10x10}}{\includegraphics[width=\textwidth]{figures/{stepwise.10x10.OPT}.pdf}}
+	\subcaptionbox{$10\times10$\label{fig:diff:opt:10x10}}{
+    \includegraphics[width=\textwidth]{figures/{stepwise.10x10.OPT}.pdf}}
 	\caption{Probability of choosing optimal move}
 	\label{fig:diff:opt}
 \end{figure}
-
-\blankpage
-\begin{figure}
-	\centering
-	\subcaptionbox{$6\times5$\label{fig:diff:case:6x5}}{\includegraphics[width=\textwidth]{figures/{stepwise.6x5.OPT.casescenario}.pdf}}
+\begin{figure}\centering
+	\subcaptionbox{$6\times5$\label{fig:diff:case:6x5}}{
+    \includegraphics[width=\textwidth]{figures/{stepwise.6x5.OPT.casescenario}.pdf}}
 	\\
-	\subcaptionbox{$10\times10$\label{fig:diff:case:10x10}}{\includegraphics[width=\textwidth]{figures/{stepwise.10x10.OPT.casescenario}.pdf}}
+	\subcaptionbox{$10\times10$\label{fig:diff:case:10x10}}{
+    \includegraphics[width=\textwidth]{figures/{stepwise.10x10.OPT.casescenario}.pdf}}
 	\caption{Mean \namerho, for best and worst case scenario of choosing suboptimal dispatch, depicted as lower and upper bound, respectively. Moreover, mean suboptimal move is given as dashed line.}
 	\label{fig:diff:case}
 \end{figure}
 
-
 \begin{figure}
-	\centering
-	\subcaptionbox{$6\times5$\label{fig:diff:opt:SDR:6x5}}{\includegraphics[width=\textwidth]{figures/{stepwise.6x5.OPT.SDR}.pdf}}
+	\subcaptionbox{$6\times5$\label{fig:diff:opt:SDR:6x5}}{
+    \includegraphics[width=\textwidth]{figures/{stepwise.6x5.SDR}.pdf}}
 	\caption{Probability of SDR being optimal}
 	\label{fig:diff:opt:SDR}
 \end{figure}
-\begin{figure}[p]
+\begin{figure}
 	\ContinuedFloat
-	\subcaptionbox{$10\times10$\label{fig:diff:opt:SDR:10x10}}{\includegraphics[width=\textwidth]{figures/{stepwise.10x10.OPT.SDR}.pdf}}
+	\subcaptionbox{$10\times10$\label{fig:diff:opt:SDR:10x10}}{
+    \includegraphics[width=\textwidth]{figures/{stepwise.10x10.SDR}.pdf}}
+  \caption{Continued.}
 \end{figure}
 
+\begin{comment}
 \begin{figure}
 	\begin{subfigure}{\textwidth}
 		\centering
@@ -278,3 +281,4 @@ However, \cref{fig:diff:case,fig:diff:opt:evol} depict the mean as is.
 		\caption{\fmxc{6}{5}}\label{diff:case:track:fmxc:6x5}
 	\end{subfigure}
 \end{figure}
+\end{comment}
