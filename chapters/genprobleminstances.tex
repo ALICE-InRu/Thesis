@@ -54,44 +54,49 @@ Secondly, there are three structured problem classes of \FSP\  which are modelle
 	\item[\Fmxc]  \fmxc{n}{m} \hfill \\
 	job processing times are dependent on machine and job indices. Mixed-correlation can be of a degree $0\leq\alpha\leq1$.
 \end{description} 
-Note, for $\alpha=0.0$ the problem instances closely correspond to \frnd{n}{m}, hence the degree of $\alpha$ controls the transition of random to structured \FSP. However, if not otherwise stipulated, a value of $\alpha=1$ is assumed.
+Note, for $\alpha=0.0$ the problem instances closely correspond to \frnd{n}{m}, 
+hence the degree of $\alpha$ controls the transition of random to structured 
+\FSP. Let's assume $\alpha=1$.
 
 For each \FSP\  class $N_{\text{train}}$  and $N_{\text{test}}$ instances were generated for training and testing, respectively. Values for $N$ are given in \cref{tbl:data}. Moreover, an example of distribution of processing times are depicted in \cref{fig:fsp:structure}.
 
 
 \begin{table}\centering
-	\caption[Problem space distributions used in experimental studies.]{Problem space distributions used in experimental studies. Note, problem instances are synthetic and each problem space is i.i.d. and `--' denotes not available.}\label{tbl:data}
+	\caption[Problem space distributions used in experimental studies.]{Problem 
+	space distributions used in experimental studies. Note, problem instances are 
+	synthetic and each problem space is i.i.d.}\label{tbl:data}
 	{\renewcommand{\arraystretch}{1.5}
 		\begin{tabular}{llcccl}\toprule
 			type & name           & size ($n\times m$) & $N_{\text{train}}$ & $N_{\text{test}}$ & note                          
 			\\ \midrule
-			\multirow{6}{*}{\rot{\JSP}}
-			     & \jrnd{6}{5}    & $6\times5$         & 500                & 500               & random                        \\
-			     & \jrndn{6}{5}   & $6\times5$         & 500                & 500               & random-narrow                 \\
-			     & \jrndJ{6}{5}   & $6\times5$         & 500                & 500               & random with job variation     \\
-			     & \jrndM{6}{5}   & $6\times5$         & 500                & 500               & random with machine variation \\
-			     & \jrnd{10}{10}  & $10\times10$       & 300                & 200               & random                        \\
-			     & \jrndn{10}{10} & $10\times10$       & 300                & 200               & random-narrow                 \\ %&\jrndJ{10}{10} & $10\times10$ & 300 & 200 & random with job variation\\
-			%&\jrndM{10}{10} & $10\times10$ & 300 & 200 & random with machine variation\\
+			\multirow{8}{*}{\rot{\JSP}}
+			& \jrnd{6}{5}   &$6\times5$ & 500 & 500 & random \\
+			& \jrndn{6}{5}  &$6\times5$ & 500 & 500 & random-narrow \\
+			& \jrndJ{6}{5}  &$6\times5$ & 500 & 500 & random with job variation \\
+			& \jrndM{6}{5}  &$6\times5$ & 500 & 500 & random with machine variation \\
+      & \jrnd{10}{10} &$10\times10$& 300 & 200 & random \\
+			& \jrndn{10}{10}&$10\times10$& 300 & 200 & random-narrow \\ 
+      &\jrndJ{10}{10} &$10\times10$& 300 & 200 & random with job variation\\
+      &\jrndM{10}{10} &$10\times10$& 300 & 200 & random with machine variation\\
 			\midrule
 			\multirow{6}{*}{\rot{\FSP}}
-			     & \frnd{6}{5}    & $6\times5$         & 500                & 500               & random                        \\ 
-			     & \frndn{6}{5}   & $6\times5$         & 500                & 500               & random-narrow                 \\ 
-			     & \fjc{6}{5}     & $6\times5$         & 500                & 500               & job-correlated                \\ 
-			     & \fmc{6}{5}     & $6\times5$         & 500                & 500               & machine-correlated            \\ 
-			     & \fmxc{6}{5}    & $6\times5$         & 500                & 500               & mixed-correlation             \\ 
-			     & \frnd{10}{10}  & $10\times10$       & 300                & 200               & random                        \\ 
-			%&\frndn{10}{10}&$10\times10$&--&500& random-narrow \\ 
-			%&\fjc{10}{10}&$10\times10$&--&500& job-correlated \\ 
-			%&\fmc{10}{10}&$10\times10$&--&500& machine-correlated \\ 
-			%&\fmxc{10}{10}&$10\times10$&--&500& mixed-correlation  \\ 
+			& \frnd{6}{5}  & $6\times5$ & 500 & 500 & random \\ 
+			& \frndn{6}{5} & $6\times5$ & 500 & 500 & random-narrow \\ 
+			& \fjc{6}{5}   & $6\times5$ & 500 & 500 & job-correlated \\ 
+			& \fmc{6}{5}   & $6\times5$ & 500 & 500 & machine-correlated \\ 
+			& \fmxc{6}{5}  & $6\times5$ & 500 & 500 & mixed-correlation \\ 
+			& \frnd{10}{10}& $10\times10$ & 300 & 200 & random \\ 
 			\bottomrule
 		\end{tabular}}
 \end{table}
 
 \begin{figure}\centering 
 	\includegraphics[width=\textwidth]{proctimes.pdf}
-	\caption[Examples of distribution of job processing times for $20\times20$ \FSP\  with different types of structure.]{Examples of distribution of job processing times for $10\times10$ \FSP\  with different types of structure. Machine indices are on the vertical axis, job indices are colour-coded and their corresponding processing times, $p_{ja}$, are on the horizontal axis.}
+	\caption[Examples of distribution of job processing times for $6\times5$ 
+	\FSP\  with different types of structure.]{Examples of distribution of job 
+	processing times for $6\times5$ \FSP\  with different types of structure. 
+	Machine indices are on the horizontal axis, job indices are colour-coded and 
+	their corresponding processing times, $p_{ja}$, are on the vertical axis.}
 	\label{fig:fsp:structure}
 \end{figure}
 
@@ -116,12 +121,14 @@ For the \FSP\  benchmarks, \citet{orlib_hel} introduces two deterministic instan
 
 % (Only odd-numbered instances are given, since the even-numbered instances are obtained from the previous instance by just reversing the processing order of each job; the optimal value of each odd-numbered instance and its even-numbered counterpart is the same.)
 
-\begin{savenotes}
+%\begin{savenotes}
 	
 	\begin{table}\centering
 		\caption[Benchmark problems from OR-Library used in experimental studies.]{Benchmark problems from OR-Library used in experimental studies. }\label{tbl:data:orlib}
 		\begin{tabular}{llrrll}\toprule
-			type & name          & size ($n\times m$) & $N_{\text{test}}$ & note              &                                                                                                                                                                                                                                                                                            \\ \midrule
+			type & name          & size ($n\times m$) & $N_{\text{test}}$ & 
+			note              &                                                       
+			       \\ \midrule
 			\multirow{6}{*}{\rot{\JSP}}
 			     & \Problem{abz} & various            & 5                 & \citet{orlib_abz} & abz05--abz09 \footnote{Best known solutions reported in \citet{jsspBESTsofar}.}                                                                                                                                                                                                            \\
 			     & \Problem{ft}  & various            & 3                 & \citet{orlib_ft}  & ft06,ft10,ft20 \textsuperscript{*}                                                                                                                                                                                                                                                         \\
@@ -136,4 +143,4 @@ For the \FSP\  benchmarks, \citet{orlib_hel} introduces two deterministic instan
 			     & \Problem{rec} & various            & 21                & \citet{orlib_rec} & rec01-rec41 \footnote{Only odd-numbered instances are given, since the even-numbered instances are obtained from the previous instance by just reversing the processing order of each job; the optimal value of each odd-numbered instance and its even-numbered counterpart is the same.} \\ \bottomrule
 		\end{tabular}
 	\end{table}
-\end{savenotes}
+%\end{savenotes}
