@@ -1,3 +1,6 @@
+\newcommand{\Alice}{Alice}
+\newcommand{\fullnameAlice}{Adaptive Learning Intelligent Composite rulEs}
+
 %\renewcommand{\rho}{\varrho}
 \renewcommand{\vec}[1]{\mathbf{#1}}
 \newcommand{\vphi}{{\mathbf{\phi}}}
@@ -98,8 +101,6 @@
 \hyphenation{heur-ist-ics}
 \hyphenation{algo-rithm}
 
-\usepackage{amsmath,amssymb}
-
 \usepackage{tabularx}
 \usepackage{multirow}
 \usepackage{rotating}
@@ -113,11 +114,12 @@
     after={{. }}
     }
 
+\setlist[description]{leftmargin=1cm,labelindent=1cm}
+\usepackage[retainorgcmds]{packages/IEEEtrantools}
 \usepackage{booktabs} % \toprule \midrule \bottomrule
 
 \usepackage{comment}
-
-%\usepackage[retainorgcmds]{IEEEtrantools}
+\usepackage[bottom,perpage,symbol*]{packages/footmisc}
 
 \usepackage{aliascnt}
 \usepackage[capitalise,nameinlink]{cleveref} % must come last! 
@@ -145,7 +147,6 @@
     }
   }
 }
-\usepackage{xifthen}
 
 \usepackage{algorithm}
 \usepackage{algpseudocode}
@@ -156,21 +157,4 @@
 \algnewcommand\algorithmicand{~\textbf{and}~}
 \algrenewtext{For}[3]%
 {\algorithmicfor\ $#1 \gets #2 \algorithmicto\ #3$~\algorithmicdo}
-\usepackage{ifthen}
-\usepackage{float}
-\usepackage{morefloats}
 
-%\usepackage{packages/footnote}
-\usepackage[bottom,perpage,symbol*]{packages/footmisc}
-
-\newcommand{\tcr}[1]{{\color{red} #1}}
-\newcommand{\tcb}[1]{{\color{blue} #1}}
-\newcommand{\tcg}[1]{{\color{green} #1}}
-\newcommand{\Alice}{Alice}
-\newcommand{\fullnameAlice}{Adaptive Learning Intelligent Composite rulEs}
-
-\usepackage[retainorgcmds]{packages/IEEEtrantools}
-
-%\usetikzlibrary{angles} % gametree
-
-\setlist[description]{leftmargin=1cm,labelindent=1cm}
