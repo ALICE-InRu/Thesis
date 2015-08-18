@@ -85,8 +85,8 @@ attribute in order to measure the quality of the schedule.
 \section{Construction heuristics}\label{sec:CH}
 Construction heuristics are designed in such a way that it limits the search 
 space in a logical manner, respecting not to exclude the optimum. Here, the 
-construction heuristic is to schedule the dispatches as closely together as 
-possible, i.e., minimise the schedule's idle times. 
+construction heuristic, $\Upsilon$, is to schedule the dispatches as closely 
+together as possible, i.e., minimise the schedule's idle times. 
 More specifically, once an operation $(j,a)$ has been chosen from the job-list, 
 $\mathcal{L}$, by some dispatching rule, it can placed immediately after (but 
 not prior) $x_e(j,\vsigma_j(a-1))$ on machine $M_a$ due to constraint 
@@ -131,8 +131,8 @@ situations, should they arise, by inspecting the schedule's features and
 translate that into the jobs' priorities.
 
 To summarise, in order to create a schedule for \JSP, a construction heuristic 
-is chosen with some DR to determine the priority of the jobs on the job-list, 
-$\mathcal{L}$. 
+$\Upsilon$ is chosen with some DR to determine the priority of the jobs on the 
+job-list, $\mathcal{L}$. 
 \Cref{pseudo:constructJSP} outlines the pseudo code for the 
 dispatching process of a \JSP\ problem instance.
 
@@ -333,9 +333,9 @@ Note, from a job-oriented viewpoint, for a job already dispatched $J_j\in\mathca
 The features of particular interest were obtained from inspecting the aforementioned SDRs from \cref{sec:SDR}:  
 \phiJobRelated\ and \phiMacRelated\ are job-related and machine-related attributes of the current schedule, respectively. 
 
-Some features are directly observed from the partial schedule, such as the job- and machine-related features. 
-
-Note that \phiLocalRelated\ are only based on the current step of the schedule, 
+Some features are directly observed from the partial schedule, such as the job- 
+and machine-related features, namely, \phiLocalRelated\ and they are only based 
+on the current step of the schedule, 
 i.e., schedule's \emph{local features}, and might not give an accurate 
 indication of how it will effect the schedule in the long run. Therefore, a set 
 of features are needed to estimate the schedule's overall performance, referred 
@@ -449,7 +449,7 @@ found.
 \begin{description} 
 	\item[Problem space] $\mathcal{P}$ is defined as the union of $N$ problem 
 	instances consisting of processing time and ordering matrices, 
-	$\vec{x}=(\vec{p},\vsigma)$, for $n$-jobs and $m$-machines, namely,
+	$\vec{x}=(\vec{p},\vsigma)$, for $n$-jobs and $m$-machines, 
 	\begin{equation} 
 		\mathcal{P}=\condset{\vec{x}_i}{n\times m~}_{i=1}^{N}
 	\end{equation}
@@ -479,5 +479,5 @@ found.
 		\mathcal{Y}=\left\{\rho_i\right\}_{i=1}^{N}
 	\end{equation}
 \end{description}
-The mapping $Y:\;\mathcal{A}\times\mathcal{F} \mapsto \mathcal{Y}$ is the 
-step-by-step construction heuristic in \cref{pseudo:constructJSP}.
+The mapping $\Upsilon:\;\mathcal{A}\times\mathcal{F} \mapsto \mathcal{Y}$ is 
+the step-by-step construction heuristic in \cref{pseudo:constructJSP}.

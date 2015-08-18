@@ -1,17 +1,18 @@
 \begin{algorithm}[t]
     \caption{Pseudo code for constructing a \JSP\ sequence using a 
     deterministic scheduling policy 
-    rule, $\pi$, for a fixed construction heuristic (Y).} 
+    rule, $\pi$, for a fixed construction heuristic ($\Upsilon$).} 
     \label{pseudo:constructJSP}
     \begin{algorithmic}[1]
-        \Procedure{Construct\JSP}{$\pi$,Y}
+        \Procedure{Construct\JSP}{$\pi$,$\Upsilon$}
         \State $\vchi \gets \emptyset$  
         \Comment{initial current dispatching sequence}
         \For{k}{1}{l=n\cdot m} 
         \Comment{at each dispatch iteration}
         \ForAll{$J_j\in \mathcal{L}^{(k)}\subset \mathcal{J}$} 
         \Comment{inspect job-list}
-        \State $I_j^{\pi} \leftarrow \pi \left([\vchi,j],Y\right)$ 
+        \State $I_j^{\pi} \gets \pi 
+        \left(\Upsilon\left([\vchi,j]\right)\right)$ 
         \Comment{priority $J_j$}
         \EndFor
         \State $j^* \gets \argmax_{j\in \mathcal{L}^{(k)}}\{I_j^{\pi}\}$ 
@@ -19,7 +20,7 @@
         \State $\chi_k \gets j^*$ 
         \Comment{dispatch $j^*$}
         \EndFor
-        \State \Return $C_{\max}^{\pi} \gets Y(\vchi)$ 
+        \State \Return $C_{\max}^{\pi} \gets \Upsilon(\vchi)$ 
         \Comment{makespan and final schedule}
         \EndProcedure
     \end{algorithmic}

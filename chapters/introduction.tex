@@ -77,7 +77,13 @@ In order to formulate the relationship between problem structure and heuristic e
 	\item[Performance space] $\mathcal{Y}$, \hfill\\
 	the outcome for $\mathcal{P}$ using an algorithm from $\mathcal{A}$.
 \end{description}
-For a given problem instance $\vec{x}\in\mathcal{P}$ with $d$ features $\vec{\phi}(\vec{x})=\left[\phi_1(\vec{x}),...,\phi_d( \vec{x})\right]^T\in\mathcal{F}$ and using algorithm $a\in\mathcal{A}$ the performance is $y=Y(a,\vec{\phi}(\vec{x}))\in\mathcal{Y}$, where $Y:\;\mathcal{A}\times\mathcal{F} \mapsto \mathcal{Y}$ is the mapping for algorithm and feature space onto the performance space. This data collection is often referred to as meta-data. 
+For a given problem instance $\vec{x}\in\mathcal{P}$ with $d$ features 
+$\vec{\phi}(\vec{x})=\left[\phi_1(\vec{x}),...,\phi_d( 
+\vec{x})\right]^T\in\mathcal{F}$ and using algorithm $a\in\mathcal{A}$ the 
+performance is $y=\Upsilon(a,\vec{\phi}(\vec{x}))\in\mathcal{Y}$, where 
+$\Upsilon:\;\mathcal{A}\times\mathcal{F} \mapsto \mathcal{Y}$ is the mapping 
+for algorithm and feature space onto the performance space. This data 
+collection is often referred to as meta-data. 
 
 In the context of Rice's framework, the aforementioned approaches to scheduling problems are to maximise its expected performance: 
 
@@ -85,7 +91,7 @@ In the context of Rice's framework, the aforementioned approaches to scheduling 
   \item[Local level] 
   \begin{equation}
     \max_{\mathcal{F}'\subset\mathcal{F}} 
-    \mathbb{E}\left[Y\left(a,\vphi(\vec{x})\right)\right]
+    \mathbb{E}\left[\Upsilon\left(a,\vphi(\vec{x})\right)\right]
   \end{equation}
   The  focal point is only using  problem instances that represent the problem 
   space, $\vec{x}\in\mathcal{P'}\subset\mathcal{P}$, in addition finding a 
@@ -95,13 +101,15 @@ In the context of Rice's framework, the aforementioned approaches to scheduling 
   ordinal regression.
   \item[Global level]
   \begin{equation}
-    \max_{a\in\mathcal{A}} \mathbb{E}\left[Y\left(a,\vphi(\vec{x})\right)\right]
+    \max_{a\in\mathcal{A}} 
+    \mathbb{E}\left[\Upsilon\left(a,\vphi(\vec{x})\right)\right]
   \end{equation}
   This is  straightforward  approach as the algorithm $a\in\mathcal{A}$ is 
   optimised directly given the entire instances space $\vec{x}\in\mathcal{P}$ 
   dedicated for training. Alas, this comes at a great computational cost.
 \end{description}
-Note, the mappings $\vphi:\mathcal{P}\mapsto\mathcal{F}$ and $Y:\mathcal{A}\mapsto\mathcal{Y}$ are the same for both paradigms.
+Note, the mappings $\vphi:\mathcal{P}\mapsto\mathcal{F}$ and 
+$\Upsilon:\mathcal{A}\mapsto\mathcal{Y}$ are the same for both paradigms.
 
 \section{Previous work}
 In order to find an optimal (or near optimal) solution for scheduling problems 
