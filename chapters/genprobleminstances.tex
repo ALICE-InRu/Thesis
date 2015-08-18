@@ -22,7 +22,26 @@ For each \JSP\ class $N_{\text{train}}$  and $N_{\text{test}}$ instances were ge
 Although in the case of \jrnd{n}{m}\ this may be an excessively large range for 
 the uniform distribution, it is however, chosen in accordance with the 
 literature \citep{Demirkol98} for creating synthesised $Jm||C_{\max}$ problem 
-instances. In addition, w.r.t. the machine ordering, one could look into a 
+instances. 
+
+In order to inspect the impact of any slight change within the problem spaces, 
+two mutated versions were created based on \jrnd{n}{m}, namely, 
+\begin{description}
+	\item[\JrndJ] \jrndJ{n}{m} \hfill \\ where the first job, $J_1$, is always twice as long as its random counterpart, i.e.,\linebreak
+	$\tilde{p}_{1a}=2\cdot p_{1a}$, where $p\in$\jrnd{n}{m}, for all $M_a\in\mathcal{M}$. 
+	\item[\JrndM] \jrndM{n}{m} \hfill \\ where the first machine, $M_1$, is always twice as long as its random counterpart, i.e.,\linebreak
+	$\tilde{p}_{j1}=2\cdot p_{j1}$, where $p\in$\jrnd{n}{m}, for all $J_j\in\mathcal{J}$. 
+\end{description}
+Therefore making job $J_1$ and machine $M_1$ bottlenecks for \jrndJ{n}{m} and 
+\jrndM{n}{m}, respectively.
+
+\citet{Hildebrandt2010} argue that the randomly generated problem 
+instances aren't a proper representative for real-world long-term \jsp\   
+applications, e.g., by the narrow choice of release-dates, yielding schedules 
+that are overloading in the beginning phases. However, as stated in
+\cref{ch:scheduling}, release-dates constraints won't be considered here.
+
+In addition, w.r.t. the machine ordering, one could look into a 
 subset of \JSP\ where the machines are partitioned into two (or more) sets, 
 where all jobs must be processed on the machines from the first set (in some 
 random order) before being processed on any machine in the second set, commonly 
@@ -31,17 +50,14 @@ denoted as $Jm|2\textrm{sets}|C_{\max}$ problems, but as discussed in
 error from best known solution) in comparison with the ``easy'' or 
 ``unchallenging'' family with the general $Jm||C_{\max}$ setup. % ath. 
 %Holtsclaw96 vitnar í orlib_swv um easy-hard pælinguna
-This is in stark contrast to \citet{Whitley} whose findings showed that structured $Fm||C_{\max}$ were much easier to solve than completely random structures. 
-Intuitively, an inherent structure in machine ordering should be exploitable for a better performance.  However, for the sake of generality, a random structure is preferred as they correspond to difficult problem instances in the case of \JSP. Whereas, structured problem subclasses will be explored for \FSP.  
-
-Moreover, in order to inspect the impact of any slight change within the problem spaces, two mutated versions were created based on \jrnd{n}{m}, namely, 
-\begin{description}
-	\item[\JrndJ] \jrndJ{n}{m} \hfill \\ where the first job, $J_1$, is always twice as long as its random counterpart, i.e.,\linebreak
-	$\tilde{p}_{1a}=2\cdot p_{1a}$, where $p\in$\jrnd{n}{m}, for all $M_a\in\mathcal{M}$. 
-	\item[\JrndM] \jrndM{n}{m} \hfill \\ where the first machine, $M_1$, is always twice as long as its random counterpart, i.e.,\linebreak
-	$\tilde{p}_{j1}=2\cdot p_{j1}$, where $p\in$\jrnd{n}{m}, for all $J_j\in\mathcal{J}$. 
-\end{description}
-Therefore making job $J_1$ and machine $M_1$ bottlenecks for \jrndJ{n}{m} and \jrndM{n}{m}, respectively.
+This is in stark contrast to \citet{Whitley} whose findings showed that 
+structured $Fm||C_{\max}$ were much easier to solve than completely random 
+structures. 
+Intuitively, an inherent structure in machine ordering should be exploitable 
+for a better performance.  However, for the sake of generality, a random 
+structure is preferred as they correspond to difficult problem instances in the 
+case of \JSP. Whereas, structured problem subclasses will be explored for 
+\FSP.  
 
 \section{\Fsp}\label{sec:data:FSP}
 Problem instances for \FSP\  are generated using \citet{Whitley} problem generator\footnote{Both code, written in \texttt{C++}, and problem instances used in their experiments can be found at: \url{http://www.cs.colostate.edu/sched/generator/}}. There are two fundamental types of problem classes: non-structured versus structured.
