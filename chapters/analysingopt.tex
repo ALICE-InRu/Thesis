@@ -5,25 +5,67 @@
 \FirstSentence{I}{n order to create successful \dr s}, a good starting point is 
 to investigate the properties of optimal solutions and hopefully be able to 
 learn how to mimic such `good' behaviour. 
-For this, we follow an optimal solution,\footnote{Optimal solutions are 
-obtained by using a commercial software package \cite{gurobi}.} and inspect the 
-evolution of its features  (defined in \cref{tbl:features}) throughout the 
-dispatching process. 
+For this, we follow an optimal solution,\footnote{Optimal solutions can be 
+  obtained by using a commercial software package by \citet{gurobi}, which has 
+  a free academic licence. However, GLPK by \citet{glpk} has a free licence. 
+  Alas, GLPK has a lacklustre performance w.r.t. speed for for solving 
+  $10\times10$ \JSP.}
+and inspect the evolution of its features  (defined in \cref{tbl:features}) 
+throughout the dispatching process. 
 Moreover, it is noted, that there are several optimal solutions available for 
 each problem instance. However, it is deemed sufficient to inspect only one 
 optimal trajectory per problem instance as there are $N_{\text{train}}$ 
 independent instances which gives the training data variety. 
+
+\Cref{fig:diff:opt:unique,fig:diff:opt:rnd,fig:diff:opt:minmax} 
+depict the mean over all the training data, which are quite noisy 
+functions. \Cref{InRu15b} depicts the mean as is, albeit only for 
+$10\times10$ problem spaces. 
+Thus, for clarity purposes, they are fitted with local polynomial regression, 
+making the boundary points sometimes biased. 
+However, 
+\cref{fig:diff:opt:SDR,fig:diff:case:OPT,fig:diff:case:SDR,fig:diff:opt:evol} 
+depict the mean as is.
+
+
+
+
+
 
 Firstly, we can observe that on a step-by-step basis there are several optimal 
 dispatches to choose from. \Cref{fig:diff:opt:unique} depicts how the number of 
 optimal dispatches evolve at each dispatch iteration. Note, that only one 
 optimal trajectory is pursued (chosen at random), hence this is only a lower 
 bound of uniqueness of optimal solutions.
-As the number of possible dispatches decrease over time, \cref{fig:diff:opt} 
+As the number of possible dispatches decrease over time, 
+\cref{fig:diff:opt:rnd} 
 depicts the probability of choosing an optimal dispatch at each iteration. 
 
+\begin{figure}
+  \centering
+  \subcaptionbox{$6\times5$\label{fig:diff:opt:unique:6x5}}{
+    \includegraphics[width=\textwidth]{figures/{stepwise.6x5.OPT.unique}.pdf}}
+  \\
+  \subcaptionbox{$10\times10$\label{fig:diff:opt:unique:10x10}}{
+    \includegraphics[width=\textwidth]{figures/{stepwise.10x10.OPT.unique}.pdf}}
+  \caption[Number of unique optimal dispatches]{Number of unique optimal 
+    dispatches (lower bound).}
+  \label{fig:diff:opt:unique}
+\end{figure}
+
+\begin{figure}\centering
+  \subcaptionbox{$6\times5$\label{fig:diff:opt:rnd:6x5}}{
+    \includegraphics[width=\textwidth]{figures/{stepwise.6x5.OPT}.pdf}}
+  \\
+  \subcaptionbox{$10\times10$\label{fig:diff:opt:rnd:10x10}}{
+    \includegraphics[width=\textwidth]{figures/{stepwise.10x10.OPT}.pdf}}
+  \caption{Probability of choosing optimal move}
+  \label{fig:diff:opt:rnd}
+\end{figure}
+
 \section{Making suboptimal decisions}\label{sec:diff:opt:sub}
-Looking at \cref{fig:diff:opt}, \jrnd{10}{10} has a relatively high probability 
+Looking at \cref{fig:diff:opt:rnd}, \jrnd{10}{10} has a relatively high 
+probability 
 ($70\%$ and above) of choosing an optimal job. However, it is imperative to 
 keep making optimal decisions, because once off the optimal track the 
 consequences can be dire. To demonstrate this interaction \cref{fig:diff:case} 
@@ -45,15 +87,26 @@ having a homogeneous machine ordering, constricting the solution immensely.
 Luckily, this does have the added benefit of making \fsp\ less vulnerable for 
 suboptimal decisions later in the decision process. 
 
+\begin{figure}\centering
+  \subcaptionbox{$6\times5$\label{fig:diff:case:6x5:OPT}}{
+    \includegraphics[width=\textwidth]{figures/ALL/{stepwise.6x5.OPT.casescenario}.pdf}}
+  \\
+  \subcaptionbox{$10\times10$\label{fig:diff:case:10x10:OPT}}{
+    \includegraphics[width=\textwidth]{figures/ALL/{stepwise.10x10.OPT.casescenario}.pdf}}
+  \caption{Mean \namerho, for best and worst case scenario of when making
+    \emph{one} sub-optimal dispatch, depicted as lower and upper bound, 
+    respectively. Moreover, mean suboptimal move is given as dashed line.}
+  \label{fig:diff:case:OPT}
+\end{figure}
 
-\section{Optimality of simple priority dispatching 
-rules}\label{sec:diff:opt:sdr}
+
+\section{Optimality of \sdr s}\label{sec:diff:opt:sdr}
 The probability of optimality of the aforementioned SDRs from \cref{sec:SDR}, 
 yet still maintaining our optimal trajectory, i.e., the probability of a job 
 chosen by a SDR being able to yield an optimal makespan on a step by step 
 basis, is depicted  in   \cref{fig:diff:opt:SDR}. Moreover, the dashed line 
 represents the benchmark of randomly guessing the optimum (cf. 
-\cref{fig:diff:opt}).
+\cref{fig:diff:opt:rnd}).
 
 Now, let's bare in mind \namerho, of applying SDRs throughout the dispatching 
 process (cf. box-plots of which in \cref{fig:SDR:boxplot}), then there is a 
@@ -119,13 +172,40 @@ same methodology from \cref{sec:diff:opt:sdr} to all varying features described
 in \cref{tbl:features}. 
 \Cref{fig:diff:opt:minmax}
 depict the probability of all extremal features being an optimal dispatch, with 
-random guessing from \cref{fig:diff:opt} as a dashed line. 
+random guessing from \cref{fig:diff:opt:rnd} as a dashed line. 
 \todo[inline]{Discuss more?}
+
+\begin{figure}\centering
+  \subcaptionbox{\jrnd{6}{5}\label{fig:diff:extr:jrnd:6x5}}{
+    \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.6x5.OPT.extremal}.pdf}}
+  \caption{Probability of extremal feature being optimal. }
+  \label{fig:diff:opt:minmax}
+\end{figure}
+\begin{figure}\centering
+  \ContinuedFloat
+  \subcaptionbox{\jrnd{10}{10}\label{fig:diff:extr:jrnd:10x10}}{
+    \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.10x10.OPT.extremal}.pdf}}
+  \caption{Continued. }
+\end{figure}
 
 \section{Feature evolution}\label{sec:diff:opt:evol}
 In order to put the extremal features into perspective, it's worth comparing 
 them with how the evolution of the features are over time, depicted in 
 \cref{fig:diff:opt:evol}. 
+
+\begin{figure}\centering
+  \subcaptionbox{\jrnd{6}{5}\label{diff:evol:jrnd:6x5}}{
+    \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.6x5.Track.evolution}.pdf}}
+  \caption[Mean stepwise evolution of $\tilde{\vphi}$]{Mean stepwise evolution 
+    of $\tilde{\vphi}$, which is scaled according to \cref{eq:scale}.}
+  \label{fig:diff:opt:evol}
+\end{figure}
+\begin{figure}\centering
+  %  \ContinuedFloat
+  \subcaptionbox{\jrnd{10}{10}\label{diff:evol:jrnd:10x10}}{
+    \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.10x10.Track.evolution}.pdf}}
+  \caption{Continued. }
+\end{figure}
 
 
 \section{Emergence of problem difficulty}\label{sec:diff:stepwise}
