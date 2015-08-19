@@ -7,7 +7,6 @@
 %The insight attained by investigating the relationship between problem structure and heuristic performance can undoubtedly lead to better heuristic design that is tailored to the data distribution under consideration.
 %\end{abstract}
 
-
 \FirstSentence{P}{roblem structure and heuristic effectiveness} are closely intertwined. When investigating the relation between the two, one can research what \citet{Corne10} call \emph{footprints} in instance space, which is an indicator how an algorithm generalises over a given instance space. This sort of investigation has also been conducted by \citet{Pfahringer00} under the alias \emph{landmarking}. 
 % quote Corne10: ``such a footprint indicates how an algorithm's comparative performance generalises in instance space''
 % quote Katie2009: ``Landmarking tries to directly characterise a domain by relating the performance to some learners -- the landmarkers -- to the performance of some other algorithm.''
@@ -154,92 +153,7 @@ Note, this \lcnamecref{sec:diff:easyhard} gave the definition of what constitute
 due to the fact \cref{eq:easy,eq:hard} are based on the first and third quantiles of the entire training set.
 Now, as the SDRs vary greatly in performance, the contribution of a SDR to \cref{eq:easyhard:all} varies, resulting in an unbalanced sample size when restricted to a single SDR. 
 
-\section{Probability of choosing optimal decision}\label{sec:diff:opt:rnd}
-In order to create successful dispatching rules, a good starting point is to investigate the properties of optimal solutions and hopefully be able to learn how to mimic such `good' behaviour. 
-For this, we follow an optimal solution,\footnote{Optimal solutions are obtained by using a commercial software package \cite{gurobi}.} and inspect the evolution of its features  (defined in \cref{tbl:features}) throughout the dispatching process. 
-Moreover, it is noted, that there are several optimal solutions available for each problem instance. However, it is deemed sufficient to inspect only one optimal trajectory per problem instance as there are $N_{\text{train}}$ independent instances which gives the training data variety. 
 
-
-Firstly, we can observe that on a step by step basis there are several optimal dispatches to choose from. \Cref{fig:diff:opt:unique} depicts how the number of optimal dispatches evolve at each dispatch iteration. Note, that only one optimal trajectory is pursued (chosen at random), hence this is only a lower bound of uniqueness of optimal solutions.
-As the number of possible dispatches decrease over time, \cref{fig:diff:opt} depicts the probability of choosing an optimal dispatch at each iteration. 
-
-\section{Making suboptimal decisions}\label{sec:diff:opt:sub}
-Looking at \cref{fig:diff:opt}, \jrnd{10}{10} has a relatively high probability ($70\%$ and above) of choosing an optimal job. However, it is imperative to keep making optimal decisions, because once off the optimal track the consequences can be dire. To demonstrate this interaction \cref{fig:diff:case} depicts the worst and best case scenario of \namerho, once you've fallen off the optimal track. Note, that this is given that you make \emph{one} wrong turn. Generally, there will be many mistakes made, and then the compound effects of making suboptimal decisions really start adding up. 
-
-It is interesting that for \JSP, that over time making suboptimal decisions make more of an impact on the resulting makespan. This is most likely due to the fact that if a suboptimal decision is made in the early stages, then there is space to rectify the situation with the subsequent dispatches. However, if done at a later point in time, little is to be done as the damage is already been inflicted upon the schedule. 
-However, for \FSP, the case is the exact opposite. Under those circumstances it's imperative to make good decisions right from the beginning. This is due to the major structural differences between \jsp\ and \fsp, namely the latter having a homogeneous machine ordering, constricting the solution immensely. Luckily, this does have the added benefit of making \fsp\ less vulnerable for suboptimal decisions later in the decision process. 
-
-
-\section{Optimality of simple priority dispatching rules}\label{sec:diff:opt:sdr}
-The probability of optimality of the aforementioned SDRs from \cref{sec:SDR}, yet still maintaining our optimal trajectory, i.e., the probability of a job chosen by a SDR being able to yield an optimal makespan on a step by step basis, is depicted  in   \cref{fig:diff:opt:SDR}. Moreover, the dashed line represents the benchmark of randomly guessing the optimum (cf. \cref{fig:diff:opt}).
-
-Now, let's bare in mind \namerho, of applying SDRs throughout the dispatching 
-process (cf. box-plots of which in \cref{fig:SDR:boxplot}), then there is a 
-some correspondence between high probability of stepwise optimality and low 
-$\rho$. Alas, this isn't always the case, for \jrnd{10}{10} SPT always 
-outperforms LPT w.r.t. stepwise optimality, however, this does not transcend to 
-SPT having a lower $\rho$ value than LPT. Hence, it's not enough to just learn 
-optimal behaviour, one needs to investigate what happens once we encounter 
-suboptimal state spaces.
-
-\section{Simple blended dispatching rule}\label{sec:diff:opt:bdr}
-As stated before, the goal of this \lcnamecref{ch:problemstructure} is to utilise feature behaviour to motivate new, and \emph{hopefully} better, dispatching rules. 
-A na\"ive approach would be creating a simple blended dispatching rule which would be for instance switch between two SDRs at a predetermined time point. Hence, going back to \cref{fig:diff:opt:SDR} a presumably good BDR for \jrnd{10}{10}  would be starting with SPT and then switching over to MWR at around time step $k=40$, where the SDRs change places in outperforming one another. A box-plot for \namerho, for all $10\times10$ problem spaces is depicted in \cref{fig:diff:boxplot:BDR}. This little manipulation between SDRs does outperform SPT immensely, yet doesn't manage to gain the performance edge of MWR, save for \frnd{10}{10}. This gives us insight that for \jsp, the attribute based on MWR is quite fruitful for good dispatches, whereas the same cannot be said about SPT -- a more sophisticated BDR is needed to improve upon MWR. 
-
-A reason for this lack of performance of our proposed BDR is perhaps that by 
-starting out with SPT in the beginning, it sets up the schedules in such a way 
-that it's quite greedy and only takes into consideration jobs with shortest 
-immediate processing times. Now, even though it is possible to find optimal 
-schedules from this scenario, as \cref{fig:diff:opt:SDR} shows, the inherent 
-structure is already taking place, and might make it hard to come across 
-optimal moves by simple methods. Therefore it's by no means guaranteed that by 
-simply swapping over to MWR will handle the situation that applying SPT has 
-already created. \Cref{fig:diff:boxplot:BDR} does however, show, that by 
-applying MWR instead of SPT in the latter stages, does help the schedule to be 
-more compact w.r.t. SPT. However, in the case of \jrnd{10}{10} and 
-\jrndn{10}{10} the fact remains that the schedules have diverged too far from 
-what MWR would have been able to achieve on its own. Preferably the blended 
-dispatching rule should use  best of both worlds, and outperform all of its 
-inherited DRs, otherwise it goes without saying, one would simply still use the 
-original DR that achieved the best results.
-
-\begin{figure}
-	\centering
-	\includegraphics[width=1\linewidth]{figures/{boxplotRho.BDR.10x10}.pdf}
-	\caption{Box plot for \namerho, for BDR where SPT is applied for the first 40\% of the dispatches, followed by MWR.}
-	\label{fig:diff:boxplot:BDR}
-\end{figure}
-
-\section{Extremal feature}\label{sec:diff:opt:ext}
-The SDRs we've inspected so-far are based on two features from 
-\cref{tbl:features}, namely
-\begin{enumerate*}
-	\item \phiproc\ for SPT and LPT
-	\item \phijobWrm\ for LWR and MWR 
-\end{enumerate*}
-By choosing the lowest value for the first SDR, and highest value for the 
-latter SDR, i.e., the extremal values for those given features. Let's apply the 
-same methodology from \cref{sec:diff:opt:sdr} to all varying features described 
-in \cref{tbl:features}. 
-\Cref{fig:diff:opt:minmax}
-depict the probability of all extremal features being an optimal dispatch, with random guessing from \cref{fig:diff:opt} as a dashed line. \todo[inline]{Discuss more?}
-
-\section{Feature evolution}\label{sec:diff:opt:evol}
-In order to put the extremal features into perspective, it's worth comparing them with how the evolution of the features are over time, depicted in \cref{fig:diff:opt:evol}. 
-
-
-\section{Emergence of problem difficulty}\label{sec:diff:stepwise}
-
-
-\section{Structure of problem spaces}
-Up till now the discussion has been general and covering many problem spaces simultaneously. The subsequent \lcnamecref{sec:diff:jrnd}s will go into more depth what is going on per individual problem space.  
-\subsection{\Jrnd}\label{sec:diff:jrnd}
-\subsection{\Jrndn}\label{sec:diff:jrndn}
-\subsection{\Frnd}\label{sec:diff:frnd}
-\subsection{\Frndn}\label{sec:diff:frndn}
-\subsection{\Fjc}\label{sec:diff:fjc}
-\subsection{\Fmc}\label{sec:diff:fmc}
-\subsection{\Fmxc}\label{sec:diff:fmxc}
 
 \section{Discussion and Conclusion}
 Despite problem instances being created by the same problem generator, they vary among one another enough. As a result, all instances are not created equal; some are always hard to solve, others always easy. 
