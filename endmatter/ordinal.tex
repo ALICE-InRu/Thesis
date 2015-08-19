@@ -1,11 +1,25 @@
 \HeaderQuote{What is the use of repeating all that stuff, if you don't explain it as you go on? It's by far the most confusing thing I ever heard!}{The Mock Turtle} 
 
 \chapter{Ordinal Regression}\label{ch:ordinal} 
-\FirstSentence{O}{rdinal regression has been} previously presented in \cite{Ru06:PPSN}, but given here for completeness. The preference learning task of linear classification presented there is based on the work proposed in \citep{liblinear,Lin08:newtontrustregion}. The modification relates to how the point pairs are selected and the fact that a $L2$-regularized logistic regression is used. \todo[inline]{Útskýra hvað er L2-regression?}
+\FirstSentence{O}{rdinal regression has been} previously presented in 
+\cite{Ru06:PPSN}, but given here for completeness. The preference learning task 
+of linear classification presented there is based on the work proposed in 
+\citep{liblinear,Lin08:newtontrustregion}. The modification relates to how the 
+point pairs are selected and the fact that a $L2$-regularized logistic 
+regression is used. \todoFind{Cite what is L2-regression}
 
 \section{Preference set}
-The ranking problem is specified by a set $S_{0} = \{(\vec{x}_i,y_i)\}_{i=1}^N \subset X \times Y$ of $N$ (solution, rank)-pairs, where $Y=\{r_1,\ldots,r_N\}$ is the outcome space with ordered ranks $r_1> r_2,> \ldots > r_N$.  
-Now consider the model space $\mathcal{H} = \{h(\cdot) : X \mapsto Y\}$ of mappings from solutions to ranks. Each such function $h$ induces an ordering $\succ$ on the solutions  by the following rule,
+The ranking problem is specified by a \emph{preference set}, 
+\begin{equation}
+\Psi := \{(\vec{x}_i,y_i)\}_{i=1}^N \subset X \times Y
+\end{equation}
+consisting of $N$ (solution, rank)-pairs, where $Y=\{r_1,\ldots,r_N\}$ 
+is the outcome space with ordered ranks $r_1> r_2,> \ldots > r_N$.  
+
+\clearpage
+Now consider the model space $\mathcal{H} = \{h(\cdot) : X \mapsto Y\}$ of 
+mappings from solutions to ranks. Each such function $h$ induces an ordering 
+$\succ$ on the solutions  by the following rule,
 \begin{equation}\label{eq:linear}
 	\vec{x}_i \succ \vec{x}_j \quad \Leftrightarrow \quad h(\vec{x}_i) > h(\vec{x}_j)
 \end{equation}
@@ -13,20 +27,32 @@ where the symbol $\succ$ denotes ``is preferred to.''
 
 In ordinal regression the task is to obtain function $h$ that can for a given pair $(\vec{x}_i,y_i)$ and $(\vec{x}_j,y_j)$ distinguish between two different outcomes: $y_i > y_j$ and $y_j > y_i$. The task is, therefore, transformed into the problem of predicting the relative ordering of all possible pairs of examples \citep{Herbrich00,Joachims02}.  However, it is sufficient to consider only all possible pairs of adjacent ranks (see also \cite{ShaweTaylor04:book} for yet an alternative formulation).  The preference set, composed of pairs, is then as follows,
 \begin{equation}
-	S = \left\{(\vec{x}_k^{(1)}, \vec{x}_k^{(2)}),t_k=\text{sign}(y_k^{(1)} - y_k^{(2)})\right\}_{k=1}^{N'} \subset X\times Y  \label{eq:S}
+	\Psi = \left\{(\vec{x}_k^{(1)}, \vec{x}_k^{(2)}),t_k=\text{sign}(y_k^{(1)} - 
+	y_k^{(2)})\right\}_{k=1}^{N'} \subset X\times Y  \label{eq:PrefSet:problem}
 \end{equation}
-where $(y_k^{(1)} = r_i) \wedge (y_k^{(2)} = r_{i+1})$ (and vice versa $(y_k^{(1)} = r_{i+1}) \wedge (y_k^{(2)} = r_{i})$) resulting in $N'=2(N-1)$ possible adjacently ranked preference pairs. The rank difference is denoted by $t_k\in\{-1,1\}$.
+where $(y_k^{(1)} = r_i) \wedge (y_k^{(2)} = r_{i+1})$, and vice versa 
+$(y_k^{(1)} = r_{i+1}) \wedge (y_k^{(2)} = r_{i})$, resulting in $N'=2(N-1)$ 
+possible adjacently ranked preference pairs. The rank difference is denoted by 
+$t_k\in\{-1,1\}$.
 
-In order to generalize the technique to different solution data types and model spaces an implicit kernel-defined feature space $\Phi\subset\mathbb{R}^d$ of dimension $d$, with corresponding feature mapping $\vphi:X\mapsto\Phi$ is applied, i.e., the feature vector $\vphi(\vec{x})=[\phi_1(\vec{x}),\ldots,\phi_d(\vec{x})]^T\in\Phi$. Thus the preference set defined by \cref{eq:S} is redefined as follows,
+In order to generalize the technique to different solution data types and model 
+spaces an implicit kernel-defined feature space $\Phi\subset\mathbb{R}^d$ of 
+dimension $d$, with corresponding feature mapping $\vphi:X\mapsto\Phi$ is 
+applied, i.e., the feature vector 
+$\vphi(\vec{x})=[\phi_1(\vec{x}),\ldots,\phi_d(\vec{x})]^T\in\Phi$. Thus the 
+preference set defined by \cref{eq:PrefSet:problem} is redefined as follows,
 \begin{equation}
-	S = \left\{\left(\vphi(\vec{x}_k^{(1)}), \vphi(\vec{x}_k^{(2)})\right),t_k=\text{sign}(y_k^{(1)} - y_k^{(2)})\right\}_{k=1}^{N'} \subset \Phi \times Y \label{eq:Sfeat}.
+	\Psi = \left\{\left(\vphi(\vec{x}_k^{(1)}), 
+	\vphi(\vec{x}_k^{(2)})\right),t_k=\text{sign}(y_k^{(1)} - 
+	y_k^{(2)})\right\}_{k=1}^{N'} \subset \Phi \times Y \label{eq:PrefSet:feat}.
 \end{equation}
 
 
 \section{Linear preference}\label{sec:ord:linpref}
 The function used to induce the preference is defined by a linear function in the kernel-defined feature space,
 \begin{equation} 
-	h(\vec{x})=\sum_{i=1}^d w_i\phi_i(\vec{x})=\inner{\vec{w}}{\vphi(\vec{x})} \label{eq:linearpref}
+  h(\vec{x}) = \sum_{i=1}^d w_i\phi_i(\vec{x})=\inner{\vec{w}}{\vphi(\vec{x})} 
+               \label{eq:pref:kernel}
 \end{equation}
 where $\vec{w}=[w_1,\ldots,w_d]\in\mathbb{R}^d$ has weight $w_i$ for feature $\phi_i$.
 
@@ -46,7 +72,10 @@ where $C > 0$ is a penalty parameter, and the negative log-likelihood is due to 
 The logistic regression defined in \cref{eq:margin} is solved iteratively, in particular using Trust Region Newton method \citep[cf.][]{Lin08:newtontrustregion}, which generates a sequence $\{\vec{w}^{(k)}\}_{k=1}^\infty$ converging to the optimal solution $\vec{w}^*$ of \cref{eq:margin}.
 \end{comment}
 
-The aim now is to find a function $h$ that encounters as few training errors as possible on $S'$. Applying the method of large margin rank boundaries of ordinal regression described in \cite{Herbrich00}, the optimal $\vec{w}^*$ is determined by solving the following task, 
+The aim now is to find a function $h$ that encounters as few training errors as 
+possible on $\Psi$. Applying the method of large margin rank boundaries of 
+ordinal regression described in \cite{Herbrich00}, the optimal $\vec{w}^*$ is 
+determined by solving the following task, 
 \begin{equation}\label{eq:margin}
 	\min_{\vec{w}}\quad \tfrac{1}{2}\inner{\vec{w}}{\vec{w}} + \tfrac{C}{2}\sum_{k=1}^{N'}\xi_k^2
 \end{equation}
@@ -62,7 +91,10 @@ and minimising $\inner{\vec{w}}{\vec{w}}$ in \cref{eq:margin} maximises the marg
 
 \begin{comment}
 \section{Non-linear preference}\label{sec:ord:nonlinpref}
-In the case that the preference set $S$ defined by \cref{eq:Sfeat} is not linearly separable, a common way of coping with non-linearity is to apply the ``kernel-trick'' to transform $S$ onto a higher dimension. In which case, the dot product in \cref{eq:linear} is replaced by a kernel function $\kappa$.
+In the case that the preference set $\Psi$ defined by \cref{eq:Sfeat} is not 
+linearly separable, a common way of coping with non-linearity is to apply the 
+``kernel-trick'' to transform $\Psi$ onto a higher dimension. In which case, 
+the dot product in \cref{eq:linear} is replaced by a kernel function $\kappa$.
 
 In terms of training data, the optimal $\vec{w}^*$ can be expressed as, \todo{Finna uppr. heimild}
 \begin{equation}
@@ -100,20 +132,42 @@ for $\gamma>0$.
 \section{Parameter setting and tuning}
 The regulation parameter $C$ in \cref{eq:margin}, controls the balance between model complexity and training errors, and must be chosen appropriately. A high value for $C$ gives greater emphasis on correctly distinguishing between different ranks, whereas a low $C$ value results in maximising the margin between classes.
 
-\section{Scaling}
-It is of paramount importance to scale the features $\vphi$ first, especially if implementing a kernel method. 
-In the case of JSP (cf. \cref{ch:prefmodels}), scaling makes the features less sensitive to varying problem instances.
-Moreover, for surrogate modelling (cf. \cref{ch:surrogates}), it is important to scale the features $\vphi$ as the evolutionary search zooms in on a particular region of the search space. 
+\section{Scaling}\label{app:feat:scaling}
+It some cases it becomes necessary to scale the features $\vphi$ from 
+\cref{sec:features} first, especially if implementing a kernel method in 
+\cref{eq:pref:kernel}.
+In the case of \JSP, scaling makes the features less sensitive to varying 
+problem instances.
+Moreover, for surrogate modelling (cf. \cref{InRu11b}), it is important to 
+scale the features $\vphi$ as the evolutionary search zooms in on a particular 
+region of the search space. 
 
-A standard method of doing so is by scaling the preference set such that all points are in some range, typically $[-1,1]$. That is, scaled $\tilde{\vphi}$ is,
+A standard method of doing so is by scaling the preference set such that all 
+points are in some range, typically $[-1,1]$. That is, scaled $\tilde{\vphi}$ 
+is,
 \begin{equation}\label{eq:scale}
-	\tilde{\phi}_i = 2 (\phi_i - \underline{\phi}_i) / (\overline{\phi}_i - \underline{\phi}_i) - 1 
-	\quad\quad \forall i\in\{1,\ldots,d\}
+\tilde{\phi}_i = 2 (\phi_i - \underline{\phi}_i) / (\overline{\phi}_i - 
+\underline{\phi}_i) - 1 
+\quad\quad \forall i\in\{1,\ldots,d\}
 \end{equation}
-where $\underline{\phi}_i$, $\overline{\phi}_i$ are the maximum and minimum $i$-th component of all the feature variables in set $\Phi$, namely,
+where $\underline{\phi}_i$, $\overline{\phi}_i$ are the maximum and minimum 
+$i$-th component of all the feature variables in set $\Phi$, namely,
 \begin{equation}
-	\underline{\phi}_i=\min\{\phi_i\;|\;\forall\vphi\in \Phi\} \quad\textrm{and}\quad \overline{\phi}_i=\max\{\phi_i\;|\;\forall\vphi\in \Phi\}
+\underline{\phi}_i=\min\{\phi_i\;|\;\forall\vphi\in \Phi\} 
+\quad\textrm{and}\quad \overline{\phi}_i=\max\{\phi_i\;|\;\forall\vphi\in 
+\Phi\}
 \end{equation}
 where $i\in\{1\ldots d\}$. 
 
+\section{Implementation}
+To use this type of ordinal regression, it's best to use LIBLINEAR: A 
+Library for Large Linear Classification by \citet{main:LIBLINEAR} which 
+contains implementations in several programming languages. The preferred choice 
+of the author was the R-package 
+\href{https://cran.r-project.org/web/packages/LiblineaR/}{\texttt{LiblineaR}} 
+by \citet{cran:LiblineaR}.
+
+However, if more sophisticated kernel methods are sought after, then {LIBSVM}: 
+A Library for Support Vector Machines by 
+\citet{main:LIBSVM} is an obvious substitute.
 
