@@ -222,14 +222,18 @@ on-time?
 
 The problem faced by Alice and her new friends is in what order should they 
 rotate their tasks between themselves so that they all finish as soon as 
-possible. This is a typical four-job and five-machine \jsp\ problem, where our 
-guests are the jobs and the tasks are the machines and our 
-objective is to minimize the makespan, i.e., the release time for Alice. 
+possible. This can be considered as is a typical four-job and five-machine 
+\jsp, where
+\begin{enumerate*}[label={{}}]
+    \item our guests are the jobs
+    \item their tasks are the machines
+    \item our objective is to minimise the makespan, i.e., when Alice can leave
+\end{enumerate*}
 Let's assume we've come to the party, after 10 operations have already been 
 made (i.e. the italic entries in \cref{tbl:example}), by using the following 
 job sequence,
 \begin{eqnarray}
-	\vchi=\left[ J_4,J_2,J_3,J_3,J_1,J_1,J_1,J_1,J_1,J_4 \right]
+	\vchi=\left\{ J_4,J_2,J_3,J_3,J_1,J_1,J_1,J_1,J_1,J_4 \right\}
 \end{eqnarray}
 hence the job-list is currently $\mathcal{L}^{(11)}=\{J_2,J_3,J_4\}$  
 indicating the 3 potential\footnote{Alice is quite anxious to leave, so she has 
@@ -244,7 +248,7 @@ dispatching process as a Gantt-chart
     \item the width of the box illustrates the processing times for a given job 
     for a particular machine $M_a$ (on the vertical axis)
     \item the dashed boxes represent the resulting partial schedule for when a 
-    particular job is scheduled next
+    particular job is scheduled next 
     \item the current $C_{\max}$ is denoted with a dotted line    
 \end{enumerate*}
 
@@ -328,7 +332,16 @@ depicted in \cref{fig:example:SDRs}.
 % The intent of MWR is to speed up jobs with large processing work resulting in a well-balanced work progress of all jobs, at the expense of a high volume of in-process inventory, while LWR tend to reduce the number of jobs in the shop.
 
 \section{Features for \jsp}\label{sec:features}
-A DR may need to perform a one-step look-ahead and observes features of the partial schedule to make a decision, for example by observing the resulting temporal makespan. These emanated observed features are sometimes referred to as an \emph{after-state} or \emph{post-decision state}. 
+A DR may need to perform a one-step look-ahead and observes features of the 
+partial schedule to make a decision, for example by observing the resulting 
+temporal makespan. 
+These emanated observed features are sometimes referred to as an 
+\emph{after-state} or \emph{post-decision state}. 
+A partial schedule is denoted $\vchi^j$ where $J_j$ is the 
+latest dispatch, i.e., $\chi_k=J_j$, and its resulting features is denoted, 
+\begin{equation}\label{eq:postdecision}
+\vphi^j:=\vphi(\vchi^j).
+\end{equation}
 
 Features are used to grasp the essence of the current state of the schedule. Temporal scheduling features applied in this dissertation for a job $J_j$ to be dispatched on machine $M_a$ are given in \cref{tbl:features}. 
 Note, from a job-oriented viewpoint, for a job already dispatched $J_j\in\mathcal{J}$ the corresponding set of machines now processed is $\mathcal{M}_j\subset\mathcal{M}$. Similarly from the machine-oriented viewpoint, $M_a\in\mathcal{M}$ with corresponding $\mathcal{J}_a\subset\mathcal{J}$. 
@@ -342,10 +355,12 @@ on the current step of the schedule,
 i.e., schedule's \emph{local features}, and might not give an accurate 
 indication of how it will effect the schedule in the long run. Therefore, a set 
 of features are needed to estimate the schedule's overall performance, referred 
-to as its \emph{global features}. The approach here is to use well known SDRs, 
-\phiSDRRelated, as a benchmark by retrieving what would the resulting 
-$C_{\max}$ would be given if that SDR would be implemented from that point 
-forward. Moreover, random completion of the partial schedule are implemented, 
+to as its \emph{global features}. 
+
+The approach here is to use well known SDRs, \phiSDRRelated, as a benchmark by 
+retrieving what would the resulting $C_{\max}$ would be given if that SDR would 
+be implemented from that point forward. 
+Moreover, random completion of the partial schedule are implemented, 
 here \phiRNDRelated\ corresponds to statics from 100 random roll-outs, which 
 can be used to identify which features $\vphi$ are promising on a long-term 
 basis.  
@@ -365,33 +380,69 @@ basis.
 	\input{tables/features-description}
 \end{table}
 
-
-
+\clearpage
 \section{Composite dispatching rules}\label{sec:CDR}
-\citet{Jayamohan04} showed that a careful combination of dispatching rules can perform significantly better. These are referred to as \emph{composite dispatching rules} (CDR), where the priority ranking is an expression of several SDRs. For instance, optimising \JSP\ w.r.t. $L_{max}$ for one machine\ \cite[see. chapter 14.2]{Pinedo08}, one can combine SDRs that are optimal for a different criteria of problem instances, which complement each other as a CDR, e.g., combining the SDRs 
-WSPT (SPT weighted w.r.t. $\mathcal{J}$), ``which is optimal when all release dates and due dates are zero,'' 
-and minimum slack first (MS), ``which is optimal when all due dates are sufficiently loose and spread out,'' 
-one gets the CDR apparent tardiness cost which can work well on a broader set 
-of problem instances than the original SDRs by themselves.
 
-CDRs can deal with greater number of features and more complicated form, in 
-short, CDR are a combination of several SDRs. For instance let $\pi$ be a CDR 
-comprised of $d$ DRs (which could be SDR or another CDR), then the index $I$ 
-for job $J_j$ using CDR is, 
+Priority \dr s are attractive since they are relatively easy to 
+implement, fast and find good schedules. In addition, they are relatively easy 
+to interpret, which makes them desirable for the end-user (i.e. shop floor 
+operators). However, they can also fail unpredictably. 
+\citet{Jayamohan04} showed that a careful combination of \dr s can 
+perform significantly better. These are referred to as \emph{composite 
+dispatching rules} (CDR), where the priority ranking is an expression of 
+several DRs. 
+
+For instance, optimising \JSP\ w.r.t. $L_{max}$ for one machine\ \cite[see. 
+chapter 14.2]{Pinedo08}, one can combine SDRs that are optimal for a different 
+criteria of problem instances, which complement each other as a CDR, e.g., 
+combining the SDRs 
+\begin{enumerate*}[after={{}}]
+    \item WSPT (SPT weighted w.r.t. $\mathcal{J}$), ``which is optimal when all 
+    release dates and due dates are zero,'' 
+    \item minimum slack first (MS), ``which is optimal when all due dates are 
+    sufficiently loose and spread out,'' 
+\end{enumerate*}
+one gets the CDR \emph{apparent tardiness cost} which can work well on a 
+broader set of problem instances than the original SDRs by themselves.
+
+\subsection*{Mathematical formulation of CDRs}
+
+CDRs can deal with a greater number of more complicated functions constructed 
+from the schedules attributes. In short, a CDR is a combination of several DRs. 
+For instance let $\pi$ be a CDR comprised of $d$ DRs, then the index $I$ for 
+$J_j\in\mathcal{L}^{(k)}$ using $\pi$ is, 
 \begin{equation}
-	I_j^{\pi} = \sum_{i=1}^d w_i \cdot \pi_i(\vphi_j)
+    I_j^{\pi} = \sum_{i=1}^d w_i \pi_i(\vchi^j) \label{eq:CDR}
 \end{equation}
 where $w_i>0$ and $\sum_{i=0}^d w_i = 1$, then $w_i$ gives the \emph{weight} of 
-the influence of $\pi_i$ to $\pi$. Note, 
-each $\pi_i$ is a function of the job $J_j$'s feature state $\vphi_j$.
+the influence of $\pi_i$ (which could be a SDR or another CDR) to $\pi$. Note, 
+each $\pi_i$ is function of $J_j$'s attributes from the partial schedule
+$\vchi^j$.
 
-Generally the weights $\vec{w}$ are chosen by the algorithm designer a priori. 
+The \cdr\ presented in \cref{eq:CDR} can be considered as a special case of a 
+the following general linear value function,
+\begin{equation}\label{eq:jssp:linweights}
+    \pi(\vchi^j)=\sum_{i=1}^d w_i \phi_i(\vchi^j) 
+    \stackrel{\eqref{eq:postdecision}}{=}
+    \inner{\vec{w}}{\vphi^j}.
+\end{equation}
+when $\pi_i(\cdot)=\phi_i(\cdot)$, i.e., a composite function of the features 
+from \cref{tbl:features}. 
+
+Finally, the job to be dispatched, $J_{j^*}$, corresponds to the one with the 
+highest value, i.e.,
+\begin{equation}\label{eq:lin}
+    J_{j^*}=\argmax_{J_j\in \mathcal{L}}\; \pi(\vphi^j)
+\end{equation}
+
+Generally the weights $\vec{w}$ in \cref{eq:jssp:linweights} are chosen by the 
+algorithm designer a priori. 
 A more sophisticated approach would to learn have the algorithm discover these 
 weights autonomously, for instance via evolutionary search or preference-based 
 imitation learning, to be discussed in \cref{ch:esmodels} and 
 \cref{ch:prefmodels}, respectively.
 
-\subsection*{Automated discovery of dispatching rules}
+\subsection*{Automated discovery of CDRs}
 \citet{Monch13} stress the importance of automated discovery of DRs and named several of successful implementations in the field of semiconductor wafer fabrication facilities. 
 However, \citeauthor{Monch13} note that this sort of investigation is still in its infancy and subject for future research.
 
@@ -412,11 +463,13 @@ which is the study of how learning algorithms can be improved, i.e., exploiting
 their strengths and remedy their failings, in order for a better algorithm 
 design. Thus creating an adaptable learning algorithm that dynamically finds 
 the appropriate dispatching rule  to the data distribution at hand. 
+
 \citet{Kalyanakrishnan11} point out that meta learning can be very fruitful in 
 reinforcement learning, and in their experiments they discovered some key 
 discriminants between competing algorithms for their particular problem 
 instances, which provided them with a hybrid algorithm which combines the 
 strengths of the algorithms.
+
 \citet{Nguyen13} proposed a novel {iterative dispatching rules} for \JSP\ 
 which learns from completed schedules in order to iteratively improve new ones. 
 At each dispatching step, the method can utilise the current feature space to 
@@ -424,11 +477,13 @@ At each dispatching step, the method can utilise the current feature space to
 lookahead). Their method is straightforward, and thus easy to implement and 
 more importantly, computationally inexpensive, although \citeauthor{Nguyen13} 
 stress that there still remains room for improvement. 
+
 \citet{Korytkowski13} implemented {ant colony optimisation} to select the 
 best DR from a selection of 9 DRs for \JSP\ and their experiments showed 
 that the choice of DR do affect the results and that for all performance 
 measures considered it was better to have all of the DRs to choose from rather 
 than just a single DR at a time. 
+
 Similarly, \citet{Lu13} investigate 11 SDRs for \JSP\ to create a pool of 
 33 CDRs that strongly outperformed the ones they were based on, which 
 is intuitive since where one SDR might be failing, another could be excelling, 
@@ -439,11 +494,18 @@ or job waiting time (similar to \phiwait\ and \phimacSlack\ in
 two key features of the schedule and then the basic DRs. However, there are no 
 combinations of the basic DR explored, only machine idle time and job waiting 
 time.  
+
 \citet{Yu13} used priority rules to combine 12 existing DRs from the 
 literature, in their approach they had 48 priority rules combinations, 
 yielding 48 different models to implement and test. This is a fairly 
 ad-hoc solution and there is no guarantee the optimal combination of DRs is 
 found. 
+
+It is intuitive to get a boost in performance by introducing new CDRs, since 
+where one DR might be failing, another could be excelling so combining them 
+together should yield a better CDR. However, these approaches introduce fairly 
+ad-hoc solutions and there is no guarantee the optimal combination of 
+\dr s are found.
 
 \section{Rice's framework for \jsp}\label{sec:rice:jsp}
 \citeauthor{Rice76}'s framework for algorithm selection (discussed in 

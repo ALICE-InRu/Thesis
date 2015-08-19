@@ -4,20 +4,22 @@
     rule, $\pi$, for a fixed construction heuristic ($\Upsilon$).} 
     \label{pseudo:constructJSP}
     \begin{algorithmic}[1]
-        \Procedure{Construct\JSP}{$\pi$,$\Upsilon$}
+        \Procedure{Construct\JSP}{$\pi,\Upsilon$}
         \State $\vchi \gets \emptyset$  
         \Comment{initial current dispatching sequence}
         \For{k}{1}{l=n\cdot m} 
         \Comment{at each dispatch iteration}
         \ForAll{$J_j\in \mathcal{L}^{(k)}\subset \mathcal{J}$} 
         \Comment{inspect job-list}
-        \State $I_j^{\pi} \gets \pi 
-        \left(\Upsilon\left([\vchi,j]\right)\right)$ 
-        \Comment{priority $J_j$}
+        \State $\vphi^j \gets \vphi\circ\Upsilon\left(\vchi^j\right)$ 
+        \label{pseudo:constructJSP:phi}
+        \Comment{temporal features for post-descision state $J_j$}
+        \State $I_j^{\pi} \gets \pi\left(\vphi^j\right)$ 
+        \Comment{priority for $J_j$}
         \EndFor
         \State $j^* \gets \argmax_{j\in \mathcal{L}^{(k)}}\{I_j^{\pi}\}$ 
         \Comment{choose highest priority}
-        \State $\chi_k \gets j^*$ 
+        \State $\chi_k \gets J_{j^*}$ 
         \Comment{dispatch $j^*$}
         \EndFor
         \State \Return $C_{\max}^{\pi} \gets \Upsilon(\vchi)$ 
