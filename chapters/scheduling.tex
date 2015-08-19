@@ -49,10 +49,8 @@ is given by a triplet $\alpha|\beta|\gamma<$, where
   constraints
   \item $\gamma$ lists the problem's objective
 \end{enumerate*}
-Hence our family of scheduling problems, i.e., a $m$ machine \JSP\ w.r.t. 
-minimising makespan, is $Jm||C_{\max}$. 
-In addition, for \FSP\ w.r.t. minimising makespan the notation is 
-$Fm||C_{\max}$. 
+Hence our family of scheduling problems, i.e., a $m$ machine \JSP\ or \FSP\ 
+w.r.t. minimising makespan, is $Jm||C_{\max}$ and $Fm||C_{\max}$, respectively. 
 An additional constraint commonly considered are job release-dates and 
 due-dates, and then the objective is generally minimising the maximum lateness, 
 denoted $Jm|r_j,d_j|L_{\max}$, however, those  constraints will not be 
@@ -66,13 +64,17 @@ will denote the time step of the operation. Note that once an operation is
 started, it must be completed uninterrupted, i.e., pre-emption is not allowed. 
 Moreover, there are no sequence dependent set-up times.
 
-For any given \JSP, which consists of $n$ jobs for $m$ machines, then each job 
-$J_j$ has an indivisible operation time (or cost) on machine $M_a$, $p_{ja}$, 
-which is assumed to be integral and finite. 
+For any given \JSP, then each job $J_j$ has an indivisible operation time (or 
+cost) on machine $M_a$, $p_{ja}$, which is assumed to be integral and finite. 
+
 Starting time of job $J_j$ on machine $M_a$ is denoted $x_s(j,a)$ and its 
 completion or end time is denoted $x_e(j,a)$ where, 
 \begin{equation}  x_e(j,a):=x_s(j,a)+p_{ja} \end{equation} 
-Each job $J_j$ has a specified processing order through the machines, it is a permutation vector, $\vsigma_j$, of $\{1,..,m\}$, representing a job $J_j$ can be processed on $M_{\vsigma_j(a)}$ only after it has been completely processed on $M_{\vsigma_j(a-1)}$, i.e.,
+
+Each job $J_j$ has a specified processing order through the machines, it is a 
+permutation vector, $\vsigma_j$, of $\{1,..,m\}$, representing a job $J_j$ can 
+be processed on $M_{\vsigma_j(a)}$ only after it has been completely processed 
+on $M_{\vsigma_j(a-1)}$, i.e.,
 \begin{equation}\label{eq:permutation}
 	x_s(j,\vsigma_j(a)) \geq x_e(j,\vsigma_j(a-1)) 
 \end{equation}
@@ -95,7 +97,9 @@ The objective function is to minimise its maximum completion times for all tasks
 Clearly, w.r.t. minimum makespan, it is preferred that schedules are non-delay, 
 i.e., the machines are not kept idle. The time in which machine $M_a$ is idle 
 between consecutive jobs $J_j$ and $J_{j'}$ is called idle time, 
-\begin{equation} s(a,j):=x_s(j,a)-x_e(j',a) \label{eq:slack}\end{equation}
+\begin{equation} 
+  s(a,j):=x_s(j,a)-x_e(j',a) \label{eq:slack}
+\end{equation}
 where $J_j$ is the immediate successor of $J_{j'}$ on $M_a$. Although this is 
 not a variable directly needed to construct a schedule for \JSP, it is a key 
 attribute in order to measure the quality of the schedule. 
@@ -114,15 +118,15 @@ idle times $M_a$ are inspected, as they create flow time  which $J_j$ can
 occupy. Bearing in mind that $J_j$ release time is $x_e(j,\vsigma_j(a-1))$ one 
 cannot implement \cref{eq:slack} directly, instead it has to be updated as 
 follows,
-\begin{eqnarray}
-	\tilde{s}(a,j')&:=& x_s(j'',a)-\max\{x_e(j',a),\;x_e(j,\vsigma_j(a-1))\} % 
+\begin{equation}
+	\tilde{s}(a,j') := x_s(j'',a)-\max\{x_e(j',a),\;x_e(j,\vsigma_j(a-1))\} % 
 	%\textrm{ if } x_e(j,\vsigma_j(a-1)\geq x_e(j',a) 
-\end{eqnarray}
+\end{equation}
 for all already dispatched jobs $J_{j'},J_{j''}\in \mathcal{J}_a$ where $J_{j''}$ is $J_{j'}$ successor on $M_a$. Since pre-emption is not allowed, the only applicable slots are whose idle time can process the entire operation, i.e.,
-\begin{eqnarray}
-	\tilde{S}_{ja}&:=&\condset{J_{j'}\in \mathcal{J}_a}{\tilde{s}(a,j')\geq 
+\begin{equation}
+	\tilde{S}_{ja} := \condset{J_{j'}\in \mathcal{J}_a}{\tilde{s}(a,j')\geq 
 	p_{ja} }\label{eq:slots}.
-\end{eqnarray} 
+\end{equation} 
 Now, there are several heuristic methods for selecting a slot from 
 \cref{eq:slots}, e.g., if the main concern were to utilise the slot space, then 
 choosing the slot with the smallest idle time would yield a closer-fitted 
@@ -166,18 +170,18 @@ such as SPT or via evolutionary search, etc.
 \section{Example}\label{sec:jsp:example}
 There are many examples of \jsp\ for real-world application. 
 However, for demonstration purposes, let's examine a problem from the 18th 
-century. Assume we are invited to the Mad Hatter's Tea Party in Wonderland (cf. 
-\cref{fig:teaparty}). 
+century. Assume we are invited to the Mad Hatter's Tea Party in Wonderland 
+illustrated in \cref{fig:teaparty}. 
 There are four guests attending, namely
 \begin{enumerate*}[label={$J_\arabic*$)}, ref={{$J_\arabic*$}}, 
-    itemjoin*={{, and our host }}]
+    itemjoin*={{, and of course our host }}]
     \item Alice\label{guest:alice}
     \item March Hare\label{guest:marchhare}
     \item Dormouse\label{guest:dormouse}
     \item Mad Hatter\label{guest:madhatter}
 \end{enumerate*}
-During these festivities, there are several things each member of the party has 
-to perform, they all have to
+During these festivities, there are several things each member of the party 
+has to perform. They all have to
 \begin{enumerate*}[label={$M_\arabic*$)}]
     \item have wine or pour tea
     \item spread butter
@@ -193,51 +197,28 @@ habit.
 Moreover, they tend to be very absent-minded so each task takes them a 
 different amount of time. 
 Let's assume that their processing times and ordering are given in 
-\cref{tbl:example}.
-
-\begin{table}[t]\centering
-%j.rnd.4x5.train.csv => instance problem.1
-\caption{Example of $4\times5$ \JSP}\label{tbl:example}
-\begin{tabular}{lc|ccccc|ccccc} \toprule
-Guest & \multicolumn{1}{c}{Job} & \multicolumn{5}{c}{Machine ordering 
-$\vsigma$} & \multicolumn{5}{c}{Processing times $\vec{p}$} \\ \midrule
-%0 16 1 5 2 10 3 15 4 10 
-Alice & \ref{guest:alice} & \textit{1} & \textit{2} & \textit{3} & \textit{4} & 
-\textit{5} & 
-\textit{26} & \textit{25} & \textit{40} & \textit{15} & \textit{42} \\
-%0 18 1 16 2 36 3 68 4 44 
-March Hare & \ref{guest:marchhare} & \textit{1} & \textbf{2} & 3 & 4 & 5 & 
-\textit{18} & \textbf{86} & 86 & 68 & 84 \\
-%4 20 3 9 2 3 1 33 0 96 
-Dormouse & \ref{guest:dormouse} & \textit{1} & \textit{3} & \textbf{2} & 4 & 5 
-& 
-\textit{20} & \textbf{59} & \textit{23} & 33 & 96 \\
-%4 40 3 7 1 15 5 13 2 80 
-Mad Hatter & \ref{guest:madhatter} & \textit{4} & \textit{3} & \textbf{1} & 5 & 
-2 & \textbf{40} & 47 & \textit{55} & \textit{13} & 99 
-\\
-\bottomrule
-\end{tabular}
-\end{table}
+\cref{tbl:example}. 
 
 \begin{figure}[b!]\centering 
-    \includegraphics[width=0.8\textwidth]{alice-mad-tea-party}
+    \includegraphics[width=0.9\textwidth]{alice-mad-tea-party}
     \caption{The Mad Hatter's Tea Party, from Alice's Adventures in Wonderland 
         by \citet{alice}. Illustration by John Tenniel 
         (1820-1914).}\label{fig:teaparty}
 \end{figure}
+
+\input{tables/example}
 
 Unfortunately, Alice can't stay long. She must leave as soon as possible to 
 play croquet with the Red Queen, 
 and she mustn't be late for that very important date. Otherwise, it's off with 
 someone's head! However, Alice, had a proper upbringing and won't leave the 
 table until everyone has finished their tasks. 
-How should the guests go about their tea-party, in order for Alice to be 
-on-time?
+How should the guests go about 
+their tea-party, in order for Alice to be on-time?
 
 The problem faced by Alice and her new friends is in what order should they 
 rotate their tasks between themselves so that they all finish as soon as 
-possible. This can be considered as is a typical four-job and five-machine 
+possible? This can be considered as is a typical four-job and five-machine 
 \jsp, where
 \begin{enumerate*}[label={{}}]
     \item our guests are the jobs
@@ -279,7 +260,6 @@ dispatching process as a Gantt-chart
     \label{fig:example:midway}
 \end{figure}
 
-\clearpage
 If the job with the shortest processing time were to be scheduled next, i.e., 
 implementing the SPT heuristic, then $J_4$ would be dispatched. Similarly, for 
 the LPT (largest processing time) heuristic then $J_2$ would be dispatched. 
@@ -287,6 +267,13 @@ Other DRs use features not directly observable from looking at the current
 partial schedule (but easy to keep record of), for example by assigning jobs 
 with most or least total processing time remaining, i.e., MWR and LWR 
 heuristics, who would yield $J_2$ and $J_4$, respectively.
+
+\begin{figure}[b!]
+  \includegraphics[width=\textwidth]{{example.gantt.SDRs}.pdf}
+  \caption{SDRs applied to the example in \cref{sec:jsp:example}. 
+    An optimal solution is shown in the lower right corner as a reference.}
+  \label{fig:example:SDRs}
+\end{figure}
 
 \section{Single-based priority dispatching rules}\label{sec:SDR}
 \emph{Dispatching rules} (DR) are of a construction heuristics, where one 
@@ -300,29 +287,31 @@ However, let's assume that ties are broken at random.
 A \emph{single-based priority dispatching rule} (SDR), or simple priority 
 dispatching rule, is a function of attributes, or features, of the jobs and/or 
 machines of the schedule. The features can be constant or vary throughout the 
-scheduling process. For instance, the priority may depend on job processing 
-attributes, such as which job has, 
+scheduling process. 
+For instance, priority may depend on job processing attributes, such as 
+which job has, 
 \begin{description}
-	\item[Shortest immediate processing time (SPT)] \hfill \\
-	greedy approach to finish shortest tasks first,  
-	\item[Longest immediate processing time (LPT)] \hfill \\
-	greedy approach to finish largest tasks first, 
-	\item[Least work remaining (LWR)] \hfill \\
-	whose intention is to complete jobs advanced in their pro\-gress, i.e., 
-	minimising the job-list $\mathcal{L}$,
-	\item[Most work remaining (MWR)] \hfill \\
-	whose intention is to accelerate the processing of jobs that require a 
-	great deal of work, yielding a balanced progress for all jobs during 
-	dispatching, however, in-process inventory can be high.
+  \item[Shortest immediate processing time (SPT)] \hfill \\
+  greedy approach to finish shortest tasks first,  
+  \item[Longest immediate processing time (LPT)] \hfill \\
+  greedy approach to finish largest tasks first, 
+  \item[Least work remaining (LWR)] \hfill \\
+  whose intention is to complete jobs advanced in their pro\-gress, i.e., 
+  minimising $\mathcal{L}$,
+  \item[Most work remaining (MWR)] \hfill \\
+  whose intention is to accelerate the processing of jobs that require a 
+  great deal of work, yielding a balanced progress for all jobs during 
+  dispatching, however, in-process inventory can be high.
 \end{description}
 These rules are the ones most commonly applied in the literature due to their simplicity and efficiency, %\citep[cf.][]{Haupt89,Panwalkar77}
 therefore they will be referenced throughout the dissertation. 
 However, there are many more available, e.g., randomly selecting an operation 
 with equal possibility (RND); minimum slack time (MST); smallest slack per 
 operation (S/OP); and using the aforementioned dispatching rules with 
-predetermined weights. A survey of more than 100 of such rules are presented in 
-\citet{Panwalkar77}, however, the reader is referred to an in-depth survey for 
-SDRs by \citet{Haupt89}. 
+predetermined weights. 
+A survey of more than 100 of such rules are presented in \citet{Panwalkar77}, 
+however, the reader is referred to an in-depth survey for SDRs by 
+\citet{Haupt89}. 
 
 %Haupt89:
 %Among the rules with job processing information, SPT is the most known, the most applied, and yet one of the most efficient rules. In line with LPT, it requires the lowest information amount, since only operation data (not job data) from the local queue (not from other queues) are needed.
@@ -336,12 +325,6 @@ Continuing with the example from \cref{sec:jsp:example}, the final schedules
 for these main SDRs (and a possible optimal schedule for reference) are 
 depicted in \cref{fig:example:SDRs}.
 
-\begin{figure}
-    \includegraphics[width=\textwidth]{{example.gantt.SDRs}.pdf}
-    \caption{SDRs applied to the example in \cref{sec:jsp:example}. 
-    An optimal solution is shown in the lower right corner as a reference.}
-    \label{fig:example:SDRs}
-\end{figure}
 
 %Haupt89:
 %Among the rules with job processing information, SPT is the most known, the most applied, and yet one of the most efficient rules. In line with LPT, it requires the lowest information amount, since only operation data (not job data) from the local queue (not from other queues) are needed.
@@ -357,7 +340,7 @@ These emanated observed features are sometimes referred to as an
 A partial schedule is denoted $\vchi^j$ where $J_j$ is the 
 latest dispatch, i.e., $\chi_k=J_j$, and its resulting features is denoted, 
 \begin{equation}\label{eq:postdecision}
-\vphi^j:=\vphi(\vchi^j).
+  \vphi^j:=\vphi(\vchi^j).
 \end{equation}
 
 Features are used to grasp the essence of the current state of the schedule. Temporal scheduling features applied in this dissertation for a job $J_j$ to be dispatched on machine $M_a$ are given in \cref{tbl:features}. 
@@ -397,7 +380,7 @@ basis.
 	\input{tables/features-description}
 \end{table}
 
-\clearpage
+
 \section{Composite dispatching rules}\label{sec:CDR}
 
 Priority \dr s are attractive since they are relatively easy to 
@@ -428,7 +411,7 @@ from the schedules attributes. In short, a CDR is a combination of several DRs.
 For instance let $\pi$ be a CDR comprised of $d$ DRs, then the index $I$ for 
 $J_j\in\mathcal{L}^{(k)}$ using $\pi$ is, 
 \begin{equation}
-    I_j^{\pi} = \sum_{i=1}^d w_i \pi_i(\vchi^j) \label{eq:CDR}
+  I_j^{\pi} = \sum_{i=1}^d w_i \pi_i(\vchi^j) \label{eq:CDR}
 \end{equation}
 where $w_i>0$ and $\sum_{i=0}^d w_i = 1$, then $w_i$ gives the \emph{weight} of 
 the influence of $\pi_i$ (which could be a SDR or another CDR) to $\pi$. Note, 
@@ -438,9 +421,8 @@ $\vchi^j$.
 The \cdr\ presented in \cref{eq:CDR} can be considered as a special case of a 
 the following general linear value function,
 \begin{equation}\label{eq:jssp:linweights}
-    \pi(\vchi^j)=\sum_{i=1}^d w_i \phi_i(\vchi^j) 
-    \stackrel{\eqref{eq:postdecision}}{=}
-    \inner{\vec{w}}{\vphi^j}.
+  \pi(\vchi^j) = \sum_{i=1}^d w_i \phi_i(\vchi^j)
+              \stackrel{\eqref{eq:postdecision}}{=} \inner{\vec{w}}{\vphi^j}.
 \end{equation}
 when $\pi_i(\cdot)=\phi_i(\cdot)$, i.e., a composite function of the features 
 from \cref{tbl:features}. 
@@ -448,7 +430,7 @@ from \cref{tbl:features}.
 Finally, the job to be dispatched, $J_{j^*}$, corresponds to the one with the 
 highest value, i.e.,
 \begin{equation}\label{eq:lin}
-    J_{j^*}=\argmax_{J_j\in \mathcal{L}}\; \pi(\vphi^j)
+  J_{j^*}=\argmax_{J_j\in \mathcal{L}}\; \pi(\vphi^j)
 \end{equation}
 
 Generally the weights $\vec{w}$ in \cref{eq:jssp:linweights} are chosen by the 
