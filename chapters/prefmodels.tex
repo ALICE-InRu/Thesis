@@ -25,7 +25,7 @@ $\mathcal{O}^{(k)}\cap\mathcal{S}^{(k)}=\emptyset$.
 
 For \jsp\ there are $d=\NrFeatTotal$ features (cf. the step-by-step varying features from \cref{tbl:features}), and the training set is created in the manner described in \cref{sec:gentrainingdata}.
 
-\todo{Which is being used, ordinal or logistic regression?}
+\todoFind{Which is being used, ordinal or logistic regression?}
 Logistic regression makes decisions regarding optimal dispatches and at the same time efficiently estimates a posteriori probabilities. When using linear classification model (cf. \cref{sec:ord:linpref}), i.e., 
 \begin{equation}\label{eq:jsp:linweights}
 	\hat{\pi}(\vchi)=\sum_{i=1}^d 
@@ -57,7 +57,7 @@ the ordinal regression to `discover' the weights $\vec{w}$ in order for
 \cref{eq:jsp:linweights} corresponding applying a \sdr~from \cref{sec:SDR}. 
 For instance, 
 \begin{IEEEeqnarray*}{s"rCl} 
-	SPT:& w_i&=&\bigg\{ \begin{array}{rl}-1&\text{if 
+    SPT:& w_i&=&\bigg\{ \begin{array}{rl}-1&\text{if 
         }i=1\\0&\text{otherwise}\end{array} \\
     LPT:& w_i&=&\bigg\{ \begin{array}{rl} 1&\text{if 
         }i=1\\0&\text{otherwise}\end{array} \\
@@ -68,99 +68,6 @@ For instance,
 \end{IEEEeqnarray*}
 where $i\in\{1,\ldots,d\}$.
 
-
-\section{Generating training data}\label{sec:gentrainingdata} 
-
-For \jsp\ there are $N_{\text{train}}$ problem instances generated using $n$ jobs and $m$ machines for processing times, $\vec{p}$, following the same data distribution and a random $\vsigma$ permutations, summarised in \cref{tbl:features}.  
-
-\subsection{\Jsp\ tree representation}\label{sec:gen:gametree}
-When building a complete \jsp\ schedule, $\ell=n\cdot m$ dispatches must be made sequentially.
-A job is placed at the earliest available time slot for its next machine, whilst still fulfilling constraints \cref{eq:permutation,eq:oneJobPerMac}.
-%that each machine can handle at most one job at each time, and jobs need to have finished their previous machines according to its machine order. 
-Unfinished jobs are dispatched one at a time according to some heuristic. 
-After each dispatch\footnote{The terms dispatch (iteration) and time step are used interchangeably.} the schedule's current features (cf. \cref{tbl:features}) are updated based on the half-finished schedule. 
-These collected features are denoted $\Phi$, where, 
-\begin{eqnarray}\label{eq:Phi}
-	\Phi:= \bigcup_{i=1}^{N_{\text{train}}} 
-	\bigcup_{k=1}^\ell\bigcup_{J_j\in\mathcal{L}^{(k)}} 
-    \condset{\vphi_j}{\vec{x}_i\in\mathcal{P}^{n\times m} }.
-\end{eqnarray}
-
-Continuing with the example from \cref{sec:jsp:example}, \cref{fig:jssp:gametree} shows how the first two dispatches could be executed for a six-job five-machine \jsp\ scheduling problem, with the machines, $a\in\{M_1,...,M_5\}$, on the vertical axis and the horizontal axis yields the current makespan. The next possible dispatches are denoted as dashed boxes with the job index $j$ within and its length corresponding to $p_{ja}$.
-In the top layer one can see an empty schedule.
-In the middle layer one of the possible dispatches from the layer above is fixed, and one can see the resulting schedule, i.e., what are the next possible dispatches given this scenario? Assuming $J_4$ would be dispatched first, the bottom layer depicts all the next possible partial schedules.
-
-This sort of tree representation is similar to \emph{game trees} \citep[cf.][]{Rosen03} where the root node denotes the initial (i.e. empty) schedule and the leaf nodes denote the complete schedule (resulting after $n\cdot m$ dispatches, thus height of the tree is $\ell$), therefore the distance $k$ from an internal node to the root yields the number of operations already dispatched. Traversing from root to leaf node one can obtain a sequence of dispatches that yielded the resulting schedule, i.e., the sequence indicates in which order the tasks should be dispatched for that particular schedule. 
-
-However one can easily see that this sequence of task assignments is by no 
-means unique. 
-Inspecting a partial schedule further along in the dispatching process such as 
-in \cref{fig:example:midway}, then let's say $J_2$ would be dispatched next, 
-and in the next iteration $J_4$. 
-Now this sequence would yield the same schedule as if $J_4$ would have been 
-dispatched first and then $J_2$ in the next iteration. 
-This is due to the fact these are non-conflicting jobs, which indicates that some of the nodes in game tree can merge. 
-In the meantime the states of the schedule are different and thus their features, although they manage to yield with the same (partial) schedule at a later date.  % ATHUGASEMD 1 -- SEQ. REP NON-UNIQUE
-In this particular instance one can not infer that choosing $J_1$ is better and $J_2$ is worse (or vice versa) since they can both yield the same solution.
-
-In some cases there can be multiple optimal solutions to the same problem instance. 
-Hence not only is the sequence representation `flawed' in the sense that slight permutations on the sequence are in fact equivalent w.r.t. the end-result.
-In addition, varying permutations of the dispatching sequence (however given the same partial initial sequence) can result in very different complete schedules but can still achieve the same makespan, and thus same \fullnamerho\ (which is the measure under consideration). 
-Care must be taken in this case that neither resulting features are labelled as undesirable. 
-Only the features from a dispatch yielding a truly suboptimal solution should be labelled undesirable. 
-
-The creation of the game tree for \jsp\ can be done recursively for all 
-possible permutation of dispatches, in the manner described above, resulting in 
-a full \mbox{$n$-ary} tree (since $|\mathcal{L}|\leq n$) of height $\ell$. Such 
-an exhaustive search would yield at the most $n^{\ell}$ leaf nodes (worst case 
-scenario being that no sub-trees merge). Now, since the internal vertices, 
-i.e., partial schedules, are only of interest to learn,\footnote{The root is 
-the empty initial schedule and for the last dispatch there is only one option 
-left to choose from, so there is no preferred `choice' to learn.} the number of 
-those can be at the most \mbox{${}^{n^{\ell}-1}/_{n-1}$}.
-Even for small dimensions of $n$ and $m$ the number of internal vertices are quite substantial and thus computationally expensive to investigate them all. Not to mention that this is done iteratively for all $N_{\text{train}}$ problem instances.
-
-\begin{figure}
-    \begin{tikzpicture}
-    \node[anchor=south west,inner sep=0] (image) at (0,0,0) 
-    {\includegraphics[width=\textwidth]{gametree}};
-    \begin{scope}[x={(image.south east)},y={(image.north west)}]
-    %% next four lines will help you to locate the point needed by forming a 
-    %%grid. comment these four lines in the final picture.↓
-    %\draw[help lines,xstep=.1,ystep=.1] (0,0) grid (1,1);
-    %\draw[help lines,xstep=.05,ystep=.05] (0,0) grid (1,1);
-    %\foreach \x in {0,1,...,9} { \node [anchor=north] at (\x/10,0) {0.\x}; }
-    %\foreach \y in {0,1,...,9} { \node [anchor=east] at (0,\y/10) {0.\y};}
-    %% upto here↑
-    \node (J0) at (0.5,0.71) {};
-    \node (J1) at (0.19,0.65) {};
-    \node (J2) at (0.42,0.65) {};
-    \node (J3) at (0.65,0.65) {};
-    \node (J4) at (0.85,0.65) {};
-    \draw[-latex] (J0) to[out=-20,in=+20] (J1);
-    \draw[-latex] (J0) to[out=-20,in=+20] (J2);
-    \draw[-latex] (J0) to[out=-20,in=+20] (J3);
-    \draw[-latex] (J0) to[out=-20,in=+20] (J4);
-    \node (J4) at (0.82,0.38) {};
-    \node (J4J1) at (0.19,0.31) {};
-    \node (J4J2) at (0.42,0.31) {};
-    \node (J4J3) at (0.65,0.31) {};
-    \node (J4J4) at (0.85,0.31) {};
-    \draw[-latex] (J4) to[out=-20,in=+20] (J4J1);
-    \draw[-latex] (J4) to[out=-20,in=+20] (J4J2);
-    \draw[-latex] (J4) to[out=-20,in=+20] (J4J3);
-    \draw[-latex] (J4) to[out=-20,in=+20] (J4J4);
-    \end{scope}
-    \end{tikzpicture}
-	\caption[Partial Game Tree for \jsp]{Partial Game Tree for \jsp\ for the 
-	first two dispatches. 
-		Top layer depicts all possible dispatches (dashed) for an empty schedule. 
-		Middle layer depicts all possible dispatches given that one of the dispatches from the layer above has been executed (solid). 
-	Bottom layer depicts when job $J_4$ on machine $M_2$ has been chosen to be dispatched from the previous layer, moreover it depicts all possible next dispatches from that scenario.}
-	\label{fig:jssp:gametree}
-\end{figure}
-
-\subsection{Labelling schedules w.r.t. optimal decisions}\label{sec:gentrdat:labelling}
 The optimum makespan is known for each problem instance. 
 At each time step (i.e. layer of the game tree) a number of feature pairs are created. 
 They consist of the features $\vphi_o$ resulting from optimal dispatches $o\in\mathcal{O}^{(k)}$, versus features $\vphi_s$ resulting from suboptimal dispatches $s\in\mathcal{S}^{(k)}$ at time $k$. 
@@ -176,7 +83,12 @@ That is to say the data generation takes into consideration when there are multi
 
 \section{Time dependant dispatching rules}
 At each dispatch iteration $k$, a number of preference pairs are created, which is then repeated for all the $N_{\text{train}}$ problem instances created. 
-A separate data set is deliberately created for each dispatch iterations, as the initial feeling is that dispatch rules used in the beginning of the schedule building process may not necessarily be the same as in the middle or end of the schedule. As a result there are $\ell$ linear scheduling rules for solving a $n \times m$ \jsp. \todo[inline]{No longer the case, one model for all steps}
+A separate data set is deliberately created for each dispatch iterations, as 
+the initial feeling is that dispatch rules used in the beginning of the 
+schedule building process may not necessarily be the same as in the middle or 
+end of the schedule. As a result there are $\ell$ linear scheduling rules for 
+solving a $n \times m$ \jsp. \todoWrite{No longer one model for all 
+steps}
 
 \section{Selecting preference pairs}\label{sec:S:strategies}
 Defining the size of the preference set as $l=\abs{S}$, then \cref{eq:S:jsp} gives the size of the feature training set as $\abs{\Phi}=\frac{1}{2}l$.
@@ -305,8 +217,6 @@ From the figures it is apparent there can be a performance edge gained by implem
 	\label{fig:size:trdat}
 \end{figure}
 
-\todo[inline]{Missing MISTA2013 figures}
-
 \subsubsection{Ranking strategies}
 There is no statistical difference between $S_f$ and $S_p$ ranking-schemes 
 across all disciplines (cf. \cref{fig:track:boxplot:p1,fig:track:boxplot:p2}), 
@@ -328,43 +238,6 @@ Finally, $S^{all}$ gave the best combination across all disciplines. Adding subo
 
 \subsubsection{Following CMA-ES guided trajectory}
 The rational for using the $S^{cma}$ strategy was mostly due to the fact a linear classifier is creating the training data (using the weights found via CMA-ES optimisation), hence the training data created should be linearly separable, which in turn should boost the training accuracy for a linear classification learning model. However, this strategy is easily outperformed by the single priority based dispatching rule MWR guiding the training data collection, $S^{mwr}$. 
-
-Let's inspect the CMA-ES guided training data more closely, in particular the linear weights for \cref{eq:jsp:linweights}. The weights are depicted in \cref{fig:weights:p1,fig:weights:p2} for problem space problem{1} and problem{2}, respectively. The original weights found via CMA-ES optimisation, that are used to guide the collection of training data, are depicted in red and  weights obtained by the linear classification model for $S_b^{cma}$ are depicted in blue.
-
-
-\begin{figure}\centering
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w1}\caption{$w_1$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w2}\caption{$w_2$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w3}\caption{$w_3$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w4}\caption{$w_4$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w5}\caption{$w_5$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w6}\caption{$w_6$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w7}\caption{$w_7$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w8}\caption{$w_8$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w9}\caption{$w_9$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w10}\caption{$w_{10}$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w11}\caption{$w_{11}$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w12}\caption{$w_{12}$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p1w13}\caption{$w_{13}$}\end{subfigure}
-	\caption{Linear weights for $\mathcal{P_1}$. Weights found via CMA-ES optimisation (red), and weights found via learning classification model based on $S_b^{cma}$ (blue).}\label{fig:weights:p1}
-\end{figure}
-
-\begin{figure}\centering
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w1}\caption{$w_1$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w2}\caption{$w_2$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w3}\caption{$w_3$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w4}\caption{$w_4$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w5}\caption{$w_5$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w6}\caption{$w_6$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w7}\caption{$w_7$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w8}\caption{$w_8$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w9}\caption{$w_9$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w10}\caption{$w_{10}$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w11}\caption{$w_{11}$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w12}\caption{$w_{12}$}\end{subfigure}
-	%\begin{subfigure}[b]{0.3\textwidth}\includegraphics[width=\textwidth]{weights/p2w13}\caption{$w_{13}$}\end{subfigure}
-	\caption{Linear weights for $\mathcal{P_2}$. Weights found via CMA-ES optimisation in red, and weights found via learning classification model based on $S_b^{cma}$ in blue.}\label{fig:weights:p2}
-\end{figure}
 
 
 \subsection{Summary and conclusion }
@@ -388,93 +261,6 @@ $k$.
 
 A more sophisticated way, would be to create a \emph{new} linear model, where the preference set, $S$, is the union of the preference pairs across the $\ell$ dispatches. This would amount to a substantial training set, and for $S$ to be computationally feasible to learn, $S$ has to be filtered to size $l_{\max}$.
 
-\section{Exhaustive feature selection}
-
-\subsection{Sampling strategies}
-Four different probability were implemented to sample $S$ to size $l_{\max}$. 
-\begin{description}
-	\item[Equal, $p^{equal}$], all preferences are of equal probability.
-	\item[Optimum, , $p^{opt}$], preferences were sampled proportional w.r.t. its stepwise optimality (cf. \cref{fig:diff:opt}).
-	\item[Best case scenario, $p^{bcs}$], preferences were sampled reciprocally proportional w.r.t. its best case scenario of suboptimal dispatches (cf. \cref{fig:diff:case} lower bounds).
-	\item[Worst case scenario, , $p^{wcs}$], preferences were sampled reciprocally proportional w.r.t. its worst case scenario of suboptimal dispatches (cf. \cref{fig:diff:case} upper bounds).
-\end{description}
-Where the latter three probabilities were sampled with replacement, whereas the first without replacement.
-
-
-\subsection{Experimental study}\label{sec:global}
-Given $N=500$ problem instances of 6-jobs 5-machines \jsp, one can see from \cref{fig:global:sizeofprefset} that $l=|\zeta_k|$ can be quite great for small $k$. Hence, the size of the preference set $\zeta_k$ is limited to $l_{\max}\leq 3.5\times10^{5}$ via random sampling prior implementing the learning algorithm. The training accuracy for the linear ordinal regression model is depicted in \cref{fig:global:tracc}, for problem space distributions problem{1} and problem{2}, described in \cref{tbl:data}.
-Moreover, a box-plot for \fullnamerho, for problem spaces considered are depicted in  \cref{fig:stepbystep:boxplot}. Note, figures utilize training set of size $N_{\text{train}}$ in all cases. Main statistics are reported in \cref{tbl:comp:p1p2p3:summary}. 
-
-\begin{figure}\centering 
-	%\includegraphics[width=0.8\textwidth]{global_numTrainingUnfiltered}
-	\caption{Size of preference set, $l$, for $\zeta_k$ defined by \cref{eq:zetak}, given $N_{\text{train}}=500$ problem instances for problem spaces problem{1} (blue) and problem{2} (red).}
-	\label{fig:global:sizeofprefset}
-\end{figure}
-
-\begin{figure}\centering
-	%\includegraphics[width=0.8\textwidth]{global_trainingacc}
-	\caption{Training accuracy for linear ordinal regression model trained on $\zeta_k$ defined by \cref{eq:zetak}, given $N_{\text{train}}=500$ problem instances for problem spaces problem{1} (blue) and problem{2} (red).}
-	\label{fig:global:tracc}
-\end{figure}
-
-\begin{figure}\centering
-	%\subfloat[Training set for $\fjc{6}{5}]{\includegraphics[height=0.8\textheight]{STEPBYSTEPfjc_rp.pdf}}\label{fig:sbs:fjc}
-\end{figure}
-
-\begin{figure}\centering
-	\ContinuedFloat 
-	%\subfloat[Training set for \frnd{6}{5}]{\includegraphics[height=0.8\textheight]{STEPBYSTEPfrnd_rp.pdf}}\label{fig:sbs:frnd}
-\end{figure}
-
-\begin{figure} \centering
-	\ContinuedFloat 
-	%\subfloat[Training set for \frndn{6}{5}]{\includegraphics[height=0.8\textheight]{STEPBYSTEPfrndn_rp.pdf}}\label{fig:sbs:frndn}
-\end{figure}
-
-\begin{figure}\centering
-	\ContinuedFloat 
-	%\subfloat[Training set for \jrnd{6}{5}]{\includegraphics[height=0.8\textheight]{STEPBYSTEPjrnd_rp.pdf}}\label{fig:sbs:jrnd}
-\end{figure}
-
-\begin{figure}\centering
-	\ContinuedFloat 
-	%\subfloat[Training set for \jrndn{6}{5}]{\includegraphics[height=0.8\textheight]{STEPBYSTEPjrndn_rp.pdf}}\label{fig:sbs:jrndn}
-	\caption{Box-plot of results for linear ordinal regression model trained on $\zeta_k$ defined by \cref{eq:zetak}, given $N=1,000$ problem instances for all considered $6\times5$ problem spaces.}\label{fig:stepbystep:boxplot}
-\end{figure}
-
-\todo[inline]{Add  $S_b^{all}$ which uses a separate local model for each step $k$, is shown on the far left for comparison  in \cref{fig:stepbystep:boxplot} ?!?}
-
-
-\begin{figure}\centering
-	%\begin{subfigure}[b]{0.49\textwidth}\centering
-	%\subfloat[Test set, problem{1}]{\includegraphics[width=0.5\textwidth]{global_p1}}\label{fig:global:p1}
-	%\subfloat[Test set, problem{2}]{\includegraphics[width=0.5\textwidth]{global_p1}}\label{fig:global:p2}
-	%\subfloat[Test set, problem{3}]{\includegraphics[width=0.5\textwidth]{global_p1}}\label{fig:global:p3}
-	\caption{Box-plot of results for global linear ordinal regression model, $\zeta_{14}$, trained on problem spaces problem{1} (blue) and problem{2} (red). Note, the step-by-step $S_b^{all}$ model for corresponding testing set is shown on the far left for comparison.}
-	\label{fig:global}
-\end{figure}
-
-\begin{table}\centering
-	\caption{Main statistics for \namerho, using problem spaces \Problem{1}, \Problem{2} and \Problem{3} using several scheduling policies}\label{tbl:comp:p1p2p3:summary}
-	%\input{tables/globalp1p2p3}
-\end{table}
-
-
-%\input{tables/orlib-jssp}
-\clearpage
-\begin{table}\centering
-	\caption{Main statistics for \namerho, for OR-Library \jsp\ benchmark problem instances using linear ordinal regression scheduling policies}\label{tbl:comp:orlibjssp:summary}
-	%\input{tables/globalpjor}
-\end{table}
-
-In addition, the global linear regression schedule policies $\zeta_{14}(\mathcal{P}_1)$ and $\zeta_{14}(\mathcal{P}_2)$ were tested on synthetic \FSP\ problems subclasses \frnd{6}{5}, \frndn{6}{5},\fjc{6}{5}, \fmc{6}{5} and \fmxc{6}{5} generated by \citet{Whitley} (cf. \cref{sec:data:FSP}). 
-
-%\input{tables/orlib-fssp} 
-%\begin{table}\centering
-%\caption{Main statistics for \namerho, for OR-Library \fsp\ benchmark problem instances using linear ordinal regression scheduling policies}
-%\input{tables/globalpfor}
-%\end{table}
-
-
+\todoWrite{No longer the case, one model instead of $\ell$ stepwise-models}
 
 \section{Discussion and conclusions}
