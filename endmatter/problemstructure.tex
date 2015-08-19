@@ -1,51 +1,7 @@
 \HeaderQuote{I can't explain myself, I'm afraid, Sir, because I'm not myself 
-	you see.}{Alice} 
+you see.}{Alice} 
 
 \chapter{Problem structure}\label{app:problemstructure} 
-Figures and tables within this \lcnamecref{app:problemstructure} pertain to 
-\cref{ch:problemstructure}. 
-\Cref{fig:diff:opt:unique,fig:diff:opt,fig:diff:opt:minmax} 
-depict the mean over all the training data, which are quite noisy 
-functions. \Cref{InRu15b} depicts the mean as is, albeit only for 
-	$10\times10$ problem spaces. 
-Thus, for clarity purposes, they are fitted with local polynomial regression, 
-making the boundary points sometimes biased. 
-However, 
-\cref{fig:diff:opt:SDR,fig:diff:case:OPT,fig:diff:case:SDR,fig:diff:opt:evol} 
-depict the mean as is.
-
-Note, other problem spaces for \cref{fig:diff:opt:minmax,fig:diff:opt:evol} 
-can be found in a 
-\href{http://tgax89.rhi.hi.is:3838/alice}{Shiny application written in R} 
-from \url{https://github.com/tungufoss/alice.code}.
-
-\newpage
-
-\begin{figure}[p]
-  \subcaptionbox{$6\times5$\label{fig:SDR:boxplot:6x5}}{
-    \includegraphics[width=\textwidth]{{boxplotRho.SDR.6x5}.pdf}}
-  \caption[Box-plots of \namerho, when applying SDRs]{Box-plots of \namerho, 
-    when applying SDRs for all problem spaces in \cref{ch:genprobleminstances}.}
-  \label{fig:SDR:boxplot}
-\end{figure}
-\begin{figure}[p]
-  \ContinuedFloat 
-  \subcaptionbox{$10\times10$\label{fig:SDR:boxplot:10x10}}{
-    \includegraphics[width=\textwidth]{{boxplotRho.SDR.10x10}.pdf}}
-  \caption{Continued.}
-\end{figure}
-
-{ \setlength{\tabcolsep}{3pt} 
-  \input{tables/quartiles.EasyHard} 
-  \input{tables/quartiles.6x5.EasyHard}
-  \input{tables/quartiles.10x10.EasyHard}
-
-  \input{tables/quartiles.6x5.Easy}
-  \input{tables/quartiles.6x5.Hard}
-
-  \input{tables/quartiles.10x10.Easy}
-  \input{tables/quartiles.10x10.Hard}
-}
 
 \begin{figure}
 	\centering
