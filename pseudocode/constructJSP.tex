@@ -1,19 +1,21 @@
 \begin{algorithm}[t]
     \caption{Pseudo code for constructing a \JSP\ sequence using a 
-    deterministic scheduling policy 
-    rule, $\pi$, for a fixed construction heuristic ($\Upsilon$).} 
+    deterministic scheduling policy (or \dr), $\pi$, for a fixed construction 
+    heuristic, $\Upsilon$.} 
     \label{pseudo:constructJSP}
     \begin{algorithmic}[1]
-        \Procedure{Construct\JSP}{$\pi,\Upsilon$}
+        \Procedure{Schedule\JSP}{$\pi,\Upsilon$}
         \State $\vchi \gets \emptyset$  
         \Comment{initial current dispatching sequence}
         \For{k}{1}{l=n\cdot m} 
         \Comment{at each dispatch iteration}
         \ForAll{$J_j\in \mathcal{L}^{(k)}\subset \mathcal{J}$} 
         \Comment{inspect job-list}
+        \State $\vchi^j \gets \{\chi_i\}_{i=1}^{k-1} \cup J_j$ 
+        \Comment{partial temporal schedule}
         \State $\vphi^j \gets \vphi\circ\Upsilon\left(\vchi^j\right)$ 
         \label{pseudo:constructJSP:phi}
-        \Comment{temporal features for post-descision state $J_j$}
+        \Comment{features for post-descision state}
         \State $I_j^{\pi} \gets \pi\left(\vphi^j\right)$ 
         \Comment{priority for $J_j$}
         \EndFor

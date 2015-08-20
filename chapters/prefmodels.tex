@@ -55,18 +55,6 @@ weights.
 Looking at the features description in \cref{tbl:features} it is possible for 
 the ordinal regression to `discover' the weights $\vec{w}$ in order for 
 \cref{eq:jsp:linweights} corresponding applying a \sdr~from \cref{sec:SDR}. 
-For instance, 
-\begin{IEEEeqnarray*}{s"rCl} 
-    SPT:& w_i&=&\bigg\{ \begin{array}{rl}-1&\text{if 
-        }i=1\\0&\text{otherwise}\end{array} \\
-    LPT:& w_i&=&\bigg\{ \begin{array}{rl} 1&\text{if 
-        }i=1\\0&\text{otherwise}\end{array} \\
-    MWR:& w_i&=&\bigg\{ \begin{array}{rl} 1&\text{if 
-        }i=7\\0&\text{otherwise}\end{array} \\
-    LWR:& w_i&=&\bigg\{ \begin{array}{rl}-1&\text{if 
-        }i=7\\0&\text{otherwise}\end{array}
-\end{IEEEeqnarray*}
-where $i\in\{1,\ldots,d\}$.
 
 The optimum makespan is known for each problem instance. 
 At each time step (i.e. layer of the game tree) a number of feature pairs are created. 

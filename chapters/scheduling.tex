@@ -34,7 +34,7 @@ implied in P\FSP.
 \Jsp\ considered for this dissertation is when $n$ jobs, 
 $\mathcal{J}=\{J_j\}_{j=1}^n$, are scheduled on a finite set, 
 $\mathcal{M}=\{M_a\}_{a=1}^m$, of $m$ machines, subject to the constraint that 
-each job $J_j$ must follow a predefined machine order (a chain or sequence of 
+each job $J_j$ must follow a predefined machine order (a chain of 
 $m$ operations, $\vsigma_j=[\sigma_{j1},\sigma_{j2},\dotsc,\sigma_{jm}]$) and 
 that a machine can handle at most one job at a time. 
 The objective is to schedule jobs in such a manner as to minimise the maximum 
@@ -42,7 +42,7 @@ completion times for all tasks, which is also known as the makespan,
 $C_{\max}$. 
 
 A common notation for scheduling problems \citep[cf. Chapter 2 in ][]{Pinedo08} 
-is given by a triplet $\alpha|\beta|\gamma<$, where 
+is given by a triplet $\alpha|\beta|\gamma$, where 
 \begin{enumerate*}[itemjoin*={, and finally}, label={{}}]
   \item $\alpha$ describes the machine environment
   \item $\beta$ details any additional processing characteristics and/or 
@@ -53,8 +53,8 @@ Hence our family of scheduling problems, i.e., a $m$ machine \JSP\ or \FSP\
 w.r.t. minimising makespan, is $Jm||C_{\max}$ and $Fm||C_{\max}$, respectively. 
 An additional constraint commonly considered are job release-dates and 
 due-dates, and then the objective is generally minimising the maximum lateness, 
-denoted $Jm|r_j,d_j|L_{\max}$, however, those  constraints will not be 
-considered here. 
+denoted $Jm|r_j,d_j|L_{\max}$. 
+However, those shop-requirements will not be considered here. 
 
 Henceforth, the index $j$ refers to a job $J_j\in\mathcal{J}$ while the index 
 $a$ refers to a machine $M_a\in\mathcal{M}$. If a job requires a number of 
@@ -64,7 +64,7 @@ will denote the time step of the operation. Note that once an operation is
 started, it must be completed uninterrupted, i.e., pre-emption is not allowed. 
 Moreover, there are no sequence dependent set-up times.
 
-For any given \JSP, then each job $J_j$ has an indivisible operation time (or 
+For any given \JSP, then each job $J_j$ has an indivisible processing time (or 
 cost) on machine $M_a$, $p_{ja}$, which is assumed to be integral and finite. 
 
 Starting time of job $J_j$ on machine $M_a$ is denoted $x_s(j,a)$ and its 
@@ -106,15 +106,15 @@ attribute in order to measure the quality of the schedule.
 
 \section{Construction heuristics}\label{sec:CH}
 Construction heuristics are designed in such a way that it limits the search 
-space in a logical manner, respecting not to exclude the optimum. Here, the 
-construction heuristic, $\Upsilon$, is to schedule the dispatches as closely 
-together as possible, i.e., minimise the schedule's idle times. 
+space in a logical manner. Preferably without excluding the true optimum. 
+Here, the construction heuristic, $\Upsilon$, is to schedule the dispatches as 
+closely together as possible, i.e., minimise the schedule's idle times. 
 More specifically, once an operation $(j,a)$ has been chosen from the job-list, 
 $\mathcal{L}$, by some dispatching rule, it can placed immediately after (but 
 not prior) $x_e(j,\vsigma_j(a-1))$ on machine $M_a$ due to constraint 
-\cref{eq:permutation}. 
-However, to guarantee that constraint \cref{eq:oneJobPerMac} is not violated, 
-idle times $M_a$ are inspected, as they create flow time  which $J_j$ can 
+\eqref{eq:permutation}. 
+However, to guarantee that constraint \eqref{eq:oneJobPerMac} is not violated, 
+idle times $M_a$ are inspected, as they create a slot which in $J_j$ can 
 occupy. Bearing in mind that $J_j$ release time is $x_e(j,\vsigma_j(a-1))$ one 
 cannot implement \cref{eq:slack} directly, instead it has to be updated as 
 follows,
@@ -141,35 +141,49 @@ $97\%$ of the instances when choosing the smallest slot.} and henceforth will
 be used throughout the dissertation.
 
 Note that the choice of slot is an intrinsic heuristic within the construction heuristic.
-Construction heuristics are designed in such a manner that they limit the 
-search space. Preferably without excluding the true optimum. The focus of this 
-dissertation, however, is on learning the priority of the jobs on the job-list, 
-for a fixed construction heuristic. Hence there are some problem instances in 
-which the optimum makespan cannot be achieved due to the limitations of the 
-schedule's construction heuristic of not being properly able to differentiate 
-between which slot from $\tilde{S}_{ja}$ is the most effective. Instead, 
-hopefully, the learning algorithm will be able to spot these problematic 
-situations, should they arise, by inspecting the schedule's features and 
-translate that into the jobs' priorities.
+The focus of this dissertation, however, is on learning the priority of the 
+jobs on the job-list, for a fixed construction heuristic. 
+Hence there could be some problem instances in which the optimum makespan 
+cannot be achieved due to the limitations of the schedule's construction 
+heuristic of not being properly able to differentiate between which slot from 
+\cref{eq:slots} is the most effective. 
+Instead, hopefully, the learning algorithm will be able to spot these 
+problematic situations, should they arise, by inspecting the schedule's 
+features and translate that into the jobs' priorities.
 
-To summarise, in order to create a schedule for \JSP, a construction heuristic 
-$\Upsilon$ is chosen with some DR to determine the priority of the jobs on the 
-job-list, $\mathcal{L}$. 
-\Cref{pseudo:constructJSP} outlines the pseudo code for the 
-dispatching process of a \JSP\ problem instance.
+\emph{Dispatching rules} (DR) are an integral part  of a construction 
+heuristics, where one starts with an empty schedule and adds sequentially on 
+one operation (or task) at a time. 
+Namely, at each time step $k$, an operation is dispatched which has the highest 
+priority of the job-list, \mbox{$\mathcal{L}^{(k)}\subset\mathcal{J}$}, i.e., 
+the jobs who still have operations unassigned. 
+If there is a tie, some other priority measure is used. 
+However, let's assume that ties are broken at random. 
+\Cref{pseudo:constructJSP} outlines the pseudo code for the entire dispatching 
+process of a \JSP\ problem instance.
 
 \input{pseudocode/constructJSP.tex}
 
-Henceforth, a \emph{sequence} will refer to the sequential ordering of the 
-dispatches of tasks to machines, i.e., $(j,a)$; the collective set of allocated 
-tasks to machines, which is interpreted by its sequence, is referred to as a 
-\emph{schedule}; a \emph{scheduling policy} $\pi$ will pertain to the manner in 
-which the sequence is manufactured for an (near) optimal schedule: be it a SDR 
-such as SPT or via evolutionary search, etc. 
+Henceforth we will adopt the following terminology: a \emph{sequence} 
+will refer to the sequential ordering of the dispatches of tasks to machines, 
+namely, 
+\begin{equation}
+  \vchi = \big\{\chi_k\big\}_{k=1}^\ell
+        = \condset{(j,a)}{J_j\in\mathcal{L}^{(k)}}_{k=1}^\ell
+\end{equation}
+Note, only a sequence of $J_j$ is needed, since the corresponding $M_a$ can be 
+obtained by reading $\vsigma$. 
+The collective set of allocated tasks to machines, which is interpreted by its 
+sequence, is referred to as a \emph{schedule}; and a \emph{scheduling policy} 
+$\pi$ will pertain to the manner in which the sequence is manufactured: be it a 
+SDR such as SPT or some other heuristic. 
+
+
 
 \section{Example}\label{sec:jsp:example}
 There are many examples of \jsp\ for real-world application. 
-However, for demonstration purposes, let's examine a problem from the 18th 
+However, for demonstration purposes, let's examine a hypothetical problem from 
+the 18th 
 century. Assume we are invited to the Mad Hatter's Tea Party in Wonderland 
 illustrated in \cref{fig:teaparty}. 
 There are four guests attending, namely
@@ -191,7 +205,7 @@ has to perform. They all have to
     a song to the group
 \end{enumerate*}
 Our guests are very particular creatures, and would like to do these task in a 
-very specific order, e.g., \ref{guest:marchhare}--March Hare insists on doing 
+very specific order, e.g., March Hare insists on doing 
 them in alphabetical order. And each would rather wait than breaking their 
 habit.
 Moreover, they tend to be very absent-minded so each task takes them a 
@@ -200,7 +214,7 @@ Let's assume that their processing times and ordering are given in
 \cref{tbl:example}. 
 
 \begin{figure}[b!]\centering 
-    \includegraphics[width=0.9\textwidth]{alice-mad-tea-party}
+    \includegraphics[width=0.8\textwidth]{alice-mad-tea-party}
     \caption{The Mad Hatter's Tea Party, from Alice's Adventures in Wonderland 
         by \citet{alice}. Illustration by John Tenniel 
         (1820-1914).}\label{fig:teaparty}
@@ -226,7 +240,7 @@ possible? This can be considered as is a typical four-job and five-machine
     \item our objective is to minimise the makespan, i.e., when Alice can leave
 \end{enumerate*}
 Let's assume we've come to the party, after 10 operations have already been 
-made (i.e. the italic entries in \cref{tbl:example}), by using the following 
+made (i.e. strikeout entries in \cref{tbl:example}), by using the following 
 job sequence,
 \begin{equation}
   \vchi = \left\{ \chi_i \right\}_{i=1}^{k-1}
@@ -250,8 +264,10 @@ dispatching process as a Gantt-chart
     \item the current $C_{\max}$ is denoted with a dotted line    
 \end{enumerate*}
 
-\begin{figure}
-    \includegraphics[width=\textwidth]{{example.gantt}.pdf}
+\clearpage
+
+\begin{figure}\centering
+    \includegraphics[width=0.9\textwidth]{{example.gantt}.pdf}
     \caption[Gantt chart of a partial \JSP\ schedule]{Gantt chart of a partial 
         \JSP\ schedule after 10 dispatches: Solid and dashed boxes represent 
         $\vchi$ and $\mathcal{L}^{(11)}$, respectively. Current $C_{\max}$ 
@@ -261,33 +277,18 @@ dispatching process as a Gantt-chart
 \end{figure}
 
 If the job with the shortest processing time were to be scheduled next, i.e., 
-implementing the SPT heuristic, then $J_4$ would be dispatched. Similarly, for 
-the LPT (largest processing time) heuristic then $J_2$ would be dispatched. 
+implementing the SPT-rule, then $J_4$ would be dispatched. Similarly, for 
+the LPT (largest processing time) then $J_2$ would be dispatched. 
 Other DRs use features not directly observable from looking at the current 
 partial schedule (but easy to keep record of), for example by assigning jobs 
 with most or least total processing time remaining, i.e., MWR and LWR 
 heuristics, who would yield $J_2$ and $J_4$, respectively.
 
-\begin{figure}[b!]
-  \includegraphics[width=\textwidth]{{example.gantt.SDRs}.pdf}
-  \caption{SDRs applied to the example in \cref{sec:jsp:example}. 
-    An optimal solution is shown in the lower right corner as a reference.}
-  \label{fig:example:SDRs}
-\end{figure}
+\section{Single priority based \dr s}\label{sec:SDR}
 
-\section{Single-based priority dispatching rules}\label{sec:SDR}
-\emph{Dispatching rules} (DR) are of a construction heuristics, where one 
-starts with an empty schedule and adds sequentially on one operation (or task) 
-at a time. Namely, at each time step $k$, an operation is dispatched which has 
-the highest priority of the job-list, 
-\mbox{$\mathcal{L}^{(k)}\subset\mathcal{J}$}, i.e., the jobs who still have 
-operations unassigned. If there is a tie, some other priority measure is used. 
-However, let's assume that ties are broken at random. 
-
-A \emph{single-based priority dispatching rule} (SDR), or simple priority 
-dispatching rule, is a function of attributes, or features, of the jobs and/or 
-machines of the schedule. The features can be constant or vary throughout the 
-scheduling process. 
+A \emph{\sdr} (SDR) is a function of attributes, or features, of the jobs 
+and/or machines of the schedule. The features can be constant or vary 
+throughout the scheduling process. 
 For instance, priority may depend on job processing attributes, such as 
 which job has, 
 \begin{description}
@@ -301,17 +302,19 @@ which job has,
   \item[Most work remaining (MWR)] \hfill \\
   whose intention is to accelerate the processing of jobs that require a 
   great deal of work, yielding a balanced progress for all jobs during 
-  dispatching, however, in-process inventory can be high.
+  dispatching. However, in-process inventory can be high.
 \end{description}
-These rules are the ones most commonly applied in the literature due to their simplicity and efficiency, %\citep[cf.][]{Haupt89,Panwalkar77}
+These rules are the ones most commonly applied in the literature due to their 
+simplicity and surprising efficiency, %\citep[cf.][]{Haupt89,Panwalkar77}
 therefore they will be referenced throughout the dissertation. 
 However, there are many more available, e.g., randomly selecting an operation 
 with equal possibility (RND); minimum slack time (MST); smallest slack per 
 operation (S/OP); and using the aforementioned dispatching rules with 
 predetermined weights. 
-A survey of more than 100 of such rules are presented in \citet{Panwalkar77}, 
-however, the reader is referred to an in-depth survey for SDRs by 
+A survey of more than 100 of such rules are presented in \citet{Panwalkar77}. 
+However, the reader is referred to an in-depth survey for SDRs by 
 \citet{Haupt89}. 
+
 
 %Haupt89:
 %Among the rules with job processing information, SPT is the most known, the most applied, and yet one of the most efficient rules. In line with LPT, it requires the lowest information amount, since only operation data (not job data) from the local queue (not from other queues) are needed.
@@ -323,13 +326,16 @@ scheduled, and are generally only based on few features and simple mathematical
 operations. 
 Continuing with the example from \cref{sec:jsp:example}, the final schedules 
 for these main SDRs (and a possible optimal schedule for reference) are 
-depicted in \cref{fig:example:SDRs}.
+depicted in \cref{fig:example:SDRs}. As we can see, MWR would have  been 
+the best strategy for Alice and company, since it has the makespan closest to 
+the optimum. 
 
-
-%Haupt89:
-%Among the rules with job processing information, SPT is the most known, the most applied, and yet one of the most efficient rules. In line with LPT, it requires the lowest information amount, since only operation data (not job data) from the local queue (not from other queues) are needed.
-%LWR give preference to jobs the work completed of which is rather advanced. Thus, they can be regarded as value-oriented rules selecting jobs with a high fraction of their value added or cumulative value to their total value.
-% The intent of MWR is to speed up jobs with large processing work resulting in a well-balanced work progress of all jobs, at the expense of a high volume of in-process inventory, while LWR tend to reduce the number of jobs in the shop.
+\begin{figure}[t]
+    \includegraphics[width=\textwidth]{{example.gantt.SDRs}.pdf}
+    \caption{SDRs applied to the example in \cref{sec:jsp:example}. 
+        An optimal solution is shown in the lower right corner as a reference.}
+    \label{fig:example:SDRs}
+\end{figure}
 
 \section{Features for \jsp}\label{sec:features}
 A DR may need to perform a one-step look-ahead and observes features of the 
@@ -343,8 +349,15 @@ latest dispatch, i.e., $\chi_k=J_j$, and its resulting features is denoted,
   \vphi^j:=\vphi(\vchi^j).
 \end{equation}
 
-Features are used to grasp the essence of the current state of the schedule. Temporal scheduling features applied in this dissertation for a job $J_j$ to be dispatched on machine $M_a$ are given in \cref{tbl:features}. 
-Note, from a job-oriented viewpoint, for a job already dispatched $J_j\in\mathcal{J}$ the corresponding set of machines now processed is $\mathcal{M}_j\subset\mathcal{M}$. Similarly from the machine-oriented viewpoint, $M_a\in\mathcal{M}$ with corresponding $\mathcal{J}_a\subset\mathcal{J}$. 
+Features are used to grasp the essence of the current state of the schedule. 
+Temporal scheduling features applied in this dissertation are given in 
+\cref{tbl:features}. 
+
+Note, from a job-oriented viewpoint, for a job already dispatched 
+$J_j\in\mathcal{J}$ the corresponding set of machines already processed is 
+$\mathcal{M}_j\subset\mathcal{M}$. Similarly from the machine-oriented 
+viewpoint, $M_a\in\mathcal{M}$ with corresponding 
+$\mathcal{J}_a\subset\mathcal{J}$. 
 
 The features of particular interest were obtained from inspecting the aforementioned SDRs from \cref{sec:SDR}:  
 \phiJobRelated\ and \phiMacRelated\ are job-related and machine-related attributes of the current schedule, respectively. 
@@ -363,7 +376,7 @@ be implemented from that point forward.
 Moreover, random completion of the partial schedule are implemented, 
 here \phiRNDRelated\ corresponds to statics from 100 random roll-outs, which 
 can be used to identify which features $\vphi$ are promising on a long-term 
-basis.  
+basis.  \todoExtend{These features have not been published yet}
 
 %All of the features vary throughout the scheduling process, w.r.t. operation 
 %belonging to the same time step $k$, save for \phitotalProc\ which varies 
@@ -383,8 +396,8 @@ basis.
 
 \section{Composite dispatching rules}\label{sec:CDR}
 
-Priority \dr s are attractive since they are relatively easy to 
-implement, fast and find good schedules. In addition, they are relatively easy 
+Priority \dr s are attractive since they are relatively simple to 
+implement, fast and find good schedules. In addition, they are easy 
 to interpret, which makes them desirable for the end-user (i.e. shop floor 
 operators). However, they can also fail unpredictably. 
 \citet{Jayamohan04} showed that a careful combination of \dr s can 
@@ -396,15 +409,15 @@ For instance, optimising $J1||L_{\max}$ \cite[see. chapter 14.2]{Pinedo08}, one
 can combine SDRs that are optimal for a different criteria of problem 
 instances, which complement each other as a CDR, e.g., combining the SDRs 
 \begin{enumerate*}[after={{}}]
-    \item WSPT (SPT weighted w.r.t. $\mathcal{J}$), ``which is optimal when all 
-    release dates and due dates are zero,'' 
-    \item minimum slack first (MS), ``which is optimal when all due dates are 
-    sufficiently loose and spread out,'' 
+    \item WSPT \footnote{WSPT is optimal when all release dates and due dates 
+    are zero.} (SPT weighted w.r.t. $\mathcal{J}$)
+    \item minimum slack first (MS),\footnote{MS is optimal when all due dates 
+    are sufficiently loose and spread out.} 
 \end{enumerate*}
-one gets the CDR \emph{apparent tardiness cost} which can work well on a 
+yields the CDR \emph{apparent tardiness cost}, which can work well on a 
 broader set of problem instances than the original SDRs by themselves.
 
-\subsection*{Mathematical formulation of CDRs}
+%\subsection*{Mathematical formulation of CDRs}
 
 CDRs can deal with a greater number of more complicated functions constructed 
 from the schedules attributes. In short, a CDR is a combination of several DRs. 
@@ -418,9 +431,10 @@ the influence of $\pi_i$ (which could be a SDR or another CDR) to $\pi$. Note,
 each $\pi_i$ is function of $J_j$'s attributes from the partial schedule
 $\vchi^j$.
 
+\clearpage
 The \cdr\ presented in \cref{eq:CDR} can be considered as a special case of a 
 the following general linear value function,
-\begin{equation}\label{eq:jssp:linweights}
+\begin{equation}\label{eq:CDR:feat}
   \pi(\vchi^j) = \sum_{i=1}^d w_i \phi_i(\vchi^j)
               \stackrel{\eqref{eq:postdecision}}{=} \inner{\vec{w}}{\vphi^j}.
 \end{equation}
@@ -429,31 +443,51 @@ from \cref{tbl:features}.
 
 Finally, the job to be dispatched, $J_{j^*}$, corresponds to the one with the 
 highest value, i.e.,
-\begin{equation}\label{eq:lin}
+\begin{equation}
   J_{j^*}=\argmax_{J_j\in \mathcal{L}}\; \pi(\vphi^j)
 \end{equation}
 
-Generally the weights $\vec{w}$ in \cref{eq:jssp:linweights} are chosen by the 
+Since we're using a feature space based on job-attributes, then it's trivial to 
+interpret \cref{eq:CDR:feat} as the SDRs from \cref{sec:SDR}. 
+Then for $i\in\{1,\ldots,d\}$, they're simply,
+\begin{IEEEeqnarray*}{s"rCl} 
+    SPT:& w_i&=&\bigg\{ \begin{array}{rl}-1&\text{if 
+        }i=1\\0&\text{otherwise}\end{array} \\
+    LPT:& w_i&=&\bigg\{ \begin{array}{rl} 1&\text{if 
+        }i=1\\0&\text{otherwise}\end{array} \\
+    MWR:& w_i&=&\bigg\{ \begin{array}{rl} 1&\text{if 
+        }i=7\\0&\text{otherwise}\end{array} \\
+    LWR:& w_i&=&\bigg\{ \begin{array}{rl}-1&\text{if 
+        }i=7\\0&\text{otherwise}\end{array}
+\end{IEEEeqnarray*}
+
+
+\subsection*{Automated discovery of CDRs}
+Generally the weights $\vec{w}$ in \cref{eq:CDR:feat} are chosen by the 
 algorithm designer a priori. 
 A more sophisticated approach would to learn have the algorithm discover these 
 weights autonomously, for instance via evolutionary search or preference-based 
 imitation learning, to be discussed in \cref{ch:esmodels} and 
 \cref{ch:prefmodels}, respectively.
 
-\subsection*{Automated discovery of CDRs}
-\citet{Monch13} stress the importance of automated discovery of DRs and named several of successful implementations in the field of semiconductor wafer fabrication facilities. 
+\citet{Monch13} stress the importance of automated discovery of DRs and named 
+several successful such implementations in the field of semiconductor wafer 
+fabrication facilities. 
 However, \citeauthor{Monch13} note that this sort of investigation is still in its infancy and subject for future research.
 
+\clearpage
 A recent editorial of the state-of-the-art approaches in advanced dispatching rules for large-scale manufacturing systems by \citet{Chen13} points out that:
 \begin{quote}
 	[..] most traditional dispatching rules are based on historical data. With the emergence of data mining and on-line analytic processing, dispatching rules can now take predictive information into account.
 \end{quote}
-implying that there has not been much automation in the process of discovering new dispatching rules, which is the ultimate goal of this dissertation, i.e., automate creating optimisation heuristics for scheduling. 
+implying that there has not been much automation in the process of discovering 
+new dispatching rules, which is the ultimate goal of this dissertation, i.e., 
+automate creation of optimisation heuristics for scheduling. 
 
 With meta heuristics one can use existing DRs and use for example 
-{portfolio-based algorithm selection} \citep{Rice76,Gomes01}, either based 
-on a single instance or class of instances \citep{Xu07} to determine which DR 
-to choose from. 
+{portfolio-based algorithm selection} either based 
+on a single instance \citep{Rice76,Gomes01} or class of instances \citep{Xu07} 
+to determine which DR to choose from. 
 Instead of optimising which algorithm to use under what data distributions, 
 such as the case of portfolio algorithms, the approach taken in this 
 dissertation is more similar to that of \emph{meta learning} \citep{Vilalta02} 
@@ -483,10 +517,8 @@ measures considered it was better to have all of the DRs to choose from rather
 than just a single DR at a time. 
 
 Similarly, \citet{Lu13} investigate 11 SDRs for \JSP\ to create a pool of 
-33 CDRs that strongly outperformed the ones they were based on, which 
-is intuitive since where one SDR might be failing, another could be excelling, 
-hence combining them should yield a better CDR. \citeauthor{Lu13} create their 
-CDRs with {multi-contextual functions} based either on machine idle time 
+33 CDRs that strongly outperformed the ones they were based on. The CDRs were 
+created with {multi-contextual functions} based either on machine idle time 
 or job waiting time (similar to \phiwait\ and \phimacSlack\ in 
 \cref{tbl:features}), creating CDRs thate are a combination of those 
 two key features of the schedule and then the basic DRs. However, there are no 
@@ -501,9 +533,9 @@ found.
 
 It is intuitive to get a boost in performance by introducing new CDRs, since 
 where one DR might be failing, another could be excelling so combining them 
-together should yield a better CDR. However, these approaches introduce fairly 
-ad-hoc solutions and there is no guarantee the optimal combination of 
-\dr s are found.
+together should yield a better CDR. However, these aforementioned approaches 
+introduce fairly ad-hoc solutions and there is no guarantee the optimal 
+combination of \dr s were found.
 
 \section{Rice's framework for \jsp}\label{sec:rice:jsp}
 \citeauthor{Rice76}'s framework for algorithm selection (discussed in 
@@ -537,7 +569,7 @@ ad-hoc solutions and there is no guarantee the optimal combination of
 		\rho=\frac{C_{\max}^{\pi}-C_{\max}^{\pi_\star}}{C_{\max}^{\pi_\star}}\cdot
 		 100\%
 	\end{equation}
-	which indicates the \namerho. Thus $\mathcal{Y}$ is the following, 
+	which indicates the \namerho. Thus $\mathcal{Y}$ is given as, 
 	\begin{equation}
 		\mathcal{Y}=\left\{\rho_i\right\}_{i=1}^{N}
 	\end{equation}

@@ -148,6 +148,9 @@
   }
 }
 
+\usepackage{soul} % strikeout text \st{text}
+%\setstcolor{gray}
+
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \makeatletter
@@ -158,6 +161,7 @@
 \algrenewtext{For}[3]%
 {\algorithmicfor\ $#1 \gets #2 \algorithmicto\ #3$~\algorithmicdo}
 \crefname{algorithm}{Alg.}{Algorithms}
+\Crefname{algorithm}{Algorithm}{Algorithms}
 
 \newcommand{\todoFind}[1]{\todo[color=red]{#1}}
 \newcommand{\todoExtend}[1]{\todo[color=blue]{#1}}
