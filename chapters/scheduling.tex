@@ -227,8 +227,8 @@ play croquet with the Red Queen,
 and she mustn't be late for that very important date. Otherwise, it's off with 
 someone's head! However, Alice, had a proper upbringing and won't leave the 
 table until everyone has finished their tasks. 
-How should the guests go about 
-their tea-party, in order for Alice to be on-time?
+How should the guests go about their tea-party, in order for Alice to be 
+on-time?
 
 The problem faced by Alice and her new friends is in what order should they 
 rotate their tasks between themselves so that they all finish as soon as 
@@ -239,9 +239,11 @@ possible? This can be considered as is a typical four-job and five-machine
     \item their tasks are the machines
     \item our objective is to minimise the makespan, i.e., when Alice can leave
 \end{enumerate*}
+
 Let's assume we've come to the party, after 10 operations have already been 
 made (i.e. strikeout entries in \cref{tbl:example}), by using the following 
-job sequence,
+job sequence,\footnote{In fact this is the sequence resulting from 10 
+dispatches following the SPT-rule, to be defined shortly.}
 \begin{equation}
   \vchi = \left\{ \chi_i \right\}_{i=1}^{k-1}
         = \left\{ J_4,J_2,J_3,J_3,J_1,J_1,J_1,J_1,J_1,J_4 \right\}
