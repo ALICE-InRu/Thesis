@@ -1,6 +1,5 @@
 \HeaderQuote{Begin at the beginning and go on till you come to the end: then stop.}{The King}
 
-
 \chapter{Introduction}\label{ch:introduction} 
 %\section{Motivation and research objectives}
 
@@ -226,8 +225,59 @@ All source code and data is freely distributed from
 \url{github.com/tungufoss/alice.data}, respectively, under the GNU 
 General Public License.
 
-\section{Contributions}\todoWrite{Discuss contributions once draft is ready...}
-The approach in this dissertation differs from previous studies, as it uses a simple linear combination of features found using a linear classifier based on ordinal regression.  
+\section{Contributions}
+
+The initial goal of the Ph.D. project was to use sophisticated algorithms for 
+preference learning on hard problems, in particular \jsp\ scheduling, and find 
+ways to mediate the computational effort that they require.
+After painstaking parameter tuning, and managing to find complex models 
+with high training accuracy. Alas, severely overfitted to the training 
+instances -- a simple linear model would suffice with similar performance, and 
+for much less overhead! Also, linear models come with the added benefit of easy 
+interpretability. 
+Unfortunately, there is not much said about algorithms that fail. 
+So to quote a pioneer in scheduling, 
+\begin{quote}
+    ``The only real mistake is the one from which we learn nothing'' \\
+    \raggedleft Henry Ford
+\end{quote}
+In order to make the best of a bad situation, this derailment\footnote{
+    This explains why \cref{InRu11b} is completely different from the other 
+    publications.} 
+designed the course of the body of work presented in this dissertation. 
+Namely, by dwelling on optimal solutions and try to understand 
+their fundamental building blocks, and applying what you learn on \emph{simple} 
+models, before investing valuable time and resources in implementing the 
+current state-of-the-art algorithms. 
+The research questions that are put forth are
+\begin{enumerate*}[itemjoin={{? }}, itemjoin*={{? And ultimately, }},
+    after={{?}}]
+    \item how are optimal solutions \emph{supposed} to behave -- what are the 
+    kind indicators
+    \item Where and when should there be emphasis on learning
+    \item what states of our problem are worth investigating further to achieve 
+    the desired result
+\end{enumerate*}
+
+Hopefully, this preparatory work helps recognising any limitations, and will 
+lead to better algorithm design, or at least improved understanding of 
+\emph{why} the models are performing in the way that they do.
+It's the believe of the author, that the methodology of going about this, which 
+is roughly described in \cref{pseudo:alice}, can be applied to any kind of 
+optimisation problem. As such, then it's suitable to name the framework:
+\emph{\fullnameAlice}, or \Alice\footnote{
+    The hopefully catchy and very deliberate acronym \Alice\ pays homage to the 
+    wonderful literary character, Alice in Wonderland -- a personal favourite 
+    of the author.} 
+for short. 
+For demonstration purposes, this dissertation will solely be 
+focusing on applying \Alice\ to \dr s for \jsp\ scheduling problems.
+
+\input{pseudocode/ALICE}
+
+
+
+
 
 \section{Outline}\todoWrite{Update outline once draft is ready...}
 An approach based on supervised learning on optimal schedules will be 

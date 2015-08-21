@@ -1,5 +1,5 @@
 \newcommand{\Alice}{ALICE}
-\newcommand{\fullnameAlice}{Analysing \& Learning Intelligent Composite rulEs}
+\newcommand{\fullnameAlice}{Analysing \& Learning in Complex Environments}
 
 %\renewcommand{\rho}{\varrho}
 \renewcommand{\vec}[1]{\mathbf{#1}}
@@ -17,7 +17,9 @@
 \newcommand{\argmax}{\mathop{\rm argmax}}
 \newcommand{\argmin}{\mathop{\rm argmin}}
 \newcommand{\nchoosek}[2]{\tiny \left(\begin{array}{c}#1\\#2\end{array}\right)}
-\newcommand{\condset}[2]{\left\{#1\;\middle|\;#2\right\}}
+\newcommand{\condset}[2]{\left\{\given{#1}{#2}\right\}}
+\newcommand{\given}[2]{#1\;\middle|\;#2}
+
 \newcommand{\limit}[3]{\lim_{#2}#1=#3}
 \newcommand{\bigOh}[1]{{O}\left(#1\right)}
 
@@ -120,6 +122,9 @@
 
 \usepackage{comment}
 \usepackage[bottom,perpage,symbol*]{packages/footmisc}
+\setfnsymbol{wiley}
+
+
 
 \usepackage{aliascnt}
 \usepackage[capitalise,nameinlink]{cleveref} % must come last! 

@@ -5,3 +5,19 @@
 
 \FirstSentence{L}{orem ipsum dolor sit amet}, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque, id pulvinar odio lorem non turpis. Nullam sit amet enim. Suspendisse id velit vitae ligula volutpat condimentum. Aliquam erat volutpat. Sed quis velit. Nulla facilisi. Nulla libero. Vivamus pharetra posuere sapien. Nam consectetuer. Sed aliquam, nunc eget euismod ullamcorper, lectus nunc ullamcorper 
 
+
+
+
+
+The analysis-phase of \Alice\ is heavily dependent on having an expert 
+policy one wants to mimic, i.e., knowing the \emph{optimal} solutions for the 
+sake of imitation learning. 
+
+Understandably, knowing the true optimum is an unreasonable claim in many 
+situations, especially for high dimensional problem instances. 
+Luckily, there seems to be the possibility to circumvent querying the expert 
+altogether, and still have reasonable performance. 
+By applying \emph{locally optimal learning to search} \citep{ChangKADL15} it is 
+possible to use imitation learning even when the reference policy is poor. 
+Although it's noted that the quality (w.r.t near-optimality) of reference 
+policy is in accordance to its performance, as is to be expected. 
