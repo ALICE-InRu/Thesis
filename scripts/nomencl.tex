@@ -1,18 +1,33 @@
-%\nomenclature[zcif]{$CIF$}{Cauchy's Integral Formula}                  % first letter Z is for Acronyms 
-%\nomenclature[aF]{$F$}{complex function}                               % first letter A is for Roman symbols
-%\nomenclature[gp]{$\pi$}{ $\simeq 3.14\ldots$}                         % first letter G is for Greek Symbols
-%\nomenclature[gi]{$\iota$}{unit imaginary number $\sqrt{-1}$}          % first letter G is for Greek Symbols
-%\nomenclature[gg]{$\gamma$}{a simply closed curve on a complex plane}  % first letter G is for Greek Symbols
-%\nomenclature[xi]{$\oint_\gamma$}{integration around a curve $\gamma$} % first letter X is for Other Symbols
-%\nomenclature[rj]{$j$}{superscript index}                              % first letter R is for superscripts
-%\nomenclature[s0]{$0$}{subscript index}                                % first letter S is for subscripts
+\makenomenclature
+\renewcommand\nomgroup[1]{
+    \ifthenelse{\equal{#1}{F}}{\item[\textbf{Rice's Framework}]}{
+        \ifthenelse{\equal{#1}{J}}{\item[\textbf{\Jsp\ Scheduling}]}{ 
+            \ifthenelse{\equal{#1}{O}}{\item[\textbf{Ordinal Regression}]}{ 
+                \ifthenelse{\equal{#1}{S}}{\item[\textbf{Surrogate 
+                Modelling}]}{ 
+                    \ifthenelse{\equal{#1}{X}}{\item[\textbf{Experimental 
+                    Settings}]}{ 
+                        \ifthenelse{\equal{#1}{Y}}{\item[\textbf{Subscripts and 
+                                Superscripts}]}{
+                            \ifthenelse{\equal{#1}{Z}}{\item[\textbf{Acronyms}]}{
+                             
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 % Rice's Framework
 \nomenclature[f01]{$\mathcal{P}$}{Problem space or instance space}
 \nomenclature[f02]{$\mathcal{F}$}{Feature space, i.e., measurable properties of the instances in $\mathcal{P}$}
 \nomenclature[f03]{$\mathcal{A}$}{Algorithm space}
 \nomenclature[f04]{$\mathcal{Y}$}{Performance space, i.e., the outcome for $\mathcal{P}$ using an algorithm from $\mathcal{A}$}
-\nomenclature[f05]{$Y$}{Mapping for algorithm and feature space onto performance space, i.e., $y=Y(a,\vphi(\vec{x}))\in\mathcal{Y}$ where $Y:\mathcal{A}\times\mathcal{F}\mapsto\mathcal{Y}$}
+\nomenclature[f05]{$\Upsilon$}{Mapping for algorithm and feature space onto 
+performance space, i.e., $y=\Upsilon(a,\vphi(\vec{x}))\in\mathcal{Y}$ where 
+$\Upsilon:\mathcal{A}\times\mathcal{F}\mapsto\mathcal{Y}$}
 
 % JOB SHOP
 \nomenclature[j01]{$n$}{number of jobs in shop}
@@ -23,7 +38,8 @@
 \nomenclature[j06]{$\vsigma_j$}{machine ordering for job $J_j$} 
 \nomenclature[j07]{$x_s(j,a)$}{starting time for job $J_j$ on machine $M_a$}
 \nomenclature[j08]{$x_f(j,a)$}{finishing time for job $J_j$ on machine $M_a$}
-\nomenclature[j09]{$s(a,j)$}{flow between current and previous task on machine $M_a$}
+\nomenclature[j09]{$s(a,j)$}{slot between current and previous task on machine 
+$M_a$}
 \nomenclature[j10{$\mathcal{R}$}{ready-list of jobs that have unassigned tasks, $\mathcal{R}\subset\mathcal{J}$}
 \nomenclature[j11]{$C_{\max}$}{makespan, i.e. maximum completion times for all tasks}
 \nomenclature[j12]{$\vchi$}{sequence of dispatches $J_j$ to create (partial) schedule/solution} 
@@ -35,7 +51,7 @@
 \nomenclature[o01]{$d$}{number of distinct features, i.e., dimension of $\mathcal{F}$}
 \nomenclature[o02]{$N$}{number of problem instances}
 \nomenclature[o03]{$\Phi$}{training set}
-\nomenclature[o04]{$S$}{preference set}
+\nomenclature[o04]{$\Psi$}{preference set}
 \nomenclature[o05]{$l$}{size of preference set, $l=\abs{S}$}
 \nomenclature[o06]{$\vphi_k$}{feature set, i.e., post-decision state, of a (partial) schedule at time $k$}
 \nomenclature[o07]{$\tilde{\vphi}$}{scaled feature set, such that $\tilde{\vphi}_i\in[-1,1]$ for all $i\in\{1,..,d\}$}
@@ -48,10 +64,13 @@
 \nomenclature[s01]{$\tau$}{Kendall's $\tau$ statistic, i.e., normalised difference in number of concordant and discordant pairs}
 
 % EXPERIMENTAL SETTING
-\nomenclature[x01]{$S_b$}{preference set added w.r.t. basic ranking}
-\nomenclature[x02]{$S_f$}{preference set added w.r.t. full subsequent ranking}
-\nomenclature[x03]{$S_p$}{preference set added w.r.t. partial subsequent ranking}
-\nomenclature[x04]{$S_a$}{union of all aforementioned rankings, i.e., $S_{a}=S_b\cup S_f\cup S_p$}
+\nomenclature[x01]{$\Psi_b$}{preference set added w.r.t. basic ranking}
+\nomenclature[x02]{$\Psi_f$}{preference set added w.r.t. full subsequent 
+ranking}
+\nomenclature[x03]{$\Psi_p$}{preference set added w.r.t. partial subsequent 
+ranking}
+\nomenclature[x04]{$\Psi_a$}{union of all aforementioned rankings, i.e., 
+$S_{a}=S_b\cup S_f\cup S_p$}
 \nomenclature[x05]{$\Phi^{SPT}$}{training data guided by SPT trajectory}
 \nomenclature[x06]{$\Phi^{LPT}$}{training data guided by LPT trajectory}
 \nomenclature[x07]{$\Phi^{LWR}$}{training data guided by LWR trajectory}
@@ -59,7 +78,9 @@
 \nomenclature[x09]{$\Phi^{OPT}$}{training data guided by (random) optimum trajectory}
 \nomenclature[x10]{$\Phi^{RND}$}{training data guided by a random trajectory}
 \nomenclature[x11]{$\Phi^{CMA}$}{training data guided by trajectory using by CMA-ES obtained weights}
-\nomenclature[x12]{$\Phi^{ALL}$}{union of all aforementioned trajectories, i.e.,  $S^{ALL}=S^{SPT}\cup S^{LPT}\cup S^{LWR}\cup S^{MWR} \cup S^{OPT} \cup S^{RND} \cup S^{CMA}$}
+\nomenclature[x12]{$\Phi^{ALL}$}{union of all aforementioned trajectories, 
+i.e.,  $\Phi^{ALL}=\Phi^{SPT}\cup \Phi^{LPT}\cup \Phi^{LWR}\cup \Phi^{MWR} \cup 
+\Phi^{OPT} \cup \Phi^{RND} \cup \Phi^{CMA}$}
 \nomenclature[x13]{$p^{equal}$}{all preferences sampled equally }
 \nomenclature[x14]{$p^{opt}$}{preferences sampled proportional w.r.t. its stepwise optimality}
 \nomenclature[x15]{$p^{bcs}$}{preferences sampled reciprocally proportional w.r.t. its stepwise best case scenario of suboptimal dispatches }
@@ -74,12 +95,13 @@
 \nomenclature[y06]{bks}{best known solution}
 
 % ACRONYMS
+\nomenclature[z00]{\Alice}{\fullnameAlice}
 \nomenclature[z01]{JSP}{\Jsp\ scheduling problem}
 \nomenclature[z02]{FSP}{\Fsp\ scheduling problem}
 \nomenclature[z03]{DR}{\dr}
 \nomenclature[z04]{SDR}{\sdr}
 \nomenclature[z05]{CDR}{\cdr}
-\nomenclature[z06]{BDR}{Blended \cdr}
+\nomenclature[z06]{BDR}{blended \cdr}
 \nomenclature[z07]{SPT}{Shortest Processing Time rule}
 \nomenclature[z08]{LPT}{Largest Processing Time rule}
 \nomenclature[z09]{LWR}{Least Work Remaining rule}

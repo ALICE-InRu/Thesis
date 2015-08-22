@@ -1,18 +1,19 @@
 % -------------------------------------------------------------------
 %  @LaTeX-class-file{
 %     filename        = "hi-thesis.cls",
-%     version         = "0.1",
-%     date            = "14 August 2015",
+%     version         = "1.0",
+%     date            = "22 August 2015",
 %     codetable       = "ISO/ASCII",
 %     keywords        = "LaTeX, hi-thesis",
 %     supported       = "send email to hei2@hi.is",
 %     docstring       = "A thesis class for a University of Iceland
 %                        dissertation.",
-%     note            = "Based on the Harvard dissertation class by Jordan Suchow (suchow@fas.harvard.edu)"
+%     note            = "Based on the Harvard dissertation class 
+%                        by Jordan Suchow (suchow@fas.harvard.edu)"
 % --------------------------------------------------------------------
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{hi-thesis}[2012/05/11 v0.1 University of Iceland Thesis Class]
+\ProvidesClass{hi-thesis}[2015/08/22 v1.0 University of Iceland Thesis Class]
 \LoadClass[11pt,b5paper,twoside]{book} % UGthesis
 
 % Required packages
@@ -186,6 +187,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
 \makeatother
 
 % ----------------------------------------------------------------- front matter
+\usepackage{nomencl}
 \makeatletter
 \newcommand{\printFrontMatter}[1]{
     \input{frontmatter/coverpage}
@@ -320,21 +322,28 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     \addcontentsline{toc}{chapter}{Listing of Publications}
     \pagestyle{fancy}
     \rhead{LISTING OF PUBLICATIONS}
-    \input{frontmatter/publications}
+    \input{frontmatter/papers}
     \rhead[\fancyplain{}{\leftmark}]{\fancyplain{}{}}
 }
 
 % ---------------------------------------------------------------ackowledgements
+\makeatletter
 \newcommand{\acknowledgments}{
     \chapter*{Acknowledgements}
     \pagestyle{fancy}
     \rhead{ACKNOWLEDGEMENTS}
     \noindent
     \input{frontmatter/thanks}
+    \begin{flushright}
+        \vfill
+        \@universitycity, \@degreemonth\ \@degreeyear\\ 
+        \@author
+    \end{flushright}
     \vspace*{\fill} 
     \cleardoublepage
     \rhead[\fancyplain{}{\leftmark}]{\fancyplain{}{}}
 }
+\makeatother
 
 % ---------------------------------------------------------- the list of authors
 \newcommand{\authorlist}{

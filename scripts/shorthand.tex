@@ -124,34 +124,11 @@
 \usepackage[bottom,perpage,symbol*]{packages/footmisc}
 \setfnsymbol{wiley}
 
-
-
 \usepackage{aliascnt}
 \usepackage[capitalise,nameinlink]{cleveref} % must come last! 
 % provide singular and plural names of the categories "paper"
 \crefname{paper}{Paper}{Papers}
 \Crefname{paper}{Paper}{Papers}
-
-% Nomenclature
-\usepackage{nomencl}
-\makenomenclature
-\renewcommand\nomgroup[1]{
-  \ifthenelse{\equal{#1}{F}}{\item[\textbf{Rice's Framework}]}{
-    \ifthenelse{\equal{#1}{J}}{\item[\textbf{\Jsp\ Scheduling}]}{ 
-      \ifthenelse{\equal{#1}{O}}{\item[\textbf{Ordinal Regression}]}{ 
-        \ifthenelse{\equal{#1}{S}}{\item[\textbf{Surrogate Modelling}]}{ 
-          \ifthenelse{\equal{#1}{X}}{\item[\textbf{Experimental Settings}]}{ 
-            \ifthenelse{\equal{#1}{Y}}{\item[\textbf{Subscripts and 
-                Superscripts}]}{
-              \ifthenelse{\equal{#1}{Z}}{\item[\textbf{Acronyms}]}{ 
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
 
 \usepackage{soul} % strikeout text \st{text}
 %\setstcolor{gray}
