@@ -3,10 +3,14 @@
 \chapter{Introduction}\label{ch:introduction} 
 %\section{Motivation and research objectives}
 
-\FirstSentence{H}{and crafting heuristics} for NP-hard problems is a time consuming trial-and-error process, requiring inductive reasoning or problem specific insights from their human designers. Furthermore, within a problems class, such as scheduling, it is possible to construct problem instances where one heuristic would outperform another. 
+\FirstSentence{H}{and crafting heuristics} for NP-hard problems is a time 
+consuming trial-and-error process, requiring inductive reasoning or problem 
+specific insights from their human designers. Furthermore, within a problem 
+class, such as scheduling, it is possible to construct problem instances where 
+one heuristic would outperform another. 
 
-Depending on the underlying data distribution of the problem instances, each 
-heuristics perform distinctly. This is due to the fact that any algorithm which 
+Depending on the underlying data distribution of the problem, each heuristics 
+perform distinctly to others. This is due to the fact that any algorithm which 
 has superior performance in one class of problems is inevitably inferior over 
 another class, i.e., \emph{no free lunch} theorem \citep{Wolpert97nofree}. 
 %  number of “no free lunch” (NFL) theorems are presented which establish that for any algorithm, any elevated performance over one class of problems is offset by performance over another class. 
@@ -24,7 +28,7 @@ for improvement. A number of attempts have been made to automate the heuristic
 design process, and it is the ultimate goal of this dissertation to automate 
 optimisation heuristics via ordinal regression. 
 The focal point will be based on a scheduling processes named \jsp\ scheduling 
-problem (\JSP), and one of its subclass, namely, \fsp\ scheduling problem 
+problem (\JSP), and one of its subclass, the \fsp\ scheduling problem 
 (\FSP).
 There are two main viewpoints on how to approach scheduling problems, namely,
 \begin{description}
@@ -42,25 +46,26 @@ The focus is essentially on creating a meaningful preference set composed of
 features and their ranks, as the learning algorithm is only run \emph{once} to 
 find suitable operators for the value function. 
 However, for global level construction, there is no feature set collected 
-beforehand since the learning model is optimised directly via evolutionary 
+beforehand, since the learning model is optimised directly via evolutionary 
 search. This requires numerous costly value function evaluations. 
-In fact it involves an indirect method of evaluation whether one learning model 
-is preferable to another w.r.t. which one yields the better expected mean. 
+In fact, it involves an indirect method of evaluation whether one learning 
+model is preferable to another w.r.t. which one yields the better expected 
+mean. 
 Evolutionary search only requires the rank of the candidates, and therefore it 
 is appropriate to retain a sufficiently accurate surrogate for the value 
 function during evolution in order to reduce the number of costly true value 
 function evaluations. 
 In this paradigm, ordinal regression can be used for surrogate assisted 
-evolutionary optimisation, where models are ranked -- whereas on local level 
+evolutionary optimisation, where models are ranked -- whereas on local level, 
 features were ranked. 
 
 %\section{Relationship between problem structure and heuristic efficiency}
 \section{Rice's framework for algorithm selection}\label{sec:rice}
-The problem is to understand what underlying characteristics of the problem 
-instances distinguishes \emph{good} and on the other hand \emph{bad} solutions 
+The goal is to understand what underlying characteristics of the problem 
+instances distinguish \emph{good}, and on the other hand \emph{bad} solutions 
 when implementing a particular algorithm. \citet{SmithMilesLion5} were 
 interested in discovering whether synthetic instances were in fact similar to 
-real-world instances for timetabling problems. Moreover,  
+real-world instances for timetabling scheduling. Moreover,  
 \citeauthor{SmithMilesLion5} focused on how varying algorithms perform 
 on different data distributions. Hence, the investigation of heuristic 
 efficiency is closely intertwined to problem generation. 
@@ -90,7 +95,7 @@ In the context of Rice's framework, the aforementioned approaches to scheduling 
   \item[Local level] 
   \begin{equation}
     \max_{\mathcal{F}'\subset\mathcal{F}} 
-    \mathbb{E}\left[\Upsilon\left(a,\vphi(\vec{x})\right)\right]
+    \Exp{\Upsilon\left(a,\vphi(\vec{x})\right)}
   \end{equation}
   The  focal point is only using  problem instances that represent the problem 
   space, $\vec{x}\in\mathcal{P'}\subset\mathcal{P}$, in addition finding a 
@@ -100,8 +105,8 @@ In the context of Rice's framework, the aforementioned approaches to scheduling 
   ordinal regression.
   \item[Global level]
   \begin{equation}
-    \max_{a\in\mathcal{A}} 
-    \mathbb{E}\left[\Upsilon\left(a,\vphi(\vec{x})\right)\right]
+    \max_{a\in\mathcal{A}}~
+    \Exp{\Upsilon\left(a,\vphi(\vec{x})\right)}
   \end{equation}
   This is  straightforward  approach as the algorithm $a\in\mathcal{A}$ is 
   optimised directly given the entire instances space $\vec{x}\in\mathcal{P}$ 
@@ -116,7 +121,7 @@ one could either use exact methods or heuristics methods. Exact methods
 guarantee an optimal solution, however, \jsp\ scheduling is strongly NP-hard 
 \citep{Garey76:NPhard}. Any exact algorithm generally suffers from the curse of 
 dimensionality, which impedes the application in finding the global optimum in 
-a reasonable amount of time. Heuristics are generally more time efficient but 
+a reasonable amount of time. Heuristics are generally more time efficient, but 
 do not necessarily attain the global optimum. Therefore, \JSP\ has the 
 reputation of being notoriously difficult to solve. As a result, it's 
 been widely studied in deterministic scheduling theory and its class of 
@@ -132,7 +137,7 @@ In the field of Artificial Intelligence, \cite{Meeran12} point out that despite
 their `intelligent' solutions, the effectiveness of finding the optimum has 
 been rather limited. However, combined with local-search methodologies, they 
 can be improved upon significantly, as \citeauthor{Meeran12} showed with the 
-use of a hybrid method using Genetic Algorithms (GA) and Tabu Search (TS). 
+use of a hybrid method involving Genetic Algorithms (GA) and Tabu Search (TS). 
 Therefore, getting the best of both worlds, namely
 \begin{enumerate*}[label={{}}]
   \item the diverse global search obtained from GA 
@@ -173,6 +178,7 @@ number of rules to choose from, thus their combinations require expert
 knowledge or extensive trial-and-error process.
 
 The literature in scheduling mainly focuses on different objectives, 
+\todoWrite{Relocate somewhere else}
 \todoFind{Add multiobjective \jsp\ citations}
 e.g., \citet{Chang96} minimised the due-date tightness and 
 \citet{Drobouchevitch2000,Gao2007} looked into solving for bottleneck machines. 
@@ -197,18 +203,18 @@ Data can be generated using a known heuristic, such an approach is taken in
 decision tree is used to create a \dr\ with similar logic. However, this method 
 cannot outperform the original LPT-heuristic used to guide the search. For 
 instruction scheduling, this drawback is confronted in 
-\citet{Malik08,Russell09,Siggi10} by using an optimal scheduler, computed 
+\citet{Malik08,Russell09,Siggi10}, by using an optimal scheduler, computed 
 off-line. The optimal solutions are used as training data and a decision tree 
-learning algorithm applied as before. Preferring simple to complex models, the 
-resulting \dr s gave significantly better schedules than using popular 
+learning algorithm is applied as before. Preferring simple to complex models, 
+the resulting \dr s gave significantly better schedules than using popular 
 heuristics in that field, and a lower worst-case factor from optimality. A 
 similar approach is taken for timetable scheduling in \cite{Burke06}, using 
 case based reasoning, where training data is guided by the two best heuristics 
-for timetable scheduling. 
+in the field. 
 \citeauthor{Burke06} point out that in order for their framework to be 
 successful, problem features need to be sufficiently explanatory and training 
-data need to be selected carefully so they can suggest the appropriate solution 
-for a specific range of new cases. 
+data needs to be selected carefully so they can suggest the appropriate 
+solution for a specific range of new cases. 
 Again, stressing the importance of meaningful feature selection. 
 
 \section{Supplements}
@@ -221,9 +227,8 @@ inspected in the supplementary \href{http://tgax89.rhi.hi.is:3838/alice}{Shiny
 application written in R}. 
 
 All source code and data is freely distributed from 
-\url{github.com/ALICE-InRu/Code} and 
-\url{github.com/ALICE-InRu/Data}, respectively, under the GNU 
-General Public License.
+\url{github.com/ALICE-InRu}, under the GNU General Public License. 
+\todoFind{Use Creative Commons Sharealike instead?}
 
 \section{Contributions}
 
@@ -271,12 +276,14 @@ optimisation problem. As such, then it's suitable to name the framework:
     of the author.} 
 for short. 
 For demonstration purposes, this dissertation will solely be 
-focusing on applying \Alice\ to \dr s for \jsp\ scheduling problems.
+focusing on applying \Alice\ to \dr s for \jsp\ scheduling.
 
 \input{pseudocode/ALICE}
 
 
-
+\todoWrite{$\xi_\pi$ can be interpreted as training accuracy.\\
+    Post-processing: apply analysis on $\hat{\pi}$ (learned policy), i.e., 
+    $\xi_{\hat{\pi}}$ and $\zeta_{\hat{\pi}}$.}
 
 
 \section{Outline}\todoWrite{Update outline once draft is ready...}

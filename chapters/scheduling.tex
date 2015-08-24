@@ -2,11 +2,15 @@
 
 \chapter{\Jsp\ Scheduling Problem}\label{ch:scheduling}
 \FirstSentence{S}{cheduling problems}, which occur frequently in practice, are a category within combinatorial optimisation problems. 
-A subclass of scheduling problems is the \jsp\ scheduling problem (\JSP), which 
+A subclass of scheduling problems is \jsp\ (\JSP), which 
 is widely studied in operations research. 
-\Jsp\ deals with the allocation of tasks of competing resources where its goal is to optimise a single or multiple objectives. 
+\JSP\ deals with the allocation of tasks of competing resources where its goal 
+is to optimise a single or multiple objectives. 
 \Jsp's analogy is from manufacturing industry where a set of jobs are broken down into tasks that must be processed on several machines in a workshop. 
-Furthermore, its formulation can be applied on a wide variety of practical problems in real-life applications which involve decision making, therefore its problem-solving capabilities has a high impact on many manufacturing organisations. % Gefa dæmi?
+Furthermore, its formulation can be applied on a wide variety of practical 
+problems in real-life applications which involve decision making. Therefore, 
+its problem-solving capabilities has a high impact on many manufacturing 
+organisations. % Gefa dæmi?
 
 Deterministic \JSP\ is the most \emph{general} case for classical scheduling problems \citep{Jain99}. 
 Many other scheduling problems can be reformulated as \JSP. 
@@ -15,7 +19,7 @@ For instance, the \textit{travelling salesman problem} can be contrived as \jsp
     \item with the salesman as a single machine in use 
     \item the cities to be visited are the jobs to be processed
 \end{enumerate*}
-Moreover, the general form of \JSP\ assumes that each job can have its own 
+Moreover, the general form of~~\JSP\ assumes that each job can have its own 
 distinctive flow pattern through the machines, which is independent of the 
 other jobs. 
 In the case where all jobs share the same permutation route, \jsp\ is reduced 
@@ -26,7 +30,7 @@ Therefore, without loss of generality, this dissertation is structured around
 \emph{Remark:} Throughout the dissertation the \FSP\ variation will \emph{not} 
 be a commonly used permutation \fsp\ (P\FSP) from the literature, which has 
 the added constraints of not allowing any jobs to pass one another.
-Here, the jobs have to be processed in the same machine order, however, 
+Here, the jobs have to be processed in the same machine order. However, 
 machines do not necessarily need to process jobs in the same order, as is 
 implied in P\FSP.
 
@@ -56,7 +60,7 @@ due-dates, and then the objective is generally minimising the maximum lateness,
 denoted $Jm|r_j,d_j|L_{\max}$. 
 However, those shop-requirements will not be considered here. 
 
-Henceforth, the index $j$ refers to a job $J_j\in\mathcal{J}$ while the index 
+Henceforth, the index $j$ refers to a job $J_j\in\mathcal{J}$, while the index 
 $a$ refers to a machine $M_a\in\mathcal{M}$. If a job requires a number of 
 processing steps or operations, then the pair $(j,a)$ refers to the operation, 
 i.e., processing the task of job $J_j$ on machine $M_a$. Moreover, index $k$ 
@@ -96,7 +100,7 @@ The objective function is to minimise its maximum completion times for all tasks
 \end{equation} 
 Clearly, w.r.t. minimum makespan, it is preferred that schedules are non-delay, 
 i.e., the machines are not kept idle. The time in which machine $M_a$ is idle 
-between consecutive jobs $J_j$ and $J_{j'}$ is called idle time, 
+between consecutive jobs $J_j$ and $J_{j'}$ is called idle time, or slack,
 \begin{equation} 
   s(a,j):=x_s(j,a)-x_e(j',a) \label{eq:slack}
 \end{equation}
@@ -111,9 +115,9 @@ Here, the construction heuristic, $\Upsilon$, is to schedule the dispatches as
 closely together as possible, i.e., minimise the schedule's idle times. 
 More specifically, once an operation $(j,a)$ has been chosen from the job-list, 
 $\mathcal{L}$, by some dispatching rule, it can placed immediately after (but 
-not prior) $x_e(j,\vsigma_j(a-1))$ on machine $M_a$ due to constraint 
+not prior) $x_e(j,\vsigma_j(a-1))$ on machine $M_a$ due to Constraint 
 \eqref{eq:permutation}. 
-However, to guarantee that constraint \eqref{eq:oneJobPerMac} is not violated, 
+However, to guarantee that Constraint \eqref{eq:oneJobPerMac} is not violated, 
 idle times $M_a$ are inspected, as they create a slot which in $J_j$ can 
 occupy. Bearing in mind that $J_j$ release time is $x_e(j,\vsigma_j(a-1))$ one 
 cannot implement \cref{eq:slack} directly, instead it has to be updated as 
@@ -144,19 +148,20 @@ Note that the choice of slot is an intrinsic heuristic within the construction h
 The focus of this dissertation, however, is on learning the priority of the 
 jobs on the job-list, for a fixed construction heuristic. 
 Hence there could be some problem instances in which the optimum makespan 
-cannot be achieved due to the limitations of the schedule's construction 
+cannot be achieved, due to the limitations of the schedule's construction 
 heuristic of not being properly able to differentiate between which slot from 
 \cref{eq:slots} is the most effective. 
 Instead, hopefully, the learning algorithm will be able to spot these 
 problematic situations, should they arise, by inspecting the schedule's 
 features and translate that into the jobs' priorities.
 
-\emph{Dispatching rules} (DR) are an integral part  of a construction 
-heuristics, where one starts with an empty schedule and adds sequentially on 
-one operation (or task) at a time. 
-Namely, at each time step $k$, an operation is dispatched which has the highest 
-priority of the job-list, \mbox{$\mathcal{L}^{(k)}\subset\mathcal{J}$}, i.e., 
+\emph{Dispatching rules} (DR) are an integral part of a construction 
+heuristics, as it determines the priorities of the job-list, i.e., 
 the jobs who still have operations unassigned. 
+Starting with an empty schedule, and sequentially adding one operation (or 
+task) at a time. Then, for each time step $k$, an operation is dispatched which 
+has the highest priority of the 
+job-list, \mbox{$\mathcal{L}^{(k)}\subset\mathcal{J}$}.
 If there is a tie, some other priority measure is used. 
 However, let's assume that ties are broken at random. 
 \Cref{pseudo:constructJSP} outlines the pseudo code for the entire dispatching 
@@ -164,18 +169,19 @@ process of a \JSP\ problem instance.
 
 \input{pseudocode/constructJSP.tex}
 
-Henceforth we will adopt the following terminology: a \emph{sequence} 
-will refer to the sequential ordering of the dispatches of tasks to machines, 
-namely, 
+Henceforth, we will adopt the following terminology: a \emph{sequence} 
+will refer to the sequential ordering of the dispatches\footnote{Note, only a 
+sequence of $J_j$ is needed, since the corresponding $M_a$ can be 
+    obtained by reading $\vsigma$.} 
+of tasks to machines, namely, 
 \begin{equation}
   \vchi = \big\{\chi_k\big\}_{k=1}^\ell
         = \condset{(j,a)}{J_j\in\mathcal{L}^{(k)}}_{k=1}^\ell
 \end{equation}
-Note, only a sequence of $J_j$ is needed, since the corresponding $M_a$ can be 
-obtained by reading $\vsigma$. 
 The collective set of allocated tasks to machines, which is interpreted by its 
-sequence, is referred to as a \emph{schedule}; and a \emph{scheduling policy} 
-$\pi$ will pertain to the manner in which the sequence is manufactured: be it a 
+sequence, is referred to as a \emph{schedule} or solution; 
+and a \emph{scheduling policy} (or \dr) $\pi$ will pertain to the manner in 
+which the sequence is manufactured: be it a 
 SDR such as SPT or some other heuristic. 
 
 
@@ -184,7 +190,7 @@ SDR such as SPT or some other heuristic.
 There are many examples of \jsp\ for real-world application. 
 However, for demonstration purposes, let's examine a hypothetical problem from 
 the 18th 
-century. Assume we are invited to the Mad Hatter's Tea Party in Wonderland 
+century. Assume we are invited to the Mad Hatter's Tea Party in Wonderland, 
 illustrated in \cref{fig:teaparty}. 
 There are four guests attending, namely
 \begin{enumerate*}[label={$J_\arabic*$)}, ref={{$J_\arabic*$}}, 
@@ -206,9 +212,9 @@ has to perform. They all have to
 \end{enumerate*}
 Our guests are very particular creatures, and would like to do these task in a 
 very specific order, e.g., March Hare insists on doing 
-them in alphabetical order. And each would rather wait than breaking their 
+them in alphabetically. And each would rather wait than breaking their 
 habit.
-Moreover, they tend to be very absent-minded so each task takes them a 
+Moreover, they tend to be very absent-minded, so each task takes them a 
 different amount of time. 
 Let's assume that their processing times and ordering are given in 
 \cref{tbl:example}. 
@@ -340,9 +346,9 @@ the optimum.
 \end{figure}
 
 \section{Features for \jsp}\label{sec:features}
-A DR may need to perform a one-step look-ahead and observes features of the 
-partial schedule to make a decision, for example by observing the resulting 
-temporal makespan. 
+A DR may need to perform a one-step look-ahead, and observe features of the 
+partial schedule to make a decision. 
+For example by observing the resulting temporal makespan. 
 These emanated observed features are sometimes referred to as an 
 \emph{after-state} or \emph{post-decision state}. 
 A partial schedule is denoted $\vchi^j$ where $J_j$ is the 
@@ -361,8 +367,10 @@ $\mathcal{M}_j\subset\mathcal{M}$. Similarly from the machine-oriented
 viewpoint, $M_a\in\mathcal{M}$ with corresponding 
 $\mathcal{J}_a\subset\mathcal{J}$. 
 
-The features of particular interest were obtained from inspecting the aforementioned SDRs from \cref{sec:SDR}:  
-\phiJobRelated\ and \phiMacRelated\ are job-related and machine-related attributes of the current schedule, respectively. 
+The features of particular interest were obtained from inspecting the 
+aforementioned SDRs from \cref{sec:SDR}: namely \phiproc\ and \phijobWrm. 
+Moreover, \phiJobRelated\ and \phiMacRelated\ are job-related and 
+machine-related attributes of the current schedule, respectively. 
 
 Some features are directly observed from the partial schedule, such as the job- 
 and machine-related features, namely, \phiLocalRelated\ and they are only based 
@@ -376,9 +384,10 @@ The approach here is to use well known SDRs, \phiSDRRelated, as a benchmark by
 retrieving what would the resulting $C_{\max}$ would be given if that SDR would 
 be implemented from that point forward. 
 Moreover, random completion of the partial schedule are implemented, 
-here \phiRNDRelated\ corresponds to statics from 100 random roll-outs, which 
+here \phiRNDRelated\ corresponds to statistics from 100 random roll-outs, which 
 can be used to identify which features $\vphi$ are promising on a long-term 
-basis.  \todoExtend{These features have not been published yet}
+basis.  \todoWrite{These features have not been published yet\\They're similar 
+to pilot method}
 
 %All of the features vary throughout the scheduling process, w.r.t. operation 
 %belonging to the same time step $k$, save for \phitotalProc\ which varies 
@@ -401,7 +410,18 @@ basis.  \todoExtend{These features have not been published yet}
 Priority \dr s are attractive since they are relatively simple to 
 implement, fast and find good schedules. In addition, they are easy 
 to interpret, which makes them desirable for the end-user (i.e. shop floor 
-operators). However, they can also fail unpredictably. 
+operators). \todoWrite{Remark: espresso-algorithm by Andy Keane 
+    \emph{Genetic Programming, Logic Design and Case-Based Reasoning for 
+    Obstacle Avoidance}\\
+    \cite{Keane15} : GP creates features for Case Based Reasoning, that are 
+    hard do understand how GP managed to come across them as they are quite 
+    complex. They use 
+    \emph{Espresso Algorithm} for feature selection, that summarises the 
+    features from GP, by combining them to a simpler form, yielding more 
+    relatable features for the end-user. (important for getting software for 
+    drones approved).
+    }
+However, they can also fail unpredictably. 
 \citet{Jayamohan04} showed that a careful combination of \dr s can 
 perform significantly better. These are referred to as \emph{composite 
 dispatching rules} (CDR), where the priority ranking is an expression of 
@@ -416,7 +436,7 @@ instances, which complement each other as a CDR, e.g., combining the SDRs
     \item minimum slack first (MS),\footnote{MS is optimal when all due dates 
     are sufficiently loose and spread out.} 
 \end{enumerate*}
-yields the CDR \emph{apparent tardiness cost}, which can work well on a 
+yields the CDR \emph{Apparent Tardiness Cost}, which can work well on a 
 broader set of problem instances than the original SDRs by themselves.
 
 %\subsection*{Mathematical formulation of CDRs}
@@ -470,7 +490,7 @@ algorithm designer a priori.
 A more sophisticated approach would to learn have the algorithm discover these 
 weights autonomously, for instance via evolutionary search or preference-based 
 imitation learning, to be discussed in \cref{ch:esmodels} and 
-\cref{ch:prefmodels}, respectively.
+\cref{ch:prefmodels}, respectively. \todoFind{Reference ch for sec:il}
 
 \citet{Monch13} stress the importance of automated discovery of DRs and named 
 several successful such implementations in the field of semiconductor wafer 
@@ -492,10 +512,10 @@ on a single instance \citep{Rice76,Gomes01} or class of instances \citep{Xu07}
 to determine which DR to choose from. 
 Instead of optimising which algorithm to use under what data distributions, 
 such as the case of portfolio algorithms, the approach taken in this 
-dissertation is more similar to that of \emph{meta learning} \citep{Vilalta02} 
+dissertation is more similar to that of \emph{meta learning} \citep{Vilalta02}, 
 which is the study of how learning algorithms can be improved, i.e., exploiting 
 their strengths and remedy their failings, in order for a better algorithm 
-design. Thus creating an adaptable learning algorithm that dynamically finds 
+design. Thus, creating an adaptable learning algorithm that dynamically finds 
 the appropriate dispatching rule  to the data distribution at hand. 
 
 \citet{Kalyanakrishnan11} point out that meta learning can be very fruitful in 
@@ -551,9 +571,9 @@ combination of \dr s were found.
 		\mathcal{P}=\condset{\vec{x}_i}{n\times m~}_{i=1}^{N}
 	\end{equation}
 	Problem generators for $\mathcal{P}$ are given in \cref{ch:genprobleminstances}.
-	\item[Feature space] $\mathcal{F}$ which is outlined in 
-	\cref{sec:features}. Note, these are not the only possible set of features, 
-	however, the local feature, \phiLocalRelated, are built on the work by 
+	\item[Feature space] $\mathcal{F}$ which was outlined in 
+	\cref{sec:features}. Note, these are not the only possible set of features. 
+	However, the local feature, \phiLocalRelated, are built on the work by 
 	\cite{SmithMilesLion3} and \cref{InRu11a} and deemed successful in 
 	capturing the essence of a \jsp\ data structure;
 	\item[Algorithm space] $\mathcal{A}$ is simply the scheduling policies under consideration, e.g., SDRs from \cref{sec:SDR},

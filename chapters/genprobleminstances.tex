@@ -47,7 +47,7 @@ random order) before being processed on any machine in the second set, commonly
 denoted as $Jm|2\textrm{sets}|C_{\max}$ problems, but as discussed in 
 \cite{orlib_swv} this family of \JSP\ is considered ``hard'' (w.r.t. relative 
 error from best known solution) in comparison with the ``easy'' or 
-``unchallenging'' family with the general $Jm||C_{\max}$ setup. % ath. 
+``unchallenging'' family with the general $Jm||C_{\max}$ set-up. % ath. 
 %Holtsclaw96 vitnar í orlib_swv um easy-hard pælinguna
 This is in stark contrast to \citet{Whitley} whose findings showed that 
 structured $Fm||C_{\max}$ were much easier to solve than completely random 
@@ -88,12 +88,12 @@ Secondly, there are three structured problem classes of \FSP\  which are modelle
 In all cases, the (job, machine or mixed) correlation can be of degree 
 $0\leq\alpha\leq1$. 
 When $\alpha=0.0$ the problem instances closely correspond to \frnd{n}{m}, 
-hence the degree of $\alpha$ controls the transition of random to structured 
-\FSP. Let's assume $\alpha=1$.
+hence the degree of $\alpha$ controls the transition of random to structured. 
+Let's assume $\alpha=1$.
 
 An example of distribution of processing times are depicted in 
 \cref{fig:fsp:structure}, where machine indices are on the horizontal axis, job 
-indices are colour-coded and their corresponding processing times, $p_{ja}$, 
+indices are colour-coded, and their corresponding processing times, $p_{ja}$, 
 are on the vertical axis.
 
 \begin{figure}\centering 
@@ -150,7 +150,7 @@ in \citet{CITATION_NEEDED}, and for \FSP\  consult \citet{CITATION_NEEDED}.
 
 \subsection*{\Jsp\ OR-Library}
 \citet{orlib_ft} had one of the more notorious benchmark problems for \JSP, and 
-computationally expensive, however, now these instances have been solved to 
+computationally expensive. However, now these instances have been solved to 
 optimality. 
 Similar to the synthetic \JSP\ problem spaces discussed earlier, 
 \citet{orlib_abz} introduce five \JSP\ instances with a random machine ordering 
@@ -186,8 +186,8 @@ i.e., $p_{ja}\in\{0,..,9\}$. \citet{orlib_car} however, comprises of eight
 problems (of various dimension) where there is high variance in processing 
 times, presumably $\vec{p}\sim\mathcal{U}(1,1000)$. 
 \citet{orlib_rec} argue that completely random problem instances are unlikely 
-to occur in practice, however, only the random instances used are reported in 
-the OR-Library;\footnote{Only odd-numbered instances in \texttt{rec01-rec42}
+to occur in practice. However, only the random instances they used are reported 
+in the OR-Library;\footnote{Only odd-numbered instances in \texttt{rec01-rec42}
   are given, since the even-numbered instances are obtained from the previous 
   instance by just reversing the processing order of each job; the optimal 
   value of each odd-numbered instance and its even-numbered counterpart is the 

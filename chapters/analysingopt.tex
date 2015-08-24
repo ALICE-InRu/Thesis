@@ -11,7 +11,7 @@ For this, we follow an optimal solution,\footnote{Optimal solutions can be
   Alas, GLPK has a lacklustre performance w.r.t. speed for for solving 
   $10\times10$ \JSP.}
 and inspect the evolution of its features  (defined in \cref{tbl:features}) 
-throughout the dispatching process. 
+throughout the dispatching process, which is detailed in \cref{ch:gentrdat}. 
 Moreover, it is noted, that there are several optimal solutions available for 
 each problem instance. However, it is deemed sufficient to inspect only one 
 optimal trajectory per problem instance as there are $N_{\text{train}}$ 
@@ -59,7 +59,7 @@ depicts the probability of choosing an optimal dispatch at each iteration.
   \\
   \subcaptionbox{$10\times10$\label{fig:diff:opt:rnd:10x10}}{
     \includegraphics[width=\textwidth]{figures/{stepwise.10x10.OPT}.pdf}}
-  \caption{Probability of choosing optimal move}
+  \caption{Probability of choosing optimal move (at random)}
   \label{fig:diff:opt:rnd}
 \end{figure}
 
@@ -73,6 +73,8 @@ depicts the worst and best case scenario of \namerho, once you've fallen off
 the optimal track. Note, that this is given that you make \emph{one} wrong 
 turn. Generally, there will be many mistakes made, and then the compound 
 effects of making suboptimal decisions really start adding up. 
+In fact, \cref{fig:diff:opt:SDR} shows the probability of optimality when 
+following a fixed SDR.
 
 It is interesting that for \JSP, that over time making suboptimal decisions 
 make more of an impact on the resulting makespan. This is most likely due to 
@@ -81,7 +83,7 @@ is space to rectify the situation with the subsequent dispatches. However, if
 done at a later point in time, little is to be done as the damage is already 
 been inflicted upon the schedule. 
 However, for \FSP, the case is the exact opposite. Under those circumstances 
-it's imperative to make good decisions right from the beginning. This is due to 
+it's imperative to make good decisions right from the get-go. This is due to 
 the major structural differences between \jsp\ and \fsp, namely the latter 
 having a homogeneous machine ordering, constricting the solution immensely. 
 Luckily, this does have the added benefit of making \fsp\ less vulnerable for 
@@ -98,7 +100,7 @@ suboptimal decisions later in the decision process.
     respectively. Moreover, mean suboptimal move is given as dashed line.}
   \label{fig:diff:case:OPT}
 \end{figure}
-
+\todoFind{Remake \cref{fig:diff:case:6x5:OPT}, legend doesn't fit page!}
 
 \section{Optimality of \sdr s}\label{sec:diff:opt:sdr}
 The probability of optimality of the aforementioned SDRs from \cref{sec:SDR}, 
@@ -120,8 +122,11 @@ suboptimal state spaces.
 \section{Simple blended dispatching rule}\label{sec:diff:opt:bdr}
 As stated before, the goal of this \lcnamecref{ch:problemstructure} is to 
 utilise feature behaviour to motivate new, and \emph{hopefully} better, 
-dispatching rules. 
-A na\"ive approach would be creating a simple blended dispatching rule which 
+\dr s. 
+\todoWrite{Note, MWR$\cap$SPT hardly ever coincide for easy or hard schedules 
+(cf. \cref{tbl:easy:cnt:10x10,tbl:hard:cnt:10x10}, so in theory they could 
+complement one another.}
+A na\"ive approach would be creating a simple blended \dr\ which 
 would be for instance switch between two SDRs at a predetermined time point. 
 Hence, going back to \cref{fig:diff:opt:SDR} a presumably good BDR for 
 \jrnd{10}{10}  would be starting with SPT and then switching over to MWR at 
@@ -160,6 +165,8 @@ original DR that achieved the best results.
 \end{figure}
 
 \section{Extremal feature}\label{sec:diff:opt:ext}
+\todoWrite{First introduce \cref{sec:diff:opt:ext}, which is overwhelming. Then 
+limit to only SDR based ones in \cref{sec:diff:opt:SDR}}
 The SDRs we've inspected so-far are based on two features from 
 \cref{tbl:features}, namely
 \begin{enumerate*}
@@ -174,6 +181,8 @@ in \cref{tbl:features}.
 depict the probability of all extremal features being an optimal dispatch, with 
 random guessing from \cref{fig:diff:opt:rnd} as a dashed line. 
 \todoExtend{Discuss extremal features more?}
+\todoWrite{Mention that $\rho$ for those single features is annotated on 
+\cref{fig:diff:opt:minmax}} 
 
 \begin{figure}\centering
   \subcaptionbox{\jrnd{6}{5}\label{fig:diff:extr:jrnd:6x5}}{
@@ -187,6 +196,11 @@ random guessing from \cref{fig:diff:opt:rnd} as a dashed line.
     \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.10x10.OPT.extremal}.pdf}}
   \caption{Continued. }
 \end{figure}
+\todoFind{Check if \cref{fig:diff:opt:minmax} are part of $d$ choose 1 
+pref-models feature selection}
+\todoExtend{Note performance edge for \phiRNDmin\ is lost from 
+\cref{fig:diff:extr:jrnd:6x5} to \cref{fig:diff:extr:jrnd:10x10} as 100 random 
+roll-outs are not enough for fully exploring $10\times10$ state space.}
 
 \section{Feature evolution}\label{sec:diff:opt:evol}
 In order to put the extremal features into perspective, it's worth comparing 
@@ -210,3 +224,57 @@ them with how the evolution of the features are over time, depicted in
 
 \section{Emergence of problem difficulty}\label{sec:diff:stepwise}
 
+From the experimental study it is apparent that features have different %impact 
+correlation with the resulting schedule depending in what stage it is in the 
+scheduling process, implying that their influence varies over the dispatching 
+sequencing. Moreover, features constant throughout the scheduling process are 
+not correlated with the end-result.
+There are some common features for both difficulties considered which define 
+\jsp\ on a whole. However, the significant features are quite different across 
+the two difficulties, implying there is a clear difference in their data 
+structure. The amount of significant features were considerably more for easy 
+problems, indicating their key elements had been found. However, the features 
+distinguishing hard problems were scarce. Most likely due to their more complex 
+data structure their key features are of a more composite nature. As a result, 
+new `global' features were introduced. 
+
+It is possible for a \JSP\ schedule to have more than one sequential 
+dispatching representation. It is especially w.r.t. the initial dispatches. 
+Revisiting \cref{fig:example:midway}, if we were to dispatch $J_2$ 
+first and then $J_4$, then that would be the same equivalent
+temporal schedule if we did it the other way around. 
+This is because they don't create a conflict for one another 
+(as is the case for jobs $J_2$ and $J_3$). This drawback of non-uniqueness of 
+sequential dispatching representation explains why there is hardly any 
+significant feature for the initial steps of the scheduling process (cf. 
+\cref{tbl:JSP:feat:easy} and \cref{tbl:JSP:feat:hard}). 
+
+Since feature selection is of paramount importance in order for algorithms to 
+become successful, one needs to give great thought to how features are 
+selected. What kind of features yield \emph{bad} schedules? And can they be 
+steered onto the path of more promising feature characteristics? This sort of 
+investigation can be an indicator how to create meaningful problem generators. 
+On the account that real-world problem instances are scarce, their hidden 
+properties need be drawn forth in order to generate artificial problem 
+instances from the same data distribution. 
+
+The feature attributes need to be based on statistical or theoretical grounds. 
+Scrutiny in understanding the nature of problem instances therefore becomes of 
+paramount importance in feature engineering for learning, as it yields feedback 
+into what features are important to devote more attention to, i.e., features 
+that result in a failing algorithm. 
+For instance, in \cref{tbl:JSP:feat:same} the slack features have the same 
+distribution in the initial stages of the scheduling process. However, there is 
+a clear point of divergence which needs to be investigate why the sudden 
+change? \todoFind{Check best/worst case scenario}
+In general, this sort of analysis can undoubtedly be used in better 
+algorithm design which is more equipped to deal with varying problem instances 
+and tailor to individual problem instance's needs, i.e., a footprint-oriented 
+algorithm.
+
+Although this methodology was only implemented on a set of simple 
+single-priority \dr s, the methodology is easily adaptable for more 
+complex algorithms, such as the learned preference models in 
+\cref{sec:pref:problemstructure}. The main objective of this work is to 
+illustrate the interaction of a specific algorithm on a given problem structure 
+and its properties. 

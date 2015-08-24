@@ -7,7 +7,12 @@
 %The insight attained by investigating the relationship between problem structure and heuristic performance can undoubtedly lead to better heuristic design that is tailored to the data distribution under consideration.
 %\end{abstract}
 
-\FirstSentence{P}{roblem structure and heuristic effectiveness} are closely intertwined. When investigating the relation between the two, one can research what \citet{Corne10} call \emph{footprints} in instance space, which is an indicator how an algorithm generalises over a given instance space. This sort of investigation has also been conducted by \citet{Pfahringer00} under the alias \emph{landmarking}. 
+\FirstSentence{P}{roblem structure and heuristic effectiveness} are closely 
+intertwined. When investigating the relation between the two, one can research 
+what \citet{Corne10} call \emph{footprints}, which is an indicator how an 
+algorithm generalises over a given instance space. This sort of investigation 
+has also been conducted by \citet{Pfahringer00} under the alias 
+\emph{landmarking}. 
 % quote Corne10: ``such a footprint indicates how an algorithm's comparative performance generalises in instance space''
 % quote Katie2009: ``Landmarking tries to directly characterise a domain by relating the performance to some learners -- the landmarkers -- to the performance of some other algorithm.''
 From experiments performed by \citeauthor{Corne10}, it is evident that 
@@ -31,14 +36,14 @@ On the other hand, \citeauthor{SmithMilesLion5} use a completely automated
 approach. Using timetabling instances, they implement a self-organizing map 
 (SOM) on the feature space to group similar problem instances together, that 
 were both real world instances and synthetic ones using different problem 
-generators. And by that way it was possible to plot visually the footprints for 
+generators. That way it was possible to plot visually the footprints for 
 several algorithms.
 
 Going back to the \jsp\ paradigm, then the interaction between processing time 
 distribution and its permutation is extremely important, because it introduces 
 hidden properties in the data structure making it \emph{easy} or \emph{hard} to 
-schedule for the given algorithm. These underlying characteristics, i.e., 
-features, define its data structure. A more sophisticated way of discretising 
+schedule for the given algorithm. These underlying characteristics (i.e. 
+features), define its data structure. A more sophisticated way of discretising 
 the instance space is grouping together problem instances that show the same 
 kind of feature behaviour, especially given the fact the learning models in 
 \cref{ch:prefmodels} will be heavily based on feature pairs. Thereby making it 
@@ -61,11 +66,11 @@ implemented, for a meaningful outcome overall.
 
 This also, essentially, answers the question of whether  it is in fact feasible 
 to discriminate between \emph{good} and \emph{bad} schedules using the 
-currently selected features as a measure. If results are contradictory, it is 
-an indicator the features selected are not robust enough to capture the essence 
-of the data structure and some key features are missing from the feature set 
-that could be able to discriminate between \emph{good} and \emph{bad} 
-schedules. 
+currently selected features as a measure of the quality of a solution. 
+If results are contradictory, it is an indicator the features selected are not 
+robust enough to capture the essence of the data structure and some key 
+features are missing from the feature set that could be able to discriminate 
+between \emph{good} and \emph{bad} schedules. 
 Additionally, there is also the question of how can one define ``similar'' 
 schedules, and what measures should be used? This 
 \lcnamecref{ch:problemstructure} describes some preliminary experiments with 
@@ -163,12 +168,20 @@ distributions.
 
 For this the two-sample Kolmogorov–Smirnov test (K-S test) is used to determine 
 whether two underlying one-dimensional probability distributions differ. 
-Furthermore, in order to find defining characteristics for easy or hard problems, a (linear) correlation is computed between features to the resulting \namerho.
+Furthermore, in order to find defining characteristics for easy or hard 
+problems, a (linear) correlation is computed between features to the resulting 
+\namerho. \todoFind{K-S tests are not used in this chapter, move until later}
 
 Note, when inspecting any statistical difference between data distribution of the features on a step by step basis, the features at step $k+1$ are of course dependant on all previous $k$ steps. This results in repetitive statistical testing, therefore a Bonferroni adjustment is used to counteract the multiple comparisons, i.e., each stepwise comparison has the significant level $\alpha_k=\frac{\alpha}{\ell}$, and thus maintaining the $\sum_{k=1}^{\ell}\alpha_k=\alpha$ significance level.
 
 \section{Defining \emph{easy} versus \emph{hard} schedules} 
 \label{sec:diff:easyhard}
+\todoWrite{Anoter way could be inspecting the number of Simplex iterations 
+needed for an optimal schedule. However, preliminary experiments showed that an 
+increased amount of Simplex solutions didn't transcend to high $\rho$, if 
+anything it means there are many optimal or near-optimal solutions available, 
+hence there is a slow process of eliminating branches of the tree, before 
+reaching to a final incumbent solution. }
 It's relatively ad-hoc how to define what makes a schedule difficult. Intuitively, it's logical to use the schedule's objective to define it directly, i.e., inspecting \fullnamerho. Moreover, since the SDRs from \cref{sec:SDR} will be used throughout as a benchmark for subsequent models, the quantiles for \namerho, using the SDRs on their training set will be used to differentiate between easy and hard scheduling problems. In particular, the classification is defined as follows, 
 \begin{description}
   \item[Easy] schedules belong to the first quantile, i.e., \hfill \\
@@ -242,6 +255,8 @@ These have up until now all been speculations about how SDRs differ. One thing i
 As the objective of this dissertation is not to choose which DR is best to use for each problem instance. 
 The focus is set on finding what characterises of \jsp\ overall, are of value (i.e. feature selection), and create a new model that works well for the problem space to a great degree.
 Namely, by exploiting feature behaviour that is considered more favourable. The hypothesis being that features evolutions of easy schedules greatly differ from features evolutions corresponding to hard schedules, and \cref{sec:diff:stepwise} will attempt to explain the evidence show in \cref{tbl:easyhard:cnt:6x5,tbl:easyhard:cnt:10x10,tbl:easy:cnt:6x5,tbl:easy:cnt:10x10,tbl:hard:cnt:6x5,tbl:hard:cnt:10x10}.
+\todoFind{Make sure \cref{sec:diff:stepwise} reference 
+\cref{tbl:easyhard:cnt:6x5,tbl:easyhard:cnt:10x10,tbl:easy:cnt:6x5,tbl:easy:cnt:10x10,tbl:hard:cnt:6x5,tbl:hard:cnt:10x10}.}
 
 Note, this \lcnamecref{sec:diff:easyhard} gave the definition of what 
 constitutes an `easy' and `hard' schedule. Since these are based on four SDRs 
@@ -263,39 +278,3 @@ Despite problem instances being created by the same problem generator, they vary
 Since the description of the problem space isn't enough to predict its performance, we need a measure to understand what's going on. Why are some instances easier to find their optimum (or close enough)? That is to say, what's their secret? This is where their feature evolution comes into play.
 By using schedules obtained by applying SDRs we have the ability to get some insight into the matter. 
 
-From the experimental study it is apparent that features have different %impact 
-correlation with the resulting schedule depending in what stage it is in the scheduling process, implying that their influence varies over the dispatching sequencing. Moreover, features constant throughout the scheduling process are not correlated with the end-result.
-There are some common features for both difficulties considered which define 
-\jsp\ on a whole. However, the significant features are quite different across 
-the two difficulties, implying there is a clear difference in their data 
-structure. The amount of significant features were considerably more for easy 
-problems, indicating their key elements had been found. However, the features 
-distinguishing hard problems were scarce. Most likely due to their more complex 
-data structure their key features are of a more composite nature. As a result, 
-new `global' features were introduced. 
-
-It is possible for a \JSP\ schedule to have more than one sequential 
-dispatching representation. It is especially w.r.t. the initial dispatches. 
-Revisiting \cref{fig:example:midway}, if we were to dispatch $J_2$ 
-first and then $J_4$, then that would be the same equivalent
-temporal schedule if we did it the other way around. 
-This is because they don't create a conflict for one another 
-(as is the case for jobs $J_2$ and $J_3$). This drawback of non-uniqueness of 
-sequential dispatching representation explains why there is hardly any 
-significant feature for the initial steps of the scheduling process (cf. 
-\cref{tbl:JSP:feat:easy} and \cref{tbl:JSP:feat:hard}). 
-
-Since feature selection is of paramount importance in order for algorithms to become successful, one needs to give great thought to how features are selected. What kind of features yield \emph{bad} schedules? And can they be steered onto the path of more promising feature characteristics. This sort of investigation can be an indicator how to create meaningful problem generators. On the account that real-world problem instances are scarce, their hidden properties need be drawn forth in order to generate artificial problem instances from the same data distribution. 
-
-The feature attributes need to be based on statistical or theoretical grounds. 
-Scrutiny in understanding the nature of problem instances therefore becomes of paramount importance in feature engineering for learning, as it yields feedback into what features are important to devote more attention to, i.e., features that result in a failing algorithm. 
-For instance, in \cref{tbl:JSP:feat:same} the slack features have the same 
-distribution in the initial stages of the scheduling process, however, there is 
-a clear point of divergence which needs to be investigate why the sudden 
-change? 
-In general, this sort of investigation can undoubtedly be used in better 
-algorithm design which is more equipped to deal with varying problem instances 
-and tailor to individual problem instance's needs, i.e., a footprint-oriented 
-algorithm.
- 
-Although this methodology was only implemented on a set of simple single-priority dispatching rules, the methodology is easily adaptable for more complex algorithms, such as the learned preference models in \cref{sec:pref:problemstructure}. The main objective of this work is to illustrate the interaction of a specific algorithm on a given problem structure and its properties. 
