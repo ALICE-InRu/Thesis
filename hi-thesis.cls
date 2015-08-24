@@ -195,6 +195,13 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     \ifthenelse{\equal{\@printmode}{draft}}{
         \pagenumbering{roman}
         \listoftodos
+        \strictpagecheck
+        \checkoddpage
+        \ifoddpage
+            % do nothing
+        \else
+            \blankpage
+        \fi        
         \setcounter{page}{0}
         \listofpublications
     }{
