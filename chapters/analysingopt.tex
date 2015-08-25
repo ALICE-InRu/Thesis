@@ -17,21 +17,17 @@ each problem instance. However, it is deemed sufficient to inspect only one
 optimal trajectory per problem instance as there are $N_{\text{train}}$ 
 independent instances which gives the training data variety. 
 
-\Cref{fig:diff:opt:unique,fig:diff:opt:rnd,fig:diff:opt:minmax} 
+\Cref{fig:diff:opt:unique,fig:diff:opt:rnd} 
 depict the mean over all the training data, which are quite noisy 
 functions. \Cref{InRu15b} depicts the mean as is, albeit only for 
 $10\times10$ problem spaces. 
 Thus, for clarity purposes, they are fitted with local polynomial regression, 
 making the boundary points sometimes biased. 
 However, 
-\cref{fig:diff:opt:SDR,fig:diff:case:OPT,fig:diff:case:SDR,fig:diff:opt:evol} 
+\cref{fig:diff:extr:SDR,fig:diff:case:OPT,fig:diff:case:SDR,fig:diff:extr:features,fig:diff:opt:evol}
 depict the mean as is.
 
-
-
-
-
-
+\section{Making optimal decisions}
 Firstly, we can observe that on a step-by-step basis there are several optimal 
 dispatches to choose from. \Cref{fig:diff:opt:unique} depicts how the number of 
 optimal dispatches evolve at each dispatch iteration. Note, that only one 
@@ -68,12 +64,13 @@ Looking at \cref{fig:diff:opt:rnd}, \jrnd{10}{10} has a relatively high
 probability 
 ($70\%$ and above) of choosing an optimal job. However, it is imperative to 
 keep making optimal decisions, because once off the optimal track the 
-consequences can be dire. To demonstrate this interaction \cref{fig:diff:case} 
+consequences can be dire. To demonstrate this interaction, 
+\cref{fig:diff:case:OPT} 
 depicts the worst and best case scenario of \namerho, once you've fallen off 
 the optimal track. Note, that this is given that you make \emph{one} wrong 
 turn. Generally, there will be many mistakes made, and then the compound 
 effects of making suboptimal decisions really start adding up. 
-In fact, \cref{fig:diff:opt:SDR} shows the probability of optimality when 
+In fact, \cref{fig:diff:extr:SDR} shows the probability of optimality when 
 following a fixed SDR.
 
 It is interesting that for \JSP, that over time making suboptimal decisions 
@@ -90,25 +87,69 @@ Luckily, this does have the added benefit of making \fsp\ less vulnerable for
 suboptimal decisions later in the decision process. 
 
 \begin{figure}\centering
-  \subcaptionbox{$6\times5$\label{fig:diff:case:6x5:OPT}}{
+  \subcaptionbox{$6\times5$\label{fig:diff:case:OPT:6x5}}{
     \includegraphics[width=\textwidth]{figures/ALL/{stepwise.6x5.OPT.casescenario}.pdf}}
   \\
-  \subcaptionbox{$10\times10$\label{fig:diff:case:10x10:OPT}}{
+  \subcaptionbox{$10\times10$\label{fig:diff:case:OPT:10x10}}{
     \includegraphics[width=\textwidth]{figures/ALL/{stepwise.10x10.OPT.casescenario}.pdf}}
   \caption{Mean \namerho, for best and worst case scenario of when making
     \emph{one} sub-optimal dispatch, depicted as lower and upper bound, 
     respectively. Moreover, mean suboptimal move is given as dashed line.}
   \label{fig:diff:case:OPT}
 \end{figure}
-\todoFind{Remake \cref{fig:diff:case:6x5:OPT}, legend doesn't fit page!}
+\todoFind{Remake \cref{fig:diff:case:OPT:6x5}, legend doesn't fit page!}
 
-\section{Optimality of \sdr s}\label{sec:diff:opt:sdr}
-The probability of optimality of the aforementioned SDRs from \cref{sec:SDR}, 
-yet still maintaining our optimal trajectory, i.e., the probability of a job 
-chosen by a SDR being able to yield an optimal makespan on a step by step 
-basis, is depicted  in   \cref{fig:diff:opt:SDR}. Moreover, the dashed line 
-represents the benchmark of randomly guessing the optimum (cf. 
-\cref{fig:diff:opt:rnd}).
+
+\section{Optimality of extremal features}\label{sec:diff:opt:ext}
+The probability of optimality of the aforementioned features from 
+\cref{tbl:features}, yet still maintaining our optimal trajectory, i.e., the 
+probability of a job chosen by an extremal value for a feature being able to 
+yield an optimal makespan on a step-by-step basis, is depicted  in   
+\cref{fig:diff:extr:features}, for both \jrnd{6}{5} and \jrnd{10}{10}.
+Moreover, the dashed line represents the benchmark of randomly guessing the 
+optimum (cf. \cref{fig:diff:opt:rnd}).
+Furthermore, the \lcnamecref{fig:diff:extr:features}s are annotated with the 
+corresponding mean \namerho, for the training set if it were scheduled solely 
+w.r.t. that extremal feature.
+
+Generally, a high stepwise optimality means a low $\rho$, e.g., 
+\phiGlobalRelated, save for \phiRNDstd. Unfortunately, it's not always so 
+predictable. Take for instance \phiproc, then the minimum value gives a better 
+$\rho$, even though it's unlikelier to be optimal than it's maximum counterpart.
+
+\todoFind{Check if \cref{fig:diff:extr:features} are part of $d$ choose 1 
+    pref-models feature selection}
+Before inspecting the local based features further. Notice that the staggering 
+performance edge for \phiRNDmin\ is lost when going to a higher dimension (cf. 
+\phiRNDmin\ in \cref{fig:diff:extr:jrnd:6x5} has 1.3\% and increases to 8.8\% 
+in  \cref{fig:diff:extr:jrnd:10x10}), implying that 100 random roll-outs for 
+are not sufficient for fully exploring $10\times10$ state-space, yet highly 
+competitive for $6\times5$.
+
+\begin{figure}\centering
+    \subcaptionbox{\jrnd{6}{5}\label{fig:diff:extr:jrnd:6x5}}{
+        \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.6x5.OPT.extremal}.pdf}}
+    \caption{Probability of extremal feature being optimal. }
+    \label{fig:diff:extr:features}
+\end{figure}
+\begin{figure}\centering
+    \ContinuedFloat
+    \subcaptionbox{\jrnd{10}{10}\label{fig:diff:extr:jrnd:10x10}}{
+        \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.10x10.OPT.extremal}.pdf}}
+    \caption{(continued)}
+\end{figure}
+
+\subsection{Optimality of SDRs}\label{sec:diff:opt:sdr}
+Let's limit ourselves to only features that correspond to SDRs from 
+\cref{sec:SDR}. Namely, \cref{pref:SDR} yield, 
+\begin{enumerate*}
+    \item \phiproc\ for SPT and LPT
+    \item \phijobWrm\ for LWR and MWR 
+\end{enumerate*}
+By choosing the lowest value for the first SDR, and highest value for the 
+latter SDR, i.e., the extremal values for those given features. 
+\Cref{fig:diff:extr:SDR} depicts the corresponding probabilities from 
+\cref{fig:diff:extr:features} in one graph.
 
 Now, let's bare in mind \namerho, of applying SDRs throughout the dispatching 
 process (cf. box-plots of which in \cref{fig:SDR:boxplot}), then there is a 
@@ -128,7 +169,7 @@ utilise feature behaviour to motivate new, and \emph{hopefully} better,
 complement one another.}
 A na\"ive approach would be creating a simple blended \dr\ which 
 would be for instance switch between two SDRs at a predetermined time point. 
-Hence, going back to \cref{fig:diff:opt:SDR} a presumably good BDR for 
+Hence, going back to \cref{fig:diff:extr:SDR} a presumably good BDR for 
 \jrnd{10}{10}  would be starting with SPT and then switching over to MWR at 
 around time step $k=40$, where the SDRs change places in outperforming one 
 another. A box-plot for \namerho, for all $10\times10$ problem spaces is 
@@ -143,7 +184,7 @@ A reason for this lack of performance of our proposed BDR is perhaps that by
 starting out with SPT in the beginning, it sets up the schedules in such a way 
 that it's quite greedy and only takes into consideration jobs with shortest 
 immediate processing times. Now, even though it is possible to find optimal 
-schedules from this scenario, as \cref{fig:diff:opt:SDR} shows, the inherent 
+schedules from this scenario, as \cref{fig:diff:extr:SDR} shows, the inherent 
 structure is already taking place, and might make it hard to come across 
 optimal moves by simple methods. Therefore it's by no means guaranteed that by 
 simply swapping over to MWR will handle the situation that applying SPT has 
@@ -164,48 +205,11 @@ original DR that achieved the best results.
   \label{fig:diff:boxplot:BDR}
 \end{figure}
 
-\section{Extremal feature}\label{sec:diff:opt:ext}
-\todoWrite{First introduce \cref{sec:diff:opt:ext}, which is overwhelming. Then 
-limit to only SDR based ones in \cref{sec:diff:opt:SDR}}
-The SDRs we've inspected so-far are based on two features from 
-\cref{tbl:features}, namely
-\begin{enumerate*}
-  \item \phiproc\ for SPT and LPT
-  \item \phijobWrm\ for LWR and MWR 
-\end{enumerate*}
-By choosing the lowest value for the first SDR, and highest value for the 
-latter SDR, i.e., the extremal values for those given features. Let's apply the 
-same methodology from \cref{sec:diff:opt:sdr} to all varying features described 
-in \cref{tbl:features}. 
-\Cref{fig:diff:opt:minmax}
-depict the probability of all extremal features being an optimal dispatch, with 
-random guessing from \cref{fig:diff:opt:rnd} as a dashed line. 
-\todoExtend{Discuss extremal features more?}
-\todoWrite{Mention that $\rho$ for those single features is annotated on 
-\cref{fig:diff:opt:minmax}} 
-
-\begin{figure}\centering
-  \subcaptionbox{\jrnd{6}{5}\label{fig:diff:extr:jrnd:6x5}}{
-    \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.6x5.OPT.extremal}.pdf}}
-  \caption{Probability of extremal feature being optimal. }
-  \label{fig:diff:opt:minmax}
-\end{figure}
-\begin{figure}\centering
-  \ContinuedFloat
-  \subcaptionbox{\jrnd{10}{10}\label{fig:diff:extr:jrnd:10x10}}{
-    \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.10x10.OPT.extremal}.pdf}}
-  \caption{Continued. }
-\end{figure}
-\todoFind{Check if \cref{fig:diff:opt:minmax} are part of $d$ choose 1 
-pref-models feature selection}
-\todoExtend{Note performance edge for \phiRNDmin\ is lost from 
-\cref{fig:diff:extr:jrnd:6x5} to \cref{fig:diff:extr:jrnd:10x10} as 100 random 
-roll-outs are not enough for fully exploring $10\times10$ state space.}
 
 \section{Feature evolution}\label{sec:diff:opt:evol}
-In order to put the extremal features into perspective, it's worth comparing 
-them with how the evolution of the features are over time, depicted in 
-\cref{fig:diff:opt:evol}. 
+In order to put the extremal features from \cref{fig:diff:extr:features} into 
+perspective, it's worth comparing them with how the evolution of the features 
+are over time, depicted in \cref{fig:diff:opt:evol}. 
 
 \begin{figure}\centering
   \subcaptionbox{\jrnd{6}{5}\label{diff:evol:jrnd:6x5}}{
@@ -218,9 +222,38 @@ them with how the evolution of the features are over time, depicted in
   %  \ContinuedFloat
   \subcaptionbox{\jrnd{10}{10}\label{diff:evol:jrnd:10x10}}{
     \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.10x10.Track.evolution}.pdf}}
-  \caption{Continued. }
+  \caption{(continued)}
 \end{figure}
 
+\section*{Experimental settings}
+% Katie orðar: A correlation analysis between the feature space and the 
+%performance space was conducted across all 1,500 problem instances revealed 
+%that instance features that appear to correlate (linearly) with heuristic 
+%performance are $phi(?)$ (correlation $=-0.59$) and $phi(?)$ (correlation 
+%$=0.44$). None of the other instance features appear to have a linear 
+%relationship with algorithmic performance.
+
+The main focus is on knowing \emph{when} during the scheduling process easy and 
+hard problems diverge and explore in further detail \emph{why} they diverged. 
+Rather than visualising high-dimensional data projected onto two dimensional 
+space (as was the focus in \cite{SmithMilesLion5} with self-organising maps), 
+instead appropriate statistical tests with a significance level $\alpha=0.05$ 
+is applied to determine if there is any difference between different data 
+distributions. 
+
+For this the two-sample Kolmogorov–Smirnov test (K-S test) is used to determine 
+whether two underlying one-dimensional probability distributions differ. 
+Furthermore, in order to find defining characteristics for easy or hard 
+problems, a (linear) correlation is computed between features to the resulting 
+\namerho. 
+
+Note, when inspecting any statistical difference between data distribution of 
+the features on a step by step basis, the features at step $k+1$ are of course 
+dependant on all previous $k$ steps. This results in repetitive statistical 
+testing, therefore a Bonferroni adjustment is used to counteract the multiple 
+comparisons, i.e., each stepwise comparison has the significant level 
+$\alpha_k=\frac{\alpha}{\ell}$, and thus maintaining the 
+$\sum_{k=1}^{\ell}\alpha_k=\alpha$ significance level.
 
 \section{Emergence of problem difficulty}\label{sec:diff:stepwise}
 
