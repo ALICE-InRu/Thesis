@@ -71,6 +71,7 @@ Moreover, there are no sequence dependent set-up times.
 For any given \JSP, then each job $J_j$ has an indivisible processing time (or 
 cost) on machine $M_a$, $p_{ja}$, which is assumed to be integral and finite. 
 
+
 Starting time of job $J_j$ on machine $M_a$ is denoted $x_s(j,a)$ and its 
 completion or end time is denoted $x_e(j,a)$ where, 
 \begin{equation}  x_e(j,a):=x_s(j,a)+p_{ja} \end{equation} 
@@ -79,7 +80,7 @@ Each job $J_j$ has a specified processing order through the machines, it is a
 permutation vector, $\vsigma_j$, of $\{1,..,m\}$, representing a job $J_j$ can 
 be processed on $M_{\vsigma_j(a)}$ only after it has been completely processed 
 on $M_{\vsigma_j(a-1)}$, i.e.,
-\begin{equation}\label{eq:permutation}
+\begin{equation}\label[ineq]{eq:permutation}
 	x_s(j,\vsigma_j(a)) \geq x_e(j,\vsigma_j(a-1)) 
 \end{equation}
 for all $J_j\in\mathcal{J}$ and $a\in\{2,..,m\}$. 
@@ -88,7 +89,7 @@ machines, which is independent of the other jobs. However, in the case that all
 jobs share the same permutation route, \JSP\ is reduced to a \FSP.
 
 The disjunctive condition that each machine can handle at most one job at a time is the following,
-\begin{equation}\label{eq:oneJobPerMac}
+\begin{equation}\label[ineq]{eq:oneJobPerMac}
 	x_s(j,a) \geq x_e(j',a) \quad\textrm{or}\quad x_s(j',a) \geq x_e(j,a)  
 \end{equation}
 for all $J_j,J_{j'}\in\mathcal{J},\; J_j\neq J_{j'}$ and $M_a\in\mathcal{M}$. 
@@ -115,9 +116,9 @@ Here, the construction heuristic, $\Upsilon$, is to schedule the dispatches as
 closely together as possible, i.e., minimise the schedule's idle times. 
 More specifically, once an operation $(j,a)$ has been chosen from the job-list, 
 $\mathcal{L}$, by some dispatching rule, it can placed immediately after (but 
-not prior) $x_e(j,\vsigma_j(a-1))$ on machine $M_a$ due to Constraint 
-\eqref{eq:permutation}. 
-However, to guarantee that Constraint \eqref{eq:oneJobPerMac} is not violated, 
+not prior) $x_e(j,\vsigma_j(a-1))$ on machine $M_a$ due to 
+\cref{eq:permutation}. 
+However, to guarantee that \cref{eq:oneJobPerMac} is not violated, 
 idle times $M_a$ are inspected, as they create a slot which in $J_j$ can 
 occupy. Bearing in mind that $J_j$ release time is $x_e(j,\vsigma_j(a-1))$ one 
 cannot implement \cref{eq:slack} directly, instead it has to be updated as 
@@ -144,13 +145,13 @@ implementing the pseudo code in \cref{pseudo:constructJSP}, however, only
 $97\%$ of the instances when choosing the smallest slot.} and henceforth will 
 be used throughout the dissertation.
 
-Note that the choice of slot is an intrinsic heuristic within the construction heuristic.
+Note that the choice of slot is an intrinsic heuristic within $\Upsilon$.
 The focus of this dissertation, however, is on learning the priority of the 
 jobs on the job-list, for a fixed construction heuristic. 
-Hence there could be some problem instances in which the optimum makespan 
-cannot be achieved, due to the limitations of the schedule's construction 
-heuristic of not being properly able to differentiate between which slot from 
-\cref{eq:slots} is the most effective. 
+Hence, there could be some problem instances in which the optimum makespan 
+cannot be achieved, due to the limitations of $\Upsilon$ of not being properly 
+able to differentiate between which slot from \cref{eq:slots} is the most 
+effective.
 Instead, hopefully, the learning algorithm will be able to spot these 
 problematic situations, should they arise, by inspecting the schedule's 
 features and translate that into the jobs' priorities.
@@ -183,8 +184,6 @@ sequence, is referred to as a \emph{schedule} or solution;
 and a \emph{scheduling policy} (or \dr) $\pi$ will pertain to the manner in 
 which the sequence is manufactured: be it a 
 SDR such as SPT or some other heuristic. 
-
-
 
 \section{Example}\label{sec:jsp:example}
 There are many examples of \jsp\ for real-world application. 
@@ -410,17 +409,7 @@ to pilot method}
 Priority \dr s are attractive since they are relatively simple to 
 implement, fast and find good schedules. In addition, they are easy 
 to interpret, which makes them desirable for the end-user (i.e. shop floor 
-operators). \todoWrite{Remark: espresso-algorithm by Andy Keane 
-    \emph{Genetic Programming, Logic Design and Case-Based Reasoning for 
-    Obstacle Avoidance}\\
-    \cite{Keane15} : GP creates features for Case Based Reasoning, that are 
-    hard do understand how GP managed to come across them as they are quite 
-    complex. They use 
-    \emph{Espresso Algorithm} for feature selection, that summarises the 
-    features from GP, by combining them to a simpler form, yielding more 
-    relatable features for the end-user. (important for getting software for 
-    drones approved).
-    }
+operators). 
 However, they can also fail unpredictably. 
 \citet{Jayamohan04} showed that a careful combination of \dr s can 
 perform significantly better. These are referred to as \emph{composite 
@@ -472,16 +461,19 @@ highest value, i.e.,
 Since we're using a feature space based on job-attributes, then it's trivial to 
 interpret \cref{eq:CDR:feat} as the SDRs from \cref{sec:SDR}. 
 Then for $i\in\{1,\ldots,d\}$, they're simply,
-\begin{IEEEeqnarray*}{s"rCl} 
+
+\begin{subequations}
+\begin{IEEEeqnarray}{s"rCl} 
     SPT:& w_i&=&\bigg\{ \begin{array}{rl}-1&\text{if 
-        }i=1\\0&\text{otherwise}\end{array} \\
+        }i=1\\0&\text{otherwise}\end{array}  \\
     LPT:& w_i&=&\bigg\{ \begin{array}{rl} 1&\text{if 
-        }i=1\\0&\text{otherwise}\end{array} \\
+        }i=1\\0&\text{otherwise}\end{array}  \\
     MWR:& w_i&=&\bigg\{ \begin{array}{rl} 1&\text{if 
-        }i=7\\0&\text{otherwise}\end{array} \\
+        }i=7\\0&\text{otherwise}\end{array}  \\
     LWR:& w_i&=&\bigg\{ \begin{array}{rl}-1&\text{if 
-        }i=7\\0&\text{otherwise}\end{array}
-\end{IEEEeqnarray*}
+        }i=7\\0&\text{otherwise}\end{array} \label{pref:SDR}
+\end{IEEEeqnarray} 
+\end{subequations}
 
 
 \subsection*{Automated discovery of CDRs}
