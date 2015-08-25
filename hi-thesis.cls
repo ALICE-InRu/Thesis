@@ -1,7 +1,7 @@
 % -------------------------------------------------------------------
 %  @LaTeX-class-file{
 %     filename        = "hi-thesis.cls",
-%     version         = "1.0",
+%     version         = "1.1",
 %     date            = "22 August 2015",
 %     codetable       = "ISO/ASCII",
 %     keywords        = "LaTeX, hi-thesis",
@@ -154,7 +154,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
 % ------------------------------------------------------------------- blank page
 \newcommand*\blankpage{%
     \newpage
-    \topskip0pt
+    %\topskip0pt % messes up with new chapters, creates 2 empty pages!
     \vspace*{\fill}
     \centerline{This page is intentionally left blank.}
     \vspace{\fill}
