@@ -250,7 +250,7 @@ made (i.e. strikeout entries in \cref{tbl:example}), by using the following
 job sequence,\footnote{In fact this is the sequence resulting from 10 
 dispatches following the SPT-rule, to be defined shortly.}
 \begin{equation}
-  \vchi = \left\{ \chi_i \right\}_{i=1}^{k-1}
+  \vchi = \left\{ \chi_i \right\}_{i=1}^{k-1} \label{eq:vchi:example}
         = \left\{ J_4,J_2,J_3,J_3,J_1,J_1,J_1,J_1,J_1,J_4 \right\}
 \end{equation}
 hence currently, at step $k=11$, the job-list is 
@@ -259,9 +259,28 @@ $\mathcal{L}^{(k)}=\{J_2,J_3,J_4\}$ indicating the 3 potential\footnote{
   therefore \ref{guest:alice}$\notin\mathcal{L}^{(11)}$.} 
 jobs (i.e. denoted in bold in \cref{tbl:example}) to be dispatched, i.e., 
 $\chi_k\in\mathcal{L}^{(k)}$.
- 
-\Cref{fig:example:midway} illustrates the temporal partial schedule of the 
-dispatching process as a Gantt-chart
+
+This is a very compact form for the current partial solution, it's easiest to 
+comprehend it via graph theory.
+Let's encode the operations as vertices, and horizontally aligning them w.r.t. 
+each job $J_j$, and connect vertices with directed edges according the 
+\cref{eq:permutation}. 
+By introducing dummy vertices before and after, then the goal is to visit 
+each vertex exactly once, or \emph{Hamiltonian} path: starting at the `source' 
+(i.e. empty schedule), and finishing at the sink (i.e. complete schedule).
+The path gives the prescription of the order in which the jobs rotate 
+between machines. 
+\Cref{fig:example:graph} depicts the path generation at the beginning, midway 
+and, final stages for our Tea Party example. 
+Gray vertices are operations that haven't yet been dispatched, and the pink 
+vertices are the ones that correspond to $\vchi$, 
+and the directed edges indicate the current partial Hamiltonian path.
+Note, only  \cref{fig:example:graph:midway} corresponds to 
+\cref{eq:vchi:example}.
+
+However, this hasn't told us when each guest should start their task, 
+i.e., the project schedule. For that, \cref{fig:example:midway} illustrates the 
+temporal partial schedule of \cref{eq:vchi:example} as a Gantt-chart
 \begin{enumerate*}
     \item numbers in the boxes represent the job identification $j$
     \item the width of the box illustrates the processing times for a given job 
@@ -270,12 +289,8 @@ dispatching process as a Gantt-chart
     particular job is scheduled next 
     \item the current $C_{\max}$ is denoted with a dotted line    
 \end{enumerate*}
-
-
-\clearpage
-
-
-\input{figures/example.graph.tex}
+Note, the sequence from \cref{fig:example:graph:midway} gives the schedule in
+\cref{fig:example:midway}.
 
 \begin{figure}\centering
     \includegraphics[width=0.9\textwidth]{{example.gantt}.pdf}
@@ -294,6 +309,8 @@ Other DRs use features not directly observable from looking at the current
 partial schedule (but easy to keep record of), for example by assigning jobs 
 with most or least total processing time remaining, i.e., MWR and LWR 
 heuristics, who would yield $J_2$ and $J_4$, respectively.
+
+\input{figures/example.graph.tex}
 
 \section{Single priority based \dr s}\label{sec:SDR}
 
@@ -446,7 +463,6 @@ the influence of $\pi_i$ (which could be a SDR or another CDR) to $\pi$. Note,
 each $\pi_i$ is function of $J_j$'s attributes from the partial schedule
 $\vchi^j$.
 
-\clearpage
 The \cdr\ presented in \cref{eq:CDR} can be considered as a special case of a 
 the following general linear value function,
 \begin{equation}\label{eq:CDR:feat}
@@ -493,7 +509,6 @@ several successful such implementations in the field of semiconductor wafer
 fabrication facilities. 
 However, \citeauthor{Monch13} note that this sort of investigation is still in its infancy and subject for future research.
 
-\clearpage
 A recent editorial of the state-of-the-art approaches in advanced dispatching rules for large-scale manufacturing systems by \citet{Chen13} points out that:
 \begin{quote}
 	[..] most traditional dispatching rules are based on historical data. With the emergence of data mining and on-line analytic processing, dispatching rules can now take predictive information into account.
