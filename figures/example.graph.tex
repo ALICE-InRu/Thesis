@@ -7,7 +7,7 @@
 \tikzstyle{possible edge} = [draw,line width=4pt,->,black!20]
 
 \begin{figure}[p]\centering
-    \subcaptionbox{$k=0$}{    
+    \subcaptionbox{$k=0$\label{fig:example:graph:empty}}{
     \begin{tikzpicture}[scale=1.5, auto, swap]
     % Draw the network
     % First we draw the jobs
@@ -33,7 +33,7 @@
     \path[possible edge] (\source) -- (\dest);
     \end{tikzpicture}
     }\\
-    \subcaptionbox{$k=10$}{
+    \subcaptionbox{$k=10$\label{fig:example:graph:midway}}{
     \begin{tikzpicture}[scale=1.5, auto, swap]
     % Draw the network
     % First we draw the jobs
@@ -69,7 +69,7 @@
     \path[edge] (\source) -- (\dest);
     \end{tikzpicture}
     }\\
-    \subcaptionbox{$k=20$}{
+    \subcaptionbox{$k=20$\label{fig:example:graph:final}}{
     \begin{tikzpicture}[scale=1.5, auto, swap]
     % Draw the network
     % First we draw the jobs
@@ -98,5 +98,5 @@
     unassigned. Moreover, grey arrows point to the operations that are 
     next on the job-list, $\mathcal{L}^{(k+1)}$, and pink arrows 
     (traversing from source towards sink) yield the sequence of operations for 
-    the schedule, i.e., $\vchi$.}
+    the schedule, i.e., $\vchi$.}\label{fig:example:graph}
 \end{figure}
