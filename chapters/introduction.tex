@@ -133,6 +133,19 @@ various research fields \citep{Meeran12}, all from simple and straight forward
     environments because they are easy to implement (by computers and shop 
     floor operators) and can cope with dynamic changes.}
 
+\todoWrite{
+    \cite{Keane15} used GP to creates features for Case Based Reasoning, which 
+    were hard do understand and cumbersome in implementation due to their 
+    complexity. In order to mediate the process, the \emph{Espresso Algorithm} 
+    from logic circuit design was used for feature selection, 
+    as `espresso' summarises the evolved features obtained by GP, yielding 
+    a much simpler form that is more comprehensible for the end-user.
+    The motivation for easily interpretable models, is particularly appealing, 
+    even necessary in some cases. Because in some paradigms they become 
+    essential for getting them sanctioned, e.g., due to legislation for 
+    implementation of uninhabited aerial vehicles (i.e. drones).
+}
+
 In the field of Artificial Intelligence, \cite{Meeran12} point out that despite 
 their `intelligent' solutions, the effectiveness of finding the optimum has 
 been rather limited. However, combined with local-search methodologies, they 
@@ -217,7 +230,7 @@ data needs to be selected carefully so they can suggest the appropriate
 solution for a specific range of new cases. 
 Again, stressing the importance of meaningful feature selection. 
 
-\section{Supplements}
+\section{Supplementary material}
 The Prologue will mostly focus on traditional \jsp\ problem instances. 
 However, in \cref{ch:genprobleminstances} there is a greater variety of problem 
 spaces introduced, and when seen fit some of them will be investigated as well 
@@ -225,10 +238,10 @@ in the subsequent \lcnamecref{ch:problemstructure}s.
 Since most experiments have been run on all problem spaces, they can be 
 inspected in the supplementary \href{http://tgax89.rhi.hi.is:3838/alice}{Shiny 
 application written in R}. 
-
-All source code and data is freely distributed from 
-\url{github.com/ALICE-InRu}, under the GNU General Public License. 
-\todoFind{Use Creative Commons Sharealike instead?}
+In addition, all source code and data is freely distributed from 
+\url{github.com/ALICE-InRu}, under the permissive creative commons share-alike 
+licence\footnote{Attribution-ShareAlike 4.0 International 
+(\href{http://creativecommons.org/licenses/by-sa/4.0/}{CC BY-SA 4.0})}.
 
 \section{Contributions}
 
@@ -271,9 +284,9 @@ It's the believe of the author, that the methodology of going about this, which
 is roughly described in \cref{pseudo:alice}, can be applied to any kind of 
 optimisation problem. As such, then it's suitable to name the framework:
 \emph{\fullnameAlice}, or \Alice\footnote{
-    The hopefully catchy and very deliberate acronym \Alice\ pays homage to the 
-    wonderful literary character, Alice in Wonderland -- a personal favourite 
-    of the author.} 
+    The hopefully catchy and very deliberate ``backronym,'' pays homage to 
+    the wonderful literary character, Alice in Wonderland--a personal 
+    favourite of the author.} 
 for short. 
 For demonstration purposes, this dissertation will solely be 
 focusing on applying \Alice\ to \dr s for \jsp\ scheduling.
