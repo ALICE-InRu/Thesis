@@ -149,7 +149,9 @@
 \crefname{algorithm}{Alg.}{Algorithms}
 \Crefname{algorithm}{Algorithm}{Algorithms}
 
-\newcommand{\todoFind}[1]{\todo[color=red]{#1}}
-\newcommand{\todoExtend}[1]{\todo[color=blue]{#1}}
-\newcommand{\todoPapers}[1]{\todo[color=green]{#1}}
-\newcommand{\todoWrite}[1]{\todo[inline,color=yellow]{#1}}
+
+\newcommand{\ntodo}[2][]{\todo[#1]{\thesection{}. #2}}
+\newcommand{\todoFind}[1]{\ntodo[color=red]{#1}}
+\newcommand{\todoExtend}[1]{\ntodo[color=blue]{#1}}
+\newcommand{\todoPapers}[1]{\ntodo[color=green]{#1}}
+\newcommand{\todoWrite}[1]{\ntodo[inline,color=yellow]{#1}}
