@@ -5,10 +5,12 @@
 \tikzstyle{proc} = [font=\small, below]
 \tikzstyle{completed edge} = [draw,line width=2pt,->,red!50]
 \tikzstyle{possible edge} = [draw,line width=4pt,->,black!20]
+\tikzstyle{job line} = [line width=4mm,join=round]
+\usetikzlibrary{backgrounds}
 
 \begin{figure}[p]\centering
     \subcaptionbox{$k=0$\label{fig:example:graph:empty}}{
-    \begin{tikzpicture}[scale=1.5, auto, swap]
+    \begin{tikzpicture}[scale=1.3, auto, swap]
     % Draw the network
     % First we draw the jobs
     \node at (-1,0) [fill=set1red] {$J_1$};
@@ -36,10 +38,21 @@
     \path[edge] (\source) -- (\dest);
     \foreach \source/ \dest in {Source/J1M1,Source/J2M1,Source/J3M1,Source/J4M4}
     \path[possible edge] (\source) -- (\dest);
+    % draw background for job's swimlane
+    \begin{pgfonlayer}{background}
+    \filldraw [job line,set1red!10]
+    (J1M1.north -| J1M1.west) rectangle (J1M5.south -| J1M5.east);
+    \filldraw [job line,set1blue!10]
+    (J2M1.north -| J2M1.west) rectangle (J2M5.south -| J2M5.east);
+    \filldraw [job line,set1green!10]
+    (J3M1.north -| J3M1.west) rectangle (J3M5.south -| J3M5.east);
+    \filldraw [job line,set1purple!10]
+    (J4M4.north -| J4M4.west) rectangle (J4M2.south -| J4M2.east);
+    \end{pgfonlayer}
     \end{tikzpicture}
     }\\
     \subcaptionbox{$k=10$\label{fig:example:graph:midway}}{
-    \begin{tikzpicture}[scale=1.5, auto, swap]
+    \begin{tikzpicture}[scale=1.3, auto, swap]
     % Draw the network
     % First we draw the jobs
     \node at (-1,0) [fill=set1red] {$J_1$};
@@ -77,10 +90,21 @@
         J3M2/J3M4,J3M4/J3M5,J3M5/Sink,
         J4M1/J4M5,J4M5/J4M2,J4M2/Sink}
     \path[edge] (\source) -- (\dest);
+    % draw background for job's swimlane
+    \begin{pgfonlayer}{background}
+    \filldraw [job line,set1red!10]
+    (J1M1.north -| J1M1.west) rectangle (J1M5.south -| J1M5.east);
+    \filldraw [job line,set1blue!10]
+    (J2M1.north -| J2M1.west) rectangle (J2M5.south -| J2M5.east);
+    \filldraw [job line,set1green!10]
+    (J3M1.north -| J3M1.west) rectangle (J3M5.south -| J3M5.east);
+    \filldraw [job line,set1purple!10]
+    (J4M4.north -| J4M4.west) rectangle (J4M2.south -| J4M2.east);
+    \end{pgfonlayer}
     \end{tikzpicture}
     }\\
     \subcaptionbox{$k=20$\label{fig:example:graph:final}}{
-    \begin{tikzpicture}[scale=1.5, auto, swap]
+    \begin{tikzpicture}[scale=1.3, auto, swap]
     % Draw the network
     % First we draw the jobs
     \node at (-1,0) [fill=set1red] {$J_1$};
@@ -103,6 +127,17 @@
         J2M2/J2M3, J2M3/J2M4, J2M4/J2M5, J2M5/J3M5, J3M5/J4M5, J4M5/J4M2, 
         J4M2/Sink} 
     \path[completed edge] (\source) -- (\dest);
+    % draw background for job's swimlane
+    \begin{pgfonlayer}{background}
+    \filldraw [job line,set1red!10]
+    (J1M1.north -| J1M1.west) rectangle (J1M5.south -| J1M5.east);
+    \filldraw [job line,set1blue!10]
+    (J2M1.north -| J2M1.west) rectangle (J2M5.south -| J2M5.east);
+    \filldraw [job line,set1green!10]
+    (J3M1.north -| J3M1.west) rectangle (J3M5.south -| J3M5.east);
+    \filldraw [job line,set1purple!10]
+    (J4M4.north -| J4M4.west) rectangle (J4M2.south -| J4M2.east);
+    \end{pgfonlayer}
     \end{tikzpicture}
     }
     \caption[Graph representation for \jsp]{Graph representation of a 
