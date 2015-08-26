@@ -1,8 +1,8 @@
 % -------------------------------------------------------------------
 %  @LaTeX-class-file{
 %     filename        = "hi-thesis.cls",
-%     version         = "1.1",
-%     date            = "22 August 2015",
+%     version         = "1.2",
+%     date            = "26 August 2015",
 %     codetable       = "ISO/ASCII",
 %     keywords        = "LaTeX, hi-thesis",
 %     supported       = "send email to hei2@hi.is",
@@ -74,7 +74,15 @@
 \definecolor{orange}{RGB}{235, 113, 37}
 \definecolor{themecolor}{RGB}{0, 69, 124} % <- for Blue PhD theme, such at UI
 \definecolor{chaptergrey}{RGB}{0, 69, 124} % blue color for the chapter numbers 
-
+% colors styles for ColorBrewer Set1 - to match ggplot2
+\definecolor{set1red}{RGB}{228, 26, 28} %1 #E41A1C
+\definecolor{set1blue}{RGB}{55, 126, 184} %2 #377EB8
+\definecolor{set1green}{RGB}{77, 175, 74} %3 #4DAF4A
+\definecolor{set1purple}{RGB}{152, 78, 163} %4 #984EA3
+\definecolor{set1orange}{RGB}{255, 127, 0} %5 #FF7F00
+\definecolor{set1yellow}{RGB}{255, 255, 51} %6 #FFFF33
+\definecolor{set1brown}{RGB}{166, 86, 40} %7 #A65628
+\definecolor{set1pink}{RGB}{247, 129, 191} %8 #F781BF
 % spacing 
 \RequirePackage{setspace} 
 \onehalfspacing
