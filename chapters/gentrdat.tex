@@ -8,7 +8,7 @@ distribution and a random $\vsigma$ permutations, summarised in
 \cref{tbl:features}.  
 
 \subsection{\Jsp\ tree representation}\label{sec:gen:gametree}
-When building a complete \jsp\ schedule, $\ell=n\cdot m$ dispatches must be 
+When building a complete \jsp\ schedule, $K=n\cdot m$ dispatches must be 
 made sequentially.
 A job is placed at the earliest available time slot for its next machine, 
 whilst still fulfilling constraints \cref{eq:permutation,eq:oneJobPerMac}.
@@ -21,7 +21,7 @@ used interchangeably.} the schedule's current features (cf.
 These collected features are denoted $\Phi$, where, 
 \begin{eqnarray}\label{eq:Phi}
 \Phi:= \bigcup_{i=1}^{N_{\text{train}}} 
-\bigcup_{k=1}^\ell\bigcup_{J_j\in\mathcal{L}^{(k)}} 
+\bigcup_{k=1}^K\bigcup_{J_j\in\mathcal{L}^{(k)}} 
 \condset{\vphi_j}{\vec{x}_i\in\mathcal{P}^{n\times m} }.
 \end{eqnarray}
 
@@ -40,7 +40,7 @@ bottom layer depicts all the next possible partial schedules.
 This sort of tree representation is similar to \emph{game trees} 
 \citep[cf.][]{Rosen03} where the root node denotes the initial (i.e. empty) 
 schedule and the leaf nodes denote the complete schedule (resulting after 
-$n\cdot m$ dispatches, thus height of the tree is $\ell$), therefore the 
+$n\cdot m$ dispatches, thus height of the tree is $K$), therefore the 
 distance $k$ from an internal node to the root yields the number of operations 
 already dispatched. Traversing from root to leaf node one can obtain a sequence 
 of dispatches that yielded the resulting schedule, i.e., the sequence indicates 
@@ -76,14 +76,14 @@ be labelled undesirable.
 
 The creation of the game tree for \jsp\ can be done recursively for all 
 possible permutation of dispatches, in the manner described above, resulting in 
-a full \mbox{$n$-ary} tree (since $|\mathcal{L}|\leq n$) of height $\ell$. Such 
-an exhaustive search would yield at the most $n^{\ell}$ leaf nodes (worst case 
+a full \mbox{$n$-ary} tree (since $|\mathcal{L}|\leq n$) of height $K$. Such 
+an exhaustive search would yield at the most $n^K$ leaf nodes (worst case 
 scenario being that no sub-trees merge). Now, since the internal vertices, 
 i.e., partial schedules, are only of interest to learn,\footnote{The root is 
   the empty initial schedule and for the last dispatch there is only one option 
   left to choose from, so there is no preferred `choice' to learn.} the number 
   of 
-those can be at the most \mbox{${}^{n^{\ell}-1}/_{n-1}$}.
+those can be at the most \mbox{${}^{n^K-1}/_{n-1}$}.
 Even for small dimensions of $n$ and $m$ the number of internal vertices are 
 quite substantial and thus computationally expensive to investigate them all. 
 Not to mention that this is done iteratively for all $N_{\text{train}}$ problem 

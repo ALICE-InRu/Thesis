@@ -11,7 +11,7 @@
         \For{i}{1}{T} \Comment{at each imitation learning iteration}
         \State Let $\pi_i = \beta_i\pi_\star + (1-\beta_i)\hat{\pi}_{i-1}$
         \Comment{\cref{eq:il}}
-        \State Sample $\ell$-step trajectories using $\pi_i$
+        \State Sample a $K$-solution using $\pi_i$
         \Comment{cf. \cref{pseudo:imitationLearning}: 
         \Call{ImitationLearning}{$i,\hat{\pi}_{i-1},\pi_\star$}}
         \State $\Phi^{\text{IL}i} = \{(s,\pi_\star(s))\}$ 

@@ -176,8 +176,8 @@ sequence of $J_j$ is needed, since the corresponding $M_a$ can be
     obtained by reading $\vsigma$.} 
 of tasks to machines, namely, 
 \begin{equation}
-  \vchi = \big\{\chi_k\big\}_{k=1}^\ell
-        = \condset{(j,a)}{J_j\in\mathcal{L}^{(k)}}_{k=1}^\ell
+  \vchi = \big\{\chi_k\big\}_{k=1}^K
+        = \condset{(j,a)}{J_j\in\mathcal{L}^{(k)}}_{k=1}^K
 \end{equation}
 The collective set of allocated tasks to machines, which is interpreted by its 
 sequence, is referred to as a \emph{schedule} or solution; 
@@ -409,21 +409,11 @@ can be used to identify which features $\vphi$ are promising on a long-term
 basis.  \todoWrite{These features have not been published yet\\They're similar 
 to pilot method \cite{Geirsson2012}}
 
-%All of the features vary throughout the scheduling process, w.r.t. operation 
-%belonging to the same time step $k$, save for \phitotalProc\ which varies 
-%between jobs; \phistep\ to keep track of features' evolution w.r.t. the 
-%scheduling process; and \phiwrmTotal\ which is static for a given problem 
-%instance, but used for normalising other features, such as work-remaining 
-%based (\phiwrmJob\ and \phiwrmMac) or makespan-based (\phiGlobalRelated) ones.
-%In addition, \phimac, is reported in order to distinguish which features are 
-%in conflict with each other.
-
 \begin{table} \centering 
 	\caption[Feature space $\mathcal{F}$ for \JSP]{Feature space $\mathcal{F}$ for \JSP\ where job $J_j$ on machine $M_a$ given the resulting temporal schedule after dispatching $(j,a)$.}
 	\label{tbl:features}
 	\input{tables/features-description}
 \end{table}
-
 
 \section{Composite dispatching rules}\label{sec:CDR}
 

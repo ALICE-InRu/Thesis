@@ -13,11 +13,11 @@ The preference learning problem is specified by a set of preference pairs,
 	S := \bigcup_{\{\vec{x}_i\}_{i=1}^{N_{\text{train}}}}
     \condset{
         \left\{\vec{z}_o,+1\right\},\left\{\vec{z}_s,-1\right\}}{\forall (o,s) 
-        \in \mathcal{O}^{(k)} \times \mathcal{S}^{(k)}}_{k=1}^{\ell} 
+        \in \mathcal{O}^{(k)} \times \mathcal{S}^{(k)}}_{k=1}^K 
     \subset \Phi\times Y 
 \end{equation}
 where $\Phi\subset\mathcal{F}$ is the training set of $d$ features, 
-$Y=\{-1,+1\}$ is the outcome space, and at dispatch $k\in\{1,..,\ell\}$, 
+$Y=\{-1,+1\}$ is the outcome space, and at dispatch $k\in\{1,..,K\}$, 
 $o\in\mathcal{O}^{(k)},~s\in \mathcal{S}^{(k)}$
 are optimal and suboptimal dispatches, respectively.
 Note, $\mathcal{O}^{(k)}\cup\mathcal{S}^{(k)}=\mathcal{L}^{(k)}$, and 
@@ -74,7 +74,7 @@ At each dispatch iteration $k$, a number of preference pairs are created, which 
 A separate data set is deliberately created for each dispatch iterations, as 
 the initial feeling is that dispatch rules used in the beginning of the 
 schedule building process may not necessarily be the same as in the middle or 
-end of the schedule. As a result there are $\ell$ linear scheduling rules for 
+end of the schedule. As a result there are $K$ linear scheduling rules for 
 solving a $n \times m$ \jsp. \todoWrite{No longer one model for all 
 steps}
 
@@ -82,7 +82,10 @@ steps}
 Defining the size of the preference set as $l=\abs{S}$, then \cref{eq:S:jsp} gives the size of the feature training set as $\abs{\Phi}=\frac{1}{2}l$.
 If $l$ is too large, than sampling needs to be done in order for the ordinal regression to be computationally feasible.
 
-%Due to the nature of the sequence representation, the earlier stages of the dispatching are more or less equivalent (and thus irrelevant), hence it is appropriate to follow some random optimal path to begin with and then go after some (if not all possible) optimal paths until completion at step $\ell$. 
+%Due to the nature of the sequence representation, the earlier stages of the 
+%dispatching are more or less equivalent (and thus irrelevant), hence it is 
+%appropriate to follow some random optimal path to begin with and then go after 
+%some (if not all possible) optimal paths until completion at step $K$. 
 
 The strategy approached in  \cref{InRu11a} was to follow some optimal job 
 $J_j\in\mathcal{O}^{(k)}$ (chosen at random), thus creating 
@@ -239,16 +242,19 @@ As stated in \cref{sec:S:strategies}, a separate data set is deliberately
 created for each dispatch iteration, as it is initially assumed that dispatch 
 rules used in the schedule building might differ in the beginning, the middle 
 or towards the end of the process. As a result there is a local linear model 
-for each dispatch; a total of $\ell$ linear models for solving $n\times m$ 
+for each dispatch; a total of $K$ linear models for solving $n\times m$ 
 \jsp. Now, if we were to create a global rule, then there would have to be one 
 model for all dispatches iterations. The approach in \cref{InRu11a} was to take 
 the mean weight for all stepwise linear models, i.e., 
-$\bar{w}_i=\frac{1}{\ell}\sum_{k=1}^{\ell}w_i^{(k)}$ where $\vec{w}^{(k)}$ is 
+$\bar{w}_i=\frac{1}{K}\sum_{k=1}^K w_i^{(k)}$ where $\vec{w}^{(k)}$ is 
 the linear weight resulting from learning preference set $S^{(k)}$ at dispatch 
 $k$. 
 
-A more sophisticated way, would be to create a \emph{new} linear model, where the preference set, $S$, is the union of the preference pairs across the $\ell$ dispatches. This would amount to a substantial training set, and for $S$ to be computationally feasible to learn, $S$ has to be filtered to size $l_{\max}$.
+A more sophisticated way, would be to create a \emph{new} linear model, where 
+the preference set, $S$, is the union of the preference pairs across the $K$ 
+dispatches. This would amount to a substantial training set, and for $S$ to be 
+computationally feasible to learn, $S$ has to be filtered to size $l_{\max}$.
 
-\todoWrite{No longer the case, one model instead of $\ell$ stepwise-models}
+\todoWrite{No longer the case, one model instead of $K$ stepwise-models}
 
 \section{Discussion and conclusions}
