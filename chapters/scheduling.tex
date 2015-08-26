@@ -386,6 +386,7 @@ Features are used to grasp the essence of the current state of the schedule.
 Temporal scheduling features applied in this dissertation are given in 
 \cref{tbl:features}. 
 
+\clearpage
 Note, from a job-oriented viewpoint, for a job already dispatched 
 $J_j\in\mathcal{J}$ the corresponding set of machines already processed is 
 $\mathcal{M}_j\subset\mathcal{M}$. Similarly from the machine-oriented 
@@ -411,8 +412,40 @@ be implemented from that point forward.
 Moreover, random completion of the $k$-solution are implemented, 
 here \phiRNDRelated\ corresponds to statistics from 100 random roll-outs, which 
 can be used to identify which features $\vphi$ are promising on a long-term 
-basis.  \todoWrite{These features have not been published yet\\They're similar 
-to pilot method \cite{Geirsson2012}}
+basis. 
+\emph{Roll-out algorithms} \citep{Bertsekas97}, also known as \emph{Pilot 
+Method} \citep{Duin99}, for combinatorial optimisation aim to improve 
+performance by sequential application of a pilot heuristic, which completes the 
+remaining $K-k$ steps. Roll-outs for \JSP\ have been conducted by 
+\citet{Ru12}. Continuing with that work, \citet{Geirsson2012} compares several 
+pilot heuristics, e.g., \emph{Randomly Chosen Dispatch Rules} which is similar 
+to \phiSDRRelated\ (but for one roll-out per fixed SDR). 
+The motivation being, that a SDR-based roll-out are of higher quality than 
+random ones, requiring less computational budget. 
+However, \citeauthor{Geirsson2012} notes that performance w.r.t. traditional 
+random roll-outs is statistically insignificant, and not worth the overhead of 
+implementing various SDRs beforehand. 
+
+\citeauthor{Geirsson2012} reworks the roll-out algorithm as an 
+$\abs{\mathcal{L}}$-armed bandit,\footnote{In probability theory, the
+    multi-armed bandit problem \citep{badit:book} describes a gambler at a row 
+    of slot machines, who has to decide which machines to play, i.e., pull its 
+    lever, in  order to maximise his rewards, that are specific to each 
+    machine. The gambler also has to decide how many times to play each machine 
+    and in which order to play them. The gambler's actions are referred to as 
+    \emph{pilot-heuristic}.} 
+i.e., each job of the job-list are the levers. Since the best job, $j^*$, to 
+dispatch at step $k$, is not known beforehand, therefore all available jobs are 
+evaluated, using roll-outs. 
+As a result, using the features \phiRNDRelated\ the weights $\vec{w}$ yield the 
+deterministic pilot heuristic, although in \citeauthor{Geirsson2012}'s work, 
+other statistics are used for guidance, e.g., quartile and octile. 
+
+It's noted, that the roll-outs considered in this dissertation, are with a very 
+frugal budget, only 100 roll-outs per lever is considered -- all evenly 
+distributed between levers. But using the multi-armed bandit paradigm, it's 
+possible to allocate roll-outs originating from the job-list with bias towards 
+more promising levers.
 
 \begin{table} \centering 
 	\caption[Feature space $\mathcal{F}$ for \JSP]{Feature space $\mathcal{F}$ for \JSP\ where job $J_j$ on machine $M_a$ given the resulting temporal schedule after dispatching $(j,a)$.}
@@ -494,15 +527,16 @@ Then for $i\in\{1,\ldots,d\}$, they're simply,
 Generally the weights $\vec{w}$ in \cref{eq:CDR:feat} are chosen by the 
 algorithm designer a priori. 
 A more sophisticated approach would to learn have the algorithm discover these 
-weights autonomously, for instance via evolutionary search or preference-based 
-imitation learning, to be discussed in \cref{ch:esmodels} and 
-\cref{ch:prefmodels}, respectively. \todoFind{Reference ch for sec:il}
+weights autonomously, for instance via preference-based 
+imitation learning or evolutionary search, to be discussed in 
+\cref{ch:prefmodels} and \cref{ch:esmodels}, respectively.
 
 \citet{Monch13} stress the importance of automated discovery of DRs and named 
 several successful such implementations in the field of semiconductor wafer 
 fabrication facilities. 
 However, \citeauthor{Monch13} note that this sort of investigation is still in its infancy and subject for future research.
 
+\clearpage
 A recent editorial of the state-of-the-art approaches in advanced dispatching rules for large-scale manufacturing systems by \citet{Chen13} points out that:
 \begin{quote}
 	[..] most traditional dispatching rules are based on historical data. With the emergence of data mining and on-line analytic processing, dispatching rules can now take predictive information into account.
