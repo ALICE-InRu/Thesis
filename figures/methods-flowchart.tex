@@ -5,7 +5,9 @@
         txtLrg/.style  = {draw, text width=2cm, align=center, %drop shadow, 
             font=\bfseries\scriptsize\sffamily, rectangle, thin},
         txtSml/.style  = {txtLrg, align=left, 
-            font=\tiny\sffamily}
+            font=\tiny\sffamily},
+        txtComment/.style = {font=\tiny\sffamily, xshift=-0.4cm, near start,
+            text width=4cm, rotate=90, align=left}
         }
 
 \forestset{
@@ -30,7 +32,9 @@ for tree={
         \forestoption{edge label};}
 }
 [\JSP, root
-    [Approximation, root
+    [Approximation, root, edge label = {node[txtComment, left]{
+            Approximations methods, or heuristics, are generally time 
+            efficient, but do not necessarily attain the global optimum.}},
         [General algorithms (iterative methods), rnode
             [Artificial intelligence, onode
                 [Constraint satisfaction,tnode]
@@ -54,7 +58,7 @@ for tree={
                 ]
                 [Problem space methods, onode
                     [Problem and heuristic space, tnode]
-                    [\sc{grasp}, tnode]
+                    [GRASP, tnode]
                 ]
                 [Large step optimisation, tnode]
                 [Tabu Search, tnode]
@@ -69,13 +73,19 @@ for tree={
             ]
             [Insertion algorithm, tnode]
             [Priority DR, onode
-                [SPT, tnode]
-                [LWR, tnode]
-                [MWR, tnode]
+                [SDR, onode
+                    [SPT, tnode]
+                    [LPT, tnode]
+                    [LWR, tnode]
+                    [MWR, tnode]
+                ]
+                [CDR, tnode]
             ] 
          ]
     ]
-    [Optimisation, root
+    [Optimisation, root, edge label = {node[txtComment, right]{
+            Exact methods guarantee an optimal solution, although for NP-hard 
+            problems they are intractable for high dimensionality.}},
         [Efficient methods, tnode] 
         [Enumerative methods, onode
             [Branch \& Bound, tnode]
@@ -93,5 +103,5 @@ for tree={
 \draw[myarrow] (VDS) to[out=north east,in=south] (SBP);
 \end{forest}
 \caption{Various methods for solving \JSP\ \citep[based on Fig. 1 
-from][]{Jain99}}
+from][]{Jain99}}\label{jsp:methods}
 \end{figure}
