@@ -74,6 +74,11 @@ undesirable.
 Only the features from a dispatch yielding a truly suboptimal solution should 
 be labelled undesirable. 
 
+\todoWrite{All possible assignments of operations for an $n\times m$ \JSP\ 
+would require an examination of $(n!)^m$ \cite{Giffler60}), thus a $6\times5$  
+problem may have at most $1.93\cdot10^{14}$ possible solutions, and for 
+$10\times10$ problem then it's $3.96\cdot10^{65}$ solutions!}
+
 The creation of the game tree for \jsp\ can be done recursively for all 
 possible permutation of dispatches, in the manner described above, resulting in 
 a full \mbox{$n$-ary} tree (since $|\mathcal{L}|\leq n$) of height $K$. Such 
@@ -81,9 +86,8 @@ an exhaustive search would yield at the most $n^K$ leaf nodes (worst case
 scenario being that no sub-trees merge). Now, since the internal vertices, 
 i.e., partial schedules, are only of interest to learn,\footnote{The root is 
   the empty initial schedule and for the last dispatch there is only one option 
-  left to choose from, so there is no preferred `choice' to learn.} the number 
-  of 
-those can be at the most \mbox{${}^{n^K-1}/_{n-1}$}.
+  left to choose from, so there is no preferred `choice' to learn.} 
+the number of those can be at the most \mbox{${}^{n^K-1}/_{n-1}$}.
 Even for small dimensions of $n$ and $m$ the number of internal vertices are 
 quite substantial and thus computationally expensive to investigate them all. 
 Not to mention that this is done iteratively for all $N_{\text{train}}$ problem 
