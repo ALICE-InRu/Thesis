@@ -1,0 +1,97 @@
+%http://tex.stackexchange.com/questions/244742/work-breakdown-structure-wbs-horizontally
+
+\usetikzlibrary{arrows.meta,shapes,positioning,shadows,trees}
+\tikzset{myarrow/.style = {->, >={latex}, draw=black},
+        txtLrg/.style  = {draw, text width=2cm, align=center, %drop shadow, 
+            font=\bfseries\scriptsize\sffamily, rectangle, thin},
+        txtSml/.style  = {txtLrg, align=left, 
+            font=\tiny\sffamily}
+        }
+
+\forestset{
+    normal/.style  = {for tree={child anchor=west, parent anchor=east}},
+    rotated/.style = {for tree={child anchor=north, parent anchor=south},
+        rotate=90},
+    root/.style  = {txtLrg, rotated, fill=gray!50, text width=2.5cm},
+    onode/.style = {txtLrg, rotated, fill=gray!25, text width=4.5em},
+    rnode/.style = {txtLrg, onode, text width=8em},
+    tnode/.style = {txtSml, normal, fill=gray!10, text width=6em},
+    edge from parent/.style={myarrow, edge from parent fork right}
+}
+
+\begin{figure}[p] \centering
+\begin{forest}
+for tree={
+    s sep=3pt, % distance between siblings
+    grow=east,
+    growth parent anchor=east,
+    edge path={\noexpand\path[\forestoption{edge},->, >={latex}] 
+        (!u.parent anchor) -- +(5pt,0pt) |- (.child anchor)
+        \forestoption{edge label};}
+}
+[\JSP, root
+    [Approximation, root
+        [General algorithms (iterative methods), rnode
+            [Artificial intelligence, onode
+                [Constraint satisfaction,tnode]
+                [Expert systems,tnode]
+                [Ant optimisation,tnode]
+                [Artificial neural network,tnode, name=ANN]
+            ]
+            [Local search, onode
+                [Evolutionary computation,tnode
+                    [Genetic local search, tnode]
+                ]
+                [Genetic algorithms, tnode]
+                [Reinsertion algorithms, tnode]
+                [Threshold algorithms, onode
+                    [Simulated annealing, tnode, name=SA]
+                    [Threshold accepting, tnode
+                        [Great Deluge alg. \& record-to-record travel, 
+                        tnode]
+                    ]
+                    [Iterative development, tnode]
+                ]
+                [Problem space methods, onode
+                    [Problem and heuristic space, tnode]
+                    [\sc{grasp}, tnode]
+                ]
+                [Large step optimisation, tnode]
+                [Tabu Search, tnode]
+                [Variable depth search, tnode, name=VDS]
+            ]
+        ]
+        [Tailored algorithms (constructive methods), rnode
+            [Bottleneck based heuristics, onode
+                [Shifting bottleneck procedure, tnode, name=SBP
+                    [Beam search, tnode]
+                ]
+            ]
+            [Insertion algorithm, tnode]
+            [Priority DR, onode
+                [SPT, tnode]
+                [LWR, tnode]
+                [MWR, tnode]
+            ] 
+         ]
+    ]
+    [Optimisation, root
+        [Efficient methods, tnode] 
+        [Enumerative methods, onode
+            [Branch \& Bound, tnode]
+            [Mathematical, onode
+                [Surrogate duality, tnode] 
+                [Lagrangian relaxation, tnode] 
+                [Decomposition methods, tnode] 
+                [Integer linear prog., tnode] 
+                [Mixed integer lin.prog., tnode] 
+            ]
+        ]
+    ]
+]
+\draw[myarrow] (ANN) to[out=north east,in=south] (SA);
+\draw[myarrow] (VDS) to[out=north east,in=south] (SBP);
+\end{forest}
+\caption{Various methods for solving \JSP\ \citep[based on Fig. 1 
+from][]{Jain99}}
+\end{figure}
