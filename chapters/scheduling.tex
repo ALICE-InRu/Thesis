@@ -14,12 +14,19 @@ organisations. % Gefa dæmi?
 
 Deterministic \JSP\ is the most \emph{general} case for classical scheduling problems \citep{Jain99}. 
 Many other scheduling problems can be reformulated as \JSP. 
-For instance, the \textit{travelling salesman problem} can be contrived as \jsp
+For instance, the \textit{travelling salesman problem}\footnote{
+    The travelling salesman problem (TSP) was formulated in the 1800s by the 
+    mathematicians W.R. Hamilton and Thomas Kirkman \citep{graphtheory}. 
+    The salesman has to visit a set of cities exactly once (i.e. Hamilton 
+    path), with the objective of minimising the route, in terms of distance, 
+    between them.}
+ can be contrived as \JSP
 \begin{enumerate*}[label={{}}]
-    \item with the salesman as a single machine in use 
+    \item with the salesman as a single machine in use
     \item the cities to be visited are the jobs to be processed
+    \item distance is sequence dependent set-up time
 \end{enumerate*}
-Moreover, the general form of~~\JSP\ assumes that each job can have its own 
+The general form of~~\JSP\ assumes that each job can have its own 
 distinctive flow pattern through the machines, which is independent of the 
 other jobs. 
 In the case where all jobs share the same permutation route, \jsp\ is reduced 
