@@ -1,13 +1,14 @@
 %http://tex.stackexchange.com/questions/244742/work-breakdown-structure-wbs-horizontally
 
 \usetikzlibrary{arrows.meta,shapes,positioning,shadows,trees}
-\tikzset{myarrow/.style = {->, >={latex}, draw=black},
+\tikzset{arrow/.style = {->,>={latex}, draw=black},
         txtLrg/.style  = {draw, text width=2cm, align=center, %drop shadow, 
             font=\bfseries\scriptsize\sffamily, rectangle, thin},
         txtSml/.style  = {txtLrg, align=left, 
             font=\tiny\sffamily},
         txtComment/.style = {font=\tiny\sffamily, xshift=-0.4cm, near start,
-            text width=4cm, rotate=90, align=left}
+            text width=4cm, rotate=90, align=left},
+        based/.style = {arrow, dotted}
         }
 
 \forestset{
@@ -18,7 +19,7 @@
     onode/.style = {txtLrg, rotated, fill=gray!25, text width=4.5em},
     rnode/.style = {txtLrg, onode, text width=8em},
     tnode/.style = {txtSml, normal, fill=gray!10, text width=6em},
-    edge from parent/.style={myarrow, edge from parent fork right}
+    edge from parent/.style={arrow, edge from parent fork right}
 }
 
 \begin{figure}[p] \centering
@@ -46,7 +47,9 @@ for tree={
                 [Evolutionary computation,tnode
                     [Genetic local search, tnode]
                 ]
-                [Genetic algorithms, tnode]
+                [Genetic algorithms, tnode
+                    [Genetic programming, tnode]
+                ]
                 [Reinsertion algorithms, tnode]
                 [Threshold algorithms, onode
                     [Simulated annealing, tnode, name=SA]
@@ -68,7 +71,7 @@ for tree={
         [Tailored algorithms (constructive methods), rnode
             [Bottleneck based heuristics, onode
                 [Shifting bottleneck procedure, tnode, name=SBP
-                    [Beam search, tnode]
+                    [Beam search, tnode, name=BS]
                 ]
             ]
             [Insertion algorithm, tnode]
@@ -88,7 +91,7 @@ for tree={
             problems they are intractable for high dimensionality.}},
         [Efficient methods, tnode] 
         [Enumerative methods, onode
-            [Branch \& Bound, tnode]
+            [Branch \& Bound, tnode, name=BB]
             [Mathematical, onode
                 [Surrogate duality, tnode] 
                 [Lagrangian relaxation, tnode] 
@@ -99,8 +102,9 @@ for tree={
         ]
     ]
 ]
-\draw[myarrow] (ANN) to[out=north east,in=south] (SA);
-\draw[myarrow] (VDS) to[out=north east,in=south] (SBP);
+\draw[arrow] (ANN) to[out=north east,in=south] (SA);
+\draw[arrow] (VDS) to[out=north east,in=south] (SBP);
+\draw[based] (BB) to[out=south east,in=north](BS);
 \end{forest}
 \caption{Various methods for solving \JSP\ \citep[based on Fig. 1 
 from][]{Jain99}}\label{jsp:methods}
