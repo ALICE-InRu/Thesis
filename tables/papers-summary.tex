@@ -1,32 +1,31 @@
-\begin{table}[p]
-    \caption[Summary of experimental designs in \lcnamecref{InRu11a}s]{Summary
-        of experimental designs in \lcnamecref{InRu11a}s.
-        \JSP\ and \FSP\ problems had uniformly distributed processing times 
-        from an interval $I=[u_1,u_2]$, i.e., 
-        \mbox{$\vec{p}\sim\mathcal{U}(u_1,u_2)$}, and 
-        models were either stepwise (i.e. total of $K$ models) or fixed 
-        throughout the dispatching process.}
-    {\setlength{\tabcolsep}{2pt} 
-    \begin{tabular}{c l l c l c}\toprule
-        Paper & Problem & $I=[u_1,u_2]$ & Model & Model parameters 
-        & $\abs{\text{Model}}$ \\ \midrule
-        \ref{InRu11a} & \JSP & $[1,100], [50,100]$ & PREF & 
+\begin{table}[p] \centering
+    \caption{Summary of experimental designs in \namecref{InRu11a}s.}
+    \label{papers:summary}
+    \subcaptionbox{Model parameters\label{papers:models}}{
+    \begin{minipage}{\fullwidth}\centering
+    {\setlength{\tabcolsep}{3pt}
+    \begin{tabular}{c l c l c}\toprule
+        Paper & Problem & Model & Model parameters 
+        & $\abs{\text{Model}}$\footnote{Models are either stepwise (i.e. 
+            total of $K$ models) or fixed throughout the dispatching 
+            process.} \\ \midrule
+        \ref{InRu11a} & \JSP & PREF & 
         ~~$\Phi^{\text{OPT}}, \Psi_b$ & $K$ \\
-        \ref{InRu11b} & \multicolumn{2}{l}{$\R$-functions} & CMA-ES & 
+        \ref{InRu11b} & $\R$-functions & CMA-ES & 
         ~~surrogate sampling strategies & 1\\
-        \ref{InRu12} & \JSP & $[1,200]$ & SDR & 
+        \ref{InRu12} & \JSP& SDR & 
         ~~MWR & 1 \\
-        \ref{InRu14} & \JSP, \FSP & $[1,99],[45,55]$ & CMA-ES & 
+        \ref{InRu14} & \JSP, \FSP & CMA-ES & 
         ~~$\min \Exp{C_{\max}},\min \Exp{\rho}$ & 1 \\
-        \ref{InRu15a} & \JSP & $[1,99],[45,55]$ & PREF & 
+        \ref{InRu15a} & \JSP & PREF & 
         $\!\begin{array}{l}
             \condset{\Phi^\pi}{\pi\in\{\text{OPT},\text{SDR},\text{ALL}\}}\\
             \condset{\Psi_r}{r\in\{b,f,p\}}
         \end{array}$
         & $K$\\
-        \ref{InRu15b} & \JSP, \FSP & $[1,99],[45,55]$ & PREF & 
+        \ref{InRu15b} & \JSP, \FSP & PREF & 
         ~~$\Phi^{\text{OPT}},\Psi_p$ & 1\\
-        \ref{InRu15c} & \JSP, \FSP & $[1,99],[45,55]$ & PREF & 
+        \ref{InRu15c} & \JSP, \FSP & PREF & 
         $\!\begin{array}{l}
             \condset{\Phi^\pi}{\pi\in\{\text{OPT},\text{OPT}\epsilon,\text{DA}i\}}\\
             \Psi_p
@@ -34,4 +33,26 @@
         & 1 \\
         \bottomrule
     \end{tabular}}
+    \end{minipage}}
+    \\
+    \subcaptionbox{\JSP\ and  \FSP\ problems spaces\label{papers:problems}}{
+    \begin{minipage}{\fullwidth}\centering
+    {\setlength{\tabcolsep}{3pt}
+    \begin{tabular}{c l l l l}\toprule
+      Paper & Problem & $I=[u_1,u_2]$\footnote{Processing times are uniformly
+        distributed from an interval $I=[u_1,u_2]$, i.e., 
+        $\vec{p}\sim\mathcal{U}(u_1,u_2)$.} & size ($n\times m$) & name \\ 
+        \midrule
+      \ref{InRu11a} & \JSP & $[1,100], [50,100]$ & $6\times6$ & j.rnd, j.rndn\\
+      \ref{InRu12} & \JSP & $[1,200]$ & $6\times 6$ & j.rnd \\
+      \ref{InRu14} & \JSP, \FSP & $[1,99],[45,55]$ & $6\times5,10\times10$ & 
+      j.rnd, j.rndn, f.rnd, f.rndn, f.jc\\
+      \ref{InRu15a} & \JSP & $[1,99],[45,55]$ & $6\times5$ & j.rnd, j.rndn\\
+      \ref{InRu15b} & \JSP, \FSP & $[1,99],[45,55]$ & $10\times10$ & 
+      j.rnd, j.rndn, f.rnd\\
+      \ref{InRu15c} & \JSP, \FSP & $[1,99],[45,55]$ & $6\times5,10\times10$ & 
+      j.rnd, j.rndn, f.rnd\\
+      \bottomrule
+    \end{tabular}}
+    \end{minipage}}
 \end{table}
