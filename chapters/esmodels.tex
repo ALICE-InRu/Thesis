@@ -40,7 +40,10 @@ better expected mean.
 
 
 
-Inspired by DRGA, the approach taken in this study is to optimise the weights $\vec{w}$ in \cref{eq:jssp:linweights} directly, via evolutionary search such as covariance matrix adaptation evolution strategy (CMA-ES) \cite{Hansen01}, which has been proven to be a very efficient numerical optimisation technique. 
+Inspired by DRGA, the approach taken in this study is to optimise the weights 
+$\vec{w}$ in \cref{eq:CDR:feat} directly, via evolutionary search such as 
+covariance matrix adaptation evolution strategy (CMA-ES) \cite{Hansen01}, which 
+has been proven to be a very efficient numerical optimisation technique. 
 
 Using standard set-up of parameters of the CMA-ES optimisation, the runtime was limited to 288 hours on a cluster for each $6\times5$ training set given in \cref{sec:data:JSP,sec:data:FSP}, and in every case the optimisation reached its maximum walltime.
 
@@ -60,9 +63,16 @@ for optimising w.r.t. $C_{\max}$ directly, and on the other hand
 \end{equation} 
 which optimises w.r.t. the resulting $C_{\max}$ scaled to its true optimum, i.e., \cref{eq:rho}.
 
-Main statistics of the experimental run are given in \cref{cma:funeval} and depicted in \cref{fig:cma:fit} for both approaches. In addition, evolving decision variables, here weights $\vec{w}$ for \cref{eq:jssp:linweights}, are depicted in \cref{fig:cma:wei}. 
+Main statistics of the experimental run are given in \cref{cma:funeval} and 
+depicted in \cref{fig:cma:fit} for both approaches. In addition, evolving 
+decision variables, here weights $\vec{w}$ for \cref{eq:CDR:feat}, are depicted 
+in \cref{fig:cma:wei}. 
 
-In order to compare the two objective functions, the best weights reported were used for \cref{eq:jssp:linweights} on the corresponding training data. Its box-plot of percentage relative deviation from optimality, defined by \cref{eq:rho}, is depicted in \cref{fig:cma:trainboxpl} and main statistics detailed in \cref{tbl:results:train}. 
+In order to compare the two objective functions, the best weights reported were 
+used for \cref{eq:CDR:feat} on the corresponding training data. Its box-plot of 
+percentage relative deviation from optimality, defined by \cref{eq:rho}, is 
+depicted in \cref{fig:cma:trainboxpl} and main statistics detailed in 
+\cref{tbl:results:train}. 
 
 In the case of \frndn{6}{5}, \cref{eq:cma:rho}  gave a considerably worse results, since the optimisation got trapped in a local minimum, as the erratic evolution of the weighs in \cref{fig:cma:wei:cmax} suggest.
 For other problem spaces, \cref{eq:cma:makespan} gave slightly better results than \cref{eq:cma:rho}, however, there was no statical difference between adopting either objective function. Therefore, minimisation of expectation of $\rho$, is preferred over simply using the unscaled resulting makespan. 
@@ -139,7 +149,7 @@ the problem instances can vary greatly within the same problem space
 evolutionary search to deviate the from giving too much weight for problematic 
 problem instances for the greater good.
 
-The weights for \cref{eq:jssp:linweights} in \cref{InRu11a} were found using 
+The weights for \cref{eq:CDR:feat} in \cref{InRu11a} were found using 
 supervised learning, where the training data was created from optimal solutions 
 of randomly generated problem instances. As an alternative, this study showed  
 that minimising the mean makespan directly using a brute force search via 
@@ -155,7 +165,14 @@ what degree, i.e., by giving a weight to the preference. This would result in a
 very large training set, which of course could be re-sampled in order to make 
 it computationally feasible to learn.
 
-The main drawback of using evolutionary search for learning optimal weights for \cref{eq:jssp:linweights} is how computationally expensive it is to evaluate the mean expected fitness. Even for a low problem dimension, 6-job 5-machine \JSP , each optimisation run reached their walltime of 288hrs, without converging. Now, $6\times5$ \JSP\ requires 30 sequential dispatches, where at each time step there are up to $6$ jobs to choose from, i.e., its complexity is $\mathcal{O}(n^{n\cdot m})$, making it computationally infeasible to apply this framework for higher dimensions as is. 
+The main drawback of using evolutionary search for learning optimal weights for 
+\cref{eq:CDR:feat} is how computationally expensive it is to evaluate the mean 
+expected fitness. Even for a low problem dimension, 6-job 5-machine \JSP , each 
+optimisation run reached their walltime of 288hrs, without converging. Now, 
+$6\times5$ \JSP\ requires 30 sequential dispatches, where at each time step 
+there are up to $6$ jobs to choose from, i.e., its complexity is 
+$\mathcal{O}(n^{n\cdot m})$, making it computationally infeasible to apply this 
+framework for higher dimensions as is. 
 However, evolutionary search only requires the rank of the candidates, and 
 therefore it is appropriate to retain a sufficiently accurate surrogate for the 
 value function during evolution in order to reduce the number of costly true 
