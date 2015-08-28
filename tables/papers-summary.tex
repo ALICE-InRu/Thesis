@@ -3,23 +3,23 @@
     \begin{tabular}{c l l c l c}\toprule
         Paper & Problem & $I=[u_1,u_2]$ & Model & Model parameters 
         & $\abs{\text{Model}}$ \\ \midrule
-        \ref{InRu11a} & \JSP & $[1,100], [1,50]$ & PREF & 
+        \ref{InRu11a} & \JSP & $[1,100], [50,100]$ & PREF & 
         ~~$\Phi^{\text{OPT}}, \Psi_b$ & $K$ \\
         \ref{InRu11b} & \multicolumn{2}{l}{$\R$-functions} & CMA-ES & 
         ~~surrogate sampling strategies & 1\\
         \ref{InRu12} & \JSP & $[1,200]$ & SDR & 
         ~~MWR & 1 \\
-        \ref{InRu14} & \JSP, \FSP & $[1,100]$ & CMA-ES & 
+        \ref{InRu14} & \JSP, \FSP & $[1,99],[45,55]$ & CMA-ES & 
         ~~$\min \Exp{C_{\max}},\min \Exp{\rho}$ & 1 \\
-        \ref{InRu15a} & \JSP & $[1,100]$ & PREF & 
+        \ref{InRu15a} & \JSP & $[1,99],[45,55]$ & PREF & 
         $\!\begin{array}{l}
             \condset{\Phi^\pi}{\pi\in\{\text{OPT},\text{SDR},\text{ALL}\}}\\
             \condset{\Psi_r}{r\in\{b,f,p\}}
         \end{array}$
         & $K$\\
-        \ref{InRu15b} & \JSP, \FSP & $[1,100],[45,55]$ & PREF & 
+        \ref{InRu15b} & \JSP, \FSP & $[1,99],[45,55]$ & PREF & 
         ~~$\Phi^{\text{OPT}},\Psi_p$ & 1\\
-        \ref{InRu15c} & \JSP, \FSP & $[1,100],[45,55]$ & PREF & 
+        \ref{InRu15c} & \JSP, \FSP & $[1,99],[45,55]$ & PREF & 
         $\!\begin{array}{l}
             \condset{\Phi^\pi}{\pi\in\{\text{OPT},\text{OPT}\epsilon,\text{DA}i\}}\\
             \Psi_p
