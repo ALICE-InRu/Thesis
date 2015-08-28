@@ -131,5 +131,19 @@
   \item [{SDR}]\begingroup \sdr\nomeqref {0}\nompageref{xx}
   \item [{CDR}]\begingroup \cdr\nomeqref {0}\nompageref{xx}
   \item [{BDR}]\begingroup blended \cdr\nomeqref {0}\nompageref{xx}
+  \item [{SPT}]\begingroup Shortest Processing Time rule\nomeqref {0}
+		\nompageref{xx}
+  \item [{LPT}]\begingroup Largest Processing Time rule\nomeqref {0}
+		\nompageref{xx}
+  \item [{LWR}]\begingroup Least Work Remaining rule\nomeqref {0}
+		\nompageref{xx}
+  \item [{MWR}]\begingroup Most Work Remaining rule\nomeqref {0}
+		\nompageref{xx}
+  \item [{ES}]\begingroup Evolution Strategy\nomeqref {0}
+		\nompageref{xx}
+  \item [{CMA}]\begingroup Covariance Matrix Adaptation\nomeqref {0}
+		\nompageref{xx}
+  \item [{PREF}]\begingroup Linear preference learning model\nomeqref {0}
+		\nompageref{xx}
 
 \end{thenomenclature}
