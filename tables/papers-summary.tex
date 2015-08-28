@@ -1,0 +1,34 @@
+\begin{table}[p]
+    {\setlength{\tabcolsep}{2pt} 
+    \begin{tabular}{c l l c l c}\toprule
+        Paper & Problem & $I=[u_1,u_2]$ & Model & Model parameters 
+        & $\abs{\text{Model}}$ \\ \midrule
+        \ref{InRu11a} & \JSP & $[1,100], [1,50]$ & PREF & 
+        ~~$\Phi^{\text{OPT}}, \Psi_b$ & $K$ \\
+        \ref{InRu11b} & \multicolumn{2}{l}{$\R$-functions} & CMA-ES & 
+        ~~surrogate sampling strategies & 1\\
+        \ref{InRu12} & \JSP & $[1,200]$ & SDR & 
+        ~~MWR & 1 \\
+        \ref{InRu14} & \JSP, \FSP & $[1,100]$ & CMA-ES & 
+        ~~$\min \Exp{C_{\max}},\min \Exp{\rho}$ & 1 \\
+        \ref{InRu15a} & \JSP & $[1,100]$ & PREF & 
+        $\!\begin{array}{l}
+            \condset{\Phi^\pi}{\pi\in\{\text{OPT},\text{SDR},\text{ALL}\}}\\
+            \condset{\Psi_r}{r\in\{b,f,p\}}
+        \end{array}$
+        & $K$\\
+        \ref{InRu15b} & \JSP, \FSP & $[1,100],[45,55]$ & PREF & 
+        ~~$\Phi^{\text{OPT}},\Psi_p$ & 1\\
+        \ref{InRu15c} & \JSP, \FSP & $[1,100],[45,55]$ & PREF & 
+        $\!\begin{array}{l}
+            \condset{\Phi^\pi}{\pi\in\{\text{OPT},\text{OPT}\epsilon,\text{DA}i\}}\\
+            \Psi_p
+        \end{array}$
+        & 1 \\
+        \bottomrule
+    \end{tabular}}
+    \caption[Summary of experimental designs in \lcnamecref{InRu11a}s]{Summary
+        of experimental designs in \lcnamecref{InRu11a}s.
+        Problems are generally have uniformly distributed processing times from 
+        an interval $I=[u_1,u_2]$, i.e., $\vec{p}\sim\mathcal{U}(u_1,u_2)$.}
+\end{table}
