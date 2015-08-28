@@ -121,8 +121,12 @@
 \usepackage{booktabs} % \toprule \midrule \bottomrule
 
 \usepackage{comment}
-\usepackage[bottom,perpage,symbol*]{packages/footmisc}
-\setfnsymbol{wiley}
+\usepackage[splitrule,bottom,perpage,symbol*]{packages/footmisc}
+\setfnsymbol{wiley} % wiley: ∗, ∗∗, †, ‡, §, ¶, ||.
+\renewcommand{\mpfootnoterule}{}
+\let\splitfootnoterule\footnoterule
+\renewcommand{\thempfootnote}{\fnsymbol{mpfootnote}}
+
 
 \usepackage{aliascnt}
 \usepackage[capitalise,nameinlink]{cleveref} % must come last! 
