@@ -320,7 +320,8 @@ beneficial information for the creation of learning models in
 \cref{ch:prefmodels}, as they are dependant  on features based on those same 
 \dr s under investigation.
 
-\vfill
+\clearpage
+
 \noindent \textbf{Chapter to Paper relation}
 \begin{enumerate}
   \item \cref{ch:scheduling} --
@@ -335,3 +336,31 @@ beneficial information for the creation of learning models in
   \item \cref{ch:experiments} -- \cref{ch:prefmodels} vs. \cref{ch:esmodels}
 \end{enumerate}
 
+
+
+\Cref{jsp:methods} summarise the main techniques applied to solve \JSP. The 
+figure is based on Fig. 1 from \citet{Jain99}, however, updated to reflect the 
+previous work relevant to this dissertation.
+
+Some notes
+\begin{description}
+  \item[Local Search] \cite{LocalSearch} divide approximations methods to 
+  \begin{enumerate}
+    \item iterative methods, which starts with some initial feasible 
+    solution, and its neighbourhood is searched for one with lower cost. If 
+    such a solution is found, the algorithm is
+    continued from there; otherwise, a local minimum has been found
+    \item constructive methods, construct a complete schedule and apply 
+    local search to partial schedules on the way
+  \end{enumerate}
+  \item[Greedy randomized adaptive search procedure] (GRASP) for \JSP\ by 
+  \cite{GRASP}
+  \item[Beam search] by \cite{BeamSearch} is an adaptation of the branch and 
+  bound method in which only some nodes are evaluated in the search tree. At 
+  any level, only the promising nodes are kept for further branching and 
+  remaining nodes are pruned off permanently.
+  \item[Insertion Algorithm] \cite{InsertionAlg} 
+\end{description}
+
+\input{figures/methods-flowchart.tex}
+\input{tables/papers-summary.tex}

@@ -7,33 +7,3 @@
 \FirstSentence{T}{here's something to be said} for having a good opening line. Morbi commodo, ipsum sed pharetra gravida, orci  $x = 1/\alpha$ magna rhoncus neque, id pulvinar odio lorem non turpis. Nullam sit amet enim. Suspendisse id velit vitae ligula volutpat condimentum. Aliquam erat volutpat. Sed quis velit. Nulla facilisi. Nulla libero. Vivamus pharetra posuere sapien. Nam consectetuer. Sed aliquam, nunc eget euismod ullamcorper, lectus nunc ullamcorper orci, fermentum bibendum enim nibh eget ipsum. Donec porttitor ligula eu dolor. Maecenas vitae nulla consequat libero cursus venenatis. Nam magna enim, accumsan eu, blandit sed, blandit a, eros.
 $$\zeta = \frac{1039}{\pi}$$
 
-\clearpage
-
-\Cref{jsp:methods} summarise the main techniques applied to solve \JSP. The 
-figure is based on Fig. 1 from \citet{Jain99}, however, updated to reflect the 
-previous work relevant to this dissertation.
-
-Some notes
-\begin{description}
-    \item[Local Search] \cite{LocalSearch} divide approximations methods to 
-    \begin{enumerate}
-        \item iterative methods, which starts with some initial feasible 
-        solution, and its neighbourhood is searched for one with lower cost. If 
-        such a solution is found, the algorithm is
-        continued from there; otherwise, a local minimum has been found
-        \item constructive methods, construct a complete schedule and apply 
-        local search to partial schedules on the way
-    \end{enumerate}
-    \item[Greedy randomized adaptive search procedure] (GRASP) for \JSP\ by 
-    \cite{GRASP}
-    \item[Beam search] by \cite{BeamSearch} is an adaptation of the branch and 
-    bound method in which only some nodes are evaluated in the search tree. At 
-    any level, only the promising nodes are kept for further branching and 
-    remaining nodes are pruned off permanently.
-    \item[Insertion Algorithm] \cite{InsertionAlg} 
-\end{description}
-
-
-\clearpage
-\input{figures/methods-flowchart.tex}
-\input{tables/papers-summary.tex}
