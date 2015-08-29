@@ -48,6 +48,7 @@ for tree={
         [General algorithms (iterative methods), onode, verylong
             [Artificial intelligence, onode
                 [Machine learning, onode,  
+                    [Roll-out / Pilot method, tnode]
                     [Reinforcement learning, tnode]
                     [Decision tree, tnode]
                     [Imitation learning, onode, emphasis
@@ -124,8 +125,8 @@ for tree={
         ]
     ]
 ]
-\draw[arrow,out=east,in=west] (ANN) -| (SA);
-\draw[arrow,out=east,in=south] (VDS) -| (SBP);
+\draw[arrow] (ANN) -| (SA);
+\draw[arrow] (VDS) -| (SBP);
 %\draw[based,out=east,in=north] (BB) to node[txtRef] {\cite{BeamSearch}} (BS);
 %\draw[hybrid,out=east,in=east] (GA) to (TS);
 %\draw[based,out=east,in=east]  (ACO) to node[txtRef] {\cite{Korytkowski13}} 
