@@ -9,12 +9,12 @@ specific insights from their human designers. Furthermore, within a problem
 class, such as scheduling, it is possible to construct problem instances where 
 one heuristic would outperform another. 
 
-Depending on the underlying data distribution of the problem, each heuristics 
-perform distinctly to others. This is due to the fact that any algorithm which 
+Depending on the underlying data distribution of the problem, each heuristic 
+performs distinctly to others. This is due to the fact that any algorithm which 
 has superior performance in one class of problems is inevitably inferior over 
 another class, i.e., \emph{no free lunch} theorem \citep{Wolpert97nofree}. 
 %  number of “no free lunch” (NFL) theorems are presented which establish that for any algorithm, any elevated performance over one class of problems is offset by performance over another class. 
-The success of a heuristic is how it manages to deal with and manipulate the 
+The success of a heuristic is how it manages to deal with, and manipulate the 
 characteristics of its given problem instance. Thus, in order to understand 
 more fully how a heuristic will eventually perform, one needs to look into what 
 kind of problem instances are being introduced to the system? What defines a 
@@ -23,19 +23,22 @@ designing better heuristics? Once the problem instances are fully understood,
 an appropriate learning algorithm can be implemented in order to create 
 heuristics that are  self-adapting to its problem instances.
 
-Given the ad-hoc nature of the heuristic design process there is clearly room 
-for improvement. A number of attempts have been made to automate the heuristic 
-design process, and it is the ultimate goal of this dissertation to automate 
+Given the ad-hoc nature of the heuristic design process, there is clearly room 
+for improvement. A number of attempts have been made to automate heuristic 
+design, and it is the ultimate goal of this dissertation to automate 
 optimisation heuristics via ordinal regression. 
 The focal point will be based on a scheduling processes named \jsp\ scheduling 
 problem (\JSP), and one of its subclass, the \fsp\ scheduling problem 
 (\FSP).
+
 There are two main viewpoints on how to approach scheduling problems, namely,
 \begin{description}
-  \item[Local level] by building schedules for one problem instance at a time.
-  \item[Global level] by building schedules for all problem instances at once.
+  \item[Tailored algorithms] or constructive methods, \\
+  by building schedules for one problem instance at a time.
+  \item[General algorithms] or iterative methods, \\ 
+  by building schedules for all problem instances at once.
 \end{description}
-For local level construction
+For tailored algorithm construction
 \begin{enumerate*}[label={{}}]
   \item a simple construction heuristic is applied 
   \item the schedule's features are collected at each dispatch iteration
@@ -45,7 +48,7 @@ For local level construction
 The focus is essentially on creating a meaningful preference set composed of 
 features and their ranks, as the learning algorithm is only run \emph{once} to 
 find suitable operators for the value function. 
-However, for global level construction, there is no feature set collected 
+However, for general algorithm construction, there is no feature set collected 
 beforehand, since the learning model is optimised directly via evolutionary 
 search. This requires numerous costly value function evaluations. 
 In fact, it involves an indirect method of evaluation whether one learning 
@@ -56,12 +59,12 @@ is appropriate to retain a sufficiently accurate surrogate for the value
 function during evolution in order to reduce the number of costly true value 
 function evaluations. 
 In this paradigm, ordinal regression can be used for surrogate assisted 
-evolutionary optimisation, where models are ranked -- whereas on local level, 
-features were ranked. 
+evolutionary optimisation, where models are ranked -- whereas for tailored 
+algorithms, features were ranked. 
 
 %\section{Relationship between problem structure and heuristic efficiency}
 \section{Rice's framework for algorithm selection}\label{sec:rice}
-The goal is to understand what underlying characteristics of the problem 
+The aim is to understand what underlying characteristics of the problem 
 instances distinguish \emph{good}, and on the other hand \emph{bad} solutions 
 when implementing a particular algorithm. \citet{SmithMilesLion5} were 
 interested in discovering whether synthetic instances were in fact similar to 
@@ -69,8 +72,12 @@ real-world instances for timetabling scheduling. Moreover,
 \citeauthor{SmithMilesLion5} focused on how varying algorithms perform 
 on different data distributions. Hence, the investigation of heuristic 
 efficiency is closely intertwined to problem generation. 
-
-In order to formulate the relationship between problem structure and heuristic efficiency one can utilise \citeauthor{Rice76}'s framework for algorithm selection problem from \citeyear{Rice76}. The framework consists of four fundamental components, namely,
+The relation between problem structure and heuristic efficiency, called 
+\emph{footprints in instance space}, will be addressed in 
+\cref{ch:problemstructure}.
+In order to formulate the relationship for footprints, one can utilise 
+\citeauthor{Rice76}'s framework for algorithm selection problem 
+from \citeyear{Rice76}. The framework consists of four fundamental components:
 \begin{description}
 	\item[Problem space or instance space] $\mathcal{P}$, \hfill\\
 	set of problem instances; 
@@ -92,7 +99,7 @@ collection is often referred to as meta-data.
 In the context of Rice's framework, the aforementioned approaches to scheduling problems are to maximise its expected performance: 
 
 \begin{description}
-  \item[Local level] 
+  \item[Tailored algorithms] 
   \begin{equation}
     \max_{\mathcal{F}'\subset\mathcal{F}} 
     \Exp{\Upsilon\left(a,\vphi(\vec{x})\right)}
@@ -103,7 +110,7 @@ In the context of Rice's framework, the aforementioned approaches to scheduling 
   $\mathcal{F}'\subset\mathcal{F}|_{\mathcal{P}'}$. If done effectively, then 
   the resulting learning model $a\in\mathcal{A}$ needs only be run once via 
   ordinal regression.
-  \item[Global level]
+  \item[General algorithms]
   \begin{equation}
     \max_{a\in\mathcal{A}}\:\Exp{\Upsilon\left(a,\vphi(\vec{x})\right)}
   \end{equation}
@@ -113,6 +120,15 @@ In the context of Rice's framework, the aforementioned approaches to scheduling 
 \end{description}
 Note, the mappings $\vphi:\mathcal{P}\mapsto\mathcal{F}$ and 
 $\Upsilon:\mathcal{A}\mapsto\mathcal{Y}$ are the same for both paradigms.
+
+A schematic flow-chart of the model selection process is illustrated in 
+\cref{fig:rice}. 
+Meta-data is analysed to investigate problem structure and heuristic 
+effectiveness, i.e., its footprint.
+Moreover, the schematic details how the preference model, which is a tailored 
+algorithm, from \cref{ch:prefmodels} will come into play in the framework.
+
+\input{figures/rice.tex}
 
 \section{Previous work}
 In order to find an optimal (or near optimal) solution for scheduling problems 
@@ -240,10 +256,13 @@ in the subsequent \lcnamecref{ch:problemstructure}s.
 Since most experiments have been run on all problem spaces, they can be 
 inspected in the supplementary \href{http://tgax89.rhi.hi.is:3838/alice}{Shiny 
 application written in R}. 
-In addition, all source code and data is freely distributed from 
-\url{github.com/ALICE-InRu}, under the permissive creative commons share-alike 
-licence\footnote{Attribution-ShareAlike 4.0 International 
-(\href{http://creativecommons.org/licenses/by-sa/4.0/}{CC BY-SA 4.0})}.
+In addition, all source code and data is freely distributed from:
+\begin{quote}
+    \url{https://github.com/ALICE-InRu/}
+\end{quote}
+under the permissive creative commons share-alike 
+licence.\footnote{Attribution-ShareAlike 4.0 International 
+(\href{http://creativecommons.org/licenses/by-sa/4.0/}{CC BY-SA 4.0})}
 
 \section{Contributions}
 
@@ -255,7 +274,10 @@ with high training accuracy. Alas, severely overfitted to the training
 instances -- a simple linear model would suffice with similar performance, and 
 for much less overhead! Also, linear models come with the added benefit of easy 
 interpretability. 
-Unfortunately, there is not much said about algorithms that fail. 
+
+Unfortunately, there is not much said about algorithms that fail 
+\citep{SmithMiles2015}, as the focus tend to be on claiming superiority in 
+performance to some previous approach.
 So to quote a pioneer in scheduling, 
 \begin{quote}
     ``The only real mistake is the one from which we learn nothing'' \\
@@ -273,7 +295,7 @@ The research questions that are put forth are
 \begin{enumerate*}[itemjoin={{? }}, itemjoin*={{? And ultimately, }},
     after={{?}}]
     \item how are optimal solutions \emph{supposed} to behave -- what are the 
-    kind indicators
+    key indicators
     \item Where and when should there be emphasis on learning
     \item what states of our problem are worth investigating further to achieve 
     the desired result
@@ -302,7 +324,7 @@ focusing on applying \Alice\ to \dr s for \jsp\ scheduling.
 
 
 \section{Outline}\todoWrite{Update outline once draft is ready...}
-An approach based on supervised learning on optimal schedules will be 
+An approach based on supervised learning, mostly on optimal schedules will be 
 investigated and its effectiveness illustrated by improving upon well known 
 dispatch rules for \jsp\ scheduling in \cref{ch:prefmodels}. The method of 
 generating training data is shown to be critical for the success of the method, 
@@ -320,6 +342,24 @@ beneficial information for the creation of learning models in
 \cref{ch:prefmodels}, as they are dependant  on features based on those same 
 \dr s under investigation.
 
+Due to scarcity of real-world data, we let random problem generators 
+suffice, that are described in \cref{ch:gentrdat}. Moreover, the traditional 
+OR-Library benchmark instances are similarly created, although for a greater 
+variety of problem sizes. 
+\citet{SmithMiles2015} warn that general practice in the OR-community is 
+over-tuning of algorithms to a relatively small set of aging\footnote{
+    The OR-Library problem instances are mostly from the 1980s and 
+    1990s, or earlier (cf. \cref{tbl:data:orlib}).}
+instances. 
+Obviously, the choice of data set has a direct influence of the proposed 
+algorithm. As they are developed with them specifically in mind. 
+This is why robustness towards different problem spaces, than initially trained 
+on, is of so much value, as it indicates how applicable our model is for 
+real-world deployment 
+
+\todoWrite{our ability to learn about the strengths and weaknesses of 
+algorithms from empirical evidence}
+
 \clearpage
 
 \noindent \textbf{Chapter to Paper relation}
@@ -335,8 +375,6 @@ beneficial information for the creation of learning models in
   incorporating the methodology from \cref{InRu11b}
   \item \cref{ch:experiments} -- \cref{ch:prefmodels} vs. \cref{ch:esmodels}
 \end{enumerate}
-
-
 
 \Cref{jsp:methods} summarise the main techniques applied to solve \JSP. The 
 figure is based on Fig. 1 from \citet{Jain99}, however, updated to reflect the 

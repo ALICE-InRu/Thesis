@@ -1,0 +1,47 @@
+\begin{figure}[t]\centering
+
+\tikzset{
+    block/.style = {draw, fill=gray!10, rectangle, text width=7em, 
+        align=center,font=\bfseries\sffamily},
+    txt/.style = {font=\small\sffamily,text width=8em,align=center,midway},
+    ltxt/.style = {txt,left,align=right},
+    rtxt/.style = {txt,right,align=left},
+    rice/.style = {fill=gray!25},
+}
+% The block diagram code is probably more verbose than necessary
+\begin{tikzpicture}[auto, node distance=2.2cm,>=latex']
+% We start by placing right side blocks
+\node [block,rice] (P) {Problem space $\vec{z}\in\mathcal{P}$};
+\node [block, below of=P] (I) {Subspace of instances 
+\mbox{$\vec{x}\in \mathcal{P}' \subset \mathcal{P}$}};
+\node [block, rice, below of=I] (Phi) {Feature space 
+$\vphi(\vec{x})\in\Phi\subset\mathcal{F}$};
+\node [block, below of=Phi] (Psi) {Preference set $\Psi \subset \Phi$};
+% then place left side blocks
+\node [block, right of=P, xshift=3cm] (F) 
+{Footprints in instance space};
+\node [block,rice, right of=I, xshift=3cm] (Y) 
+{Performance space $y\in\mathcal{Y}$};
+\node [block,rice, right of=Phi, xshift=3cm] (A) 
+{Algorithm space $a\in\mathcal{A}$};
+\node [block, right of=Psi, xshift=3cm] (PREF) {Preference learning};
+
+\draw [arrow] (P) -- node[ltxt] {instance selection} (I);
+\draw [arrow] (I) -- node[ltxt] {feature selection $\vphi$} (Phi);
+\draw [arrow,dotted] (Phi) -- node[ltxt] {sample preference pairs} (Psi);
+\draw [arrow] (Phi) -- (A);
+\draw [arrow,dotted] (Psi) -- (PREF);
+\draw [arrow,dotted] (PREF) -- node[rtxt] {train algorithm $a$} (A);
+\draw [arrow] (A) -- node[rtxt] {$\Upsilon(a,\vphi(\vec{x}))$ apply alg. $a$ to 
+instance $\vec{x}$} (Y);
+\draw [arrow] (Y) -- node[rtxt] {define algorithm footprint 
+$f(y(a,\vec{x}))$} (F);
+\draw [arrow] (F) -- node[txt] {infer algorithm performance on all 
+$\vec{z}\in\mathcal{P}$} (P);
+\draw [arrow,dotted] (F) -- node[txt,sloped,above] 
+{feature feedback} (Psi);
+\end{tikzpicture}
+\caption{Flow-chart for \citeauthor{Rice76}'s framework for algorithm 
+selection}
+\label{fig:rice}
+\end{figure}
