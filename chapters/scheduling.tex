@@ -18,7 +18,7 @@ Many other scheduling problems can be reformulated as \JSP.
 For instance, the \textit{travelling salesman problem}\footnote{
     The travelling salesman problem (TSP) was formulated in the 1800s by the 
     mathematicians W.R. Hamilton and Thomas Kirkman \citep{graphtheory}. 
-    The salesman has to visit a set of cities exactly once (i.e. Hamilton 
+    The salesman has to visit a set of cities exactly once (i.e. Hamiltonian 
     path), with the objective of minimising the route, in terms of distance, 
     between them.}
  can be contrived as \JSP
@@ -61,7 +61,7 @@ is given by a triplet $\alpha|\beta|\gamma$, where
   constraints
   \item $\gamma$ lists the problem's objective
 \end{enumerate*}
-Hence our family of scheduling problems, i.e., a $m$ machine \JSP\ or \FSP\ 
+Hence our family of scheduling problems, i.e., a $m$ machine \JSP\ and \FSP\ 
 w.r.t. minimising makespan, is $Jm||C_{\max}$ and $Fm||C_{\max}$, respectively. 
 An additional constraint commonly considered are job release-dates and 
 due-dates, and then the objective is generally minimising the maximum lateness, 
@@ -173,7 +173,7 @@ task) at a time. Then, for each time step $k$, an operation is dispatched which
 has the highest priority of the 
 job-list, \mbox{$\mathcal{L}^{(k)}\subset\mathcal{J}$}.
 If there is a tie, some other priority measure is used. 
-However, let's assume that ties are broken at random. 
+However, let's assume that ties are broken randomly. 
 \Cref{pseudo:constructJSP} outlines the pseudo code for the entire dispatching 
 process of a \JSP\ problem instance.
 
@@ -272,39 +272,31 @@ $\mathcal{L}^{(k)}=\{J_2,J_3,J_4\}$ indicating the 3 potential\footnote{
 jobs (i.e. denoted in bold in \cref{tbl:example}) to be dispatched, i.e., 
 $\chi_k\in\mathcal{L}^{(k)}$.
 
+\input{figures/example.graph.tex}
+
 This is a very compact form for the current partial solution, it's easiest to 
 comprehend it via disjunctive graph \citep{roy64} to model the work-flow of 
 tasks to be scheduled.
-Let's encode the operations as vertices, and horizontally aligning them w.r.t. 
-each job $J_j$, and connect vertices with directed edges according the 
-\cref{eq:permutation}. 
-By introducing dummy vertices before and after, then the goal is to visit 
-each vertex exactly once, or \emph{Hamiltonian} path: starting at the `source' 
-(i.e. empty schedule), and finishing at the sink (i.e. complete schedule).
+Let's encode
+\begin{enumerate*}
+    \item the operations as vertices
+    \item horizontally aligning them w.r.t. each job $J_j$
+    \item connect vertices with directed edges according the 
+        \cref{eq:permutation}
+    \item by introducing dummy vertices before and after, then the goal is to 
+    visit each vertex exactly once, or \emph{Hamiltonian} path: starting at the 
+    `source'  (i.e. empty schedule), and finishing at the sink (i.e. complete 
+    schedule)
+\end{enumerate*}
 The path gives the prescription of the order in which the jobs rotate 
 between machines. 
-\Cref{fig:example:graph} depicts the path generation at the beginning, midway 
-and, final stages for our Tea Party example. 
+\Cref{fig:example:graph} depicts the path generation at the beginning, midway, 
+and final stages for our Tea Party example. 
 Gray vertices are operations that haven't yet been dispatched, and the pink 
 vertices are the ones that correspond to $\vchi$, 
-and the directed edges indicate the current partial Hamiltonian path.
-Note, only  \cref{fig:example:graph:midway} corresponds to 
+and the pink directed edges indicate the current partial Hamiltonian path.
+Note, only \cref{fig:example:graph:midway} corresponds to 
 \cref{eq:vchi:example}.
-
-However, this hasn't told us when each guest should start their task, 
-i.e., the project schedule. For that, \cref{fig:example:midway} illustrates the 
-temporal partial schedule or $k$-solution, of \cref{eq:vchi:example} as a 
-Gantt-chart
-\begin{enumerate*}
-    \item numbers in the boxes represent the job identification $j$
-    \item the width of the box illustrates the processing times for a given job 
-    for a particular machine $M_a$ (on the vertical axis)
-    \item the dashed boxes represent the resulting $(k+1)$-solution for when a 
-    particular job is scheduled next 
-    \item the current $C_{\max}$ is denoted with a dotted line    
-\end{enumerate*}
-Note, the sequence from \cref{fig:example:graph:midway} gives the schedule in
-\cref{fig:example:midway}.
 
 \begin{figure}\centering
     \includegraphics[width=0.9\textwidth]{{example.gantt}.pdf}
@@ -316,6 +308,21 @@ Note, the sequence from \cref{fig:example:graph:midway} gives the schedule in
     \label{fig:example:midway}
 \end{figure}
 
+However, this hasn't told us when each guest should start their task, 
+i.e., the project schedule. For that, \cref{fig:example:midway} illustrates the 
+temporal partial schedule (or $k$-solution) of \cref{eq:vchi:example} as a 
+Gantt-chart
+\begin{enumerate*}
+    \item numbers in the boxes represent the job identification $j$
+    \item the width of the box illustrates the processing times for a given job 
+    for a particular machine $M_a$ (on the vertical axis)
+    \item the dashed boxes represent the resulting $(k+1)$-solution for when a 
+    particular job is scheduled next 
+    \item the current $C_{\max}$ is denoted with a dotted line    
+\end{enumerate*}
+Note, the disjunctive graph from \cref{fig:example:graph:midway} gives the 
+schedule in \cref{fig:example:midway}.
+
 If the job with the shortest processing time were to be scheduled next, i.e., 
 implementing the SPT-rule, then $J_4$ would be dispatched. Similarly, for 
 the LPT (largest processing time) then $J_2$ would be dispatched. 
@@ -324,7 +331,6 @@ Other DRs use features not directly observable from looking at the $k$-solution
 with most or least total processing time remaining, i.e., MWR and LWR 
 heuristics, who would yield $J_2$ and $J_4$, respectively.
 
-\input{figures/example.graph.tex}
 
 \section{Single priority based \dr s}\label{sec:SDR}
 
@@ -347,8 +353,8 @@ which job has,
   dispatching. However, in-process inventory can be high.
 \end{description}
 These rules are the ones most commonly applied in the literature due to their 
-simplicity and surprising efficiency, %\citep[cf.][]{Haupt89,Panwalkar77}
-therefore they will be referenced throughout the dissertation. 
+simplicity and surprising efficiency. %\citep[cf.][]{Haupt89,Panwalkar77}
+Therefore, they will be referenced throughout the dissertation. 
 However, there are many more available, e.g., randomly selecting an operation 
 with equal possibility (RND); minimum slack time (MST); smallest slack per 
 operation (S/OP); and using the aforementioned dispatching rules with 
@@ -374,8 +380,9 @@ the optimum.
 
 \begin{figure}[t]
     \includegraphics[width=\textwidth]{{example.gantt.SDRs}.pdf}
-    \caption{SDRs applied to the example in \cref{sec:jsp:example}. 
-        An optimal solution is shown in the lower right corner as a reference.}
+    \caption{SDRs applied to the Tea-party example in \cref{sec:jsp:example}. 
+        A possible optimal solution is shown in the lower right 
+        corner as a reference.}
     \label{fig:example:SDRs}
 \end{figure}
 
@@ -416,7 +423,7 @@ of features are needed to estimate the schedule's overall performance, referred
 to as its \emph{global features}. 
 
 The approach here is to use well known SDRs, \phiSDRRelated, as a benchmark by 
-retrieving what would the resulting $C_{\max}$ would be given if that SDR would 
+retrieving what would the resulting $C_{\max}$ be given if that SDR would 
 be implemented from that point forward. 
 Moreover, random completion of the $k$-solution are implemented, 
 here \phiRNDRelated\ corresponds to statistics from 100 random roll-outs, which 
@@ -428,7 +435,7 @@ performance by sequential application of a pilot heuristic, which completes the
 remaining $K-k$ steps. Roll-outs for \JSP\ have been conducted by 
 \citet{Ru12}. Continuing with that work, \citet{Geirsson2012} compares several 
 pilot heuristics, e.g., \emph{Randomly Chosen Dispatch Rules} which is similar 
-to \phiSDRRelated\ (but for one roll-out per fixed SDR). 
+to \phiSDRRelated\ (but here one roll-out per fixed SDR). 
 The motivation being, that a SDR-based roll-out are of higher quality than 
 random ones, requiring less computational budget. 
 However, \citeauthor{Geirsson2012} notes that performance w.r.t. traditional 
@@ -446,8 +453,8 @@ $\abs{\mathcal{L}}$-armed bandit,\footnote{In probability theory, the
 i.e., each job of the job-list are the levers. Since the best job, $j^*$, to 
 dispatch at step $k$, is not known beforehand, therefore all available jobs are 
 evaluated, using roll-outs. 
-As a result, using the features \phiRNDRelated\ the weights $\vec{w}$ yield the 
-deterministic pilot heuristic, although in \citeauthor{Geirsson2012}'s work, 
+As a result, using the features \phiRNDRelated, the weights $\vec{w}$ yield the 
+deterministic pilot heuristic. Although in \citeauthor{Geirsson2012}'s work, 
 other statistics are used for guidance, e.g., quartile and octile. 
 
 It's noted, that the roll-outs considered in this dissertation, are with a very 
@@ -540,8 +547,8 @@ Then for $i\in\{1,\ldots,d\}$, they're simply,
 \subsection*{Automated discovery of CDRs}
 Generally the weights $\vec{w}$ in \cref{eq:CDR:feat} are chosen by the 
 algorithm designer a priori. 
-A more sophisticated approach would to learn have the algorithm discover these 
-weights autonomously, for instance via preference-based 
+A more sophisticated approach would have the algorithm discover these 
+weights autonomously. For instance via preference-based 
 imitation learning or evolutionary search, to be discussed in 
 \cref{ch:prefmodels} and \cref{ch:esmodels}, respectively.
 
