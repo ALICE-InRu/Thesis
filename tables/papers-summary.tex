@@ -2,7 +2,8 @@
     \caption{Summary of experimental designs in \namecref{InRu11a}s.}
     \label{papers:summary}
     \subcaptionbox{Model parameters\label{papers:models}}{
-    \begin{minipage}{\fullwidth}\centering
+    \noindent % otherwise ba
+    \begin{minipage}{\textwidth}\centering
     {\setlength{\tabcolsep}{3pt}
     \begin{tabular}{c l c l c}\toprule
         Paper & Problem & Model & Model parameters 
@@ -32,27 +33,6 @@
         \end{array}$
         & 1 \\
         \bottomrule
-    \end{tabular}}
-    \end{minipage}}
-    \\
-    \subcaptionbox{\JSP\ and  \FSP\ problems spaces\label{papers:problems}}{
-    \begin{minipage}{\fullwidth}\centering
-    {\setlength{\tabcolsep}{3pt}
-    \begin{tabular}{c l l l l}\toprule
-      Paper & Problem & $I=[u_1,u_2]$\footnote{Processing times are uniformly
-        distributed from an interval $I=[u_1,u_2]$, i.e., 
-        $\vec{p}\sim\mathcal{U}(u_1,u_2)$.} & size ($n\times m$) & name \\ 
-        \midrule
-      \ref{InRu11a} & \JSP & $[1,100], [50,100]$ & $6\times6$ & j.rnd, j.rndn\\
-      \ref{InRu12} & \JSP & $[1,200]$ & $6\times 6$ & j.rnd \\
-      \ref{InRu14} & \JSP, \FSP & $[1,99],[45,55]$ & $6\times5,10\times10$ & 
-      j.rnd, j.rndn, f.rnd, f.rndn, f.jc\\
-      \ref{InRu15a} & \JSP & $[1,99],[45,55]$ & $6\times5$ & j.rnd, j.rndn\\
-      \ref{InRu15b} & \JSP, \FSP & $[1,99],[45,55]$ & $10\times10$ & 
-      j.rnd, j.rndn, f.rnd\\
-      \ref{InRu15c} & \JSP, \FSP & $[1,99],[45,55]$ & $6\times5,10\times10$ & 
-      j.rnd, j.rndn, f.rnd\\
-      \bottomrule
     \end{tabular}}
     \end{minipage}}
 \end{table}

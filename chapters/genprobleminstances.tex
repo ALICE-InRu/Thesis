@@ -8,6 +8,12 @@ Following the approach in \citet{Whitley}, difficult problem instances are not f
 Although real-world instances are desirable, unfortunately they are scarce, hence in some experiments, problem instances from OR-Library maintained by \citet{ORlibrary} will be used as benchmark problems, and detailed in \cref{sec:data:orlib}. It is noted, that some of the instances are also simulated, but the majority are based on real-world instances, albeit sometimes simplified. 
 %\citet{Panwalkar77} reports an extensive survey of 36 research papers in scheduling, most experiments are based on simulated data, and its verification on real-world data would be desirable, but missing. 
 
+The problem spaces for the \namecref{InRu11a}s are summarised in 
+\cref{tbl:papers:problems}. Note, that the problem generators in 
+\cref{InRu14,InRu15a,InRu15b,InRu15c} are the same as described here.
+
+\input{tables/papers-problems.tex}
+
 \section{\Jsp}\label{sec:data:JSP}
 Problem instances for \JSP\ are generated stochastically by fixing the number of jobs and machines and 
 discrete processing time are i.i.d. and sampled from a discrete uniform distribution. % from the interval $I=[u_1,u_2]$, i.e., $\vec{p}\sim \mathcal{U}(u_1,u_2)$. 
