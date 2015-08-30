@@ -128,7 +128,9 @@ suboptimal decisions later in the decision process.
   \\
   \subcaptionbox{$10\times10$\label{fig:diff:case:OPT:10x10}}{
     \includegraphics[width=0.95\textwidth]{figures/ALL/{stepwise.10x10.OPT.casescenario}.pdf}}
-  \caption{Mean \namerho, for best and worst case scenario of when making
+  \caption[Mean \namerho, for best and worst case scenario for making one 
+  suboptimal move]{Mean \namerho, for best and worst case scenario of when 
+  making
     \emph{one} sub-optimal dispatch, depicted as lower and upper bound, 
     respectively. Moreover, mean suboptimal move is given as dashed line.}
   \label{fig:diff:case:OPT}
@@ -164,16 +166,20 @@ for are not sufficient for fully exploring $10\times10$ state-space, yet highly
 competitive for $6\times5$.
 
 \begin{figure}\centering
+    \captionsetup{list=no}
     \subcaptionbox{\jrnd{6}{5}\label{fig:diff:extr:jrnd:6x5}}{
         \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.6x5.OPT.extremal}.pdf}}
-    \caption{Probability of extremal feature being optimal. }
+    \caption{Probability of extremal feature being optimal}
     \label{fig:diff:extr:features}
 \end{figure}
 \begin{figure}\centering
+    \captionsetup{list=no}
     \ContinuedFloat
     \subcaptionbox{\jrnd{10}{10}\label{fig:diff:extr:jrnd:10x10}}{
         \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.10x10.OPT.extremal}.pdf}}
-    \caption{(continued)}
+    \caption{}
+    \MyCaption{Probability of extremal feature being 
+    optimal}{fig:diff:extr:jrnd:6x5}{fig:diff:extr:jrnd:10x10}
 \end{figure}
 
 \subsection{Optimality of SDRs}\label{sec:diff:opt:sdr}
@@ -266,17 +272,21 @@ dispatches left, it might be worth developing a hybrid approach where the
 remaining dispatches from that point are optimised with some exact methods. 
 
 \begin{figure}\centering
+  \captionsetup{list=no}
   \subcaptionbox{\jrnd{6}{5}\label{diff:evol:jrnd:6x5}}{
     \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.6x5.evolution}.pdf}}
-  \caption[Mean stepwise evolution of $\tilde{\vphi}$]{Mean stepwise evolution 
-    of $\tilde{\vphi}$, which is scaled according to \cref{eq:scale}.}
+  \caption{Mean stepwise evolution of $\tilde{\vphi}$, which is scaled 
+  according to \cref{eq:scale}}
   \label{fig:diff:opt:evol}
 \end{figure}
 \begin{figure}\centering
-  %  \ContinuedFloat
+  \captionsetup{list=no}
+  \ContinuedFloat
   \subcaptionbox{\jrnd{10}{10}\label{diff:evol:jrnd:10x10}}{
     \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.10x10.evolution}.pdf}}
-  \caption{(continued)}
+  \caption{}
+  \MyCaption{Mean stepwise evolution of 
+  $\tilde{\vphi}$}{diff:evol:jrnd:6x5}{diff:evol:jrnd:10x10}
 \end{figure}
 
 \section*{Experimental settings}

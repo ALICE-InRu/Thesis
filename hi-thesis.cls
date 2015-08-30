@@ -1,7 +1,7 @@
 % -------------------------------------------------------------------
 %  @LaTeX-class-file{
 %     filename        = "hi-thesis.cls",
-%     version         = "1.8",
+%     version         = "1.9",
 %     date            = "26 August 2015",
 %     codetable       = "ISO/ASCII",
 %     keywords        = "LaTeX, hi-thesis",
@@ -155,6 +155,14 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
 \captionsetup[subtable]{textfont=sf,aboveskip=3pt,belowskip=9pt}
 \captionsetup[figure]{position=bottom}
 \captionsetup[subfigure]{textfont=sf}
+
+%http://tex.stackexchange.com/questions/50988/one-caption-in-listoffigures-for-a-continuedfloat
+\DeclareCaptionLabelFormat{continued}{#1~#2~(cont.)}
+\captionsetup[ContinuedFloat]{labelformat=continued}
+
+\def\MyCaption#1#2#3{\addtocontents{lof}{\protect\contentsline{figure}{\protect\numberline{\thefigure}{\ignorespaces
+ #1\relax}}{{\pageref{#2}}--{\pageref{#3}}}{}}}
+
 
 %http://tex.stackexchange.com/questions/26521/how-to-change-the-spacing-between-figures-tables-and-text
 \setlength{\textfloatsep}{10pt plus 1.0pt minus 2.0pt}
@@ -375,8 +383,8 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
 % ------------------------------------------------------------ table of contents
 \RequirePackage[titles]{tocloft}
 \setcounter{tocdepth}{2}
-\setcounter{lofdepth}{2}
-\setcounter{lotdepth}{2}
+\setcounter{lofdepth}{1}
+\setcounter{lotdepth}{1}
 \renewcommand{\cftchapfont}{\normalsize \scshape}
 \renewcommand*\cftchapnumwidth{2em} % add margin to fit Roman numerals
 \renewcommand*\cftsecnumwidth{3em}  % from Papers section
@@ -599,6 +607,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     \strictpagecheck
     \checkoddpage
     \ifoddpage
+    
     \begin{tikzpicture}[remember picture, overlay]
     \node [thumb,align=center,anchor=north east] at ($%
     (current page.north east)-%
@@ -613,6 +622,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     $) {#2};
     \end{tikzpicture}
     \fi
+    
 }
 
 % --------------------------------------------------------------------- colophon

@@ -72,20 +72,34 @@ inspected for \JSP\ -- not only does it reach the known optimum most often but
 it also has the lowest worst-case factor from optimality. Similarly LWR for 
 \FSP.
 
-Although the same processing time distribution is used, there are some inherent structure in which MWR and LWR can exploit for \JSP\ and  \FSP, respectively, whereas the other SDRs cannot. However, \emph{all} of these dispatching rules are considered good and commonly used in practice and no one is better than the rest \citep{Haupt89}, it simply depends on the data distribution at hand. This indicates that some distributions are harder than others, and these \JSP\ problem generators simply favours MWR, whereas the \FSP\ problem generators favours LWR. 
+Although the same processing time distribution is used, there are some inherent 
+structure in which MWR and LWR can exploit for \JSP\ and  \FSP, respectively, 
+whereas the other SDRs cannot. However, \emph{all} of these dispatching rules 
+are considered good and commonly used in practice and no one is better than the 
+rest \citep{Haupt89}, it simply depends on the data distribution at hand. This 
+indicates that some distributions are harder than others, and these \JSP\ 
+problem generators simply favours MWR, whereas the \FSP\ problem generators 
+favours LWR. 
 
-\begin{figure}[p]
-  \subcaptionbox{$6\times5$\label{fig:SDR:boxplot:6x5}}{
-    \includegraphics[width=\textwidth]{{boxplotRho.SDR.6x5}.pdf}}
-  \caption[Box-plots of \namerho, when applying SDRs]{Box-plots of \namerho, 
-    when applying SDRs for all problem spaces in \cref{ch:genprobleminstances}.}
-  \label{fig:SDR:boxplot}
+\begin{figure}
+    \captionsetup{list=no}
+    \centering
+    \subcaptionbox{$6\times5$\label{fig:SDR:boxplot:6x5}}{
+      \includegraphics[width=\textwidth]{{boxplotRho.SDR.6x5}.pdf}}
+    \label{fig:SDR:boxplot}
+    \caption{Box-plots of \namerho, when applying SDRs for all problem spaces 
+    in \cref{ch:genprobleminstances}}
 \end{figure}
-\begin{figure}[h]
-  \ContinuedFloat 
-  \subcaptionbox{$10\times10$\label{fig:SDR:boxplot:10x10}}{
-    \includegraphics[width=\textwidth]{{boxplotRho.SDR.10x10}.pdf}}
-  \caption{Continued.}
+
+\begin{figure}
+    \captionsetup{list=no}
+    \ContinuedFloat
+    \centering
+    \subcaptionbox{$10\times10$\label{fig:SDR:boxplot:10x10}}{
+      \includegraphics[width=\textwidth]{{boxplotRho.SDR.10x10}.pdf}}
+    \caption{}
+    \MyCaption{Box-plots of \namerho, when applying 
+    SDRs}{fig:SDR:boxplot:6x5}{fig:SDR:boxplot:10x10}
 \end{figure}
 
 \section{Distribution difficulty}
