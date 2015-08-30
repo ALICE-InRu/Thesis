@@ -27,10 +27,7 @@ These collected features are denoted $\Phi$, where,
 
 Continuing with the example from \cref{sec:jsp:example}, 
 \cref{fig:jssp:gametree} shows how the first two dispatches could be executed 
-for a six-job five-machine \jsp\ scheduling problem, with the machines, 
-$a\in\{M_1,...,M_5\}$, on the vertical axis and the horizontal axis yields the 
-current makespan. The next possible dispatches are denoted as dashed boxes with 
-the job index $j$ within and its length corresponding to $p_{ja}$.
+for a $4\times5$ \jsp\ from \cref{sec:jsp:example}.
 In the top layer one can see an empty schedule.
 In the middle layer one of the possible dispatches from the layer above is 
 fixed, and one can see the resulting schedule, i.e., what are the next possible 
@@ -53,13 +50,13 @@ in \cref{fig:example:midway}, then let's say $J_2$ would be dispatched next,
 and in the next iteration $J_4$. 
 Now this sequence would yield the same schedule as if $J_4$ would have been 
 dispatched first and then $J_2$ in the next iteration. 
-This is due to the fact these are non-conflicting jobs, which indicates that 
-some of the nodes in game tree can merge. 
-In the meantime the states of the schedule are different and thus their 
+This is due to the fact they have non-conflicting machines, which indicates 
+that some of the nodes in game tree can merge. 
+Meanwhile, the states of the schedule are different and thus their 
 features, although they manage to yield with the same (partial) schedule at a 
 later date.  % ATHUGASEMD 1 -- SEQ. REP NON-UNIQUE
-In this particular instance one can not infer that choosing $J_1$ is better and 
-$J_2$ is worse (or vice versa) since they can both yield the same solution.
+In this particular instance one can not infer that choosing $J_2$ is better and 
+$J_4$ is worse (or vice versa) since they can both yield the same solution.
 
 In some cases there can be multiple optimal solutions to the same problem 
 instance. 
@@ -75,7 +72,7 @@ Only the features from a dispatch yielding a truly suboptimal solution should
 be labelled undesirable. 
 
 \todoWrite{All possible assignments of operations for an $n\times m$ \JSP\ 
-would require an examination of $(n!)^m$ \cite{Giffler60}), thus a $6\times5$  
+would require an examination of $(n!)^m$ \citep{Giffler60}, thus a $6\times5$  
 problem may have at most $1.93\cdot10^{14}$ possible solutions, and for 
 $10\times10$ problem then it's $3.96\cdot10^{65}$ solutions!}
 
