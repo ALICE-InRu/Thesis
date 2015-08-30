@@ -60,7 +60,7 @@
 
 \RequirePackage[margin=2.3cm,
     b5paper,
-    showframe, % option good for draft mode
+    %showframe, % option good for draft mode
     includehead]{geometry} % 
 \RequirePackage[b5]{crop}
 
