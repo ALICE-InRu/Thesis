@@ -94,7 +94,10 @@ dispatch $k$, resulting in a training size of,
 \begin{equation}\label{eq:sizeS_b}
 	l =  \sum_{i=1}^{N_{\text{train}}} \left(2 \abs{\mathcal{O}^{(k)}_i}\cdot \abs{\mathcal{S}^{(k)}_i} \right)
 \end{equation}
-For the problem spaces considered there, that sort of simple sampling of the state space was sufficient for a favourable outcome. However for a considerably harder problem spaces (see \cref{ch:problemstructure}), preliminary experiments were not satisfactory. 
+For the problem spaces considered there, that sort of simple sampling of the 
+state space was sufficient for a favourable outcome. However for a considerably 
+harder problem spaces (see \cref{ch:defdifficulty}), preliminary experiments 
+were not satisfactory. 
 
 A brute force approach was adopted to investigate the feasibility of finding optimal weights $\vec{w}$ for \cref{eq:jsp:linweights}. 
 By applying CMA-ES (discussed thoroughly in \cref{ch:esmodels}) to directly minimize the mean $C_{\max}$  w.r.t. the weights $\vec{w}$, gave a considerably more favourable result in predicting optimal versus suboptimal dispatching paths. 
@@ -186,7 +189,7 @@ instance, in those cases as well.
 These trajectory strategies were initially introduced in \cref{InRu15a}, save 
 for $S^{CMA}$ and the SDR-based ones, however the latter are currently 
 addressed since, e.g., LWR is considered more favourable for \fsp\ rather than 
-MWR (cf. \cref{ch:problemstructure}). 
+MWR (cf. \cref{ch:defdifficulty}). 
 
 \subsection{Experimental study}\label{sec:expr:locallin}
 To test the validity of different ranking and strategies from \cref{sec:S:strategies}, a training set of $N_{\text{train}}$ problem instances of $6\times5$ \jsp\ and \fsp\ summarised in \cref{tbl:data} (omitting the job and machine variations of \jsp). The size of the preference set, $S$, for different trajectory and ranking strategies are depicted in \cref{fig:sizeofprefset}. Note, for now $10\times10$ problem spaces will be ignored, due to the extreme computational cost of correctly labelling each trajectory. However, in \cref{sec:pref:scalability} an optimum path will be pursued for said dimension.

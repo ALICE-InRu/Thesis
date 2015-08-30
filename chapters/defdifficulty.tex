@@ -1,6 +1,6 @@
 \HeaderQuote{Sentence first -- verdict afterwards.}{The Queen}
 
-\chapter{Problem Structure}\label{ch:problemstructure} 
+\chapter{Defining problem difficulty}\label{ch:defdifficulty} 
 
 %\begin{abstract} 
 %Many heuristic methods have been proposed for the \jsp\ scheduling problem. Different solution methodologies outperform other depending on the particular problem instance under consideration. Therefore, one is interested in knowing how the instances differ in structure and determine when a particular heuristic solution is likely to fail and explore in further detail the causes. In order to achieve this, we seek to characterise features for different difficulties. Preliminary experiments show there are different significant features that distinguish between easy and hard \jsp\ problem, and that they vary throughout the scheduling process. 
@@ -73,7 +73,7 @@ features are missing from the feature set that could be able to discriminate
 between \emph{good} and \emph{bad} schedules. 
 Additionally, there is also the question of how can one define ``similar'' 
 schedules, and what measures should be used? This 
-\lcnamecref{ch:problemstructure} describes some preliminary experiments with 
+\lcnamecref{ch:defdifficulty} describes some preliminary experiments with 
 the aim of investigating the feasibility of finding distinguishing features 
 corresponding to \emph{good} and \emph{bad} schedules in \jsp. To summarise
 \begin{enumerate*}[itemjoin={{? }}, itemjoin*={{? And }}, after={{? }}]
@@ -255,7 +255,7 @@ Namely, by exploiting feature behaviour that is considered more favourable. The 
 Note, this \lcnamecref{sec:diff:easyhard} gave the definition of what 
 constitutes an `easy' and `hard' schedule. Since these are based on four SDRs 
 (cf. \cref{eq:SDRset}) the training data for the experiments done in this 
-\lcnamecref{ch:problemstructure} is based on $4N_{\text{train}}$ problem 
+\lcnamecref{ch:defdifficulty} is based on $4N_{\text{train}}$ problem 
 instances, per problem space, therefore,
 \begin{equation}\label{eq:easyhard:all}
   \sum_{a\in\mathcal{A}}\abs{\mathcal{E}(a)} \approx N_{\text{train}}
