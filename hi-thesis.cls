@@ -1,7 +1,7 @@
 % -------------------------------------------------------------------
 %  @LaTeX-class-file{
 %     filename        = "hi-thesis.cls",
-%     version         = "1.4",
+%     version         = "1.5",
 %     date            = "26 August 2015",
 %     codetable       = "ISO/ASCII",
 %     keywords        = "LaTeX, hi-thesis",
@@ -55,8 +55,11 @@
     \lettrine[lines=2,slope=4pt,nindent=0pt,findent=0pt]{\textcolor{chaptergrey}{#1}}{#2}}
 
 \RequirePackage[tight,nice]{units}
-\RequirePackage[margin=2.3cm,b5paper,includehead]{geometry} % showframe option 
-%good for draft mode
+
+\RequirePackage[margin=2.3cm,
+    b5paper,
+    showframe, % option good for draft mode
+    includehead]{geometry} % 
 \RequirePackage[b5]{crop}
 
 % for comments and such 
@@ -236,17 +239,18 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
 % -------------------------------------------------------------------- maketitle
 \makeatletter
 \renewcommand{\maketitle}{ 
+    \bookcover
     \pagestyle{fancy}
     \pagenumbering{roman}
     \thispagestyle{empty}
     \begin{center}
         \normalsize Dissertation for the degree of \@degree
+        \vspace*{\fill}\\
+        \includegraphics[width=24.76mm]{frontmatter/HI-logo.pdf}
         \vspace{12pt}\\
         \Huge \textcolor{chaptergrey}{\sc{\@title}}
         \vspace{24pt}\\
         \Large \@author
-        \vspace*{\fill}\\
-        \includegraphics[width=0.5\columnwidth]{frontmatter/HI-logo.pdf}
         \vspace*{\fill}\\
         \normalsize
         \@department\\
@@ -256,6 +260,44 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     
     \newpage 
     \lhead{} \rhead{} \cfoot{\thepage}
+}
+\newcommand{\BackgroundPic}
+{%
+    \put(0,0){%
+        \hspace*{-25pt}
+        \begin{tikzpicture}[overlay]
+        \node[anchor=south west] (image) at (0,0,0) 
+        {\includegraphics[width=2\paperwidth,height=\paperheight,
+            keepaspectratio]{frontmatter/HI-blueribbon.pdf}};
+        \begin{scope}[x={(image.south east)},y={(image.north west)}]
+        \node[font=\bfseries\sffamily\Large,align=center,
+            text width=500pt,text=white] (c) at (0.5,0.1) {
+            \@faculty\\
+            \@university\\
+            \@degreeyear
+        };
+        \end{scope}
+        \end{tikzpicture}
+    }
+}
+
+\newcommand{\bookcover}{ 
+    \pagestyle{empty}
+    \vspace*{3.35mm}
+    {\centering\includegraphics[width=24.76mm]{frontmatter/HI-logo.pdf}\par}
+    \vspace*{25.25mm}
+    {\centering\bfseries\sffamily\Huge{\@title}\par}
+    \vspace*{30mm}
+    {\centering\sffamily\Large{\@author}\par}
+    \vspace*{\fill}
+    \AddToShipoutPicture*{\BackgroundPic}
+    %\includepdf[height=\paperheight]{frontmatter/HI-blueribbon.pdf}
+    
+    
+\newpage 
+     
+    \cleardoublepage
+    \setcounter{page}{1}
 }
 \makeatother
 
