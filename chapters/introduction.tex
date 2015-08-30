@@ -362,20 +362,39 @@ algorithms from empirical evidence}
 
 \clearpage
 
-\noindent \textbf{Chapter to Paper relation}
-\begin{enumerate}
-  \item \cref{ch:scheduling} --
-  \cref{InRu11a,InRu12,InRu14,InRu15a,InRu15b,InRu15c}
-  \item \cref{ch:genprobleminstances} --
-  \cref{InRu11a,InRu12,InRu14,InRu15a,InRu15b,InRu15c}
-  \item \cref{ch:defdifficulty} -- \cref{InRu12}
-  \item \cref{ch:analysingsol} -- \cref{InRu15b}
-  \item \cref{ch:prefmodels} -- \cref{InRu11a,InRu15a,InRu15b,InRu15c}
-  \item \cref{ch:esmodels} -- \cref{InRu14}, which could be improved by 
-  incorporating the methodology from \cref{InRu11b}
-  \item \cref{ch:experiments} -- \cref{ch:prefmodels} vs. \cref{ch:esmodels}
-\end{enumerate}
+\subsection*{Mapping between \cref{Prologue} and \cref{Papers}}
+The prologue will be addressing the \jsp\ scheduling problem, detailed in 
+\cref{ch:scheduling} and correspond to the application in 
+\cref{InRu11a,InRu12,InRu14,InRu15a,InRu15b,InRu15c}. The problem generators 
+used are subsequently described in \cref{ch:genprobleminstances}.
+From there, we try do define problem difficulty in \cref{ch:defdifficulty}, 
+improving upon the ad-hoc definition from \cref{InRu12}. 
+There will be two algorithms considered
+\begin{enumerate*}
+    \item preference learning in \cref{ch:prefmodels}, which is a tailored 
+    algorithm
+    \item evolutionary search in \cref{ch:esmodels}, which is a general 
+    algorithm
+\end{enumerate*}
+The latter was implemented in \cref{InRu14}, which could be improved by 
+incorporating the methodology from \cref{InRu11b}.
+Preference models on  the other hand, are highly dependent on training data, 
+whose collection is addressed in \cref{ch:gentrdat}, and were the topic of 
+discussion in \cref{InRu15a} and \cref{InRu15c}. Moreover, the training 
+data contains an abundance of information that can be used to determine a
+algorithm's footprint in instance space, which was done for optimal solutions 
+in \cref{InRu15b}, and in addition to that SDR based trajectories were 
+inspected in \cref{ch:analysingsol} along with tying together the preliminary 
+work in \cref{InRu12}. 
+Finally, \cref{ch:experiments} compares to two methodologies, as the preference 
+models had been significantly improved since \cref{InRu14}.
+An overview of experimental settings in \cref{Papers} is given in 
+\cref{papers:summary}.
 
+\input{tables/papers-summary.tex}
+
+
+\clearpage
 \Cref{jsp:methods} summarise the main techniques applied to solve \JSP. The 
 figure is based on Fig. 1 from \citet{Jain99}, however, updated to reflect the 
 previous work relevant to this dissertation.
@@ -399,4 +418,3 @@ Some notes
 \end{description}
 
 \input{figures/methods-flowchart.tex}
-\input{tables/papers-summary.tex}
