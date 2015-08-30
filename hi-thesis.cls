@@ -1,7 +1,7 @@
 % -------------------------------------------------------------------
 %  @LaTeX-class-file{
 %     filename        = "hi-thesis.cls",
-%     version         = "1.3",
+%     version         = "1.4",
 %     date            = "26 August 2015",
 %     codetable       = "ISO/ASCII",
 %     keywords        = "LaTeX, hi-thesis",
@@ -27,10 +27,10 @@
 \hypersetup{
     linktocpage,
     colorlinks,
-    citecolor=black, % could be themecolor
+    citecolor=black, % could be chaptergrey
     filecolor=black,
     linkcolor=black,
-    urlcolor=black, % could be themecolor
+    urlcolor=black, % could be chaptergrey
     pdfauthor={\@author},
     pdftitle={\@title}   
 }
@@ -72,9 +72,8 @@
 \definecolor{green}{RGB}{113,149,0}
 \definecolor{yellow}{RGB}{245,207,71}
 \definecolor{orange}{RGB}{235, 113, 37}
-\definecolor{themecolor}{RGB}{0, 69, 124} % <- for Blue PhD theme, such at UI
 \definecolor{chaptergrey}{RGB}{90,91,94} % gray color for the chapter numbers 
-%(less print in color) 
+% and other fancy headings
 
 % colors styles for ColorBrewer Set1 - to match ggplot2
 \definecolor{set1red}{RGB}{228, 26, 28} %1 #E41A1C
@@ -243,7 +242,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     \begin{center}
         \normalsize Dissertation for the degree of \@degree
         \vspace{12pt}\\
-        \Huge \textcolor{themecolor}{\sc{\@title}}
+        \Huge \textcolor{chaptergrey}{\sc{\@title}}
         \vspace{24pt}\\
         \Large \@author
         \vspace*{\fill}\\
@@ -384,7 +383,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     
     \thispagestyle{empty}
     \vspace*{\fill}
-    \centerline{\Huge \textcolor{themecolor}{\sc{prologue}}}
+    \centerline{\Huge \textcolor{chaptergrey}{\sc{prologue}}}
     \addcontentsline{toc}{chapter}{Prologue}    
     \vspace{\fill}    
     \ifthenelse{\equal{\@printmode}{draft}}{
@@ -413,7 +412,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     \thispagestyle{empty}
     \topskip0pt
     \vspace*{\fill}
-    \centerline{\Huge \textcolor{themecolor}{\sc{papers}}}
+    \centerline{\Huge \textcolor{chaptergrey}{\sc{papers}}}
     \addcontentsline{toc}{chapter}{Papers}    
     \vspace{\fill}
     \pagestyle{plain}
