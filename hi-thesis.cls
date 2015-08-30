@@ -442,7 +442,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     \cleardoublepage
     \setcounter{page}{1}
     \pagenumbering{arabic}
-    \part{Prologue}
+    \part{Prologue}\label{Prologue}
     \normalsize
     \ifthenelse{\equal{\@printmode}{draft}}{
         \lfoot{Draft -- \today}
@@ -460,7 +460,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
 
 % --------------------------------------------------------------- my papers page
 \newcommand*\papers{%
-    \part{Papers}
+    \part{Papers}\label{Papers}
     \renewcommand\appendixname{Paper}
     \renewcommand\chaptername{Paper}
     \renewcommand{\thechapter}{\Roman{chapter}}
