@@ -1,6 +1,6 @@
 \HeaderQuote{Sentence first -- verdict afterwards.}{The Queen}
 
-\chapter{Defining problem difficulty}\label{ch:defdifficulty} 
+\chapter{Problem difficulty}\label{ch:defdifficulty} 
 
 %\begin{abstract} 
 %Many heuristic methods have been proposed for the \jsp\ scheduling problem. Different solution methodologies outperform other depending on the particular problem instance under consideration. Therefore, one is interested in knowing how the instances differ in structure and determine when a particular heuristic solution is likely to fail and explore in further detail the causes. In order to achieve this, we seek to characterise features for different difficulties. Preliminary experiments show there are different significant features that distinguish between easy and hard \jsp\ problem, and that they vary throughout the scheduling process. 
@@ -50,41 +50,6 @@ kind of feature behaviour, especially given the fact the learning models in
 possible to infer what sort of feature behaviour distinguishes  between 
 \emph{good} and \emph{bad} schedules. 
 
-It is interesting to know if the difference in the structure of the schedule is 
-time dependent, e.g.,  is there a clear time of divergence within the 
-scheduling process? 
-Moreover, investigation of how sensitive is the difference between two sets of 
-features, e.g., can two schedules with similar feature values yield 
-\begin{enumerate*}[label={{}}, 
-  itemjoin={{? }}, itemjoin*={{? Or }}, after={{? }}]
-  \item completely contradictory outcomes (i.e. one poor and one good schedule)
-  \item will they more or less follow the their predicted trend
-\end{enumerate*}
-If the latter is the prevalent case, then instances need to be segregated 
-w.r.t. their difficulty, where each has their own learning algorithm 
-implemented, for a meaningful outcome overall.  
-
-This also, essentially, answers the question of whether  it is in fact feasible 
-to discriminate between \emph{good} and \emph{bad} schedules using the 
-currently selected features as a measure of the quality of a solution. 
-If results are contradictory, it is an indicator the features selected are not 
-robust enough to capture the essence of the data structure and some key 
-features are missing from the feature set that could be able to discriminate 
-between \emph{good} and \emph{bad} schedules. 
-Additionally, there is also the question of how can one define ``similar'' 
-schedules, and what measures should be used? This 
-\lcnamecref{ch:defdifficulty} describes some preliminary experiments with 
-the aim of investigating the feasibility of finding distinguishing features 
-corresponding to \emph{good} and \emph{bad} schedules in \jsp. To summarise
-\begin{enumerate*}[itemjoin={{? }}, itemjoin*={{? And }}, after={{? }}]
-  \item How to define problem difficulty
-  \item Is there a time of divergence
-  \item What are ``similar'' schedules
-  \item Do similar features yield contradictory outcomes
-  \item Are extra features needed
-  \item what can be learned from feature behaviour
-\end{enumerate*}
-
 Instead of searching through a large set of algorithms  and determining which 
 algorithm is the most suitable for a given subset of the instance space, i.e., 
 creating an algorithm portfolio, as is generally the focus in the current 
@@ -108,7 +73,6 @@ inspected for \JSP\ -- not only does it reach the known optimum most often but
 it also has the lowest worst-case factor from optimality. Similarly LWR for 
 \FSP.
 
-\clearpage
 Although the same processing time distribution is used, there are some inherent structure in which MWR and LWR can exploit for \JSP\ and  \FSP, respectively, whereas the other SDRs cannot. However, \emph{all} of these dispatching rules are considered good and commonly used in practice and no one is better than the rest \citep{Haupt89}, it simply depends on the data distribution at hand. This indicates that some distributions are harder than others, and these \JSP\ problem generators simply favours MWR, whereas the \FSP\ problem generators favours LWR. 
 
 \begin{figure}[p]
@@ -161,7 +125,13 @@ directly applicable in practice \citep{Dudek92}. This is why \fjc{n}{m},
 It's relatively ad-hoc how to define what makes a schedule difficult. 
 For instance, it could be sensible to define it in terms of how many Simplex 
 iterations are needed to find an optimal schedule, using \emph{Branch and 
-Bound}. However, it showed that an increased amount of Simplex iterations 
+Bound}.\footnote{Branch and bound \citep{bnb} is a methodology in integer
+    linear programming, where the original problem is branched into smaller sub 
+    problems until it becomes easily solvable. Each sub problem has an lower 
+    bound on its solution, found with LP-relaxation. Depending on the lower 
+    bound, sub branches are systemically discarded, since they cannot contain 
+    the optimal solution.} 
+However, it showed that an increased amount of Simplex iterations 
 didn't necessarily transcend to high $\rho$. 
 If anything, it means there are many optimal (or near-optimal) solutions 
 available, which causes the slow process of pruning branches of the tree, 
@@ -243,7 +213,6 @@ In fact, MWR is never considered hard for any of the \JSP\ (cf. \cref{tbl:hard:c
 But the LPT counterpart has a relatively high occurrence rate (3-14\%), so due to the similarity of the dispatching rules, the denominating factor between LPT and MWR can be an indicator for explaining some of MWR's pitfalls.
 That is to say, why aren't all of the \jsp\ schedules easy when applying MWR? 
 
-\clearpage
 These have up until now all been speculations about how SDRs differ. One thing is for certain, the underlying problem space plays a great role on a SDR's success. Even slight variations to one job or machine, i.e., \jrndJ{10}{10} and \jrndM{10}{10}, shows significant change in performance. Due to the presence of bottleneck, MWR is able to detect it and thus becomes the clear winner. Even outperforming the original \jrnd{10}{10} which they're based on, despite having processing times doubled for a single job or machine, with approximately 10\% lower first quantile (cf. \cref{tbl:easyhard:quantile:10x10}) in both cases. 
 
 As the objective of this dissertation is not to choose which DR is best to use for each problem instance. 
