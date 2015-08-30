@@ -17,14 +17,13 @@ The ranking problem is specified by a \emph{preference set},
 consisting of $N$ (solution, rank)-pairs, where $Y=\{r_1,\ldots,r_N\}$ 
 is the outcome space with ordered ranks $r_1> r_2,> \ldots > r_N$.  
 
-\clearpage
 Now consider the model space $\mathcal{H} = \{h(\cdot) : X \mapsto Y\}$ of 
 mappings from solutions to ranks. Each such function $h$ induces an ordering 
 $\succ$ on the solutions  by the following rule,
 \begin{equation}\label{eq:linear}
 	\vec{x}_i \succ \vec{x}_j \quad \Leftrightarrow \quad h(\vec{x}_i) > h(\vec{x}_j)
 \end{equation}
-where the symbol $\succ$ denotes ``is preferred to.''  
+where the symbol $\succ$ denotes `is preferred to.' 
 
 In ordinal regression the task is to obtain function $h$ that can for a given pair $(\vec{x}_i,y_i)$ and $(\vec{x}_j,y_j)$ distinguish between two different outcomes: $y_i > y_j$ and $y_j > y_i$. The task is, therefore, transformed into the problem of predicting the relative ordering of all possible pairs of examples \citep{Herbrich00,Joachims02}.  However, it is sufficient to consider only all possible pairs of adjacent ranks (see also \cite{ShaweTaylor04:book} for yet an alternative formulation).  The preference set, composed of pairs, is then as follows,
 \begin{equation}
@@ -77,7 +76,7 @@ The aim now is to find a function $h$ that encounters as few training errors as
 possible on $\Psi$. Applying the method of large margin rank boundaries of 
 ordinal regression described in \cite{Herbrich00}, the optimal $\vec{w}^*$ is 
 determined by solving the following task, 
-\begin{equation}\label{eq:margin}
+\begin{equation}\label{eq:margin:linear}
 	\min_{\vec{w}}\quad \tfrac{1}{2}\inner{\vec{w}}{\vec{w}} + \tfrac{C}{2}\sum_{k=1}^{N'}\xi_k^2
 \end{equation}
 subject to $t_k\inner{\vec{w}}{(\vphi(\vec{x}_k^{(1)})-\vphi(\vec{x}_k^{(2)})}\ge 1 - \xi_k$ and $\xi_k \ge 0$, $k = 1,\ldots, N'$. The degree of constraint violation is given by the margin slack variable $\xi_k$ and when greater than $1$ the corresponding pair are incorrectly ranked. 
@@ -85,19 +84,20 @@ Note that,
 \begin{equation}
 	h(\vec{x}_i)-h(\vec{x}_j)=\inner{\vec{w}}{\vphi(\vec{x}_i)-\vphi(\vec{x}_j)}
 \end{equation}
-and minimising $\inner{\vec{w}}{\vec{w}}$ in \cref{eq:margin} maximises the margin between rank boundaries, i.e., the distance between adjacently ranked pair $h(\vec{x}^{(1)})$ and $h(\vec{x}^{(2)})$.
+and minimising $\inner{\vec{w}}{\vec{w}}$ in \cref{eq:margin:linear} maximises 
+the margin between rank boundaries, i.e., the distance between adjacently 
+ranked pair $h(\vec{x}^{(1)})$ and $h(\vec{x}^{(2)})$.
 
 
-
-
-\begin{comment}
 \section{Non-linear preference}\label{sec:ord:nonlinpref}
-In the case that the preference set $\Psi$ defined by \cref{eq:Sfeat} is not 
-linearly separable, a common way of coping with non-linearity is to apply the 
-``kernel-trick'' to transform $\Psi$ onto a higher dimension. In which case, 
-the dot product in \cref{eq:linear} is replaced by a kernel function $\kappa$.
+In the case that the preference set $\Psi$ defined by \cref{eq:PrefSet:feat} is 
+not linearly separable, a common way of coping with non-linearity is to apply 
+the `kernel-trick' to transform $\Psi$ onto a higher dimension. In which case, 
+the dot product in \cref{eq:pref:kernel} is replaced by a kernel function 
+$\kappa$.
 
-In terms of training data, the optimal $\vec{w}^*$ can be expressed as, \todo{Finna uppr. heimild}
+In terms of training data, the optimal $\vec{w}^*$ can be expressed as, 
+\todoFind{original source}
 \begin{equation}
 	\vec{w}^*=\sum_{k=1}^{N'} \alpha^* t_k \left( \vphi(\vec{x}_k^{(1)})-\vphi(\vec{x}_k^{(2)}) \right)
 \end{equation}
@@ -108,7 +108,7 @@ and the function $h$ may be reconstructed as follows,
 	&=&\sum_{k=1}^{N'} \alpha^* t_k \left( \kappa(\vec{x}_k^{(1)},\vec{x})-\kappa(\vec{x}_k^{(2)},\vec{x}) \right)
 \end{eqnarray}
 where $\kappa(\vec{x},\vec{z})=\inner{\vphi(\vec{x})}{\vphi(\vec{z})}$ is the chosen kernel and $\alpha_k^*$ are the Lagrangian multi\-pliers for the constraints that can be determined by solving the dual quadratic programming problem,
-\begin{equation}
+\begin{equation}\label{eq:margin:nonlinear}
 	\max_{\alpha} \sum_{k=1}^{N'} \alpha_k -\frac{1}{2} \sum_{i=1}^{N'}\sum_{j=1}^{N'} \alpha_i\alpha_jt_it_j\left(K(\vec{x}_i^{(1)},\vec{x}_i^{(2)},\vec{x}_j^{(1)},\vec{x}_j^{(2)}) +\frac{1}{C}\delta_{ij}\right)
 \end{equation} 
 subject to $\sum_{k=1}^{N'} \alpha_kt_k=0$ and $\alpha_k\geq0$ for all $k\in\{1,\ldots,N'\}$, and where,
@@ -118,7 +118,7 @@ subject to $\sum_{k=1}^{N'} \alpha_kt_k=0$ and $\alpha_k\geq0$ for all $k\in\{1,
 \end{eqnarray*}
 and $\delta_{ij}$ is the Kronecker $\delta$ defined to be 1 iff $i=j$ and 0 otherwise.
 
-\subsection{Kernel functions}
+\subsection*{Kernel functions}
 There are several choices for a kernel $\kappa$, e.g., \emph{polynomial kernel},
 \begin{eqnarray}
 	\kappa_{\text{poly}}(\vec{x}_i,\vec{x}_j)&=& \left(1+\inner{\vec{x}_i}{\vec{x}_j} \right)^p
@@ -128,10 +128,13 @@ of order $p$, or the most commonly used kernel in the literature which implement
 	\kappa_{\text{rbf}}(\vec{x}_i,\vec{x}_j)&=& e^{-\gamma \norm{\vec{x}_i-\vec{x}_j}^2}
 \end{eqnarray}
 for $\gamma>0$.
-\end{comment}
 
 \section{Parameter setting and tuning}
-The regulation parameter $C$ in \cref{eq:margin}, controls the balance between model complexity and training errors, and must be chosen appropriately. A high value for $C$ gives greater emphasis on correctly distinguishing between different ranks, whereas a low $C$ value results in maximising the margin between classes.
+The regulation parameter $C$ in \cref{eq:margin:linear,eq:margin:nonlinear}, 
+controls the balance between model complexity and training errors, and must be 
+chosen appropriately. A high value for $C$ gives greater emphasis on correctly 
+distinguishing between different ranks, whereas a low $C$ value results in 
+maximising the margin between classes.
 
 \section{Scaling}\label{app:feat:scaling}
 It some cases it becomes necessary to scale the features $\vphi$ from 
@@ -152,7 +155,7 @@ is,
 \quad\quad \forall i\in\{1,\ldots,d\}
 \end{equation}
 where $\underline{\phi}_i$, $\overline{\phi}_i$ are the maximum and minimum 
-$i$-th component of all the feature variables in set $\Phi$, namely,
+$i$-th component of all the feature variables in $\Phi$, namely,
 \begin{equation}
 \underline{\phi}_i=\min\{\phi_i\;|\;\forall\vphi\in \Phi\} 
 \quad\textrm{and}\quad \overline{\phi}_i=\max\{\phi_i\;|\;\forall\vphi\in 
@@ -161,13 +164,12 @@ $i$-th component of all the feature variables in set $\Phi$, namely,
 where $i\in\{1\ldots d\}$. 
 
 \section{Implementation}
-To use this type of ordinal regression, it's best to use LIBLINEAR: A 
-Library for Large Linear Classification by \citet{main:LIBLINEAR} which 
+To linear ordinal regression, then it's best to use LIBLINEAR: A 
+Library for Large Linear Classification by \citet{main:LIBLINEAR}, which 
 contains implementations in several programming languages. The preferred choice 
 of the author was the R-package 
 \href{https://cran.r-project.org/web/packages/LiblineaR/}{\texttt{LiblineaR}} 
 by \citet{cran:LiblineaR}.
-
 However, if more sophisticated kernel methods are sought after, then {LIBSVM}: 
 A Library for Support Vector Machines by 
 \citet{main:LIBSVM} is an obvious substitute.
