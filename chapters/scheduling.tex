@@ -79,11 +79,11 @@ Moreover, there are no sequence dependent set-up times.
 For any given \JSP, then each job $J_j$ has an indivisible processing time (or 
 cost) on machine $M_a$, $p_{ja}$, which is assumed to be integral and finite. 
 
-
 Starting time of job $J_j$ on machine $M_a$ is denoted $x_s(j,a)$ and its 
 completion or end time is denoted $x_e(j,a)$ where, 
 \begin{equation}  x_e(j,a):=x_s(j,a)+p_{ja} \end{equation} 
 
+\clearpage
 Each job $J_j$ has a specified processing order through the machines, it is a 
 permutation vector, $\vsigma_j$, of $\{1,..,m\}$, representing a job $J_j$ can 
 be processed on $M_{\vsigma_j(a)}$ only after it has been completely processed 
@@ -125,7 +125,7 @@ closely together as possible, i.e., minimise the schedule's idle times.
 More specifically, once an operation $(j,a)$ has been chosen from the job-list, 
 $\mathcal{L}$, by some dispatching rule, it can placed immediately after (but 
 not prior) $x_e(j,\vsigma_j(a-1))$ on machine $M_a$ due to 
-\cref{eq:permutation}. 
+\cref{eq:permutation}.
 However, to guarantee that \cref{eq:oneJobPerMac} is not violated, 
 idle times $M_a$ are inspected, as they create a slot which in $J_j$ can 
 occupy. Bearing in mind that $J_j$ release time is $x_e(j,\vsigma_j(a-1))$ one 
@@ -163,7 +163,6 @@ effective.
 Instead, hopefully, the learning algorithm will be able to spot these 
 problematic situations, should they arise, by inspecting the schedule's 
 features and translate that into the jobs' priorities.
-\clearpage
 
 \emph{Dispatching rules} (DR) are an integral part of a construction 
 heuristics, as it determines the priorities of the job-list, i.e., 
@@ -199,11 +198,10 @@ schedule, at step $k$, is called $k$-solution.} \citep{Bertsekas97}.
 
 \section{Example}\label{sec:jsp:example}
 There are many examples of \jsp\ for real-world application. 
-However, for demonstration purposes, let's examine a hypothetical problem from 
-the 18th 
-century. Assume we are invited to the Mad Hatter's Tea Party in Wonderland, 
-illustrated in \cref{fig:teaparty}. 
-There are four guests attending, namely
+For demonstration purposes, let's examine a hypothetical problem from 
+the 18th century. Assume we are invited to the Mad Hatter's Tea Party in 
+Wonderland, illustrated in \cref{fig:teaparty}. 
+There are four guests attending
 \begin{enumerate*}[label={$J_\arabic*$)}, ref={{$J_\arabic*$}}, 
     itemjoin*={{, and of course our host }}]
     \item Alice\label{guest:alice}
@@ -218,17 +216,17 @@ has to perform. They all have to
     \item spread butter
     \item get a haircut
     \item check the time of the broken watch for themselves
-    \item say what you mean, be it asking a riddle, telling a story, or singing 
-    a song to the group
+    \item say what they mean, e.g., asking a riddle  or reciting a poem to the 
+    group
 \end{enumerate*}
-Our guests are very particular creatures, and would like to do these task in a 
+The guests are very particular creatures, and would like to do these task in a 
 very specific order, e.g., March Hare insists on doing 
-them in alphabetically. And each would rather wait than breaking their 
-habit.
-Moreover, they tend to be very absent-minded, so each task takes them a 
-different amount of time. 
-Let's assume that their processing times and ordering are given in 
+them alphabetically. Each would rather wait than breaking their habit.
+They tend to be absent-minded, so each task takes them a different amount of 
+time. 
+Let's assume their processing times and ordering are given in 
 \cref{tbl:example}. 
+\clearpage
 
 \begin{figure}[b!]\centering 
     \includegraphics[width=0.8\textwidth]{alice-mad-tea-party}
@@ -254,7 +252,8 @@ possible? This can be considered as is a typical four-job and five-machine
 \begin{enumerate*}[label={{}}]
     \item our guests are the jobs
     \item their tasks are the machines
-    \item our objective is to minimise the makespan, i.e., when Alice can leave
+    \item our objective is to minimise $C_{\max}$, i.e., when Alice can 
+    leave
 \end{enumerate*}
 
 Let's assume we've come to the party, after 10 operations have already been 
@@ -331,7 +330,6 @@ Other DRs use features not directly observable from looking at the $k$-solution
 with most or least total processing time remaining, i.e., MWR and LWR 
 heuristics, who would yield $J_2$ and $J_4$, respectively.
 
-
 \section{Single priority based \dr s}\label{sec:SDR}
 
 A \emph{\sdr} (SDR) is a function of attributes, or features, of the jobs 
@@ -402,7 +400,6 @@ Features are used to grasp the essence of the current state of the schedule.
 Temporal scheduling features applied in this dissertation are given in 
 \cref{tbl:features}. 
 
-\clearpage
 Note, from a job-oriented viewpoint, for a job already dispatched 
 $J_j\in\mathcal{J}$ the corresponding set of machines already processed is 
 $\mathcal{M}_j\subset\mathcal{M}$. Similarly from the machine-oriented 
@@ -510,7 +507,6 @@ where $w_i>0$ and $\sum_{i=0}^d w_i = 1$, then $w_i$ gives the \emph{weight} of
 the influence of $\pi_i$ (which could be a SDR or another CDR) to $\pi$. Note, 
 each $\pi_i$ is function of $J_j$'s attributes from the $k$-solution $\vchi^j$.
 
-\clearpage
 The \cdr\ presented in \cref{eq:CDR} can be considered as a special case of a 
 the following general linear value function,
 \begin{equation}\label{eq:CDR:feat}
@@ -557,8 +553,8 @@ several successful such implementations in the field of semiconductor wafer
 fabrication facilities. 
 However, \citeauthor{Monch13} note that this sort of investigation is still in its infancy and subject for future research.
 
-\clearpage
-A recent editorial of the state-of-the-art approaches in advanced dispatching rules for large-scale manufacturing systems by \citet{Chen13} points out that:
+A recent editorial of the state-of-the-art approaches in advanced dispatching 
+rules for large-scale manufacturing systems by \citet{Chen13} points out that:
 \begin{quote}
 	[..] most traditional dispatching rules are based on historical data. With the emergence of data mining and on-line analytic processing, dispatching rules can now take predictive information into account.
 \end{quote}

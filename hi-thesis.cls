@@ -1,7 +1,7 @@
 % -------------------------------------------------------------------
 %  @LaTeX-class-file{
 %     filename        = "hi-thesis.cls",
-%     version         = "1.6",
+%     version         = "1.7",
 %     date            = "26 August 2015",
 %     codetable       = "ISO/ASCII",
 %     keywords        = "LaTeX, hi-thesis",
@@ -71,14 +71,16 @@
 \RequirePackage{color} 
 % official color definitions at the University of Iceland:
 \definecolor{blue}{RGB}{0, 69, 124}
-\definecolor{gray}{RGB}{90,91,94}
+\definecolor{gray}{RGB}{90,90,90} % should be 90,91,94
 \definecolor{bluegreen}{RGB}{0,152,170}
 \definecolor{red}{RGB}{172,26,64}
 \definecolor{green}{RGB}{113,149,0}
 \definecolor{yellow}{RGB}{245,207,71}
 \definecolor{orange}{RGB}{235, 113, 37}
-\definecolor{chaptergrey}{RGB}{90,91,94} % gray color for the chapter numbers 
-% and other fancy headings
+\makeatletter
+\definecolor{chaptergrey}{RGB}{90,90,90} 
+% gray color for the chapter numbers and other fancy headings
+\makeatother
 
 % colors styles for ColorBrewer Set1 - to match ggplot2
 \definecolor{set1red}{RGB}{228, 26, 28} %1 #E41A1C
@@ -91,7 +93,10 @@
 \definecolor{set1pink}{RGB}{247, 129, 191} %8 #F781BF
 % spacing 
 \RequirePackage{setspace} 
-\onehalfspacing
+%\onehalfspacing
+\singlespacing
+\setstretch{1.1} % reduce spacing
+% intention of a paragraph
 \parindent 12pt
 
 %Be more forgiving, and stretch word spacing out more so that words don't run 
@@ -234,7 +239,6 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
         \addcontentsline{toc}{chapter}{Nomenclature}
         \acknowledgments
     }
-    \onehalfspacing
 }
 \makeatother
 
@@ -451,6 +455,13 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
 \makeatother
 
 % ------------------------------------------------------------------- references
+\newcommand{\references}{
+    \begin{spacing}{0.75}
+        \bibliographystyle{abbrvnat} 
+        \bibliography{papers/references}
+        \addcontentsline{toc}{chapter}{\bibname}
+    \end{spacing}
+}
 \renewcommand\bibname{References}
 \RequirePackage[comma, sort&compress]{natbib}
 %   list an entire bibliography entry inline. Useful for acknowledging when my 

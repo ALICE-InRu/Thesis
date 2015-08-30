@@ -31,7 +31,8 @@ The focal point will be based on scheduling processes named \jsp\ scheduling
 problem (\JSP), and one of its subclasses, the \fsp\ scheduling problem 
 (\FSP).
 
-There are two main viewpoints on how to approach scheduling problems, namely,
+\noindent There are two main viewpoints on how to approach scheduling problems, 
+namely,
 \begin{description}
   \item[Tailored algorithms] or constructive methods, \\
   by building schedules for one problem instance at a time.
@@ -146,6 +147,10 @@ been widely studied in deterministic scheduling theory and its class of
 problems has been tested on a plethora of different solution methodologies from 
 various research fields \citep{Meeran12}, all from simple and straight forward 
 \dr s to highly sophisticated frameworks.
+\Cref{jsp:methods} summarise the main techniques applied to solve \JSP. The 
+figure is based on Fig. 1 from \citet{Jain99}, however, updated to reflect the 
+previous work relevant to this dissertation.
+\input{figures/methods-flowchart.tex}
 
 \todoWrite{\dr s are a very useful approach to dealing with these 
     environments because they are easy to implement (by computers and shop 
@@ -175,8 +180,8 @@ Therefore, getting the best of both worlds, namely
   \item being complemented with the intensified local search capabilities of TS
 \end{enumerate*}
 Unfortunately, hybridisation of global and local methodologies is non-trivial. 
-In general, combination of the two improves performance, however, they often 
-come at a great computational cost.  
+In general, combination of the two improves performance. Unfortunately, they 
+often come at a great computational cost.  
 
 Various \emph{learning} approaches have been applied to solving \jsp\ 
 scheduling, such as\todoExtend{More learning methods for \JSP}
@@ -247,22 +252,6 @@ successful, problem features need to be sufficiently explanatory and training
 data needs to be selected carefully so they can suggest the appropriate 
 solution for a specific range of new cases. 
 Again, stressing the importance of meaningful feature selection. 
-
-\section{Supplementary material}
-The Prologue will mostly focus on traditional \jsp\ problem instances. 
-However, in \cref{ch:genprobleminstances} there is a greater variety of problem 
-spaces introduced, and when seen fit some of them will be investigated as well 
-in the subsequent \lcnamecref{ch:defdifficulty}s. 
-Since most experiments have been run on all problem spaces, they can be 
-inspected in the supplementary \href{http://tgax89.rhi.hi.is:3838/alice}{Shiny 
-application written in R}. 
-In addition, all source code and data is freely distributed from:
-\begin{quote}
-    \url{https://github.com/ALICE-InRu/}
-\end{quote}
-under the permissive creative commons share-alike 
-licence.\footnote{Attribution-ShareAlike 4.0 International 
-(\href{http://creativecommons.org/licenses/by-sa/4.0/}{CC BY-SA 4.0})}
 
 \section{Contributions}
 
@@ -360,14 +349,24 @@ real-world deployment
 \todoWrite{our ability to learn about the strengths and weaknesses of 
 algorithms from empirical evidence}
 
+\section{Supplementary material}
+The Prologue will mostly focus on traditional \jsp\ problem instances. 
+However, in \cref{ch:genprobleminstances} there is a greater variety of problem 
+spaces introduced, and when seen fit some of them will be investigated as well 
+in the subsequent \lcnamecref{ch:defdifficulty}s. 
+Since most experiments have been run on all problem spaces, they can be 
+inspected in the supplementary \href{http://tgax89.rhi.hi.is:3838/alice}{Shiny 
+    application written in R}. 
+In addition, all source code and data is freely distributed from:
+\begin{quote}
+    \url{https://github.com/ALICE-InRu/}
+\end{quote}
+under the permissive creative commons share-alike 
+licence.\footnote{Attribution-ShareAlike 4.0 International 
+    (\href{http://creativecommons.org/licenses/by-sa/4.0/}{CC BY-SA 4.0})}
+
+
 \clearpage
-
-
-
-\clearpage
-\Cref{jsp:methods} summarise the main techniques applied to solve \JSP. The 
-figure is based on Fig. 1 from \citet{Jain99}, however, updated to reflect the 
-previous work relevant to this dissertation.
 
 Some notes
 \begin{description}
@@ -387,4 +386,3 @@ Some notes
   \item[Insertion Algorithm] \cite{InsertionAlg} 
 \end{description}
 
-\input{figures/methods-flowchart.tex}
