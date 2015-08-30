@@ -6,29 +6,29 @@
 \FirstSentence{H}{and crafting heuristics} for NP-hard problems is a time 
 consuming trial-and-error process, requiring inductive reasoning or problem 
 specific insights from their human designers. Furthermore, within a problem 
-class, such as scheduling, it is possible to construct problem instances where 
+class (such as scheduling) it is possible to construct problem instances where 
 one heuristic would outperform another. 
 
-Depending on the underlying data distribution of the problem, each heuristic 
-performs distinctly to others. This is due to the fact that any algorithm which 
+Each heuristic performs distinctly to others depending on the underlying data 
+distribution of the problem. Because any algorithm which 
 has superior performance in one class of problems is inevitably inferior over 
 another class, i.e., \emph{no free lunch} theorem \citep{Wolpert97nofree}. 
 %  number of “no free lunch” (NFL) theorems are presented which establish that for any algorithm, any elevated performance over one class of problems is offset by performance over another class. 
-The success of a heuristic is how it manages to deal with, and manipulate the 
+The success of a heuristic is how it manages to deal with and manipulate the 
 characteristics of its given problem instance. Thus, in order to understand 
 more fully how a heuristic will eventually perform, one needs to look into what 
-kind of problem instances are being introduced to the system? What defines a 
+kind of problem instances are being introduced to the system. What defines a 
 problem instance, e.g., what are its key features? And how can they help with 
 designing better heuristics? Once the problem instances are fully understood, 
 an appropriate learning algorithm can be implemented in order to create 
-heuristics that are  self-adapting to its problem instances.
+heuristics that are  self-adapting to its those instances.
 
 Given the ad-hoc nature of the heuristic design process, there is clearly room 
 for improvement. A number of attempts have been made to automate heuristic 
 design, and it is the ultimate goal of this dissertation to automate 
 optimisation heuristics via ordinal regression. 
-The focal point will be based on a scheduling processes named \jsp\ scheduling 
-problem (\JSP), and one of its subclass, the \fsp\ scheduling problem 
+The focal point will be based on scheduling processes named \jsp\ scheduling 
+problem (\JSP), and one of its subclasses, the \fsp\ scheduling problem 
 (\FSP).
 
 There are two main viewpoints on how to approach scheduling problems, namely,
@@ -39,7 +39,7 @@ There are two main viewpoints on how to approach scheduling problems, namely,
   by building schedules for all problem instances at once.
 \end{description}
 For tailored algorithm construction
-\begin{enumerate*}[label={{}}]
+\begin{enumerate*} %[label={{}}]
   \item a simple construction heuristic is applied 
   \item the schedule's features are collected at each dispatch iteration
   \item from which a learning model will inspect the feature set to 
@@ -64,17 +64,17 @@ algorithms, features were ranked.
 
 %\section{Relationship between problem structure and heuristic efficiency}
 \section{Rice's framework for algorithm selection}\label{sec:rice}
-The aim is to understand what underlying characteristics of the problem 
-instances distinguish \emph{good}, and on the other hand \emph{bad} solutions 
+The aim of this dissertation is to understand what underlying characteristics 
+of the problem instances distinguish \emph{good} and \emph{bad} solutions 
 when implementing a particular algorithm. \citet{SmithMilesLion5} were 
 interested in discovering whether synthetic instances were in fact similar to 
 real-world instances for timetabling scheduling. Moreover,  
 \citeauthor{SmithMilesLion5} focused on how varying algorithms perform 
 on different data distributions. Hence, the investigation of heuristic 
-efficiency is closely intertwined to problem generation. 
+efficiency is closely intertwined with problem generation. 
 The relation between problem structure and heuristic efficiency, called 
 \emph{footprints in instance space}, will be addressed in 
-\cref{ch:problemstructure}.
+\cref{ch:problemstructure,ch:analysingopt}.
 In order to formulate the relationship for footprints, one can utilise 
 \citeauthor{Rice76}'s framework for algorithm selection problem 
 from \citeyear{Rice76}. The framework consists of four fundamental components:
