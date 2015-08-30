@@ -195,16 +195,13 @@ problems (of various dimension) where there is high variance in processing
 times, presumably $\vec{p}\sim\mathcal{U}(1,1000)$. 
 \citet{orlib_rec} argue that completely random problem instances are unlikely 
 to occur in practice. However, only the random instances they used are reported 
-in the OR-Library;\footnote{Only odd-numbered instances in \texttt{rec01-rec42}
-  are given, since the even-numbered instances are obtained from the previous 
-  instance by just reversing the processing order of each job; the optimal 
-  value of each odd-numbered instance and its even-numbered counterpart is the 
-  same.} 
-for a total of 42 problem instances with processing times 
+in the OR-Library, for a total of 42 problem instances with processing times 
 following a uniform distribution, $\vec{p}\sim\mathcal{U}(1,100)$, of 
 dimensions varying from $20\times5$ to $75\times20$. 
 
 \begin{table}\centering
+\noindent
+\begin{minipage}{\textwidth}
   \caption{Benchmark problems from OR-Library used in experimental studies.}
   \label{tbl:data:orlib}
   \begin{tabular}{llrrll}\toprule
@@ -219,7 +216,13 @@ dimensions varying from $20\times5$ to $75\times20$.
     \midrule \multirow{3}{*}{\rot{\FSP}}
     &\Problem{car}& various &  8 & \citet{orlib_car} & \texttt{car1-car8} \\
     &\Problem{hel}& various &  2 & \citet{orlib_hel} & \texttt{hel1,hel2}  \\
-    &\Problem{rec}& various & 21 & \citet{orlib_rec} & \texttt{rec01-rec42}\\
+    &\Problem{rec}& various & 21 & \citet{orlib_rec}\footnote{Only odd-numbered
+        instances in \texttt{rec01-rec42} are given, since the even-numbered 
+        instances are obtained from the previous instance by just reversing the 
+        processing order of each job; the optimal value of each odd-numbered 
+        instance and its even-numbered counterpart is the same.}  
+    & \texttt{rec01-rec42}\\
     \bottomrule
   \end{tabular}
+\end{minipage}
 \end{table}
