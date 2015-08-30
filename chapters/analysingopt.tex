@@ -148,17 +148,20 @@ corresponding mean \namerho, for the training set if it were scheduled solely
 w.r.t. that extremal feature.
 
 Generally, a high stepwise optimality means a low $\rho$, e.g., 
-\phiGlobalRelated, save for \phiRNDstd. Unfortunately, it's not always so 
-predictable. Take for instance \phiproc, then the minimum value gives a better 
-$\rho$, even though it's unlikelier to be optimal than it's maximum counterpart.
+\phiGlobalRelated, save for \phiRNDstd.\footnote{Note, \phiRNDstd\ is 
+non-informative on its own, as a tight standard deviation implies either 
+consistently high \emph{or} low $C_{\max}$ from the roll-outs.} 
+Unfortunately, it's not always so predictable. Take for instance \phiproc, then 
+the minimum value gives a better $\rho$, even though it's unlikelier to be 
+optimal than it's maximum counterpart.
 
 \todoFind{Check if \cref{fig:diff:extr:features} are part of $d$ choose 1 
     pref-models feature selection}
 Before inspecting the local based features further. Notice that the staggering 
 performance edge for \phiRNDmin\ is lost when going to a higher dimension (cf. 
-\phiRNDmin\ in \cref{fig:diff:extr:jrnd:6x5} has 1.3\% and increases to 8.8\% 
-in  \cref{fig:diff:extr:jrnd:10x10}), implying that 100 random roll-outs for 
-are not sufficient for fully exploring $10\times10$ state-space, yet highly 
+\phiRNDmin\ in \cref{fig:diff:extr:jrnd:6x5} has $\rho=1.3\%$ and increases to 
+8.8\% in  \cref{fig:diff:extr:jrnd:10x10}), implying that 100 random roll-outs 
+for are not sufficient for fully exploring $10\times10$ state-space, yet highly 
 competitive for $6\times5$.
 
 \begin{figure}\centering
@@ -176,7 +179,7 @@ competitive for $6\times5$.
 
 \subsection{Optimality of SDRs}\label{sec:diff:opt:sdr}
 Let's limit ourselves to only features that correspond to SDRs from 
-\cref{sec:SDR}. Namely, \cref{pref:SDR} yield, 
+\cref{sec:SDR}. Namely, \cref{pref:SDR} yield
 \begin{enumerate*}
     \item \phiproc\ for SPT and LPT
     \item \phijobWrm\ for LWR and MWR 
@@ -199,20 +202,21 @@ suboptimal state spaces.
 As stated before, the goal of this \lcnamecref{ch:defdifficulty} is to 
 utilise feature behaviour to motivate new, and \emph{hopefully} better, 
 \dr s. 
-\todoWrite{Note, MWR$\cap$SPT hardly ever coincide for easy or hard schedules 
-(cf. \cref{tbl:easy:cnt:10x10,tbl:hard:cnt:10x10}, so in theory they could 
-complement one another.}
-A na\"ive approach would be creating a simple blended \dr\ which 
+A na\"ive approach would be creating a simple blended \dr\ (BDR) which 
 would be for instance switch between two SDRs at a predetermined time point. 
 Hence, going back to \cref{fig:diff:extr:SDR} a presumably good BDR for 
 \jrnd{10}{10}  would be starting with SPT and then switching over to MWR at 
 around time step $k=40$, where the SDRs change places in outperforming one 
-another. A box-plot for \namerho, for all $10\times10$ problem spaces is 
+another. 
+Note, MWR$\cap$SPT hardly ever coincide for easy or hard schedules (cf. 
+\cref{tbl:easy:cnt:10x10,tbl:hard:cnt:10x10}, so its reasonable to believe they 
+could complement one another.
+A box-plot for \namerho, for all $10\times10$ problem spaces is 
 depicted in \cref{fig:diff:boxplot:BDR}. This little manipulation between SDRs 
 does outperform SPT immensely, yet doesn't manage to gain the performance edge 
 of MWR, save for \frnd{10}{10}. This gives us insight that for \jsp, the 
 attribute based on MWR is quite fruitful for good dispatches, whereas the same 
-cannot be said about SPT -- a more sophisticated BDR is needed to improve upon 
+cannot be said about SPT -- a more sophisticated DR is needed to improve upon 
 MWR. 
 
 A reason for this lack of performance of our proposed BDR is perhaps that by 
@@ -223,14 +227,14 @@ schedules from this scenario, as \cref{fig:diff:extr:SDR} shows, the inherent
 structure is already taking place, and might make it hard to come across 
 optimal moves by simple methods. Therefore it's by no means guaranteed that by 
 simply swapping over to MWR will handle the situation that applying SPT has 
-already created. \Cref{fig:diff:boxplot:BDR} does however, show, that by 
+already created. \Cref{fig:diff:boxplot:BDR} does however show, that by 
 applying MWR instead of SPT in the latter stages, does help the schedule to be 
 more compact w.r.t. SPT. However, in the case of \jrnd{10}{10} and 
 \jrndn{10}{10} the fact remains that the schedules have diverged too far from 
 what MWR would have been able to achieve on its own. Preferably the blended 
 dispatching rule should use  best of both worlds, and outperform all of its 
-inherited DRs, otherwise it goes without saying, one would simply still use the 
-original DR that achieved the best results.
+inherited DRs, otherwise it goes without saying, one would simply keep on still 
+using the original DR that achieved the best results.
 
 \begin{figure}
   \centering
@@ -245,10 +249,19 @@ original DR that achieved the best results.
 In order to put the extremal features from \cref{fig:diff:extr:features} into 
 perspective, it's worth comparing them with how the evolution of the features 
 are over time, depicted in \cref{fig:diff:opt:evol}. 
+Note that the optimal trajectory describes  how `good' features should aspire 
+to be.
+We can also notice that the relative ranking in \phiGlobalRelated\ is 
+proportional their expected mean \namerho. Although $(K-k)$-step lookahead give 
+are consistently the best indicators for finding good solutions. However, they 
+are not practical features for high dimensional data due to computational cost.
+However, bearing \cref{fig:diff:case:OPT} in mind, then 
+
+\todoExtend{Very short section. Elaborate.}
 
 \begin{figure}\centering
   \subcaptionbox{\jrnd{6}{5}\label{diff:evol:jrnd:6x5}}{
-    \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.6x5.Track.evolution}.pdf}}
+    \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.6x5.evolution}.pdf}}
   \caption[Mean stepwise evolution of $\tilde{\vphi}$]{Mean stepwise evolution 
     of $\tilde{\vphi}$, which is scaled according to \cref{eq:scale}.}
   \label{fig:diff:opt:evol}
@@ -256,7 +269,7 @@ are over time, depicted in \cref{fig:diff:opt:evol}.
 \begin{figure}\centering
   %  \ContinuedFloat
   \subcaptionbox{\jrnd{10}{10}\label{diff:evol:jrnd:10x10}}{
-    \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.10x10.Track.evolution}.pdf}}
+    \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.10x10.evolution}.pdf}}
   \caption{(continued)}
 \end{figure}
 
