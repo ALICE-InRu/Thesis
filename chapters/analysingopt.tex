@@ -253,11 +253,18 @@ Note that the optimal trajectory describes  how `good' features should aspire
 to be.
 We can also notice that the relative ranking in \phiGlobalRelated\ is 
 proportional their expected mean \namerho. Although $(K-k)$-step lookahead give 
-are consistently the best indicators for finding good solutions. However, they 
-are not practical features for high dimensional data due to computational cost.
-However, bearing \cref{fig:diff:case:OPT} in mind, then 
-
-\todoExtend{Very short section. Elaborate.}
+consistently the best (single) indicators for finding good solutions. Sadly, 
+they are not practical features for high dimensional data due to computational 
+cost. Nevertheless, bearing \cref{fig:diff:case:OPT:10x10} in mind then it 
+might be sufficient to do only a few steps lookahead at some key times in the 
+dispatching process. For instance, let the computational budget for 
+\frnd{10}{10} roll-outs be full $K$-solutions in the beginning phases, as 
+that's when the problem space is most susceptible to bad moves. Then gradually 
+decrease to only a few step lookahead, as \fsp\ is then relatively stable.
+Conversely for \jrnd{10}{10}, start with a few step lookahead, and then 
+expand the horizon as time goes by. Alternatively, when there aren't that many 
+dispatches left, it might be worth developing a hybrid approach where the 
+remaining dispatches from that point are optimised with some exact methods. 
 
 \begin{figure}\centering
   \subcaptionbox{\jrnd{6}{5}\label{diff:evol:jrnd:6x5}}{
