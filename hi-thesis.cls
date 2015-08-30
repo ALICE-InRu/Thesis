@@ -1,7 +1,7 @@
 % -------------------------------------------------------------------
 %  @LaTeX-class-file{
 %     filename        = "hi-thesis.cls",
-%     version         = "1.7",
+%     version         = "1.8",
 %     date            = "26 August 2015",
 %     codetable       = "ISO/ASCII",
 %     keywords        = "LaTeX, hi-thesis",
@@ -63,6 +63,7 @@
     %showframe, % option good for draft mode
     includehead]{geometry} % 
 \RequirePackage[b5]{crop}
+\topskip0pt % make text appear at top of page, othewise vertically centered
 
 % for comments and such 
 \usepackage[colorinlistoftodos, textwidth=\marginparwidth]{todonotes} 
@@ -112,6 +113,7 @@
 \cfoot{\fancyplain{}{\thepage}}
 \setlength\headheight{14pt}
 
+
 % ------------------------------------------------------------------------- Font
 % use fonttype Arno Pro (a copy is located in subdirectory fonts/) instead of 
 %standard LaTeX fonts,
@@ -153,6 +155,9 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
 \captionsetup[subtable]{textfont=sf,aboveskip=3pt,belowskip=9pt}
 \captionsetup[figure]{position=bottom}
 \captionsetup[subfigure]{textfont=sf}
+
+%http://tex.stackexchange.com/questions/26521/how-to-change-the-spacing-between-figures-tables-and-text
+\setlength{\textfloatsep}{10pt plus 1.0pt minus 2.0pt}
 
 %Vertical layout of float pages : 
 %http://www.tex.ac.uk/cgi-bin/texfaq2html?label=floatpages+vertposfp

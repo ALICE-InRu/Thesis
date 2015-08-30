@@ -118,6 +118,8 @@ directly applicable in practice \citep{Dudek92}. This is why \fjc{n}{m},
 \fmc{n}{m} and \fmxc{n}{m} are also taken into consideration in 
 \cref{sec:data:FSP}.
 
+\vfill
+
 \section{Defining \emph{easy} versus \emph{hard} schedules} 
 \label{sec:diff:easyhard}
 
@@ -137,12 +139,14 @@ available, which causes the slow process of pruning branches of the tree,
 before reaching to a final incumbent solution. If that's the case, than that's 
 promising for our instance, as it's likelier for an arbitrary algorithm to find 
 a good solution. 
+
 Intuitively, it's logical to use the schedule's objective to define the 
 difficulty directly, i.e., inspecting \namerho. Moreover, since the SDRs from 
 \cref{eq:SDRset} will be used throughout as a benchmark for subsequent models, 
 the quartiles for $\rho$, using the SDRs on their training set will be used 
 to differentiate between easy and hard instances. In particular, the 
 classification is defined as follows, 
+
 \begin{description}
   \item[Easy] schedules belong to the first quartile, i.e., \hfill \\
   \begin{equation}\label{eq:easy}
@@ -157,9 +161,7 @@ classification is defined as follows,
 \end{description}
 where $\vec{x}\in\mathcal{P}_{\text{train}}$ for a given $a\in\mathcal{A}$ from 
 \cref{eq:SDRset}.
-
 \input{tables/quartiles.EasyHard} 
-
 \Cref{tbl:easyhard:quartile} reports the first and third quartiles for each 
 problem space, i.e., the cut-off values that determine the SDRs difficulty, 
 whose division, defined as percentage of problem instances, i.e., 
@@ -168,12 +170,14 @@ whose division, defined as percentage of problem instances, i.e.,
   \quad \text{and} \quad 
   \frac{\abs{\mathcal{H}(a)}}{N_{\text{train}}}\cdot 100\%
 \end{equation}
-for each $a\in\mathcal{A}$, are given in \cref{tbl:easyhard:cnt:6x5,tbl:easyhard:cnt:10x10}, respectively. 
+for each $a\in\mathcal{A}$, are given in 
+\cref{tbl:easyhard:cnt:6x5,tbl:easyhard:cnt:10x10}, respectively. 
 
 {\setlength{\tabcolsep}{3pt} 
-  \input{tables/quartiles.6x5.EasyHard}
-  \input{tables/quartiles.10x10.EasyHard}
+    \input{tables/quartiles.6x5.EasyHard}
+    \input{tables/quartiles.10x10.EasyHard}
 }
+\newpage
 
 \section{Consistency of problem instances}
 The intersection of pairwise SDRs being simultaneously easy or hard are given in \cref{tbl:easy:cnt:6x5,tbl:easy:cnt:10x10,tbl:hard:cnt:6x5,tbl:hard:cnt:10x10}, i.e., 
@@ -185,14 +189,6 @@ The intersection of pairwise SDRs being simultaneously easy or hard are given in
   100\%
 \end{equation}
 where $a_i,a_j\in\mathcal{A}$. Note, when $a_i=a_j$ then \cref{eq:easyorhard:cnt} is equivalent to \cref{eq:easyhard:cnt}.
-
-{\setlength{\tabcolsep}{3pt} 
-  \input{tables/quartiles.6x5.Easy}
-  \input{tables/quartiles.6x5.Hard}
-  
-  \input{tables/quartiles.10x10.Easy}
-  \input{tables/quartiles.10x10.Hard}
-}
 
 Even though this is a na\"ive way to inspect difference between varying SDRs, it's does give some initial insight of the potential of improving dispatching rules; a sanity check before going into extensive experiments, as will be done in \cref{sec:diff:stepwise}.
 
@@ -211,6 +207,16 @@ However, the greedy approach here is  not gaining any new information on how to 
 In fact, MWR is never considered hard for any of the \JSP\ (cf. \cref{tbl:hard:cnt:10x10}), therefore no intersection with any hard schedules. 
 But the LPT counterpart has a relatively high occurrence rate (3-14\%), so due to the similarity of the dispatching rules, the denominating factor between LPT and MWR can be an indicator for explaining some of MWR's pitfalls.
 That is to say, why aren't all of the \jsp\ schedules easy when applying MWR? 
+
+{\setlength{\tabcolsep}{3pt} 
+    \input{tables/quartiles.6x5.Easy}
+    \input{tables/quartiles.6x5.Hard}
+    
+    \input{tables/quartiles.10x10.Easy}
+    \input{tables/quartiles.10x10.Hard}
+}
+
+\section{Discussion and Conclusion}
 
 These have up until now all been speculations about how SDRs differ. One thing 
 is for certain, the underlying problem space plays a great role on a SDR's 
@@ -243,8 +249,9 @@ Now, as the SDRs vary greatly in performance, the contribution of a SDR to \cref
 
 
 
-\section{Discussion and Conclusion}
-Despite problem instances being created by the same problem generator, they vary among one another enough. As a result, all instances are not created equal; some are always hard to solve, others always easy. 
+Despite problem instances being created by the same problem generator, they 
+vary among one another enough. As a result, all instances are not created 
+equal; some are always hard to solve, others always easy. 
 Since the description of the problem space isn't enough to predict its performance, we need a measure to understand what's going on. Why are some instances easier to find their optimum (or close enough)? That is to say, what's their secret? This is where their feature evolution comes into play.
 By using schedules obtained by applying SDRs we have the ability to get some insight into the matter. 
 
