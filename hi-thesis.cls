@@ -1,7 +1,7 @@
 % -------------------------------------------------------------------
 %  @LaTeX-class-file{
 %     filename        = "hi-thesis.cls",
-%     version         = "1.5",
+%     version         = "1.6",
 %     date            = "26 August 2015",
 %     codetable       = "ISO/ASCII",
 %     keywords        = "LaTeX, hi-thesis",
@@ -22,6 +22,8 @@
 \RequirePackage{graphicx}
 \DeclareGraphicsExtensions{.eps, .ps, .pdf}
 \graphicspath{{figures/EPS/}{figures/}}
+
+\usepackage{packages/appendix}
 
 \RequirePackage{hyperref}
 \hypersetup{
@@ -367,7 +369,8 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
 \setcounter{lofdepth}{2}
 \setcounter{lotdepth}{2}
 \renewcommand{\cftchapfont}{\normalsize \scshape}
-
+\renewcommand*\cftchapnumwidth{2em} % add margin to fit Roman numerals
+\renewcommand*\cftsecnumwidth{3em}  % from Papers section
 % -------------------------------------------------------------- list of figures
 \renewcommand\listfigurename{Listing of figures}
 
@@ -412,27 +415,38 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     \newpage \rm
 }
 
+\makeatletter
+\renewcommand\part{%
+    \if@openright
+    \cleardoublepage
+    \else
+    \clearpage
+    \fi
+    \thispagestyle{empty}% remove page numbering
+    \if@twocolumn
+    \onecolumn
+    \@tempswatrue
+    \else
+    \@tempswafalse
+    \fi
+    \null\vfil
+    \secdef\@part\@spart}
+\@addtoreset{chapter}{part}
+\@addtoreset{@ppsaveapp}{part}
+\makeatother
+
 %-------------------------------------------------------- main matter / prologue
 \makeatletter
 \newcommand*\prologue{%
     % setting up for the mainmatter
     \cleardoublepage
-    \setcounter{chapter}{0}
-    
     \setcounter{page}{1}
     \pagenumbering{arabic}
+    \part{Prologue}
     \normalsize
-    
-    \thispagestyle{empty}
-    \vspace*{\fill}
-    \centerline{\Huge \textcolor{chaptergrey}{\sc{prologue}}}
-    \addcontentsline{toc}{chapter}{Prologue}    
-    \vspace{\fill}    
     \ifthenelse{\equal{\@printmode}{draft}}{
         \lfoot{Draft -- \today}
     }{}
-    \newpage
-    \thispagestyle{plain} % empty page before actual chapters
 }
 \makeatother
 
@@ -446,17 +460,10 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
 
 % --------------------------------------------------------------- my papers page
 \newcommand*\papers{%
-    \setcounter{chapter}{0}
+    \part{Papers}
     \renewcommand\appendixname{Paper}
     \renewcommand\chaptername{Paper}
     \renewcommand{\thechapter}{\Roman{chapter}}
-    \cleardoublepage
-    \thispagestyle{empty}
-    \topskip0pt
-    \vspace*{\fill}
-    \centerline{\Huge \textcolor{chaptergrey}{\sc{papers}}}
-    \addcontentsline{toc}{chapter}{Papers}    
-    \vspace{\fill}
     \pagestyle{plain}
     \include{endmatter/papers} 
 }
