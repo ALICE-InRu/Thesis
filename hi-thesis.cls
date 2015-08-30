@@ -1,7 +1,7 @@
 % -------------------------------------------------------------------
 %  @LaTeX-class-file{
 %     filename        = "hi-thesis.cls",
-%     version         = "1.2",
+%     version         = "1.3",
 %     date            = "26 August 2015",
 %     codetable       = "ISO/ASCII",
 %     keywords        = "LaTeX, hi-thesis",
@@ -51,8 +51,8 @@
 }
 
 \RequirePackage{lettrine} % big letter at start of chapter
-\newcommand{\FirstSentence}[2]{\lettrine[lines=2,slope=4pt,nindent=0pt,findent=0pt]{\textcolor{themecolor}{#1}}{#2}}
-
+\newcommand{\FirstSentence}[2]{ % match chapter color
+    \lettrine[lines=2,slope=4pt,nindent=0pt,findent=0pt]{\textcolor{chaptergrey}{#1}}{#2}}
 
 \RequirePackage[tight,nice]{units}
 \RequirePackage[margin=2.3cm,b5paper,includehead]{geometry} % showframe option 
@@ -73,7 +73,9 @@
 \definecolor{yellow}{RGB}{245,207,71}
 \definecolor{orange}{RGB}{235, 113, 37}
 \definecolor{themecolor}{RGB}{0, 69, 124} % <- for Blue PhD theme, such at UI
-\definecolor{chaptergrey}{RGB}{0, 69, 124} % blue color for the chapter numbers 
+\definecolor{chaptergrey}{RGB}{90,91,94} % gray color for the chapter numbers 
+%(less print in color) 
+
 % colors styles for ColorBrewer Set1 - to match ggplot2
 \definecolor{set1red}{RGB}{228, 26, 28} %1 #E41A1C
 \definecolor{set1blue}{RGB}{55, 126, 184} %2 #377EB8
