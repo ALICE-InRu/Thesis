@@ -36,13 +36,17 @@ Therefore, without loss of generality, this dissertation is structured around
 \JSP. 
 
 \emph{Remark:} Throughout the dissertation the \FSP\ variation will \emph{not} 
-be a commonly used permutation \fsp\ (P\FSP) from the literature, which has 
-the added constraints of not allowing any jobs to pass one another.
+be a commonly used permutation \fsp\ (P\FSP) from the 
+literature,\footnote{\Cref{InRu12} wrongly states that it is used P\FSP\ problem
+    instances, it was in fact \FSP.} 
+which has the added constraints of not allowing any jobs to pass one another.
 Here, the jobs have to be processed in the same machine order. However, 
 machines do not necessarily need to process jobs in the same order, as is 
-implied in P\FSP.
+implied in P\FSP. For P\FSP\ the \citet{Manne60} model would be more 
+appropriate, rather than the one described in the following 
+\lcnamecref{jsp:MIP}.
 
-\section{Mathematical formulation}
+\section{Mathematical formulation}\label{jsp:MIP}
 \Jsp\ considered for this dissertation is when $n$ jobs, 
 $\mathcal{J}=\{J_j\}_{j=1}^n$, are scheduled on a finite set, 
 $\mathcal{M}=\{M_a\}_{a=1}^m$, of $m$ machines, subject to the constraint that 
@@ -176,6 +180,8 @@ Instead, hopefully, the learning algorithm will be able to spot these
 problematic situations, should they arise, by inspecting the schedule's 
 features and translate that into the jobs' priorities.
 
+\subsubsection*{Dispatching rules}
+
 \emph{Dispatching rules} (DR) are an integral part of a construction 
 heuristics, as it determines the priorities of the job-list, i.e., 
 the jobs who still have operations unassigned. 
@@ -188,6 +194,7 @@ However, let's assume that ties are broken randomly.
 \Cref{pseudo:constructJSP} outlines the pseudo code for the entire dispatching 
 process of a \JSP\ problem instance.
 
+\clearpage
 \input{pseudocode/constructJSP.tex}
 
 Henceforth, we will adopt the following terminology: a \emph{sequence} will 
@@ -238,10 +245,10 @@ They tend to be absent-minded, so each task takes them a different amount of
 time. 
 Let's assume their processing times and ordering are given in 
 \cref{tbl:example}. 
-\clearpage
+
 
 \begin{figure}[b!]\centering 
-    \includegraphics[width=0.9\textwidth]{alice-mad-tea-party}
+    \includegraphics[width=0.85\textwidth]{alice-mad-tea-party}
     \caption{The Mad Hatter's Tea Party, from Alice's Adventures in Wonderland 
         by \citet{alice}. Illustration by John Tenniel 
         (1820-1914).}\label{fig:teaparty}
@@ -279,8 +286,7 @@ job sequence,\footnote{In fact this is the sequence resulting from 10
 hence currently, at step $k=11$, the job-list is 
 $\mathcal{L}^{(k)}=\{J_2,J_3,J_4\}$ indicating the 3 potential\footnote{
     Alice is quite anxious to leave, so she has already completed everything, 
-    and 
-    therefore \ref{guest:alice}$\notin\mathcal{L}^{(11)}$.} 
+    and therefore \ref{guest:alice}$\notin\mathcal{L}^{(11)}$.} 
 jobs (i.e. denoted in bold in \cref{tbl:example}) to be dispatched, i.e., 
 $\chi_k\in\mathcal{L}^{(k)}$.
 
@@ -303,12 +309,13 @@ Let's encode
 The path gives the prescription of the order in which the jobs rotate 
 between machines. 
 \Cref{fig:example:graph} depicts the path generation at the beginning, midway, 
-and final stages for our Tea Party example. 
-Gray vertices are operations that haven't yet been dispatched, and the pink 
-vertices are the ones that correspond to $\vchi$, 
-and the pink directed edges indicate the current partial Hamiltonian path.
-Note, only \cref{fig:example:graph:midway} corresponds to 
-\cref{eq:vchi:example}.
+and final stages for our Tea Party. 
+\begin{enumerate*}
+    \item gray vertices are operations that haven't yet been dispatched
+    \item pink vertices are the ones that correspond to $\vchi$
+    \item pink directed edges indicate the current partial Hamiltonian path
+\end{enumerate*}
+%Note, \cref{fig:example:graph:midway} corresponds to \cref{eq:vchi:example}.
 
 \begin{figure}\centering
     \includegraphics[width=0.9\textwidth]{{example.gantt}.pdf}
@@ -320,8 +327,8 @@ Note, only \cref{fig:example:graph:midway} corresponds to
     \label{fig:example:midway}
 \end{figure}
 
-However, this hasn't told us when each guest should start their task, 
-i.e., the project schedule. For that, \cref{fig:example:midway} illustrates the 
+Now we're interested to know when each guest should start their task, 
+i.e., the project schedule. \Cref{fig:example:midway} illustrates the 
 temporal partial schedule (or $k$-solution) of \cref{eq:vchi:example} as a 
 Gantt-chart
 \begin{enumerate*}
@@ -336,10 +343,10 @@ Note, the disjunctive graph from \cref{fig:example:graph:midway} gives the
 schedule in \cref{fig:example:midway}.
 
 If the job with the shortest processing time were to be scheduled next, i.e., 
-implementing the SPT-rule, then $J_4$ would be dispatched. Similarly, for 
-the LPT (largest processing time) then $J_2$ would be dispatched. 
+applying SPT-rule, then $J_4$ would be dispatched. Similarly, for  LPT-rule 
+(largest processing time) then $J_2$ would be dispatched. 
 Other DRs use features not directly observable from looking at the $k$-solution 
-(but easy to keep record of), for example by assigning jobs 
+(but easy to keep record of), e.g., by assigning jobs 
 with most or least total processing time remaining, i.e., MWR and LWR 
 heuristics, who would yield $J_2$ and $J_4$, respectively.
 
@@ -569,6 +576,7 @@ fabrication facilities.
 However, \citeauthor{Monch13} note that this sort of investigation is still in 
 its infancy and subject for future research.
 
+\clearpage
 A recent editorial of the state-of-the-art approaches in advanced dispatching 
 rules for large-scale manufacturing systems by \citet{Chen13} points out that:
 \begin{quote}
