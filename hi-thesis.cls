@@ -1,8 +1,8 @@
 % -------------------------------------------------------------------
 %  @LaTeX-class-file{
 %     filename        = "hi-thesis.cls",
-%     version         = "1.9",
-%     date            = "26 August 2015",
+%     version         = "1.10",
+%     date            = "31 August 2015",
 %     codetable       = "ISO/ASCII",
 %     keywords        = "LaTeX, hi-thesis",
 %     supported       = "send email to hei2@hi.is",
@@ -468,12 +468,14 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
 \makeatother
 
 % ------------------------------------------------------------------- references
-\newcommand{\references}{
-    \begin{spacing}{0.75}
+\newenvironment{references}{
+    \newcommand{\topic}[2]{ ##1 }
         \bibliographystyle{abbrvnat} 
-        \bibliography{papers/references}
         \addcontentsline{toc}{chapter}{\bibname}
-    \end{spacing}
+        \begin{spacing}{0.75}
+        }
+        {
+        \end{spacing}
 }
 \renewcommand\bibname{References}
 \RequirePackage[comma, sort&compress]{natbib}
