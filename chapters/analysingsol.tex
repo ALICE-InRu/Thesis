@@ -29,15 +29,25 @@ schedules, and what measures should be used? This
 the aim of investigating the feasibility of finding distinguishing features 
 corresponding to \emph{good} and \emph{bad} schedules in \jsp. To summarise
 \begin{enumerate*}[itemjoin={{? }}, itemjoin*={{? And }}, after={{? }}]
-    \item Is there a time of divergence
-    \item What are `similar' schedules
-    \item Do similar features yield contradictory outcomes
-    \item Are extra features needed
+    \item is there a time of divergence
+    \item what are `similar' schedules
+    \item do similar features yield contradictory outcomes
+    \item are extra features needed
     \item what can be learned from feature behaviour
 \end{enumerate*}
 
+\emph{Remark:} \Cref{fig:diff:opt:unique,fig:diff:opt:rnd} 
+depict the mean over all the training data, which are quite noisy 
+functions. \Cref{InRu15b} depicts the mean as is, albeit only for 
+$10\times10$ problem spaces. 
+Thus, for clarity purposes, they are fitted with local polynomial regression, 
+making the boundary points sometimes biased. 
+However, 
+\cref{fig:diff:extr:SDR,fig:diff:case:OPT,fig:diff:case:SDR,fig:diff:extr:features,fig:diff:opt:evol}
+depict the mean as is.
 
-\section{Probability of choosing optimal decision}\label{sec:diff:opt:rnd}
+
+\section{Making optimal decisions}
 In order to create successful \dr, a good starting point is 
 to investigate the properties of optimal solutions and hopefully be able to 
 learn how to mimic such `good' behaviour. 
@@ -53,17 +63,6 @@ each problem instance. However, it is deemed sufficient to inspect only one
 optimal trajectory per problem instance as there are $N_{\text{train}}$ 
 independent instances which gives the training data variety. 
 
-\Cref{fig:diff:opt:unique,fig:diff:opt:rnd} 
-depict the mean over all the training data, which are quite noisy 
-functions. \Cref{InRu15b} depicts the mean as is, albeit only for 
-$10\times10$ problem spaces. 
-Thus, for clarity purposes, they are fitted with local polynomial regression, 
-making the boundary points sometimes biased. 
-However, 
-\cref{fig:diff:extr:SDR,fig:diff:case:OPT,fig:diff:case:SDR,fig:diff:extr:features,fig:diff:opt:evol}
-depict the mean as is.
-
-\section{Making optimal decisions}
 Firstly, we can observe that on a step-by-step basis there are several optimal 
 dispatches to choose from. \Cref{fig:diff:opt:unique} depicts how the number of 
 optimal dispatches evolve at each dispatch iteration. Note, that only one 
@@ -202,6 +201,25 @@ outperforms LPT w.r.t. stepwise optimality, however, this does not transcend to
 SPT having a lower $\rho$ value than LPT. Hence, it's not enough to just learn 
 optimal behaviour, one needs to investigate what happens once we encounter 
 suboptimal state spaces.
+
+\begin{figure}\centering
+   \captionsetup{list=no}
+    \subcaptionbox{$6\times5$\label{fig:diff:extr:SDR:6x5}}{
+        \includegraphics[width=\textwidth]{figures/{stepwise.6x5.SDR}.pdf}}
+    \caption{Probability of SDR being optimal move. Both optimal (solid) and 
+    SDR-based (dashed) trajectories are inspected.}\label{fig:diff:extr:SDR}
+    
+\end{figure}
+\begin{figure}\centering
+    \captionsetup{list=no}
+    \ContinuedFloat
+    \subcaptionbox{$10\times10$\label{fig:diff:extr:SDR:10x10}}{
+        \includegraphics[width=\textwidth]{figures/{stepwise.10x10.SDR}.pdf}}
+    \caption{Note, due to computational complexity, only \jrnd{10}{10} has 
+    SDR-based trajectories also inspected. Otherwise, only optimal is pursued.}
+    \MyCaption{Probability of SDR being optimal 
+    move}{fig:diff:extr:SDR:6x5}{fig:diff:extr:SDR:10x10}
+\end{figure}
 
 \section{Simple blended dispatching rule}\label{sec:diff:opt:bdr}
 As stated before, the goal of this \lcnamecref{ch:defdifficulty} is to 
