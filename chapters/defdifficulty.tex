@@ -72,6 +72,7 @@ inspected for \JSP\ -- not only does it reach the known optimum most often but
 it also has the lowest worst-case factor from optimality. Similarly LWR for 
 \FSP.
 
+\clearpage
 Although the same processing time distribution is used, there are some inherent 
 structure in which MWR and LWR can exploit for \JSP\ and  \FSP, respectively, 
 whereas the other SDRs cannot. However, \emph{all} of these dispatching rules 
@@ -91,7 +92,7 @@ favours LWR.
     in \cref{ch:genprobleminstances}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[t]
     \captionsetup{list=no}
     \ContinuedFloat
     \centering
@@ -153,6 +154,8 @@ available, which causes the slow process of pruning branches of the tree,
 before reaching to a final incumbent solution. If that's the case, than that's 
 promising for our instance, as it's likelier for an arbitrary algorithm to find 
 a good solution. 
+
+\clearpage
 
 Intuitively, it's logical to use the schedule's objective to define the 
 difficulty directly, i.e., inspecting \namerho. Moreover, since the SDRs from 
@@ -230,6 +233,7 @@ That is to say, why aren't all of the \jsp\ schedules easy when applying MWR?
     \input{tables/quartiles.10x10.Hard}
 }
 
+\clearpage
 \section{Discussion and Conclusion}
 
 These have up until now all been speculations about how SDRs differ. One thing 
