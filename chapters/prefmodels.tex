@@ -23,7 +23,9 @@ are optimal and suboptimal dispatches, respectively.
 Note, $\mathcal{O}^{(k)}\cup\mathcal{S}^{(k)}=\mathcal{L}^{(k)}$, and 
 $\mathcal{O}^{(k)}\cap\mathcal{S}^{(k)}=\emptyset$. 
 
-For \jsp\ there are $d=\NrFeatTotal$ features (cf. the step-by-step varying features from \cref{tbl:features}), and the training set is created in the manner described in \cref{sec:gentrainingdata}.
+For \jsp\ there are $d=\NrFeatLocal$ features (cf. the local features from 
+\cref{tbl:features}), and the training set is created in the 
+manner described in \cref{ch:gentrdat}.
 
 \todoFind{Which is being used, ordinal or logistic regression?}
 Logistic regression makes decisions regarding optimal dispatches and at the same time efficiently estimates a posteriori probabilities. When using linear classification model (cf. \cref{sec:ord:linpref}), i.e., 
