@@ -1,9 +1,10 @@
 \begin{table}[]\centering
     \caption{Main statistics of $C_{\max}$ for various models, using  
-    corresponding $10\times 10$ test data. \newline}
+        corresponding $10\times 10$ test data. \newline}
     \label{tbl:results:test}
     %jsp
-    \subcaptionbox{\jrnd{10}{10}\label{tbl:test:j.rnd}}{
+    \subcaptionbox{$\mathcal{P}_{ j.rnd }^{10\times10}$\label{tbl:test:j.rnd}}
+    {
         \begin{tabular}{lrrrrr}
             \toprule
             model&mean & med & sd & min & max \\ 
@@ -13,10 +14,11 @@
             ES$_\rho$& 931.37 & 931 & 71 & 735 & 1167   \\ % CMA-ES min_rho 
             %j.rnd 10x10 test
             PREF&   1011.38 & 1004 & 82 & 809 & 1281 \\   %PREF j.rnd 10x10 test
-            MWR &  997.01 & 992 & 81 & 800 & 1273   \\ %MWR j.rnd 10x10 test\
+            MWR &  997.01 & 992 & 81 & 800 & 1273   \\ %MWR j.rnd 10x10 test
             \bottomrule \end{tabular}}
     \quad
-    \subcaptionbox{\jrndn{10}{10}\label{tbl:test:j.rndn}}{
+    \subcaptionbox{$\mathcal{P}_{ j.rndn }^{10\times10}$\label{tbl:test:j.rndn}}
+    {
         \begin{tabular}{lrrrrr}
             \toprule
             model& mean & med & sd & min & max \\ 
@@ -30,7 +32,8 @@
             \bottomrule \end{tabular}}
     %flow shop
     \quad
-    \subcaptionbox{\frnd{10}{10}\label{tbl:test:f.rnd}}{
+    \subcaptionbox{$\mathcal{P}_{ f.rnd }^{10\times10}$\label{tbl:test:f.rnd}}
+    {
         \begin{tabular}{lrrrrr} \toprule
             model&mean & med & sd & min & max \\   \midrule
             ES$_{C_{\max}}$& 1178.73 & 1176 & 80 & 976 & 1416   \\ % CMA-ES 
@@ -41,7 +44,8 @@
             LWR &  1284.41 & 1286 & 85 & 1042 & 1495   \\ %LWR f.rnd 10x10 test
             \bottomrule \end{tabular}}
     \quad
-    \subcaptionbox{\frndn{10}{10}\label{tbl:test:f.rndn}}{
+    \subcaptionbox{$\mathcal{P}_{ f.rndn }^{10\times10}$\label{tbl:test:f.rndn}}
+    {
         \begin{tabular}{lrrrrr} \toprule
             model&mean & med & sd & min & max \\   \midrule
             ES$_{C_{\max}}$& 1065.48 & 1059 & 32 & 992 & 1222   \\ % CMA-ES 
@@ -52,7 +56,8 @@
             LWR &  986.94 & 987 &  9 & 959 & 1010   \\ %LWR f.rndn 10x10 test
             \bottomrule \end{tabular}}
     \quad
-    \subcaptionbox{\fjc{10}{10}\label{tbl:test:f.jc}}{
+    \subcaptionbox{$\mathcal{P}_{ f.jc }^{10\times10}$\label{tbl:test:f.jc}}
+    {
         \begin{tabular}{lrrrrr} \toprule
             model&mean & med & sd & min & max \\   \midrule
             ES$_{C_{\max}}$& 1135.44 & 1134 & 286 & 582 & 1681   \\ % CMA-ES 

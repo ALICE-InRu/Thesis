@@ -1,0 +1,31 @@
+\begin{table}\centering
+	\caption{Final results for CMA-ES optimisation; total number of generations 
+	and function evaluations and its resulting fitness value for both 
+	performance measures considered.}\label{cma:funeval}
+	
+	\subcaptionbox{w.r.t. \cref{eq:cma:makespan}}{
+		\begin{tabular}{lrrr}\toprule
+			$\mathcal{P}$ & \#gen & \#eval & ES$_{C_{\max}}$ \\
+			\midrule
+			j.rnd         & 4707  & 51788  & 448.612         \\
+			j.rndn        & 4802  & 52833  & 449.942         \\
+			f.rnd         & 5088  & 55979  & 571.394         \\
+			f.rndn        & 5557  & 61138  & 544.764         \\
+			f.jc          & 5984  & 65835  & 567.688         \\
+			\bottomrule
+		\end{tabular}
+	}
+	\quad
+	\subcaptionbox{w.r.t. \cref{eq:cma:rho}}{
+		\begin{tabular}{lrrr}\toprule
+			$\mathcal{P}$ & \#gen & \#eval & ES$_\rho$ \\
+			\midrule
+			j.rnd         & 1944  & 21395  & 8.258     \\
+			j.rndn        & 1974  & 21725  & 8.691     \\
+			f.rnd         & 4546  & 50006  & 7.479     \\
+			f.rndn        & 2701  & 29722  & 0.938     \\
+			f.jc          & 1625  & 17886  & 0.361     \\
+			\bottomrule
+		\end{tabular}
+	}
+\end{table}
