@@ -158,8 +158,7 @@ obtained from the Operations Research Library (OR-Library) maintained by
 Given the high problem dimensions of some problems, the optimum is not known, 
 hence in those instances \cref{eq:rho} will be reporting  deviation from the 
 latest best known solution (BKS) from the literature, reported by 
-\citet{orlibJSP} save for \Problem{swv} which can be found 
-in \citet{Jain99}, and for \FSP\  consult \citet{orlibFSP}.
+\citet{Jain99,orlibJSP}, and for \FSP\  consult \citet{orlibFSP}.
 
 \subsection*{\Jsp\ OR-Library}
 \citet{orlib_ft} had one of the more notorious benchmark problems for \JSP, and 
@@ -199,10 +198,11 @@ i.e., $p_{ja}\in\{0,..,9\}$. \citet{orlib_car} however, comprises of eight
 problems (of various dimension) where there is high variance in processing 
 times, presumably $\vec{p}\sim\mathcal{U}(1,1000)$. 
 \citet{orlib_rec} argue that completely random problem instances are unlikely 
-to occur in practice. However, only the random instances they used are reported 
-in the OR-Library, for a total of 42 problem instances with processing times 
-following a uniform distribution, $\vec{p}\sim\mathcal{U}(1,100)$, of 
-dimensions varying from $20\times5$ to $75\times20$. 
+to occur in practice. However, only the random instances they used (type C) are 
+reported in the OR-Library, for a total of 42 problem instances with processing 
+times following a uniform distribution, $\vec{p}\sim\mathcal{U}(1,100)$, of 
+dimensions varying from $20\times5$ to $75\times20$, although \cite{orlibFSP} 
+omitted \Problem[75 \times 20]{reC} instances in their comparison.
 
 \begin{table}\centering
 \noindent
@@ -221,12 +221,12 @@ dimensions varying from $20\times5$ to $75\times20$.
     \midrule \multirow{3}{*}{\rot{\FSP}}
     &\Problem{car}& various &  8 & \citet{orlib_car} & \texttt{car1-car8} \\
     &\Problem{hel}& various &  2 & \citet{orlib_hel} & \texttt{hel1,hel2}  \\
-    &\Problem{rec}& various & 21 & \citet{orlib_rec}\footnote{Only odd-numbered
+    &\Problem{reC}& various & 21 & \citet{orlib_rec}\footnote{Only odd-numbered
         instances in \texttt{rec01-rec42} are given, since the even-numbered 
         instances are obtained from the previous instance by just reversing the 
         processing order of each job; the optimal value of each odd-numbered 
         instance and its even-numbered counterpart is the same.}  
-    & \texttt{rec01-rec42}\\
+    & \texttt{reC01-reC42}\\
     \bottomrule
   \end{tabular}
 \end{minipage}
