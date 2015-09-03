@@ -14,16 +14,16 @@ features, e.g., can two schedules with similar feature values yield
 \end{enumerate*}
 If the latter is the prevalent case, then instances need to be segregated 
 w.r.t. their difficulty, where each has their own learning algorithm 
-implemented, for a meaningful outcome overall.  
+implemented, for a more meaningful overall outcome.  
 
-This also, essentially, answers the question of whether  it is in fact feasible 
+Essentially this also answers the question of whether  it is in fact feasible 
 to discriminate between \emph{good} and \emph{bad} schedules using the 
-currently selected features as a measure of the quality of a solution. 
-If results are contradictory, it is an indicator the features selected are not 
-robust enough to capture the essence of the data structure and some key 
+currently selected features as a measure for the quality of a solution. 
+If results are contradictory, then it is an indicator the features selected are 
+not robust enough to capture the essence of the data structure and some key 
 features are missing from the feature set that could be able to discriminate 
 between \emph{good} and \emph{bad} schedules. 
-Additionally, there is also the question of how can one define `similar'
+Additionally, there is also the question of how to define `similar'
 schedules, and what measures should be used? This 
 \lcnamecref{ch:defdifficulty} describes some preliminary experiments with 
 the aim of investigating the feasibility of finding distinguishing features 
@@ -38,13 +38,11 @@ corresponding to \emph{good} and \emph{bad} schedules in \jsp. To summarise
 
 \emph{Remark:} \Cref{fig:diff:opt:unique,fig:diff:opt:rnd} 
 depict the mean over all the training data, which are quite noisy 
-functions. \Cref{InRu15b} depicts the mean as is, albeit only for 
-$10\times10$ problem spaces. 
-Thus, for clarity purposes, they are fitted with local polynomial regression, 
-making the boundary points sometimes biased. 
-However, 
-\cref{fig:diff:extr:SDR,fig:diff:case:OPT,fig:diff:extr:features,fig:diff:extr:SDR,fig:diff:opt:evol}
-depict the mean as is.
+functions. Thus, for clarity purposes, they are fitted with local polynomial 
+regression, making the boundary points sometimes biased. 
+\Cref{InRu15b} depicts the raw mean as is, albeit only for $10\times10$ problem 
+spaces, which is also done here for 
+\cref{fig:diff:extr:SDR,fig:diff:case:OPT,fig:diff:extr:features,fig:diff:extr:SDR,fig:diff:opt:evol}.
 
 \section{Making optimal decisions}
 In order to create successful \dr, a good starting point is 

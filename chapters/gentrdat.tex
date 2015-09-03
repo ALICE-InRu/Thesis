@@ -39,6 +39,7 @@ These collected features are denoted $\Phi$, where,
     \label{fig:example:gametree}
 \end{figure}
 
+\vspace*{-24pt}
 \section{\Jsp\ tree representation}\label{sec:gen:gametree}
 Continuing with the example from \cref{sec:jsp:example}, 
 \cref{fig:example:gametree} shows how the first two dispatches could be 
@@ -89,12 +90,12 @@ Only the features from a dispatch yielding a truly suboptimal solution should
 be labelled undesirable. 
 
 \section{Computational growth}
-The creation of the game tree for \jsp\ can be done recursively for all 
-possible permutation of dispatches, in the manner described above, resulting in 
-a full \mbox{$n$-ary} tree (since $|\mathcal{L}|\leq n$) of height $K$. Such 
-an exhaustive search would yield at the most $n^K$ leaf nodes (worst case 
-scenario being that no sub-trees merge). Now, since the internal vertices, 
-i.e., partial schedules, are only of interest to learn,\footnote{The root is 
+The creation of the game tree for \JSP\ can be done recursively for all 
+possible permutations of dispatches, resulting in a full \mbox{$n$-ary} tree 
+(since $|\mathcal{L}|\leq n$) of height $K$. 
+Such an exhaustive search would yield at the most $n^K$ leaf nodes (worst case 
+scenario being no sub-trees merge). Since the internal vertices (i.e. 
+partial schedules) are only of interest to learn,\footnote{The root is 
   the empty initial schedule and for the last dispatch there is only one option 
   left to choose from, so there is no preferred `choice' to learn.} 
 the number of those can be at the most \mbox{${}^{n^K-1}/_{n-1}$}.
@@ -114,17 +115,18 @@ consist of relatively large $N_{\text{train}}$, so even though we will only
 pursue one trajectory per instance, then the aggregated training data will give 
 it variety.
 
-
 \section{Trajectory sampling strategies}\label{sec:trdat:tracks}
 For each feature in \cref{eq:Phi} we need to keep track of the resulting 
 makespan for its dispatched job. 
 As a result, we obtain the meta-data $\{\Phi,\mathcal{Y}\}$ from 
 \cref{fig:rice} as follows, 
 \begin{equation}\label{eq:trdat:metadata}
-\condset{\{\vphi_j,C_{\max}^{\vchi^j}\}}{J_j\in\mathcal{L}^{(k)}}_{k=1}^K \in 
-\Phi \times \mathcal{Y}
+\condset{\{ \vphi_j, C_{\max}^{\pi_\star(\vchi^j)}
+    \}}{J_j\in\mathcal{L}^{(k)}}_{k=1}^K \in \Phi \times \mathcal{Y}
 \end{equation}
-for a single problem instance $\vec{x}\in\mathcal{P}_{\text{train}}$.
+for a single problem instance $\vec{x}\in\mathcal{P}_{\text{train}}$, and where 
+$C_{\max}^{\pi_\star(\vchi^j)}$ denotes the optimal makespan (i.e. following 
+the expert policy $\pi_\star$) for the resulting post-decision state $\vchi^j$.
 
 Due to superabundant possible solutions for a single problem instance, 
 there needs to be some logic based on how to sample the state-space for a 
@@ -145,6 +147,7 @@ them also.
 Similarly, the weights for \cref{eq:CDR:feat} that were optimised directly 
 using from evolutionary search (cf. \cref{ch:esmodels}) will also be used.
 
+\clearpage
 To clarify, the trajectory sampling strategies for collecting a feature set and 
 its corresponding labelling for \cref{eq:trdat:metadata} are the following:
 \begin{description}
@@ -169,10 +172,10 @@ its corresponding labelling for \cref{eq:trdat:metadata} are the following:
     corresponding to highest priority, computed with fixed weights $\vec{w}$, 
     which were obtained by optimising the mean for \fullnamerho, with CMA-ES. 
     \item[All trajectories, \PhiSet{ALL},] denotes all aforementioned 
-    trajectories were explored, i.e., 
+    trajectories were explored, i.e., \vspace*{-18pt}
     \begin{equation}
     \Phi^{\text{ALL}}:=\condset{\Phi^{A}}{\forall A \in 
-    \{\text{OPT,~CMA,~SPT,~LPT,~LWR,~MWR,~RND}\}}.
+    \{\text{OPT,~CMA,~SPT,~LPT,~LWR,~MWR,~RND}\}}
     \end{equation}
 \end{description}
 
@@ -184,8 +187,9 @@ Hence it is appropriate to follow some random optimal path to begin with and
 then go after some (if not all possible) optimal paths until completion at step 
 $K$. 
 
-In the case of the $\Phi^{\langle \text{SDR} \rangle}$ trajectories it is 
-sufficient to explore each trajectory exactly once for each problem instance. 
+In the case of the $\Phi^{\langle \text{SDR} \rangle}$ and \PhiSet{CMA} 
+trajectories it is sufficient to explore each trajectory exactly once for each 
+problem instance. 
 Whereas, for \PhiSet{OPT} and \PhiSet{RND} there can be several 
 trajectories worth exploring, however, only one is chosen (at random). It is 
 noted that since the number of problem instances, $N_{\text{train}}$, is 
@@ -202,8 +206,8 @@ The number of features that were collected on a step-by-step basis for
 \cref{fig:size:trdat}. 
 There is an apparent stair-like structure for LWR, in accordance with its 
 motivation (cf. \cref{sec:SDR}), which is completing jobs advanced in their 
-progress, that is to ay minimising $\mathcal{L}$ and from \cref{eq:Phi} we have 
-$\abs{\Phi}\propto\abs{\mathcal{L}}$.
+progress, that is to say minimising $\mathcal{L}$ and from \cref{eq:Phi} we 
+have $\abs{\Phi}\propto\abs{\mathcal{L}}$.
 Whereas MWR tries to keep the jobs more balanced, hence more steady 
 $\abs{\mathcal{L}}$, until at $k>(K-n)$ then \mbox{$\abs{\mathcal{L}} \lneq 
 (K-k)$}, which explains the sharp decent near the end for MWR.
