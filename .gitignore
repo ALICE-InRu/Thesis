@@ -125,7 +125,3 @@ sympy-plots-for-*.tex/
 # WinEdt
 *.bak
 *.sav
-
-
-# Currently a temp file
-thesis.pdf
