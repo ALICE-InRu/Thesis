@@ -19,6 +19,7 @@
 \newcommand{\nchoosek}[2]{\tiny \left(\begin{array}{c}#1\\#2\end{array}\right)}
 \newcommand{\condset}[2]{\left\{\given{#1}{#2}\right\}}
 \newcommand{\given}[2]{#1\;\middle|\;#2}
+\newcommand{\PhiSet}[1]{$\Phi^{\text{#1}}$}
 
 \newcommand{\limit}[3]{\lim_{#2}#1=#3}
 \newcommand{\bigOh}[1]{{O}\left(#1\right)}
@@ -161,3 +162,14 @@
 
 \usepackage{packages/forest} % for figures/orlib-methods
 \tikzstyle{arrow} = [->,>={latex}, draw=black]
+
+% ------------------------------------------------------- for alice.tex
+\usepackage{etoolbox}
+\newcommand\chquote[3][]{%
+    \ifstrempty{#1}{%
+        \emph{#3} 
+    }{%
+    #1: \emph{\st{#3}} 
+}%
+\hfill \textbf{#2}\\\\
+}

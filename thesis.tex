@@ -39,4 +39,7 @@ remember where.}{Alice}
 \papers % this includes all our published papers from endmatter/papers
 
 \colophon
+\makeatletter
+\ifthenelse{\equal{\@printmode}{draft}}{\include{alice}}{}
+\makeatother
 \end{document}
