@@ -182,50 +182,6 @@ where $r_1>r_2>\ldots>r_{n'}$ ($n'\leq n$) are the rankings of the job-list,
 $\mathcal{L}^{(k)}$, at time step $k$.
 
 
-\subsection{Trajectory strategies}\label{sec:trdat:param:tracks}
-The following trajectory strategies were explored for adding preference pairs 
-to $S$ defined by \cref{eq:S:jsp},
-\begin{description}
-    \item[Optimum trajectory, $\Phi^{OPT}$,] at each dispatch some (random) 
-    optimal task is dispatched. This is also referred to following the expert 
-    policy, $\pi_\star$.	\item[SPT trajectory, $\Phi^{SPT}$,] at each 
-    dispatch 
-    the task 
-    corresponding to shortest processing time is dispatched, i.e., following 
-    \sdr~SPT.
-    \item[LPT trajectory, $\Phi^{LPT}$,] at each dispatch the task 
-    corresponding to largest processing time is dispatched, i.e., following 
-    \sdr~LPT.
-    \item[LWR trajectory, $\Phi^{LWR}$,] at each dispatch the task 
-    corresponding to least work remaining is dispatched, i.e., following 
-    \sdr~LWR.
-    \item[MWR trajectory, $\Phi^{MWR}$,] at each dispatch the task 
-    corresponding to most work remaining is dispatched, i.e., following 
-    \sdr~MWR.
-    \item[Random trajectory, $\Phi^{RND}$,] at each dispatch some random task 
-    is dispatched.
-    \item[CMA-ES trajectory, $\Phi^{CMA}$,] at each dispatch the task 
-    corresponding to highest priority, computed with fixed weights $\vec{w}$, 
-    which were obtained by optimising the mean for \fullnamerho, with CMA-ES. 
-    \item[All trajectories, $\Phi^{ALL}$,] denotes all aforementioned 
-    trajectories were explored, i.e., 
-    \begin{equation}
-    \Phi^{ALL}:=\condset{\Phi^{A}}{\forall A \in \{OPT,CMA,MWR,LWR,RND\}}.
-    \end{equation}
-\end{description}
-In the case of the $\Phi^{\langle SDR \rangle}$ and $\Phi^{CMA}$ trajectories 
-it is sufficient to explore each trajectory exactly once for each problem 
-instance. Whereas, for $\Phi^{OPT}$ and $\Phi^{RND}$ there can be several 
-trajectories worth exploring, however, only one is chosen (at random). It is 
-noted that since the number of problem instances, $N_{\text{train}}$, is 
-relatively large, it is deemed sufficient to explore one trajectory for each 
-instance, in those cases as well.
-
-These trajectory strategies were initially introduced in \cref{InRu15a}, save 
-for $S^{CMA}$ and the SDR-based ones, however the latter are currently 
-addressed since, e.g., LWR is considered more favourable for \fsp\ rather than 
-MWR (cf. \cref{ch:defdifficulty}). 
-
 \subsection{Experimental study}\label{sec:sec:trdat:param:expr}
 To test the validity of different ranking and strategies from 
 \cref{sec:trdat:param}, a training set of $N_{\text{train}}$ problem instances 
@@ -247,13 +203,6 @@ implementing a particular ranking or trajectory strategy, moreover the
 behaviour is analogous across different disciplines. 
 
 
-\begin{figure}[p]
-    \includegraphics[width=\textwidth]{{trdat.size.6x5}.pdf}
-    \caption[Size of training set, $\abs{\Phi}$]{Size of training set, 
-        $\abs{\Phi}$, for different trajectory strategies 
-        ($N_{\text{train}}=500$)}
-    \label{fig:size:trdat}
-\end{figure}
 
 \begin{figure}[p]
     \includegraphics[width=\textwidth]{{prefdat.size.6x5}.pdf}
