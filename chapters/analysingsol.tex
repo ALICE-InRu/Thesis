@@ -66,6 +66,22 @@ As the number of possible dispatches decrease over time,
 \cref{fig:diff:opt:rnd} 
 depicts the probability of choosing an optimal dispatch at each iteration. 
 
+To generalise, we could consider the probability of optimality as a sort of 
+stepwise `training accuracy.' Then for a given policy $\pi$, we'd formalise its 
+optimality (yet still maintaining optimal trajectory) as, 
+\begin{equation} \label{eq:tracc:opt}
+    \xi_{\pi} := \Exp{\given{\pi_{\star} = \pi}{\pi_{\star}}}
+\end{equation}
+that is to say the mean likelihood of our policy $\pi$ being equivalent to the 
+expert policy $\pi_\star$, i.e., $Y^{\pi_\star}=Y^\pi$. Note, for $\xi_\pi$ we 
+only need $\{\Phi^{OPT},\mathcal{Y}\}$ from \cref{eq:trdat:metadata}
+\begin{enumerate*}
+    \item retrace $\pi_\star$ as done in \cref{pseudo:constructJSP}
+    \item inspect if the job $j^*$ chosen by $\pi$ yields the same 
+    $C_{\max}^{\pi_\star(\vchi^{j^*})}$ as the true optimum, 
+    $C_{\max}^{\pi_\star}$
+\end{enumerate*}
+
 \begin{figure}
   \centering
   \subcaptionbox{$6\times5$\label{fig:diff:opt:unique:6x5}}{
@@ -100,14 +116,16 @@ the optimal track. Note, that this is given that you make \emph{one} wrong
 turn. Generally, there will be many mistakes made, and then the compound 
 effects of making suboptimal decisions really start adding up. 
 In fact, \cref{fig:diff:extr:SDR} shows the probability of optimality when 
-following a fixed SDR.
+following a fixed SDR (i.e. if \cref{eq:tracc:opt} is conditioned on $\pi$ 
+instead of $\pi_\star$).
 
-It is interesting that for \JSP, that over time making suboptimal decisions 
-make more of an impact on the resulting makespan. This is most likely due to 
-the fact that if a suboptimal decision is made in the early stages, then there 
-is space to rectify the situation with the subsequent dispatches. However, if 
-done at a later point in time, little is to be done as the damage is already 
-been inflicted upon the schedule. 
+It is interesting that for \JSP, then making suboptimal decisions makes more of 
+an impact on the resulting makespan as the dispatching process progresses. 
+This is most likely due to the fact that if a suboptimal decision is made in 
+the early stages, then there is space to rectify the situation with the 
+subsequent dispatches. 
+However, if done at a later point in time, little is to be done as the damage 
+has already been inflicted upon the schedule. 
 However, for \FSP, the case is the exact opposite. Under those circumstances 
 it's imperative to make good decisions right from the get-go. This is due to 
 the major structural differences between \jsp\ and \fsp, namely the latter 
@@ -130,13 +148,14 @@ suboptimal decisions later in the decision process.
 \end{figure}
 
 \section{Optimality of extremal features}\label{sec:diff:opt:ext}
-The probability of optimality of the aforementioned features from 
-\cref{tbl:features}, yet still maintaining our optimal trajectory, i.e., the 
-probability of a job chosen by an extremal value for a feature being able to 
-yield an optimal makespan on a step-by-step basis, is depicted  in   
-\cref{fig:diff:extr:features}, for both \jrnd{6}{5} and \jrnd{10}{10}.
+The training accuracy from \cref{eq:tracc:opt} of the aforementioned 
+features from \cref{tbl:features}, or probability of a job chosen by an 
+extremal value for a feature being able to yield an optimal makespan on a 
+step-by-step basis, i.e., $\xi_{\pm\phi_i}$, 
+is depicted in \cref{fig:diff:extr:features}, for both \jrnd{6}{5} and 
+\jrnd{10}{10}.
 Moreover, the dashed line represents the benchmark of randomly guessing the 
-optimum (cf. \cref{fig:diff:opt:rnd}).
+optimum, $\xi_{\text{RND}}$ (cf. \cref{fig:diff:opt:rnd}).
 Furthermore, the \lcnamecref{fig:diff:extr:features}s are annotated with the 
 corresponding mean \namerho, for the training set if it were scheduled solely 
 w.r.t. that extremal feature.
@@ -175,7 +194,7 @@ competitive for $6\times5$.
     optimal}{fig:diff:extr:jrnd:6x5}{fig:diff:extr:jrnd:10x10}
 \end{figure}
 
-\subsection{Optimality of SDRs}\label{sec:diff:opt:sdr}
+\subsection*{Optimality of SDRs}
 Let's limit ourselves to only features that correspond to SDRs from 
 \cref{sec:SDR}. Namely, \cref{pref:SDR} yield
 \begin{enumerate*}
@@ -221,14 +240,14 @@ utilise feature behaviour to motivate new, and \emph{hopefully} better,
 \dr s. 
 A na\"ive approach would be creating a simple blended \dr\ (BDR) which 
 would be for instance switch between two SDRs at a predetermined time point. 
-Hence, going back to \cref{fig:diff:extr:SDR} a presumably good BDR for 
+Hence, going back to \cref{fig:diff:extr:SDR:10x10} a presumably good BDR for 
 \jrnd{10}{10}  would be starting with SPT and then switching over to MWR at 
 around time step $k=40$, where the SDRs change places in outperforming one 
 another. 
 Note, MWR$\cap$SPT hardly ever coincide for easy or hard schedules (cf. 
-\cref{tbl:easy:cnt:10x10,tbl:hard:cnt:10x10}, so its reasonable to believe they 
-could complement one another.
-A box-plot for \namerho, for all $10\times10$ problem spaces is 
+\cref{tbl:easy:cnt:10x10,tbl:hard:cnt:10x10}), so its reasonable to believe 
+they could complement one another.
+A box-plot for \namerho, for \Problem[10\times10]{\text{train}} is 
 depicted in \cref{fig:diff:boxplot:BDR}. This little manipulation between SDRs 
 does outperform SPT immensely, yet doesn't manage to gain the performance edge 
 of MWR, save for \frnd{10}{10}. This gives us insight that for \jsp, the 
@@ -267,7 +286,7 @@ In order to put the extremal features from \cref{fig:diff:extr:features} into
 perspective, it's worth comparing them with how the evolution of the features 
 are over time, depicted in \cref{fig:diff:opt:evol}. 
 Note that the optimal trajectory describes  how `good' features should aspire 
-to be.
+to be like.
 We can also notice that the relative ranking in \phiGlobalRelated\ is 
 proportional their expected mean \namerho. Although $(K-k)$-step lookahead give 
 consistently the best (single) indicators for finding good solutions. Sadly, 
@@ -318,7 +337,6 @@ space (as was the focus in \cite{SmithMilesLion5} with SOM),
 instead appropriate statistical tests with a significance level $\alpha=0.05$ 
 is applied to determine if there is any difference between different data 
 distributions. 
-
 For this the two-sample Kolmogorov–Smirnov test (K-S test) is used to determine 
 whether two underlying one-dimensional probability distributions differ. 
 Furthermore, in order to find defining characteristics for easy or hard 
@@ -326,7 +344,7 @@ problems, a (linear) correlation is computed between features to the resulting
 \namerho. 
 
 Note, when inspecting any statistical difference between data distribution of 
-the features on a step by step basis, the features at step $k+1$ are of course 
+the features on a step-by-step basis, the features at step $k+1$ are of course 
 dependant on all previous $k$ steps. This results in repetitive statistical 
 testing, therefore a Bonferroni adjustment is used to counteract the multiple 
 comparisons, i.e., each stepwise comparison has the significant level 
@@ -351,6 +369,9 @@ $\sum_{k=1}^K\alpha_k=\alpha$ significance level.
         \missingfigure{Hard corrolation}}
 \end{table}
 
+
+\todoWrite{Explain which problem space and policies are considered}
+
 From the experimental study it is apparent that features have different %impact 
 correlation with the resulting schedule depending in what stage it is in the 
 scheduling process, implying that their influence varies over the dispatching 
@@ -367,7 +388,7 @@ new `global' features were introduced.
 
 It is possible for a \JSP\ schedule to have more than one sequential 
 dispatching representation. It is especially w.r.t. the initial dispatches. 
-Revisiting \cref{fig:example:midway}, if we were to dispatch $J_2$ 
+Revisiting \cref{fig:example:midway}, if we were to dispatch $J_2$ f
 first and then $J_4$, then that would be the same equivalent
 temporal schedule if we did it the other way around. 
 This is because they don't create a conflict for one another 
@@ -377,6 +398,14 @@ significant feature for the initial steps of the scheduling process (cf.
 \cref{tbl:jrnd:feat:easy,tbl:jrnd:feat:hard}). 
 
 \section{Summary and conclusions}
+
+\todoWrite{From \cref{sec:diff:opt:ext} we noticed that high stepwise 
+optimality generally implies low \namerho. Moreover, there is clearly an 
+important factor \emph{when} sub-optimal moves are made, as 
+\cref{sec:diff:opt:sub} showed. Therefore it's not 
+    }
+\todoWrite{$\xi_\pi$ can be interpreted as training accuracy}
+
 Since feature selection is of paramount importance in order for algorithms to 
 become successful, one needs to give great thought to how features are 
 selected. What kind of features yield \emph{bad} schedules? And can they be 
