@@ -25,9 +25,9 @@ $\succ$ on the solutions  by the following rule,
 where the symbol $\succ$ denotes `is preferred to.' 
 
 In ordinal regression the task is to obtain function $h$ that can for a given pair $(\vec{x}_i,y_i)$ and $(\vec{x}_j,y_j)$ distinguish between two different outcomes: $y_i > y_j$ and $y_j > y_i$. The task is, therefore, transformed into the problem of predicting the relative ordering of all possible pairs of examples \citep{Herbrich00,Joachims02}.  However, it is sufficient to consider only all possible pairs of adjacent ranks (see also \cite{ShaweTaylor04:book} for yet an alternative formulation).  The preference set, composed of pairs, is then as follows,
-\begin{equation}
-	\Psi = \left\{(\vec{x}_k^{(1)}, \vec{x}_k^{(2)}),t_k=\text{sign}(y_k^{(1)} - 
-	y_k^{(2)})\right\}_{k=1}^{N'} \subset X\times Y  \label{eq:PrefSet:problem}
+\begin{equation}\label{eq:PrefSet:problem}
+	\Psi = \left\{(\vec{x}_k^{(1)}, \vec{x}_k^{(2)}),t_k=\text{sign}(y_k^{(1)} 
+	- y_k^{(2)})\right\}_{k=1}^{N'} \subset X\times Y  
 \end{equation}
 where $(y_k^{(1)} = r_i) \wedge (y_k^{(2)} = r_{i+1})$, and vice versa 
 $(y_k^{(1)} = r_{i+1}) \wedge (y_k^{(2)} = r_{i})$, resulting in $N'=2(N-1)$ 
@@ -40,18 +40,17 @@ dimension $d$, with corresponding feature mapping $\vphi:X\mapsto\Phi$ is
 applied, i.e., the feature vector 
 $\vphi(\vec{x})=[\phi_1(\vec{x}),\ldots,\phi_d(\vec{x})]^T\in\Phi$. Thus the 
 preference set defined by \cref{eq:PrefSet:problem} is redefined as follows,
-\begin{equation}
+\begin{equation}\label{eq:PrefSet:feat}
 	\Psi = \left\{\left(\vphi(\vec{x}_k^{(1)}), 
 	\vphi(\vec{x}_k^{(2)})\right),t_k=\text{sign}(y_k^{(1)} - 
-	y_k^{(2)})\right\}_{k=1}^{N'} \subset \Phi \times Y \label{eq:PrefSet:feat}.
+	y_k^{(2)})\right\}_{k=1}^{N'} \subset \Phi \times Y.
 \end{equation}
 
 
 \section{Linear preference}\label{sec:ord:linpref}
 The function used to induce the preference is defined by a linear function in the kernel-defined feature space,
-\begin{equation} 
+\begin{equation}\label{eq:pref:kernel} 
   h(\vec{x}) = \sum_{i=1}^d w_i\phi_i(\vec{x})=\inner{\vec{w}}{\vphi(\vec{x})} 
-               \label{eq:pref:kernel}
 \end{equation}
 where $\vec{w}=[w_1,\ldots,w_d]\in\mathbb{R}^d$ has weight $w_i$ for feature $\phi_i$.
 

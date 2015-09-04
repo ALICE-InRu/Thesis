@@ -86,12 +86,12 @@ correctly label which operations' features were optimal when compared to other
 possible operations. Therefore, it would be of interest to inspect if there is 
 any performance edge gained by incorporating optimal labelling in evolutionary 
 search. Therefore, two objective functions will be considered, namely, 
-\begin{equation}
-	ES_{C_{\max}} := \min \Exp{C_{\max}} \label{eq:cma:makespan}
+\begin{equation}\label{eq:cma:makespan}
+	ES_{C_{\max}} := \min \Exp{C_{\max}} 
 \end{equation}
 for optimising w.r.t. $C_{\max}$ directly, and on the other hand
-\begin{equation}
-	ES_{\rho} := \min \Exp{\rho} \label{eq:cma:rho}
+\begin{equation}\label{eq:cma:rho}
+	ES_{\rho} := \min \Exp{\rho} 
 \end{equation} 
 which optimises w.r.t. the resulting $C_{\max}$ scaled to its true optimum, 
 i.e., \cref{eq:rho}.
@@ -150,11 +150,11 @@ e.g. $\phi_3=\phi_1+\phi_2$.
 \input{tables/esmodels-runs}
 
 \begin{figure} 
-	\subcaptionbox{minimise w.r.t. 
-	\cref{eq:cma:makespan}}{\includegraphics[width=\textwidth]{{CMAweightsEvo.ES_Cmax}.eps}\label{fig:cma:wei:cmax}}
+	\subcaptionbox{minimise w.r.t. \cref{eq:cma:makespan} 
+	\label{fig:cma:wei:cmax}}{\includegraphics[width=\textwidth]{{CMAweightsEvo.ES_Cmax}.eps}}
 	\\
-	\subcaptionbox{minimise w.r.t. 
-	\cref{eq:cma:rho}}{\includegraphics[width=\textwidth]{{CMAweightsEvo.ES_rho}.eps}\label{fig:cma:wei:rho}}
+	\subcaptionbox{minimise w.r.t. \cref{eq:cma:rho} 
+	\label{fig:cma:wei:rho}}{\includegraphics[width=\textwidth]{{CMAweightsEvo.ES_rho}.eps}}
 	\caption{Evolution of weights of features (given in \cref{tbl:features}) at 
 	each generation of the CMA-ES optimisation. Note, weights are normalised 
 	such that $\norm{\vec{w}}=1$.}\label{fig:cma:wei}
