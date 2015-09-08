@@ -163,18 +163,20 @@ the quartiles for $\rho$, using the SDRs on their training set will be used
 to differentiate between easy and hard instances. In particular, the 
 classification is defined as follows, 
 
+\begin{subequations}\label{eq:easy.vs.hard}
 \begin{description}
   \item[Easy] schedules belong to the first quartile, i.e., \hfill \\
-  \begin{equation}\label{eq:easy}
+  \begin{equation} 
     \mathcal{E}(a):=\condset{\vec{x}}{
       \rho=\Upsilon(a,\vec{x})<\rho^{\text{1st. Qu.}}}
   \end{equation} 
   \item[Hard] schedules belong to the third quartile, i.e., \hfill \\
-  \begin{equation}\label{eq:hard}
+  \begin{equation} 
     \mathcal{H}(a):=\condset{\vec{x}}{
       \rho=\Upsilon(a,\vec{x})>\rho^{\text{3rd. Qu.}}}
-  \end{equation} 
+  \end{equation}  
 \end{description}
+\end{subequations}
 where $\vec{x}\in\mathcal{P}_{\text{train}}$ for a given $a\in\mathcal{A}$ from 
 \cref{eq:SDRset}.
 \input{tables/quartiles.EasyHard} 
