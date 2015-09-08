@@ -351,24 +351,23 @@ comparisons, i.e., each stepwise comparison has the significant level
 $\alpha_k=\frac{\alpha}{K}$, and thus maintaining the 
 $\sum_{k=1}^K\alpha_k=\alpha$ significance level.
 
-\begin{table}
+\begin{figure}
+    \includegraphics[width=\textwidth]{{j.rnd/phi.ks.SDR.6x5}.pdf}
     \caption[Features for easy and hard problems are drawn from the same data 
     distribution]{Features for easy and hard problems are drawn from the same 
     data distribution (denoted by $\cdot$)}\label{tbl:jrnd:feat:same}
-    \missingfigure{Easy and Hard simultaneous corrolation}
-\end{table}
+\end{figure}
 
-\begin{table}
+\begin{figure}
+    \subcaption{Without Bonferroni adjustment\label{tbl:jrnd:feat:corr:SDR}}{
+            \includegraphics[width=\textwidth]{{j.rnd/phi.corr.SDR.6x5}.pdf}}
+    \subcaption{With Bonferroni adjustment\label{tbl:jrnd:feat:corr:ALL}}{
+            \includegraphics[width=\textwidth]{{j.rnd/phi.corr.ALL.6x5}.pdf}}
     \caption[Stepwise significant correlation between features $\vphi$ to 
-        \namerho]{Stepwise significant correlation (denoted by $\cdot$) for 
+    \namerho]{Stepwise significant correlation (denoted by $\cdot$) for 
         features $\vphi$ and resulting \namerho. Commonly significant features
-        across the tables are denoted by $\bullet$.}\label{tbl:jrnd:feat}
-    \subcaption{Easy problems\label{tbl:jrnd:feat:easy}}{
-        \missingfigure{Easy corrolation}}
-    \subcaption{Hard problems\label{tbl:jrnd:feat:hard}}{
-        \missingfigure{Hard corrolation}}
-\end{table}
-
+        across the tables are denoted by $\bullet$.}\label{tbl:jrnd:feat:corr}
+\end{figure}
 
 \todoWrite{Explain which problem space and policies are considered}
 
