@@ -353,18 +353,6 @@ testing, therefore a Bonferroni adjustment is used to counteract the multiple
 comparisons, i.e., each stepwise comparison has the significant level 
 $\alpha_k=\frac{\alpha}{K}$, and thus maintaining the 
 $\sum_{k=1}^K\alpha_k=\alpha$ significance level.
-As we can see from \cref{tbl:jrnd:feat:cnt}, the number of problem instances 
-used for testing is quite limited, and we saw from \cref{sec:jsp:example} that 
-there are many jobs that have non-conflicting machines, thereby making 
-subsequent dispatches equivalent to the previous one, i.e., $\vchi^k \approx 
-\vchi^{(k\pm1)}$. Therefore it's reasonable to inspect the stepwise statistical 
-testing based on sliding window of the preceding and subsequent step, i.e., 
-test at time $k$ is based on: 
-\begin{equation}
-\vphi_i^{(k)} = \condset{\phi_i^{k'}}{\forall \phi_i\in\Phi}_{k'=k-1}^{k+1} 
-\end{equation}
-for all individual local features $\phi_i\in\{1,..,\NrFeatLocal\}$ from 
-\cref{tbl:features}.
 
 {\setlength{\tabcolsep}{3pt} 
 \begin{table}\centering
@@ -373,30 +361,31 @@ for all individual local features $\phi_i\in\{1,..,\NrFeatLocal\}$ from
     \label{tbl:jrnd:feat:cnt}
     \subcaptionbox{Used in \cref{fig:jrnd:feat:KStest}}{
         \begin{tabular}{lrrr}
-            \hline
+            \toprule
             Track & $\#$Easy & $\#$Hard & $\#$Significant \\ 
-            \hline
+            \midrule
             SPT &  37 & 203 &  48 \\ 
             LPT & 103 &  81 &  47 \\ 
             LWR &  19 & 295 &  31 \\ 
             MWR & 328 &   1 &   0 \\ 
-            \hline
-        \end{tabular}
-    }
-    \subcaptionbox{Used in \cref{fig:jrnd:feat:corr}}{
-        \begin{tabular}{llrr}
-            \toprule
-            Track & Difficulty & N & $\#$Significant \\ 
             \midrule
-            SPT & Easy &  37 &  78 \\ 
-            SPT & Hard & 203 & 101 \\ 
-            LPT & Easy & 103 &  87 \\ 
-            LPT & Hard &  81 &  45 \\ 
-            LWR & Easy &  19 &  48 \\ 
-            LWR & Hard & 295 &  82 \\ 
-            MWR & Easy & 328 & 167 \\ 
-            ALL & Easy & 1114 & 260 \\ 
-            ALL & Hard & 637 & 138 \\ 
+             $\Sigma$ & 487 & 580 & 126 \\
+             \bottomrule
+        \end{tabular}
+    }\quad\quad
+    \subcaptionbox{Used in \cref{fig:jrnd:feat:corr}}{
+        \begin{tabular}{lrr}
+            \toprule
+            & \multicolumn{2}{c}{$\#$Significant} \\
+            Track & Easy & Hard \\ 
+            \midrule
+            SPT &  78 & 101 \\ 
+            LPT &  87 &  45 \\ 
+            LWR &  48 &  82 \\ 
+            MWR & 167 &   0 \\ 
+            ALL & 260 & 138 \\ 
+            \midrule
+            $\Sigma$ & 640 & 366 \\
             \bottomrule
         \end{tabular}}
 \end{table}}
@@ -422,14 +411,15 @@ for all individual local features $\phi_i\in\{1,..,\NrFeatLocal\}$ from
 distributions differ. In the initial stages, the features are more or less the 
 same. However, there is a clear time of divergence towards the end of the 
 scheduling process, around $k=25$ (little sooner for LPT and later for LWR).
+\todoExtend{\cref{fig:jrnd:feat:KStest}}
 
-Furthermore, \cref{fig:jrnd:feat:corr} gives when easy or hard features 
+Furthermore, \cref{fig:jrnd:feat:corr} shows when easy or hard features 
 are significantly correlated to the \namerho.
-From the experimental study it is apparent that features have different %impact 
-correlation with the resulting schedule depending in what stage it is in the 
+There we can see an apparent difference in correlation between individual 
+features with the resulting schedule depending in what stage it is in the 
 scheduling process, implying that their influence varies over the dispatching 
-sequencing. Moreover, features constant throughout the scheduling process are 
-not correlated with the end-result.
+sequencing. 
+\todoExtend{\cref{fig:jrnd:feat:corr}}
 There are some common features for both difficulties considered which define 
 \jsp\ on a whole. However, the significant features are quite different across 
 the two difficulties, implying there is a clear difference in their data 
@@ -447,8 +437,23 @@ temporal schedule if we did it the other way around.
 This is because they don't create a conflict for one another 
 (as is the case for jobs $J_2$ and $J_3$). This drawback of non-uniqueness of 
 sequential dispatching representation explains why there is hardly any 
-significant feature for the initial steps of the scheduling process (cf. 
-\cref{tbl:jrnd:feat:easy,tbl:jrnd:feat:hard}). 
+significant difference between the difficulties for the initial steps of the 
+scheduling process (cf. \cref{fig:jrnd:feat:KStest}).
+As we can see from \cref{tbl:jrnd:feat:cnt}, the number of problem instances 
+used for statistical testing is quite limited when applying on a single 
+algorithm. 
+Using the non-uniqueness of $\vchi$ to our advantage, where there are many jobs 
+that have non-conflicting machines, thereby making subsequent dispatches 
+equivalent to the previous one, i.e., $\vchi^k \approx  \vchi^{(k\pm1)}$. 
+Therefore it's reasonable, when labelled optimal data is scarce, to inspect the 
+stepwise statistical testing based on sliding window of the preceding and 
+subsequent step, i.e., test at time $k$ is based on: 
+\begin{equation}
+\vphi_i^{(k)} := \condset{\phi_i^{k'}}{\forall \phi_i\in\Phi}_{k'=k-1}^{k+1} 
+\end{equation}
+for all individual local features $\phi_i\in\{1,..,\NrFeatLocal\}$ from 
+\cref{tbl:features}.
+
 
 \section{Summary and conclusions}
 
@@ -487,3 +492,5 @@ complex algorithms, such as the learned preference models in
 \cref{ch:prefmodels}. The main objective of this work is to 
 illustrate the interaction of a specific algorithm on a given problem structure 
 and its properties. 
+
+
