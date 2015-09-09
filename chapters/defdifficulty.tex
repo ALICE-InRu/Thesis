@@ -249,8 +249,6 @@ lower first quartile (cf. \cref{tbl:easyhard:quartile:10x10}) in both cases.
 As the objective of this dissertation is not to choose which DR is best to use for each problem instance. 
 The focus is set on finding what characterises of \jsp\ overall, are of value (i.e. feature selection), and create a new model that works well for the problem space to a great degree.
 Namely, by exploiting feature behaviour that is considered more favourable. The hypothesis being that features evolutions of easy schedules greatly differ from features evolutions corresponding to hard schedules, and \cref{sec:diff:stepwise} will attempt to explain the evidence show in \cref{tbl:easyhard:cnt:6x5,tbl:easyhard:cnt:10x10,tbl:easy:cnt:6x5,tbl:easy:cnt:10x10,tbl:hard:cnt:6x5,tbl:hard:cnt:10x10}.
-\todoFind{Make sure \cref{sec:diff:stepwise} reference 
-\cref{tbl:easyhard:cnt:6x5,tbl:easyhard:cnt:10x10,tbl:easy:cnt:6x5,tbl:easy:cnt:10x10,tbl:hard:cnt:6x5,tbl:hard:cnt:10x10}.}
 
 Note, this \lcnamecref{sec:diff:easyhard} gave the definition of what 
 constitutes an `easy' and `hard' schedule. Since these are based on four SDRs 
@@ -262,7 +260,7 @@ instances, per problem space, therefore,
   \quad\text{and}\quad
   \sum_{a\in\mathcal{A}}\abs{\mathcal{H}(a)} \approx N_{\text{train}}
 \end{equation} 
-due to the fact \cref{eq:easy,eq:hard} are based on the first and third 
+due to the fact \cref{eq:easy.vs.hard} are based on the first and third 
 quartiles of the entire training set.
 Now, as the SDRs vary greatly in performance, the contribution of a SDR to \cref{eq:easyhard:all} varies, resulting in an unbalanced sample size when restricted to a single SDR. 
 
