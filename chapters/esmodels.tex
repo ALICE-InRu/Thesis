@@ -104,7 +104,7 @@ depicted in \cref{fig:cma:wei}.
 In order to compare the two objective functions, the best weights reported were 
 used for \cref{eq:CDR:feat} on the corresponding training data. Its 
 box-plot of percentage relative deviation from optimality, defined by 
-\cref{eq:rho}, is depicted in \cref{fig:cma:trainboxpl} and 
+\cref{eq:rho}, is depicted in \cref{fig:cma:boxplot} and 
 \cref{tbl:results:train} present its main statistics; mean, median, standard 
 deviation, minimum and maximum values.
 
@@ -116,13 +116,16 @@ than \cref{eq:cma:rho}. However, there was no statistical difference between
 adopting either objective function. Therefore, minimisation of expectation of 
 $\rho$, is preferred over simply using the unscaled resulting makespan. 
 
-\begin{figure}[t]
-	\includegraphics[width=\textwidth]{CMAboxplotEvoTrain}
-	\caption{Box-plot of training data for percentage relative deviation from 
-	optimality, defined by \cref{eq:rho}, when implementing the final weights 
-	obtained from CMA-ES optimisation, using both objective functions from 
-	\cref{eq:cma:makespan,eq:cma:rho}, left and right, 
-	respectively.}\label{fig:cma:trainboxpl}
+\begin{figure}[p]
+    \subcaptionbox{Models applied to corresponding training and test set
+        \label{fig:cma:boxplot:set}}{
+        \includegraphics[width=\textwidth]{{boxplot.CMAES}.pdf}}
+    \subcaptionbox{Models applied to ORLIB test set 
+        s\label{fig:cma:boxplot:orlib}}{
+        \includegraphics[width=\textwidth]{{boxplot.CMAES.ORLIB}.pdf}}
+	\caption{Box-plot for \namerho, when implementing the final weights 
+	obtained from CMA-ES optimisation, using objective functions from 
+	\cref{eq:cma:makespan,eq:cma:rho}.}\label{fig:cma:boxplot}
 \end{figure}
 
 \section{Problem difficulty}\label{sec:expr:data}
