@@ -6,39 +6,75 @@
 
 \FirstSentence{G}{enetic algorithms (GA) are one of the} most widely used 
 approaches in \JSP\ literature \citep{Pinedo08}. 
-However, in that case an extensive number of schedules need to be evaluated, 
-and even for low dimensional JSP, it can quickly become computationally 
-infeasible. GAs can be used directly on schedules 
-\cite{Cheng96,Cheng99,Tsai07,Qing-dao-er-ji12,Ak12}. 
+GA is search heuristic that is inspired by the process of natural selection, 
+and is a subclass of evolutionary algorithms (EA), which generate solutions to 
+optimisation problems using techniques based on natural evolution, such as 
+inheritance, mutation, selection, and crossover.
+
+When applying GAs to \JSP, an extensive number of schedules need to be 
+evaluated, and even for low dimensional JSP, it can quickly become 
+computationally infeasible. GAs can be used directly on schedules 
+\citep{Cheng96,Cheng99,Tsai07,Qing-dao-er-ji12,Ak12}. 
 However, then there are many concerns that need to be dealt with. 
 To begin with there are nine encoding schemes for representing the schedules 
-\cite{Cheng96}, in addition, special care must be taken when applying 
-cross-over and mutation operators in order for the schedules, now in the role 
-of `chromosomes,' to still remain feasible. 
+\citep{Cheng96}, in addition, special care must be taken when applying 
+cross-over and mutation operators in order for the schedules (now in the role 
+of `chromosomes') to still remain feasible. 
 Moreover, in case of JSP, GAs are not adapt for fine-tuning around optima. 
 Luckily a subsequent local search can mediate the optimisation 
 \citep{Cheng99,Meeran12}.
 
 The most predominant approach in hyper-heuristics, a framework of creating 
 \emph{new} heuristics from a set of  predefined heuristics, is genetic 
-programming \cite{Burke10}. Dispatching rules based genetic algorithms (DRGA) 
-\cite{Vazquez-Rodriguez09,Dhingra10,Nguyen13} are a special case of genetic 
-programming \cite{Koza05}, where GAs are applied indirectly to JSP via 
+programming \citep{Burke10}. Dispatching rules based genetic algorithms (DRGA) 
+\citep{Vazquez-Rodriguez09,Dhingra10,Nguyen13} are a special case of genetic 
+programming \citep{Koza05}, where GAs are applied indirectly to JSP via 
 \dr s, i.e., where a solution is no longer a \emph{proper} schedule 
 but a \emph{representation} of a schedule via applying certain DRs 
 consecutively. 
 
+As previously discussed in \cref{ch:introduction}, there are two main 
+viewpoints on how to approach scheduling problems
+\begin{enumerate*}
+    \item tailored algorithms where schedules are built for one problem 
+    instance at a time
+    \item general algorithms where schedules are built for all problem 
+    instances at once
+\end{enumerate*}
+For tailored algorithms a simple construction heuristic is applied. The 
+schedule's features are collected at each dispatch iteration from which a 
+learning model will inspect the feature set to discriminate which operations 
+are preferred to others via ordinal regression. The focus is essentially on 
+creating a meaningful preference set composed of features and their ranks as 
+the learning algorithm is only run once to find suitable operators for the 
+value function. This is the approach taken in \cref{InRu11a}. Expanding on 
+that  work, this \lcnamecref{ch:esmodels} will explore a general algorithms 
+construction viewpoint where there is no feature set collected beforehand since 
+the learning model is optimised directly via evolutionary search. The framework 
+was first reported in \cref{InRu14}, and later used to improve the preference 
+models in \cref{InRu15a}. 
+
+Evolutionary search requires numerous costly value function evaluations. 
+In fact it involves an indirect method of evaluation whether one learning model 
+is preferable to another, w.r.t. which one yields a better expected mean. For 
+that reason, it can be mediated with the use of preference learning, as 
+discussed in \cref{InRu11b}, albeit for traditional test functions suite (in 
+particular Rosenbrock's function and Sphere model).
+
+\section{Experimental setting}
 A prevalent approach to solving \JSP\ is to combine several relatively simple 
 dispatching rules such that they may benefit each other for a given problem 
 space. Generally, this is done on an ad-hoc basis, requiring expert knowledge 
 from heuristics designer, or extensive exploration of suitable combinations of 
-heuristics. The approach in this \namecref{ch:esmodels}, is to automate that 
-selection, by translating dispatching rules into measurable features and 
-optimising what their contribution should be via evolutionary search. The 
-framework is straight forward and easy to implement and shows promising 
-results. Various data distributions from \cref{ch:genprobleminstances} are 
-investigated, however only trained on the lower dimension, $6\times5$, yet, 
-validated on higher dimension, $10\times10$. 
+heuristics. The approach in \cref{InRu14}, was to automate that selection 
+similar to DRGA, by translating dispatching rules into measurable features and 
+optimising what their contribution should be via evolutionary search, i.e., 
+optimise the weights $\vec{w}$ in \cref{eq:CDR:feat} directly using
+covariance matrix adaptation evolution strategy (CMA-ES) by \cite{Hansen01}, 
+which has been proven to be a very efficient numerical optimisation technique. 
+The framework is straight forward and easy to implement and shows promising 
+results. 
+
 
 Moreover, \cref{sec:es:measure} shows that the choice of objective function  
 for evolutionary search is worth investigating. Since the optimisation is based 
@@ -46,55 +82,44 @@ on minimising the expected mean of the fitness function over a large set of
 problem instances, which can vary within. Then normalising the objective 
 function can stabilise the optimisation process away from local minima. 
 
-As previously discussed in \cref{ch:introduction}, there are two main 
-viewpoints on how to approach scheduling problems
+Preliminary experiments were first reported in \cref{InRu14,InRu15a} using 
 \begin{enumerate*}
-	\item local level by building schedules for one problem instance at a time
-    \item global level by building schedules for all problem instances at once
+    \item standard set-up of parameters of the CMA-ES optimisation
+    \item runtime was limited to 288 hours on a cluster for each 
+    \Problem[6\times5]{\text{train}} problem set given in \cref{tbl:data}, 
+    where in every case the optimisation reached its maximum walltime
 \end{enumerate*}
-For local level construction a simple construction heuristic is applied. The 
-schedule's features are collected at each dispatch iteration from which a 
-learning model will inspect the feature set to discriminate which operations 
-are preferred to others via ordinal regression. The focus is essentially on 
-creating a meaningful preference set composed of features and their ranks as 
-the learning algorithm is only run once to find suitable operators for the 
-value function. This is the approach taken in \cref{InRu11a}. Expanding on 
-that  work, this study will explore a global level construction viewpoint where 
-there is no feature set collected beforehand since the learning model is 
-optimised directly via evolutionary search. This involves numerous costly value 
-function evaluations. In fact it involves an indirect method of evaluation 
-whether one learning model is preferable to another, w.r.t. which one yields a 
-better expected mean. 
+\Cref{InRu14} had one model for all $K$ time steps, whereas \cref{InRu15a} used 
+a different stepwise model at each dispatch iteration. 
 
-\section{Experimental set-up}\label{sec:expr}
-\todoWrite{Throughout a Kolmogorov-Smirnov test with $\alpha=0.05$ is applied 
-to determine statistical significance between methodologies.}
+Various data distributions from \cref{ch:genprobleminstances} are investigated. 
+Due to computational cost, only $6\times5$ instances were initially 
+considered. However, since then the scheduling subroutines have been made more 
+time-efficient, making \Problem[10\times10]{\text{train}} applicable in a 
+reasonable amount of time. 
+CMA-ES models will be mostly trained on the lower dimension, $6\times5$, 
+and only the general random $10\times10$ \JSP\ case is explored. 
+Finally, to check robustness, models are validated on benchmark tests sets from 
+the OR-Library (cf. \cref{sec:data:orlib}).
 
-Inspired by DRGA, the approach taken in this study is to optimise the weights 
-$\vec{w}$ in \cref{eq:CDR:feat} directly via evolutionary search such as 
-covariance matrix adaptation evolution strategy (CMA-ES) \cite{Hansen01}. This 
-has been proven to be a very efficient numerical optimisation technique. 
-
-Using standard set-up of parameters of the CMA-ES optimisation, the runtime was 
-limited to 288 hours on a cluster for each training set given in 
-\cref{tbl:data} and in every case the optimisation reached its maximum walltime.
-
-\section{Performance measures}\label{sec:expr:measure}
+\section{Performance measures}\label{sec:es:measure}
 Generally, evolutionary search only needs to minimise the expected fitness 
 value. However, the  approach in \cref{InRu11a} was to use the known optimum to 
 correctly label which operations' features were optimal when compared to other 
 possible operations. Therefore, it would be of interest to inspect if there is 
 any performance edge gained by incorporating optimal labelling in evolutionary 
 search. Therefore, two objective functions will be considered, namely, 
+\begin{subequations}\label{eq:cma:objfun}
 \begin{equation}\label{eq:cma:makespan}
-	ES_{C_{\max}} := \min \Exp{C_{\max}} 
+    \minCmax := \min \Exp{C_{\max}} 
 \end{equation}
 for optimising w.r.t. $C_{\max}$ directly, and on the other hand
 \begin{equation}\label{eq:cma:rho}
-	ES_{\rho} := \min \Exp{\rho} 
+    \minRho := \min \Exp{\rho} 
 \end{equation} 
 which optimises w.r.t. the resulting $C_{\max}$ scaled to its true optimum, 
 i.e., \cref{eq:rho}.
+\end{subequations}
 
 Main statistics of the experimental run are given in \cref{cma:funeval} and 
 depicted in \cref{fig:cma:fit} for both approaches. In addition, evolving 
@@ -102,11 +127,12 @@ decision variables, here weights $\vec{w}$ for \cref{eq:CDR:feat}, are
 depicted in \cref{fig:cma:wei}. 
 
 In order to compare the two objective functions, the best weights reported were 
-used for \cref{eq:CDR:feat} on the corresponding training data. Its 
-box-plot of percentage relative deviation from optimality, defined by 
-\cref{eq:rho}, is depicted in \cref{fig:cma:boxplot} and 
-\cref{tbl:results:train} present its main statistics; mean, median, standard 
-deviation, minimum and maximum values.
+used for \cref{eq:CDR:feat} on the corresponding training and test data. 
+Its box-plot of \fullnamerho, is depicted in \cref{fig:cma:boxplot:set} and 
+\cref{tbl:cma:boxplot:set} present its main statistics: mean, median, standard 
+deviation, minimum and maximum values. Furthermore, 
+\cref{fig:cma:boxplot:orlib} depicts the box-plot when applying the models (for 
+all training data) on the benchmark problem instances from the OR-Library.
 
 In the case of \frndn{6}{5}, \cref{eq:cma:rho} gave a considerably worse 
 results, since the optimisation got trapped in a local minima, as the erratic 
@@ -121,12 +147,57 @@ $\rho$, is preferred over simply using the unscaled resulting makespan.
         \label{fig:cma:boxplot:set}}{
         \includegraphics[width=\textwidth]{{boxplot.CMAES}.pdf}}
     \subcaptionbox{Models applied to ORLIB test set 
-        s\label{fig:cma:boxplot:orlib}}{
+        \label{fig:cma:boxplot:orlib}}{
         \includegraphics[width=\textwidth]{{boxplot.CMAES.ORLIB}.pdf}}
 	\caption{Box-plot for \namerho, when implementing the final weights 
 	obtained from CMA-ES optimisation, using objective functions from 
-	\cref{eq:cma:makespan,eq:cma:rho}.}\label{fig:cma:boxplot}
+	\cref{eq:cma:objfun}.}\label{fig:cma:boxplot}
 \end{figure}
+
+{\setlength{\tabcolsep}{3pt} 
+\begin{table}[b]
+\caption{Main statistics for \cref{fig:cma:boxplot:set}} 
+\label{tbl:cma:boxplot:set}
+\centering
+\begin{tabular}{lclrrrrrr}
+\toprule
+\multicolumn{2}{c}{\Problem{\text{train}}} & \cref{eq:cma:objfun}  
+    & Min. & 1st Qu. & Median & Mean & 3rd Qu. & Max.\\
+\midrule
+j.rnd & $6\times5$ & $\minCmax$ & 1.90 & 29.35 & 39.71 & 41.13 & 51.11 & 114.30 
+\\ 
+j.rnd & $6\times5$ & $\minRho$ & 0.00 & 21.40 & 30.08 & \textbf{31.44} & 39.72 
+& 86.04 \\ \midrule
+j.rnd & $10\times10$ & $\minRho$ & 0.88 & 7.99 & 10.64 & \textbf{10.87} & 13.40 
+& 27.81 \\ \midrule
+j.rndn & $6\times5$ & $\minCmax$ & 7.43 & 32.08 & 39.97 & \textbf{41.50} & 
+50.00 & 90.39 \\ 
+j.rndn & $6\times5$ & $\minRho$ & 7.43 & 31.54 & 40.67 & 41.58 & 50.98 & 95.16 
+\\ \midrule
+j.rnd, J1 & $6\times5$ & $\minCmax$ & 0.00 & 22.06 & 33.17 & 35.36 & 45.90 & 
+120.00 \\ 
+j.rnd, J1 & $6\times5$ & $\minRho$ & 0.00 & 21.75 & 33.06 & \textbf{35.31} & 
+46.15 & 
+120.00 \\ \midrule
+f.rnd & $6\times5$ & $\minCmax$ & 0.00 & 17.91 & 25.77 & \textbf{26.37} & 34.32 
+& 69.73 \\ 
+f.rnd & $6\times5$ & $\minRho$ & 3.91 & 25.44 & 33.15 & 34.02 & 41.48 & 83.68 
+\\ \midrule
+f.rndn & $6\times5$ & $\minCmax$ & 0.00 & 17.41 & 20.26 & 21.94 & 28.85 & 48.90 
+\\ 
+f.rndn & $6\times5$ & $\minRho$ & 0.00 & 5.92 & 11.67 & \textbf{11.27} & 13.66 
+& 32.36 \\ \midrule
+f.jc & $6\times5$ & $\minCmax$ & 0.00 & 0.71 & 1.77 & 4.73 & 7.91 & 33.26 
+\\ 
+f.jc & $6\times5$ & $\minRho$ & 0.00 & 0.71 & 1.75 & \textbf{4.57} & 7.73 & 
+36.66 \\ \midrule
+f.mc & $6\times5$ & $\minCmax$ & 0.00 & 7.27 & 14.20 & 14.38 & 20.63 & 49.19 \\ 
+f.mc & $6\times5$ & $\minRho$ & 0.00 & 1.31 & 3.11 & \textbf{7.29} & 12.33 & 
+32.07 \\ 
+\bottomrule
+\end{tabular}
+\end{table}}
+
 
 \section{Problem difficulty}\label{sec:expr:data}
 The evolution of fitness per generation from the CMA-ES optimisation of 
@@ -227,12 +298,16 @@ it computationally feasible to learn.
 
 The main drawback of using evolutionary search for learning optimal weights for 
 \cref{eq:CDR:feat} is how computationally expensive it is to evaluate the mean 
-expected fitness. Even for a low problem dimension 6-job 5-machine JSP, each 
-optimisation run reached their walltime of 288 hours without converging. Now, 
-$6\times5$ JSP requires 30 sequential operations where at each time step there 
-are up to $6$ jobs to choose from -- i.e., its complexity is 
-$\mathcal{O}(n^{n\cdot m})$ making it computationally infeasible to apply this 
-framework for higher dimensions as is. 
+expected fitness. Even for a low problem dimension such  as 6-job 5-machine 
+JSP, each optimisation run reached their maximum allotted function evaluations 
+without converging. 
+Now, $6\times5$ \JSP\ requires 30 sequential operations where at each time step 
+there are up to $6$ jobs to choose from, in fact its complexity is  
+$\bigOh{n!^m}$ \citep{Giffler60} making it computationally infeasible to apply 
+this framework for higher dimensions as is. Especially, considering that it's 
+preferred to run these experiments several times -- e.g. in \cref{InRu14} 
+\fjc{6}{5} got stuck in local minima for $\minCmax$, which could have been 
+avoided by restarting the optimisation.
 However, evolutionary search only requires the rank of the candidates and 
 therefore it is appropriate to retain a sufficiently accurate surrogate for the 
 value function during evolution in order to reduce the number of costly true 
@@ -240,27 +315,5 @@ value function evaluations, such as the approach in \cref{InRu11b}. This could
 reduce the computational cost of the evolutionary search considerably, making 
 it feasible to conduct the experiments from \cref{sec:expr} for problems of 
 higher dimensions, e.g., with these adjustments it is possible to train on 
-$10\times10$ and test on for example $14\times14$ to verify whether scalability 
-holds for even higher dimensions.  
-
-
-
-
-
-\todoWrite{A prevalent approach to solving job shop scheduling problems is to 
-    combine several relatively simple dispatching rules such that they may 
-    benefit 
-    each other for a given problem space. Generally, this is done in an ad-hoc 
-    fashion, requiring expert knowledge from heuristics designers, or extensive 
-    exploration of suitable combinations of heuristics. The approach here is to 
-    automate that selection by translating dispatching rules into measurable 
-    features and optimising what their contribution should be via evolutionary 
-    search. The framework is straight forward and easy to implement and shows 
-    promising results. Various data distributions are investigated for both job 
-    shop and flow shop problems, as is scalability for higher dimensions. 
-    Moreover, the study shows that the choice of objective function  for 
-    evolutionary search is worth investigating. Since the optimisation is based 
-    on minimising the expected mean of the fitness function over a large set of 
-    problem instances which can vary within the set, then normalising the 
-    objective function can stabilise the optimisation process away from local 
-    minima.}
+$10\times10$ with greater ease, or even considering even  higher dimensions, 
+e.g. $14\times14$.
