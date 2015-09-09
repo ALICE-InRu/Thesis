@@ -102,6 +102,7 @@ and only the general random $10\times10$ \JSP\ case is explored.
 Finally, to check robustness, models are validated on benchmark tests sets from 
 the OR-Library (cf. \cref{sec:data:orlib}).
 
+
 \section{Performance measures}\label{sec:es:measure}
 Generally, evolutionary search only needs to minimise the expected fitness 
 value. However, the  approach in \cref{InRu11a} was to use the known optimum to 
@@ -121,10 +122,13 @@ which optimises w.r.t. the resulting $C_{\max}$ scaled to its true optimum,
 i.e., \cref{eq:rho}.
 \end{subequations}
 
+\section{Experimental results}
+
 Main statistics of the experimental run are given in \cref{cma:funeval} and 
 depicted in \cref{fig:cma:fit} for both approaches. In addition, evolving 
 decision variables, here weights $\vec{w}$ for \cref{eq:CDR:feat}, are 
 depicted in \cref{fig:cma:wei}. 
+
 
 In order to compare the two objective functions, the best weights reported were 
 used for \cref{eq:CDR:feat} on the corresponding training and test data. 
@@ -154,50 +158,7 @@ $\rho$, is preferred over simply using the unscaled resulting makespan.
 	\cref{eq:cma:objfun}.}\label{fig:cma:boxplot}
 \end{figure}
 
-{\setlength{\tabcolsep}{3pt} 
-\begin{table}[b]
-\caption{Main statistics for \cref{fig:cma:boxplot:set}} 
-\label{tbl:cma:boxplot:set}
-\centering
-\begin{tabular}{lclrrrrrr}
-\toprule
-\multicolumn{2}{c}{\Problem{\text{train}}} & \cref{eq:cma:objfun}  
-    & Min. & 1st Qu. & Median & Mean & 3rd Qu. & Max.\\
-\midrule
-j.rnd & $6\times5$ & $\minCmax$ & 1.90 & 29.35 & 39.71 & 41.13 & 51.11 & 114.30 
-\\ 
-j.rnd & $6\times5$ & $\minRho$ & 0.00 & 21.40 & 30.08 & \textbf{31.44} & 39.72 
-& 86.04 \\ \midrule
-j.rnd & $10\times10$ & $\minRho$ & 0.88 & 7.99 & 10.64 & \textbf{10.87} & 13.40 
-& 27.81 \\ \midrule
-j.rndn & $6\times5$ & $\minCmax$ & 7.43 & 32.08 & 39.97 & \textbf{41.50} & 
-50.00 & 90.39 \\ 
-j.rndn & $6\times5$ & $\minRho$ & 7.43 & 31.54 & 40.67 & 41.58 & 50.98 & 95.16 
-\\ \midrule
-j.rnd, J1 & $6\times5$ & $\minCmax$ & 0.00 & 22.06 & 33.17 & 35.36 & 45.90 & 
-120.00 \\ 
-j.rnd, J1 & $6\times5$ & $\minRho$ & 0.00 & 21.75 & 33.06 & \textbf{35.31} & 
-46.15 & 
-120.00 \\ \midrule
-f.rnd & $6\times5$ & $\minCmax$ & 0.00 & 17.91 & 25.77 & \textbf{26.37} & 34.32 
-& 69.73 \\ 
-f.rnd & $6\times5$ & $\minRho$ & 3.91 & 25.44 & 33.15 & 34.02 & 41.48 & 83.68 
-\\ \midrule
-f.rndn & $6\times5$ & $\minCmax$ & 0.00 & 17.41 & 20.26 & 21.94 & 28.85 & 48.90 
-\\ 
-f.rndn & $6\times5$ & $\minRho$ & 0.00 & 5.92 & 11.67 & \textbf{11.27} & 13.66 
-& 32.36 \\ \midrule
-f.jc & $6\times5$ & $\minCmax$ & 0.00 & 0.71 & 1.77 & 4.73 & 7.91 & 33.26 
-\\ 
-f.jc & $6\times5$ & $\minRho$ & 0.00 & 0.71 & 1.75 & \textbf{4.57} & 7.73 & 
-36.66 \\ \midrule
-f.mc & $6\times5$ & $\minCmax$ & 0.00 & 7.27 & 14.20 & 14.38 & 20.63 & 49.19 \\ 
-f.mc & $6\times5$ & $\minRho$ & 0.00 & 1.31 & 3.11 & \textbf{7.29} & 12.33 & 
-32.07 \\ 
-\bottomrule
-\end{tabular}
-\end{table}}
-
+{\setlength{\tabcolsep}{3pt} \input{tables/stats.boxplot.CMAES.tex}}
 
 \section{Problem difficulty}\label{sec:expr:data}
 The evolution of fitness per generation from the CMA-ES optimisation of 
@@ -215,7 +176,7 @@ fact some features in \cref{tbl:features} are a linear combination of others,
 e.g. $\phi_3=\phi_1+\phi_2$.
 
 \begin{figure}[t]\centering
-	\includegraphics[width=\columnwidth]{CMAfitnessEvo}
+	\includegraphics[width=\columnwidth]{{CMAES.fitness}.pdf}
 	\caption{Fitness for optimising (w.r.t. \cref{eq:cma:makespan,eq:cma:rho} 
 	above and below, receptively), per generation of the CMA-ES 
 	optimisation.}\label{fig:cma:fit}
@@ -233,28 +194,6 @@ e.g. $\phi_3=\phi_1+\phi_2$.
 	each generation of the CMA-ES optimisation. Note, weights are normalised 
 	such that $\norm{\vec{w}}=1$.}\label{fig:cma:wei}
 \end{figure}
-
-\subsection{Scalability}\label{sec:expr:scalability} 
-As a benchmark, the linear ordinal regression model (PREF) from \cref{InRu11a} 
-was created.
-Using the weights obtained from optimising \cref{eq:cma:rho} and applying them 
-on their  $6\times5$ training data. Their main statistics of \cref{eq:rho} 
-are reported in \cref{tbl:results:train} for all training sets described in 
-\cref{tbl:data}. Moreover, the best SDR from which the features in 
-\cref{tbl:features} were inspired by, are also reported for comparison, i.e., 
-most work remaining (MWR) for all \JSP\ problem spaces, and least work 
-remaining (LWR) for all \FSP\ problem spaces.
-
-To explore the scalability of the learning models, a similar comparison to 
-\cref{sec:expr:data} is made for applying the learning models on their 
-corresponding $10\times10$ testing data. Results are reported in 
-\cref{tbl:results:test}. Note, that only resulting $C_{\max}$ is reported as 
-the optimum makespan is not known and \cref{eq:rho} is not applicable. 
-
-{\setlength{\tabcolsep}{3pt}
-    \input{tables/esmodels.6x5}
-    \input{tables/esmodels.10x10}
-}
 
 \section{Discussion and conclusions}\label{sec:disc}
 Data distributions considered in this study either varied 
