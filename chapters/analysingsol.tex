@@ -225,7 +225,14 @@ suboptimal state spaces.
     \captionsetup{list=no}
     \ContinuedFloat
     \subcaptionbox{$10\times10$\label{fig:diff:extr:SDR:10x10}}{
-        \includegraphics[width=0.9\textwidth]{figures/{stepwise.10x10.SDR}.pdf}}
+      \begin{tikzpicture}
+      \node[anchor=south west,inner sep=0] (image) at (0,0,0) 
+      {\includegraphics[width=\textwidth]{figures/{stepwise.10x10.SDR}.pdf}};
+      \begin{scope}[x={(image.south east)},y={(image.north west)}]
+      \node (zoom) at (0.27,.45)
+      {\includegraphics[width=0.24\textwidth]{figures/j.rnd/{stepwise.10x10.SDR.zoom}.pdf}};
+      \end{scope}
+      \end{tikzpicture}}
     \caption{Note, due to computational complexity, only \jrnd{10}{10} has 
     SDR-based trajectories also inspected. Otherwise, only optimal is pursued.}
     \MyCaption{Probability of SDR being optimal 
