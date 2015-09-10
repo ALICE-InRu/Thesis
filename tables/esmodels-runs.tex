@@ -1,25 +1,36 @@
-\begin{table}\centering
+\begin{table}[hb!]\centering
 \caption{Final results for CMA-ES optimisation; total number of generations and 
-    function evaluations and its resulting fitness value for both performance 
-    measures considered.}\label{cma:funeval}
+    function evaluations and its resulting fitness value for both objective 
+    functions.}\label{tbl:cma:run}
 \begin{tabular}{llcrrrrrr}
     \toprule
-    & & & \multicolumn{3}{c}{optimise w.r.t \cref{eq:cma:makespan}} & 
-    \multicolumn{3}{c}{optimise w.r.t. \cref{eq:cma:rho}} \\
-    \multicolumn{2}{c}{\Problem{\text{train}}} & \#models &
+    & & & \multicolumn{3}{c}{optimise \cref{eq:cma:makespan}} & 
+    \multicolumn{3}{c}{optimise \cref{eq:cma:rho}} \\
+    \multicolumn{3}{r}{\Problem{\text{train}} \quad \#models} &
         \#gen & \#eval & $\minCmax$ & \#gen & \#eval & $\minRho$ \\ 
     \midrule
     j.rnd & $6\times5$ & 1 & 1712 & 20544 & 476.34 & 4167 & 50004 & 6.23 \\ 
-    j.rnd & $6\times5$ & $K$ & 1144 & 25168 & 470.87 & 2273 & 50006 & 4.42 \\ 
+    j.rnd & $6\times5$ & $K$ & 2273 & 50006 & 467.92 & 2273 & 50006 & 4.42 \\ 
     j.rndn & $6\times5$ & 1 & 4167 & 50004 & 442.99 & 4167 & 50004 & 8.29 \\ 
-    j.rnd, J1 & $6\times5$ & 1 & 4167 & 50004 & 666.07 & 4167 & 50004 & 3.33 \\ 
+    j.rndn & $6\times5$ & $K$ & 1265 & 27830 & 437.85 & 2273 & 50006 & 6.66 \\ 
+    j.rnd,$J_1$ & $6\times5$ & 1 & 4167 & 50004 & 666.07 & 4167 & 50004 & 3.33 
+    \\ 
+    j.rnd,$J_1$ & $6\times5$ & $K$ & & & & & & \\
+    j.rnd,$M_1$ & $6\times5$ & 1 & 2085 & 25020 & 603.46 & 2623 & 31476 & 5.61 
+    \\ 
+    j.rnd,$M_1$ & $6\times5$ & $K$ & & & & & & \\
     f.rnd & $6\times5$ & 1 & 3682 & 44184 & 570.15 & 4167 & 50004 & 7.34 \\ 
+    f.rnd & $6\times5$ & $K$ &  &  &  & 1220 & 26840 & 5.46 \\ 
     f.rndn & $6\times5$ & 1 & 1828 & 21936 & 508.69 & 4167 & 50004 & 0.96 \\ 
+    f.rndn & $6\times5$ & $K$ &  &  &  & 150 & 3300 & 11.34 \\ 
     f.jc & $6\times5$ & 1 & 4167 & 50004 & 567.80 & 4167 & 50004 & 0.34 \\ 
+    f.jc & $6\times5$ & $K$ &  &  &  & 2273 & 50006 & 0.43 \\ 
     f.mc & $6\times5$ & 1 & 1795 & 21540 & 579.40 & 1730 & 20760 & 0.44 \\ 
-    f.mxc & $6\times5$ & 1 & 1229 & 14748 & 578.36 & 2203 & 26436 & 1.08 \\ 
+    f.mc & $6\times5$ & $K$ &  &  &  & 792 & 17424 & 0.38 \\ 
+    f.mxc & $6\times5$ & 1 & 4167 & 50004 & 578.36 & 4167 & 50004 & 1.08 \\ 
+    f.mxc & $6\times5$ & $K$ & & & & & & \\
     \midrule
-    j.rnd & $10\times10$ & 1 & 106 & 1272 & 899.33 & 2996 & 35952 & 10.49 \\ 
+    j.rnd & $10\times10$ & 1 & 639 & 7668 & 898.81 & 2996 & 35952 & 10.49 \\ 
     \bottomrule
 \end{tabular}    
 \end{table}

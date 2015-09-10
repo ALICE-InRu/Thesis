@@ -124,19 +124,21 @@ i.e., \cref{eq:rho}.
 
 \section{Experimental results}
 
-Main statistics of the experimental run are given in \cref{cma:funeval} and 
+Main statistics of the experimental run are given in \cref{tbl:cma:run} and 
 depicted in \cref{fig:cma:fit} for both approaches. In addition, evolving 
 decision variables, here weights $\vec{w}$ for \cref{eq:CDR:feat}, are 
 depicted in \cref{fig:cma:wei}. 
 
+{\setlength{\tabcolsep}{3pt} \input{tables/esmodels-runs} }
 
 In order to compare the two objective functions, the best weights reported were 
-used for \cref{eq:CDR:feat} on the corresponding training and test data. 
+used for \cref{eq:CDR:feat} on the corresponding training and test set. 
 Its box-plot of \fullnamerho, is depicted in \cref{fig:cma:boxplot:set} and 
 \cref{tbl:cma:boxplot:set} present its main statistics: mean, median, standard 
-deviation, minimum and maximum values. Furthermore, 
-\cref{fig:cma:boxplot:orlib} depicts the box-plot when applying the models (for 
-all training data) on the benchmark problem instances from the OR-Library.
+deviation, minimum and maximum values. 
+Furthermore, \cref{fig:cma:boxplot:orlib} depicts the box-plot when applying 
+the time independent models (for all training data) on the benchmark problem 
+instances from the OR-Library.
 
 In the case of \frndn{6}{5}, \cref{eq:cma:rho} gave a considerably worse 
 results, since the optimisation got trapped in a local minima, as the erratic 
@@ -157,6 +159,7 @@ $\rho$, is preferred over simply using the unscaled resulting makespan.
 	obtained from CMA-ES optimisation, using objective functions from 
 	\cref{eq:cma:objfun}.}\label{fig:cma:boxplot}
 \end{figure}
+
 
 {\setlength{\tabcolsep}{3pt} \input{tables/stats.boxplot.CMAES.tex}}
 
@@ -181,7 +184,6 @@ e.g. $\phi_3=\phi_1+\phi_2$.
     generation of the CMA-ES optimisation.}\label{fig:cma:fit}
 \end{figure}
 
-\input{tables/esmodels-runs}
 
 \begin{figure} 
 	\subcaptionbox{minimise w.r.t. \cref{eq:cma:makespan} 
