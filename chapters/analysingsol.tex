@@ -277,6 +277,17 @@ dispatching rule should use  best of both worlds, and outperform all of its
 inherited DRs, otherwise it goes without saying, one would simply keep on still 
 using the original DR that achieved the best results.
 
+Revisiting \cref{fig:diff:extr:SDR:10x10} for \jrnd{10}{10}, we can see that 
+even though SPT is generally more likely to find optimal dispatches in the 
+initial steps, then shortly after $k=15$ MWR becomes a contender again. 
+This could explain why our BDR switch at $k=40$ in 
+\cref{fig:diff:boxplot:BDR} was unsuccessful. 
+However, changing to MWR at $k=10$ or $k=15$ is not statically significant from 
+MWR (boost in mean $\rho$ is at most 1.25\%). 
+But as pointed in \cref{sec:diff:opt:sub}, it's not so fatal to make bad moves 
+in the very first dispatches for \jrnd{10}{10}, hence little is gained with 
+improved classification accuracy in that region.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\textwidth]{figures/{j.rnd}/{boxplotRho.BDR.10x10}.pdf}
