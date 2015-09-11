@@ -186,14 +186,15 @@ e.g. $\phi_3=\phi_1+\phi_2$.
 
 
 \begin{figure} 
-	\subcaptionbox{minimise w.r.t. \cref{eq:cma:makespan} 
-	\label{fig:cma:wei:cmax}}{\includegraphics[width=\textwidth]{{CMAweightsEvo.ES_Cmax}.eps}}
-	\\
-	\subcaptionbox{minimise w.r.t. \cref{eq:cma:rho} 
-	\label{fig:cma:wei:rho}}{\includegraphics[width=\textwidth]{{CMAweightsEvo.ES_rho}.eps}}
-	\caption{Evolution of weights of features (given in \cref{tbl:features}) at 
-	each generation of the CMA-ES optimisation. Note, weights are normalised 
-	such that $\norm{\vec{w}}=1$.}\label{fig:cma:wei}
+\subcaptionbox{evolution of weights for time independent models
+     \label{fig:cma:wei:1}}{
+\includegraphics[width=\textwidth]{{CMAES.weights.timeindependent}.pdf}}\\
+\subcaptionbox{stepwise evolultion of final weights for time dependent models
+    \label{fig:cma:wei:K}}{
+    \includegraphics[width=\textwidth]{{CMAES.weights.timedependent}.pdf}}
+\caption{Evolution of weights for features (given in \cref{tbl:features}).
+    Note, weights are normalised such that $\norm{\vec{w}}=1$.}
+\label{fig:cma:wei}
 \end{figure}
 
 \section{Discussion and conclusions}\label{sec:disc}
