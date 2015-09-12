@@ -175,12 +175,12 @@ amount of function evaluations than using $\minRho$ as an objective.
 Furthermore, the  evolution of the decision variables $\vec{w}$ are depicted in 
 \cref{fig:cma:wei}. As one can see, the relative contribution for each weight 
 clearly differs between problem spaces. Note, that in the case of 
-\jrndn{6}{5} (cf. \cref{fig:cma:wei:rho}), CMA-ES restarts around generation 
-1,600 and quickly converges back to its previous fitness. However, lateral 
-relation of weights has completely changed, implying that there are many 
-optimal combinations of weights to be used. This can be expected due to the 
-fact some features in \cref{tbl:features} are a linear combination of others, 
-e.g. $\phi_3=\phi_1+\phi_2$.
+\jrnd{6}{5} (cf. \cref{fig:cma:wei:1,fig:cma:fit}), CMA-ES restarts around 
+generation 1,600 and quickly converges back to its previous fitness. 
+However, lateral relation of weights has completely changed, implying that 
+there are many optimal combinations of weights to be used. This can be expected 
+due to the fact some features in \cref{tbl:features} are a linear combination 
+of others, e.g. $\phi_3=\phi_1+\phi_2$.
 
 \begin{figure}[t]\centering
     \includegraphics[width=\columnwidth]{{CMAES.generation.log.fitness}.pdf}
