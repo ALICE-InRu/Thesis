@@ -6,11 +6,13 @@ a category within combinatorial optimisation problems.
 A subclass of scheduling problems is \jsp\ (\JSP), which 
 is widely studied in operations research. 
 \JSP\ deals with the allocation of tasks of competing resources where its goal 
-is to optimise a single or multiple objectives. 
-\Jsp's analogy is from manufacturing industry where a set of jobs are broken down into tasks that must be processed on several machines in a workshop. 
+is to optimise one ore more objectives. 
+\Jsp's analogy is from the manufacturing industry where a set of jobs are 
+broken down into tasks that must be processed on several machines in a 
+workshop. 
 Furthermore, its formulation can be applied on a wide variety of practical 
 problems in real-life applications which involve decision making. Therefore, 
-its problem-solving capabilities has a high impact on many manufacturing 
+its problem-solving capabilities have a high impact on many manufacturing 
 organisations. % Gefa dæmi?
 
 Deterministic \JSP\ is the most \emph{general} case for classical scheduling problems \citep{Jain99}. 
@@ -23,7 +25,7 @@ For instance, the \textit{travelling salesman problem}\footnote{
     between them.}
  can be contrived as \JSP
 \begin{enumerate*}[label={{}}]
-    \item with the salesman as a single machine in use
+    \item the salesman as a single machine in use
     \item the cities to be visited are the jobs to be processed
     \item distance is sequence dependent set-up time
 \end{enumerate*}
@@ -77,13 +79,13 @@ $a$ refers to a machine $M_a\in\mathcal{M}$. If a job requires a number of
 processing steps or operations, then the pair $(j,a)$ refers to the operation, 
 i.e., processing the task of job $J_j$ on machine $M_a$. Moreover, index $k$ 
 will denote the time step of the operation. Note that once an operation is 
-started, it must be completed uninterrupted, i.e., pre-emption is not allowed. 
+started it must be completed uninterrupted, i.e., pre-emption is not allowed. 
 Moreover, there are no sequence dependent set-up times.
 
-For any given \JSP, then each job $J_j$ has an indivisible processing time (or 
+For any given \JSP\ each job $J_j$ has an indivisible processing time (or 
 cost) on machine $M_a$, $p_{ja}$, which is assumed to be integral and finite. 
 
-Starting time of job $J_j$ on machine $M_a$ is denoted $x_s(j,a)$ and its 
+The starting time of job $J_j$ on machine $M_a$ is denoted $x_s(j,a)$ and its 
 completion or end time is denoted $x_e(j,a)$ where, 
 \begin{equation}  x_e(j,a):=x_s(j,a)+p_{ja} \end{equation} 
 
@@ -132,7 +134,7 @@ $\mathcal{J}_a\subset\mathcal{J}$.
 
 \section{Construction heuristics}\label{sec:CH}
 Construction heuristics are designed in such a way that it limits the search 
-space in a logical manner. Preferably without excluding the true optimum. 
+space in a logical manner, preferably without excluding the true optimum. 
 Here, the construction heuristic, $\Upsilon$, is to schedule the dispatches as 
 closely together as possible, i.e., minimise the schedule's idle times. 
 More specifically, once an operation $(j,a)$ has been chosen from the job-list, 
