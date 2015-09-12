@@ -168,14 +168,15 @@ its corresponding labelling for \cref{eq:trdat:metadata} are the following:
     \sdr~MWR.
     \item[Random trajectory, \PhiSet{RND},] at each dispatch some random task 
     is dispatched.
-    \item[CMA-ES trajectory, \PhiSet{CMA},] at each dispatch the task 
+    \item[CMA-ES trajectory, $\Phi^{\minRho}$,] at each dispatch the task 
     corresponding to highest priority, computed with fixed weights $\vec{w}$, 
-    which were obtained by optimising the mean for \fullnamerho, with CMA-ES. 
+    which were obtained by optimising the mean for \fullnamerho, with CMA-ES 
+    optimisation from \cref{ch:esmodels}. 
     \item[All trajectories, \PhiSet{ALL},] denotes all aforementioned 
     trajectories were explored, i.e., \vspace*{-18pt}
     \begin{equation}
     \Phi^{\text{ALL}}:=\condset{\Phi^{A}}{\forall A \in 
-    \{\text{OPT,~CMA,~SPT,~LPT,~LWR,~MWR,~RND}\}}
+    \left\{\text{OPT,~SPT,~LPT,~LWR,~MWR,~RND,~}\minRho\right\}}
     \end{equation}
 \end{description}
 
@@ -187,7 +188,7 @@ Hence it is appropriate to follow some random optimal path to begin with and
 then go after some (if not all possible) optimal paths until completion at step 
 $K$. 
 
-In the case of the $\Phi^{\langle \text{SDR} \rangle}$ and \PhiSet{CMA} 
+In the case of the $\Phi^{\langle \text{SDR} \rangle}$ and $\Phi^{\minRho}$ 
 trajectories it is sufficient to explore each trajectory exactly once for each 
 problem instance. 
 Whereas, for \PhiSet{OPT} and \PhiSet{RND} there can be several 
@@ -211,20 +212,22 @@ have $\abs{\Phi}\propto\abs{\mathcal{L}}$.
 Whereas MWR tries to keep the jobs more balanced, hence more steady 
 $\abs{\mathcal{L}}$, until at $k>(K-n)$ then \mbox{$\abs{\mathcal{L}} \lneq 
 (K-k)$}, which explains the sharp decent near the end for MWR.
-\Cref{tbl:size:trdat} gives the total size for $\abs{\Phi}$, which gives the 
+\Cref{tbl:size:trdat} gives the total size for $\abs{\Phi}$, indicating the
 number of optimisations needed for obtaining $\mathcal{Y}$.
 
 \begin{figure}[t]
     \includegraphics[width=\textwidth]{{trdat.size.6x5}.pdf}
+    \vspace{-24pt}
     \caption[Size of training set, $\abs{\Phi}$]{Size of training set, 
         $\abs{\Phi}$, for different trajectory strategies 
         ($N_{\text{train}}=500$)}
     \label{fig:size:trdat}
 \end{figure}
 
-\begin{table}\centering
+\begin{table}[b]\centering
     \caption{Total number of features in $\Phi$ for all $K$ steps}
     \label{tbl:size:trdat}
+    \vspace{-12pt}
 {\setlength{\tabcolsep}{2pt} \scriptsize
 \subcaptionbox{\Problem[6\times5]{\text{train}}, $N_{\text{train}}=500$}{
 \begin{tabular}{lccccccccc}
@@ -239,7 +242,8 @@ number of optimisations needed for obtaining $\mathcal{Y}$.
   MWR & 79230 & 82500 & 78327 & 77934 & 79288 & 82500 & 80546 & 82498 & 82485 \\
   RND & 71390 & 71608 & 71445 & 71463 & 71427 & 71945 & 71558 & 71456 & 71649 \\
   OPT & 76592 & 78176 & 74109 & 74069 & 70037 & 69180 & 69716 & 71602 & 71102 \\
-  CMA & 79319 & 81423 & 79070 & 78501 & 72866 & 56428 & 60049 & 52710 & 57177 \\
+  $\minRho$ & 79319 & 81423 & 79070 & 78501 & 72866 & 56428 & 60049 & 52710 & 
+  57177 \\
   \bottomrule
 \end{tabular}}
 \subcaptionbox{\Problem[10\times10]{\text{train}}, $N_{\text{train}}=300$}{
