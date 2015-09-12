@@ -204,15 +204,27 @@ latter SDR, i.e., the extremal values for those given features.
 \Cref{fig:diff:extr:SDR} depicts the corresponding probabilities from 
 \cref{fig:diff:extr:features} in one graph, for all problem spaces in 
 \cref{tbl:data}.
+Furthermore, we know that our SDR heuristics aren't  perfect, and they're bound 
+to make mistakes at some point. 
+It's interesting to see how that stepwise optimality evolves for its intended 
+trajectory, thereby updating \cref{eq:tracc:opt} to
+\begin{equation} \label{eq:tracc:track}
+\hat{\xi}_{\pi} := \mathbb{E}\left\{\pi_{\star} = \pi \;\mid\; \pi \right\}
+\end{equation}
+As a result $\hat{\xi}_{\pi}$ is based on $\{\Phi^\pi,\mathcal{Y}\}$ meta-data 
+from \cref{eq:trdat:metadata}.
+\Cref{fig:diff:extr:SDR} shows the difference between $\xi_{\langle \text{SDR} 
+    \rangle}$ and $\hat{\xi}_{\langle \text{SDR} \rangle}$.
 
 Now, let's bare in mind \namerho, of applying SDRs throughout the dispatching 
 process (cf. box-plots of which in \cref{fig:SDR:boxplot}), then there is a 
 some correspondence between high probability of stepwise optimality and low 
-$\rho$. Alas, this isn't always the case, for \jrnd{10}{10} SPT always 
-outperforms LPT w.r.t. stepwise optimality, however, this does not transcend to 
-SPT having a lower $\rho$ value than LPT. Hence, it's not enough to just learn 
-optimal behaviour, one needs to investigate what happens once we encounter 
-suboptimal state spaces.
+$\rho$. Alas, this isn't always the case, for \jrnd{10}{10} 
+${\xi}_{\text{SPT}}$ always outperforms ${\xi}_{\text{LPT}}$ in choosing a 
+dispatch which may result in an optimal schedule. However, this does not 
+transcend to SPT having a lower $\rho$ value than LPT. Hence, it's not enough 
+to just learn optimal behaviour, one needs to investigate what happens once we 
+encounter suboptimal state spaces.
 
 \begin{figure}\centering
    \captionsetup{list=no}
@@ -246,9 +258,12 @@ utilise feature behaviour to motivate new, and \emph{hopefully} better,
 A na\"ive approach would be creating a simple blended \dr\ (BDR) which 
 would be for instance switch between two SDRs at a predetermined time point. 
 Hence, going back to \cref{fig:diff:extr:SDR:10x10} a presumably good BDR for 
-\jrnd{10}{10}  would be starting with SPT and then switching over to MWR at 
-around time step $k=40$, where the SDRs change places in outperforming one 
-another. 
+\jrnd{10}{10}  would be starting with ${\xi}_{\text{SPT}}$ and then switching 
+over to ${\xi}_{\text{MWR}}$ at around time step $k=40$, where the SDRs change 
+places in outperforming one another. 
+In addition, we can see that even though $\hat{\xi}_{\text{SPT}}$ is generally 
+more likely to find optimal dispatches in the initial steps, then shortly after 
+$k=15$, $\hat{\xi}_{\text{MWR}}$ becomes a contender again. 
 Note, MWR$\cap$SPT hardly ever coincide for easy or hard schedules (cf. 
 \cref{tbl:easy:cnt:10x10,tbl:hard:cnt:10x10}), so its reasonable to believe 
 they could complement one another.
@@ -260,8 +275,9 @@ attribute based on MWR is quite fruitful for good dispatches, whereas the same
 cannot be said about SPT -- a more sophisticated DR is needed to improve upon 
 MWR. 
 
-A reason for this lack of performance of our proposed BDR is perhaps that by 
-starting out with SPT in the beginning, it sets up the schedules in such a way 
+A reason for this lack of performance of our proposed BDR at $k=40$ is perhaps 
+that by starting out with SPT in the beginning, 
+it sets up the schedules in such a way 
 that it's quite greedy and only takes into consideration jobs with shortest 
 immediate processing times. Now, even though it is possible to find optimal 
 schedules from this scenario, as \cref{fig:diff:extr:SDR} shows, the inherent 
@@ -272,14 +288,16 @@ already created. \Cref{fig:diff:boxplot:BDR} does however show, that by
 applying MWR instead of SPT in the latter stages, does help the schedule to be 
 more compact w.r.t. SPT. However, in the case of \jrnd{10}{10} and 
 \jrndn{10}{10} the fact remains that the schedules have diverged too far from 
-what MWR would have been able to achieve on its own. Preferably the blended 
-dispatching rule should use  best of both worlds, and outperform all of its 
-inherited DRs, otherwise it goes without saying, one would simply keep on still 
-using the original DR that achieved the best results.
+what MWR would have been able to achieve on its own, i.e., using SPT 
+downgrades the performance of MWR. 
+Preferably the blended dispatching rule should use  best of both worlds, and 
+outperform all of its inherited DRs, otherwise it goes without saying, one 
+would simply keep on still using the original DR that achieved the best results.
 
 Revisiting \cref{fig:diff:extr:SDR:10x10} for \jrnd{10}{10}, we can see that 
-even though SPT is generally more likely to find optimal dispatches in the 
-initial steps, then shortly after $k=15$ MWR becomes a contender again. 
+even though $\hat{\xi}_{\text{SPT}}$ is generally more likely to find optimal 
+dispatches in the initial steps, then shortly after $k=15$, 
+$\hat{\xi}_{\text{MWR}}$ becomes a contender again. 
 This could explain why our BDR switch at $k=40$ in 
 \cref{fig:diff:boxplot:BDR} was unsuccessful. 
 However, changing to MWR at $k=10$ or $k=15$ is not statically significant from 
@@ -288,7 +306,7 @@ But as pointed in \cref{sec:diff:opt:sub}, it's not so fatal to make bad moves
 in the very first dispatches for \jrnd{10}{10}, hence little is gained with 
 improved classification accuracy in that region.
 
-\begin{figure}[t]
+\begin{figure}[p]
   \centering
   \includegraphics[width=\textwidth]{figures/{j.rnd}/{boxplotRho.BDR.10x10}.pdf}
   \caption{Box plot of \jrnd{10}{10} \namerho, for BDR where SPT is applied 
@@ -469,7 +487,7 @@ subsequent step, i.e., test at time $k$ is based on:
 \begin{equation}
 \vphi_i^{(k)} := \condset{\phi_i^{k'}}{\forall \phi_i\in\Phi}_{k'=k-1}^{k+1} 
 \end{equation}
-for all individual local features $\phi_i\in\{1,..,\NrFeatLocal\}$ from 
+for all individual local features $\phi_i\in\{1,\ldots,\NrFeatLocal\}$ from 
 \cref{tbl:features}.
 
 
