@@ -165,14 +165,18 @@ $\rho$, is preferred over simply using the unscaled resulting makespan.
 
 \section{Problem difficulty}\label{sec:expr:data}
 The evolution of fitness per generation from the CMA-ES optimisation of 
-\cref{eq:cma:rho} is depicted in \cref{fig:cma:fit}. Note, all problem spaces 
-reached their allotted computational time without converging. In fact 
-\frnd{6}{5} and \jrndn{6}{5} needed restarting during the optimisation process.
+\cref{eq:cma:rho} is depicted in \cref{fig:cma:fit}. Note, most problem spaces 
+reached their allotted maximum function evaluations without converging. In fact 
+several problem spaces, e.g., \frnd{6}{5}, needed restarting during the 
+optimisation process.
+Notice \jrndJ{6}{5} especially, then $\minCmax$ needs more than twice the 
+amount of function evaluations than using $\minRho$ as an objective.
+
 Furthermore, the  evolution of the decision variables $\vec{w}$ are depicted in 
 \cref{fig:cma:wei}. As one can see, the relative contribution for each weight 
 clearly differs between problem spaces. Note, that in the case of 
 \jrndn{6}{5} (cf. \cref{fig:cma:wei:rho}), CMA-ES restarts around generation 
-1,000 and quickly converges back to its previous fitness. However, lateral 
+1,600 and quickly converges back to its previous fitness. However, lateral 
 relation of weights has completely changed, implying that there are many 
 optimal combinations of weights to be used. This can be expected due to the 
 fact some features in \cref{tbl:features} are a linear combination of others, 
@@ -186,11 +190,11 @@ e.g. $\phi_3=\phi_1+\phi_2$.
 
 
 \begin{figure} 
-\subcaptionbox{evolution of weights for time independent models
+\subcaptionbox{evolution of weights for \jrnd{n}{m} time independent models
      \label{fig:cma:wei:1}}{
 \includegraphics[width=\textwidth]{{CMAES.weights.timeindependent}.pdf}}\\
-\subcaptionbox{stepwise evolultion of final weights for time dependent models
-    \label{fig:cma:wei:K}}{
+\subcaptionbox{stepwise evolultion of final weights for \jrnd{6}{5} time 
+    dependent models \label{fig:cma:wei:K}}{
     \includegraphics[width=\textwidth]{{CMAES.weights.timedependent}.pdf}}
 \caption{Evolution of weights for features (given in \cref{tbl:features}).
     Note, weights are normalised such that $\norm{\vec{w}}=1$.}
