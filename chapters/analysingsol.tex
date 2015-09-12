@@ -77,7 +77,7 @@ expert policy $\pi_\star$, i.e., $Y^{\pi_\star}=Y^\pi$. Note, for $\xi_\pi$ we
 only need $\{\Phi^{OPT},\mathcal{Y}\}$ from \cref{eq:trdat:metadata}
 \begin{enumerate*}
     \item retrace $\pi_\star$ as done in \cref{pseudo:constructJSP}
-    \item inspect if the job $j^*$ chosen by $\pi$ yields the same 
+    \item inspect if the job $J_{j^*}$ chosen by $\pi$ yields the same 
     $C_{\max}^{\pi_\star(\vchi^{j^*})}$ as the true optimum, 
     $C_{\max}^{\pi_\star}$
 \end{enumerate*}
@@ -230,8 +230,11 @@ encounter suboptimal state spaces.
    \captionsetup{list=no}
     \subcaptionbox{$6\times5$\label{fig:diff:extr:SDR:6x5}}{
         \includegraphics[width=\textwidth]{figures/{stepwise.6x5.SDR}.pdf}}
-    \caption{Probability of SDR being optimal move. Both optimal (solid) and 
-    SDR-based (dashed) trajectories are inspected.}\label{fig:diff:extr:SDR}
+    \caption[Probability of SDR yielding optimal move]{
+        sProbability of SDR yielding optimal move. Both optimal 
+    (solid: $\xi_{\langle \text{SDR}\rangle}$) and SDR-based 
+    (dashed: $\hat{\xi}_{\langle \text{SDR}\rangle}$) trajectories are 
+    inspected.}\label{fig:diff:extr:SDR}
 \end{figure}
 \begin{figure}[t]\centering
     \captionsetup{list=no}
@@ -306,7 +309,7 @@ But as pointed in \cref{sec:diff:opt:sub}, it's not so fatal to make bad moves
 in the very first dispatches for \jrnd{10}{10}, hence little is gained with 
 improved classification accuracy in that region.
 
-\begin{figure}[p]
+\begin{figure}[t]
   \centering
   \includegraphics[width=\textwidth]{figures/{j.rnd}/{boxplotRho.BDR.10x10}.pdf}
   \caption{Box plot of \jrnd{10}{10} \namerho, for BDR where SPT is applied 
