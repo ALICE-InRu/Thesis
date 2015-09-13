@@ -122,55 +122,18 @@ which optimises w.r.t. the resulting $C_{\max}$ scaled to its true optimum,
 i.e., \cref{eq:rho}.
 \end{subequations}
 
-\section{Experimental results}
+\section{Experimental results}\label{sec:cma:expr}
 
 Main statistics of the experimental run are given in \cref{tbl:cma:run} and 
 depicted in \cref{fig:cma:fit} for both approaches. In addition, evolving 
 decision variables, here weights $\vec{w}$ for \cref{eq:CDR:feat}, are 
 depicted in \cref{fig:cma:wei}. 
 
-{\setlength{\tabcolsep}{3pt} \input{tables/esmodels-runs} }
-
-In order to compare the two objective functions, the best weights reported were 
-used for \cref{eq:CDR:feat} on the corresponding training and test set. 
-Its box-plot of \fullnamerho, is depicted in \cref{fig:cma:boxplot:set} and 
-\cref{tbl:cma:boxplot:set} present its main statistics: mean, median, standard 
-deviation, minimum and maximum values. 
-Furthermore, \cref{fig:cma:boxplot:orlib} depicts the box-plot when applying 
-the time independent\footnote{Note, time dependant models are inapplicable
-    for OR-Library, since they're size $n\times m$ doesn't match any in the 
-    benchmark set. However, this is irrelevant for time independent models.} 
-models (for all training data) on the benchmark problem 
-instances from the OR-Library.
-
-In the case of \frndn{6}{5}, \cref{eq:cma:rho} gave a considerably worse 
-results, since the optimisation got trapped in a local minima, as the erratic 
-evolution of the weights in \cref{fig:cma:wei:cmax} suggest.
-For other problem spaces, \cref{eq:cma:makespan} gave slightly better results 
-than \cref{eq:cma:rho}. However, there was no statistical difference between 
-adopting either objective function. Therefore, minimisation of expectation of 
-$\rho$, is preferred over simply using the unscaled resulting makespan. 
-
-\begin{figure}[p]
-    \subcaptionbox{Models applied to corresponding training and test set
-        \label{fig:cma:boxplot:set}}{
-        \includegraphics[width=\textwidth]{{boxplot.CMAES}.pdf}}
-    \subcaptionbox{Models applied to ORLIB test set 
-        \label{fig:cma:boxplot:orlib}}{
-        \includegraphics[width=\textwidth]{{boxplot.CMAES.ORLIB}.pdf}}
-	\caption{Box-plot for \namerho, when implementing the final weights 
-	obtained from CMA-ES optimisation, using objective functions from 
-	\cref{eq:cma:objfun}.}\label{fig:cma:boxplot}
-\end{figure}
-
-
-{\setlength{\tabcolsep}{3pt} \input{tables/stats.boxplot.CMAES.tex}}
-
-\section{Problem difficulty}\label{sec:expr:data}
 The evolution of fitness per generation from the CMA-ES optimisation of 
-\cref{eq:cma:rho} is depicted in \cref{fig:cma:fit}. Note, most problem spaces 
-reached their allotted maximum function evaluations without converging. In fact 
-several problem spaces, e.g., \frnd{6}{5}, needed restarting during the 
+\cref{eq:cma:objfun} is depicted in \cref{fig:cma:fit}. 
+Note, most problem spaces reached their allotted maximum function evaluations 
+(set as 50,000) without converging. 
+In fact several problem spaces, e.g., \frnd{6}{5}, needed restarting during the 
 optimisation process.
 Notice \jrndJ{6}{5} especially, then $\minCmax$ needs more than twice the 
 amount of function evaluations than using $\minRho$ as an objective.
@@ -184,70 +147,116 @@ However, lateral relation of weights has completely changed, implying that
 there are many optimal combinations of weights to be used. This can be expected 
 due to the fact some features in \cref{tbl:features} are a linear combination 
 of others, e.g. $\phi_3=\phi_1+\phi_2$.
+Moreover, from \cref{fig:cma:wei:K} we see that the evolution of weights w.r.t. 
+each step $k$ is quite erratic and \cref{eq:cma:makespan} is somewhat 
+dissimilar to its \cref{eq:cma:rho} counterpart, yet their resulting  $\rho$ 
+values are not significantly different. Most likely, this can be explained by 
+feature equivalence. 
+
+{\setlength{\tabcolsep}{3pt} \input{tables/esmodels-runs} }
 
 \begin{figure}[t]\centering
     \includegraphics[width=\columnwidth]{{CMAES.generation.log.fitness}.pdf}
     \caption{Log fitness for optimising w.r.t. \cref{eq:cma:objfun}, per 
-    generation of the CMA-ES optimisation.}\label{fig:cma:fit}
+        generation of the CMA-ES optimisation.}\label{fig:cma:fit}
 \end{figure}
-
 
 \begin{figure} 
-\subcaptionbox{evolution of weights for \jrnd{n}{m} time independent models
-     \label{fig:cma:wei:1}}{
-\includegraphics[width=\textwidth]{{CMAES.weights.timeindependent}.pdf}}\\
-\subcaptionbox{stepwise evolultion of final weights for \jrnd{6}{5} time 
-    dependent models \label{fig:cma:wei:K}}{
-    \includegraphics[width=\textwidth]{{CMAES.weights.timedependent}.pdf}}
-\caption{Evolution of weights for features (given in \cref{tbl:features}).
-    Note, weights are normalised such that $\norm{\vec{w}}=1$.}
-\label{fig:cma:wei}
+    \subcaptionbox{evolution of weights for \jrnd{n}{m} time independent models
+        \label{fig:cma:wei:1}}{
+        \includegraphics[width=\textwidth]{{CMAES.weights.timeindependent}.pdf}}\\
+    \subcaptionbox{stepwise evolultion of final weights for \jrnd{6}{5} time 
+        dependent models \label{fig:cma:wei:K}}{
+        \includegraphics[width=\textwidth]{{CMAES.weights.timedependent}.pdf}}
+    \caption{Evolution of weights for features (given in \cref{tbl:features}).
+        Note, weights are normalised such that $\norm{\vec{w}}=1$.}
+    \label{fig:cma:wei}
 \end{figure}
 
-\section{Discussion and conclusions}\label{sec:disc}
-Data distributions considered in this study either varied 
-w.r.t. the processing time distributions, continuing the preliminary 
-experiments in  \cref{InRu11a}, or 
-w.r.t. the job ordering permutations -- i.e., homogeneous machine order for 
-\FSP\ versus heterogeneous machine order for JSP. 
-From the results based on $6\times5$ training data given  in 
-\cref{tbl:results:train}, it's obvious that CMA-ES optimisation substantially 
-outperforms the previous PREF methods from \cref{InRu11a} for all problem 
-spaces considered. Furthermore, the results hold when testing on $10\times10$ 
-(cf. \cref{tbl:results:test}), suggesting the method is indeed scalable to 
-higher dimensions. 
+In order to compare the two objective functions in \cref{eq:cma:objfun}, the 
+best weights reported were used for \cref{eq:CDR:feat} on the corresponding 
+training and test set. 
+Its box-plot of \fullnamerho, is depicted in \cref{fig:cma:boxplot:set} and 
+\cref{tbl:cma:boxplot:set} presents its main statistics: mean, median, standard 
+deviation, minimum and maximum values. 
 
-Moreover, the study showed that the choice of objective function  for 
-evolutionary search is worth investigating. There was no statistical difference 
-from minimising the fitness function directly and its normalisation w.r.t. true 
-optimum (cf. \cref{eq:cma:makespan,eq:cma:rho}), save for \frndn{6}{5}. 
-Implying, even though ES doesn't rely on optimal solutions, there are some 
+In most cases (except for \frndn{6}{5}, \fjc{6}{5}) there was a 
+significant difference w.r.t. lower mean $\rho$, when using a separate model 
+for each time step, as is to be expected as the optimal \dr s used in the 
+beginning of the scheduling process may not necessarily be the same as in the 
+middle, or end of the schedule. 
+Alas, stepwise models aren't appropriate when inspecting robustness towards 
+different problem spaces.\footnote{Note, time dependant 
+    models are inapplicable for OR-Library, since their size $n\times m$ 
+    doesn't match any size in the benchmark set. However, this is irrelevant 
+    for time independent models.}
+Hence, a single model for all iterations is preferred. 
+
+Regarding the choice of objective function in \cref{eq:cma:objfun}, then there 
+is no statistical difference between adopting either objective function with 
+respect to training and test set, save for time independent \fmxc{6}{5}. 
+Now, when applying the time independent models to the OR-Library benchmark 
+data sets, depicted in \cref{fig:cma:boxplot:orlib}, then we see a clear 
+performance boost when using \cref{eq:cma:rho} in 
+\begin{enumerate*}
+    \item \fjc{6}{5}, \fmc{6}{5} and \fmxc{6}{5} for \JSP\ 
+    \item \fjc{6}{5} and \fmxc{6}{5} for \FSP\ 
+\end{enumerate*}
+Therefore, minimisation of expectation of $\rho$, is preferred over simply 
+using the unscaled resulting makespan. 
+Also it's noted that in \cref{InRu14}, then \fjc{6}{5} optimised w.r.t. 
+\cref{eq:cma:makespan} gave a considerably worse results, since the 
+optimisation got trapped in a local minima.
+
+Furthermore, notice how \fmxc{6}{5} obtains a significantly better mean $\rho$ 
+(from 52.8\% down to 24.46\%) for the \JSP\ (cf. \cref{fig:cma:boxplot:orlib}) 
+then it did for it's corresponding problem space, which was the only setting 
+where \cref{eq:cma:rho} was significantly different than \cref{eq:cma:makespan} 
+(worsening by $\approx1\%$).
+
+\begin{figure}[p]
+    \subcaptionbox{Models applied to corresponding training and test set
+        \label{fig:cma:boxplot:set}}{
+        \includegraphics[width=\textwidth]{{boxplot.CMAES}.pdf}}
+    \subcaptionbox{Models applied to ORLIB test set 
+        \label{fig:cma:boxplot:orlib}}{
+        \includegraphics[width=\textwidth]{{boxplot.CMAES.ORLIB}.pdf}}
+	\caption{Box-plot for \namerho, when implementing the final weights 
+	obtained from CMA-ES optimisation, using objective functions from 
+	\cref{eq:cma:objfun}.}\label{fig:cma:boxplot}
+\end{figure}
+
+{\setlength{\tabcolsep}{3pt} \input{tables/stats.boxplot.CMAES.tex}}
+
+
+
+\section{Discussion and conclusions}\label{sec:disc}
+Data distributions considered in this study incorporated more problem spaces 
+than in its initial reports in  \cref{InRu14}. Furthermore, both time dependent 
+and independent models were optimised with CMA-ES. The former generally 
+obtained lower mean $\rho$. However, the latter was often equally good, with 
+the added benefit of being applicable for higher (or lower) dimensionality, 
+which was then tested using the benchmark set from the OR-Library.
+
+The study showed that the choice of objective function for evolutionary search 
+is worth investigating. 
+There was no statistical difference from minimising the fitness function 
+directly and its normalisation w.r.t. true optimum (cf. \cref{eq:cma:objfun}), 
+save for time independent \fmxc{6}{5}, when applying the models to their 
+corresponding training and test set. However, preliminary experiments in 
+\cref{InRu14} and application on unseen data sets from the OR-Library, showed 
+great improvement when using \cref{eq:cma:rho} over \cref{eq:cma:makespan}.
+Implying, even though CMA-ES doesn't rely on optimal solutions, there are some 
 problem spaces where it can be of great benefit. This is due to the fact that 
 the problem instances can vary greatly within the same problem space 
 \cref{InRu12}. Thus normalising the objective function would help the 
 evolutionary search to deviate from giving too much weight for problematic 
 problem instances.
 
-The weights for \cref{eq:CDR:feat} in \cref{InRu11a} were found using 
-supervised learning, where the training data was created from optimal solutions 
-of randomly generated problem instances. As an alternative, this study showed  
-that minimising the mean makespan directly using a brute force search via 
-CMA-ES actually results in a better CDRs. The nature of CMA-ES is to explore 
-suboptimal routes until it converges to an optimal one. Implying that the 
-previous approach of only looking into one optimal route may not produce a 
-sufficiently rich training set. That is, the training set should incorporate a 
-more complete knowledge on \emph{all} possible preferences, i.e., make also the 
-distinction between suboptimal and sub-suboptimal features, etc.  This would 
-require a Pareto ranking of preferences which can be used to make the 
-distinction to which feature sets are equivalent, better or worse -- and to 
-what degree, i.e., by giving a weight to the preference. This would result in a 
-very large training set, which of course could be re-sampled in order to make 
-it computationally feasible to learn.
-
-The main drawback of using evolutionary search for learning optimal weights for 
+The main drawback of using evolutionary search for finding optimal weights for 
 \cref{eq:CDR:feat} is how computationally expensive it is to evaluate the mean 
-expected fitness. Even for a low problem dimension such  as 6-job 5-machine 
-JSP, each optimisation run reached their maximum allotted function evaluations 
+expected fitness. Even for a low problem dimension such as 6-job 5-machine 
+\JSP, each optimisation run reached their maximum allotted function evaluations 
 without converging. 
 Now, $6\times5$ \JSP\ requires 30 sequential operations where at each time step 
 there are up to $6$ jobs to choose from, in fact its complexity is  
@@ -261,7 +270,7 @@ therefore it is appropriate to retain a sufficiently accurate surrogate for the
 value function during evolution in order to reduce the number of costly true 
 value function evaluations, such as the approach in \cref{InRu11b}. This could 
 reduce the computational cost of the evolutionary search considerably, making 
-it feasible to conduct the experiments from \cref{sec:expr} for problems of 
+it feasible to conduct the experiments from \cref{sec:cma:expr} for problems of 
 higher dimensions, e.g., with these adjustments it is possible to train on 
-$10\times10$ with greater ease, or even considering even  higher dimensions, 
+$10\times10$ with greater ease, or even considering even higher dimensions, 
 e.g. $14\times14$.
