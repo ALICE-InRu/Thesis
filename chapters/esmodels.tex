@@ -137,7 +137,10 @@ Its box-plot of \fullnamerho, is depicted in \cref{fig:cma:boxplot:set} and
 \cref{tbl:cma:boxplot:set} present its main statistics: mean, median, standard 
 deviation, minimum and maximum values. 
 Furthermore, \cref{fig:cma:boxplot:orlib} depicts the box-plot when applying 
-the time independent models (for all training data) on the benchmark problem 
+the time independent\footnote{Note, time dependant models are inapplicable
+    for OR-Library, since they're size $n\times m$ doesn't match any in the 
+    benchmark set. However, this is irrelevant for time independent models.} 
+models (for all training data) on the benchmark problem 
 instances from the OR-Library.
 
 In the case of \frndn{6}{5}, \cref{eq:cma:rho} gave a considerably worse 
