@@ -9,7 +9,7 @@ Let $\vphi_{o}\in\mathcal{F}$ denote the post-decision state when dispatching $J
 Note, a negative example is only created as long as $J_s$ actually results in a worse makespan, i.e., $C_{\max}^{(s)}\gneq C_{\max}^{(o)}$, since there can exist situations in which more than one operation can be considered optimal.
 
 The preference learning problem is specified by a set of preference pairs,
-\begin{equation}\label{eq:\Psi:jsp}
+\begin{equation}\label{eq:Psi:jsp}
 	\Psi := \bigcup_{\{\vec{x}_i\}_{i=1}^{N_{\text{train}}}}
     \condset{
         \left\{\vec{z}_o,+1\right\},\left\{\vec{z}_s,-1\right\}}{\forall (o,s) 
@@ -42,7 +42,7 @@ $J_{j^*}$, is the one corresponding to the highest preference estimate, i.e.,
 	J_{j^*}=\argmax_{J_j\in \mathcal{L}}\; \hat{\pi}(\vphi_j)
 \end{equation}
 where $\hat{\pi}(\cdot)$ is the classification model obtained by the preference 
-set, $\Psi$, defined by \cref{eq:\Psi:jsp}. 
+set, $\Psi$, defined by \cref{eq:Psi:jsp}. 
 
 
 \section{Interpreting linear classification models}
@@ -160,7 +160,7 @@ training data
 
 \subsection{Ranking strategies}\label{sec:trdat:param:ranks}
 The following ranking strategies were implemented for adding preference pairs 
-to $\Psi$ defined by \cref{eq:\Psi:jsp}, they were first reported in 
+to $\Psi$ defined by \cref{eq:Psi:jsp}, they were first reported in 
 \cref{InRu15a},
 \begin{description}
     \item[Basic ranking, $\Psi_b$,] i.e., all optimum rankings $r_1$ versus all 
