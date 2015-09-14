@@ -1,8 +1,7 @@
 \usetikzlibrary{shapes,positioning,shadows,trees}
 
 \tikzset{
-    txtComment/.style = {above, font=\tiny\sffamily, text width=5em, 
-        near end},
+    txtComment/.style = {above, font=\tiny\sffamily, short, near end},
     isLeft/.style = {align=right,left},
     isRight/.style = {align=left,right},
 }
@@ -29,9 +28,9 @@ for tree={
         \forestoption{edge label};
     }
 }
-[Raw Data: \cref{ch:genprobleminstances}, root
-    [Optimum Data: \cref{eq:rho}, tnode, 
-        edge label = {node[txtComment,isLeft]{ Optimise using \cite{gurobi}}},
+[Problem Space: \cref{ch:genprobleminstances}, root
+    [Optimum Data: Expert policy $\pi_\star$, tnode, medium, name=Rho,
+        edge label = {node[txtComment,isLeft,long]{ Query \cite{gurobi}}},
         [Training Set: \cref{ch:gentrdat}, tnode, medium
             [Retrace Set, onode,
             edge label = {node[txtComment,isLeft]{Update $\Phi$ in 
@@ -45,7 +44,7 @@ for tree={
                 \cref{eq:cma:rho} not \cref{eq:cma:makespan} }} 
         ]
     ]
-    [Heuristic Data, onode 
+    [Performance Space, onode, name=Cmax
         [CDR Data: \cref{sec:CDR}, tnode, name=CDR
             [, phantom, calign with current
                 [Linear policy $\pi$: \cref{eq:CDR:feat}, onode, short, 
@@ -59,6 +58,7 @@ for tree={
         ]
     ]
 ]
+\draw[arrow] (Rho) to node[txtComment,sloped] {\cref{eq:rho}}  (Cmax);
 \draw[arrow] (JSP) ->  (FEAT);
 \draw[arrow] (FEAT) ->  (LINEAR);
 \draw[arrow] (LINEAR) to[bend right=5]  (SDR);

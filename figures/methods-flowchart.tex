@@ -15,8 +15,7 @@
         veryshort/.style = {text width=3em},
         short/.style = {text width=4.25em},
         medium/.style = {text width=7em},
-        long/.style = {text width=7em},
-        verylong/.style = {text width=8em},
+        long/.style = {text width=8em}
 }
 
 \forestset{
@@ -26,7 +25,7 @@
     unrotate/.style = {normal, rotate=-90},
     root/.style  = {txtLrg, rotated, fill=gray!50, medium},
     onode/.style = {txtLrg, rotated, fill=gray!25, medium},
-    tnode/.style = {txtSml, normal, fill=gray!10, long},
+    tnode/.style = {txtSml, normal, fill=gray!10, medium},
     emphasis/.style = {}, %tikz={\node [draw,red,thick,fit to tree]{};}},
     edge from parent/.style={arrow, edge from parent fork right}
 }
@@ -45,7 +44,7 @@ for tree={
     [Approximation, root, edge label = {node[txtComment, left]{
             Approximations methods, or heuristics, are generally time 
             efficient, but do not necessarily attain the global optimum.}},
-        [General algorithms (iterative methods), onode, verylong
+        [General algorithms (iterative methods), onode, long
             [Artificial intelligence, onode
                 [Machine learning, onode,  
                     [Roll-out / Pilot method, tnode]
@@ -69,7 +68,7 @@ for tree={
             ]
             [Local search, onode
                 [Reinsertion algorithms, tnode]
-                [Threshold alg., onode, long, unrotate
+                [Threshold alg., onode, medium, unrotate
                     [Simulated annealing, tnode, name=SA]
                     [Threshold accepting, tnode
 %                        [Great Deluge alg. \& record-to-record travel, tnode]
@@ -91,8 +90,8 @@ for tree={
                 [Variable depth search, tnode, name=VDS]
             ]
         ]
-        [Tailored algorithms (constructive methods), onode, verylong
-            [Bottleneck based heuristics, onode, long, unrotate
+        [Tailored algorithms (constructive methods), onode, long
+            [Bottleneck based heuristics, onode, medium, unrotate
                 [Shifting bottleneck procedure, tnode, short, name=SBP
                     [Beam search, tnode, short, name=BS]
                 ]
