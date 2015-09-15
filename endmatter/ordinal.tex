@@ -47,28 +47,12 @@ preference set defined by \cref{eq:PrefSet:problem} is redefined as follows,
 \end{equation}
 
 
-\section{Linear preference}\label{sec:ord:linpref}
+\section{Ordinal Regression}\label{sec:ord:linpref}
 The function used to induce the preference is defined by a linear function in the kernel-defined feature space,
 \begin{equation}\label{eq:pref:kernel} 
   h(\vec{x}) = \sum_{i=1}^d w_i\phi_i(\vec{x})=\inner{\vec{w}}{\vphi(\vec{x})} 
 \end{equation}
 where $\vec{w}=[w_1,\ldots,w_d]\in\mathbb{R}^d$ has weight $w_i$ for feature $\phi_i$.
-
-
-\begin{comment}
-Let $\vec{z}$ denote either $\vphi(\vec{x}_k^{(1)})-\vphi(\vec{x}_k^{(2)})$ with \mbox{$t_k=+1$} or 
-$\vphi(\vec{x}_k^{(2)})-\vphi(\vec{x}_k^{(1)})$ with \mbox{$t_k=-1$}, positive or negative example respectively.
-
-Logistic regression learns the optimal parameters $\vec{w}\in\mathbb{R}^d$ determined by solving the following task,
-\begin{equation}\label{eq:margin}
-	\min_{\vec{w}}\quad \tfrac{1}{2}\inner{\vec{w}}{\vec{w}} + C \sum_{i=1}^{N'} \log\left(1 + e^{-y_i \inner{\vec{w}}{\vec{z}_i}}\right) 
-\end{equation}
-where $C > 0$ is a penalty parameter, and the negative log-likelihood is due to the fact the given data point $\vec{z}_i$ and weights $\vec{w}$ are assumed to follow the probability model,
-\begin{equation}\label{eq:prob}
-	\mathcal{P}\big(y=\pm1|\vec{z},\vec{w}\big)=\frac{1}{1+e^{-y\inner{\vec{w}}{\vec{z}_i}}}.
-\end{equation}
-The logistic regression defined in \cref{eq:margin} is solved iteratively, in particular using Trust Region Newton method \citep[cf.][]{Lin08:newtontrustregion}, which generates a sequence $\{\vec{w}^{(k)}\}_{k=1}^\infty$ converging to the optimal solution $\vec{w}^*$ of \cref{eq:margin}.
-\end{comment}
 
 The aim now is to find a function $h$ that encounters as few training errors as 
 possible on $\Psi$. Applying the method of large margin rank boundaries of 
@@ -79,15 +63,39 @@ determined by solving the following task,
 \end{equation}
 subject to $t_k\inner{\vec{w}}{(\vphi(\vec{x}_k^{(1)})-\vphi(\vec{x}_k^{(2)})}\ge 1 - \xi_k$ and $\xi_k \ge 0$, $k = 1,\ldots, N'$. The degree of constraint violation is given by the margin slack variable $\xi_k$ and when greater than $1$ the corresponding pair are incorrectly ranked. 
 Note that,
-\begin{equation}
+\begin{equation}\label{eq:hfun}
 	h(\vec{x}_i)-h(\vec{x}_j)=\inner{\vec{w}}{\vphi(\vec{x}_i)-\vphi(\vec{x}_j)}
 \end{equation}
 and minimising $\inner{\vec{w}}{\vec{w}}$ in \cref{eq:margin:linear} maximises 
 the margin between rank boundaries, i.e., the distance between adjacently 
 ranked pair $h(\vec{x}^{(1)})$ and $h(\vec{x}^{(2)})$.
 
+\section{Logistic Regression}
+Let $\vec{z}$ denote either $\vphi(\vec{x}_k^{(1)})-\vphi(\vec{x}_k^{(2)})$ 
+with \mbox{$t_k=+1$} or 
+$\vphi(\vec{x}_k^{(2)})-\vphi(\vec{x}_k^{(1)})$ with \mbox{$t_k=-1$}, positive 
+or negative example respectively.
 
-\section{Non-linear preference}\label{sec:ord:nonlinpref}
+Logistic regression learns the optimal parameters $\vec{w}\in\mathbb{R}^d$ 
+determined by solving the following task,
+\begin{equation}\label{eq:margin}
+\min_{\vec{w}}\quad \tfrac{1}{2}\inner{\vec{w}}{\vec{w}} + C \sum_{i=1}^{N'} 
+\log\left(1 + e^{-y_i \inner{\vec{w}}{\vec{z}_i}}\right) 
+\end{equation}
+where $C > 0$ is a penalty parameter, and the negative log-likelihood is due to 
+the fact the given data point $\vec{z}_i$ and weights $\vec{w}$ are assumed to 
+follow the probability model,
+\begin{equation}\label{eq:prob}
+\mathcal{P}\big(y=\pm1|\vec{z},\vec{w}\big)=\frac{1}{1+e^{-y\inner{\vec{w}}{\vec{z}_i}}}.
+\end{equation}
+The logistic regression defined in \cref{eq:margin} is solved iteratively, in 
+particular using Trust Region Newton method 
+\citep[cf.][]{Lin08:newtontrustregion}, which generates a sequence 
+$\{\vec{w}^{(k)}\}_{k=1}^\infty$ converging to the optimal solution $\vec{w}^*$ 
+of \cref{eq:margin}.
+
+
+\section{Non-Linear Preference}\label{sec:ord:nonlinpref}
 In the case that the preference set $\Psi$ defined by \cref{eq:PrefSet:feat} is 
 not linearly separable, a common way of coping with non-linearity is to apply 
 the `kernel-trick' to transform $\Psi$ onto a higher dimension. In which case, 
@@ -98,7 +106,7 @@ In terms of training data, the optimal $\vec{w}^*$ can be expressed as,
 \begin{equation}
 	\vec{w}^*=\sum_{k=1}^{N'} \alpha^* t_k \left( \vphi(\vec{x}_k^{(1)})-\vphi(\vec{x}_k^{(2)}) \right)
 \end{equation}
-and the function $h$ may be reconstructed as follows,
+and the function $h(\cdot)$ from \cref{eq:hfun} may be reconstructed as follows,
 \begin{eqnarray}\label{eq:nonlinear}
 	h(\vec{x})=\inner{\vec{w}^*}{\vphi(\vec{x})} &=& 
 	\sum_{k=1}^{N'} \alpha^* t_k \left( \inner{\vphi(\vec{x}_k^{(1)})}{\vphi(\vec{x})}-\inner{\vphi(\vec{x}_k^{(2)})}{\vphi(\vec{x})} ) \right) \nonumber \\ 
