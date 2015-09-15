@@ -106,13 +106,20 @@ and the function $h$ may be reconstructed as follows,
 \end{eqnarray}
 where $\kappa(\vec{x},\vec{z})=\inner{\vphi(\vec{x})}{\vphi(\vec{z})}$ is the chosen kernel and $\alpha_k^*$ are the Lagrangian multi\-pliers for the constraints that can be determined by solving the dual quadratic programming problem,
 \begin{equation}\label{eq:margin:nonlinear}
-	\max_{\alpha} \sum_{k=1}^{N'} \alpha_k -\frac{1}{2} \sum_{i=1}^{N'}\sum_{j=1}^{N'} \alpha_i\alpha_jt_it_j\left(K(\vec{x}_i^{(1)},\vec{x}_i^{(2)},\vec{x}_j^{(1)},\vec{x}_j^{(2)}) +\frac{1}{C}\delta_{ij}\right)
+	\max_{\alpha} \sum_{k=1}^{N'} \alpha_k -\frac{1}{2} 
+	\sum_{i=1}^{N'}\sum_{j=1}^{N'} \alpha_i\alpha_jt_it_j\left(
+  K\left(\vec{x}_i^{(1)},\vec{x}_i^{(2)},\vec{x}_j^{(1)},\vec{x}_j^{(2)}\right) 
+  +\frac{1}{C}\delta_{ij}\right)
 \end{equation} 
 subject to $\sum_{k=1}^{N'} \alpha_kt_k=0$ and $\alpha_k\geq0$ for all $k\in\{1,\ldots,N'\}$, and where,
-\begin{eqnarray*}
-	K(\vec{x}_i^{(1)},\vec{x}_i^{(2)},\vec{x}_j^{(1)},\vec{x}_j^{(2)})  &=& 
-	\kappa(\vec{x}_i^{(1)},\vec{x}_j^{(1)})-\kappa(\vec{x}_i^{(1)},\vec{x}_j^{(2)})-\kappa(\vec{x}_i^{(2)},\vec{x}_j^{(1)})+\kappa(\vec{x}_i^{(2)},\vec{x}_j^{(2)})
-\end{eqnarray*}
+\begin{eqnarray}
+K\left(\vec{x}_i^{(1)},\vec{x}_i^{(2)},\vec{x}_j^{(1)},\vec{x}_j^{(2)}\right)  
+&=& 
+  \kappa\left(\vec{x}_i^{(1)},\vec{x}_j^{(1)}\right)
+  -\kappa\left(\vec{x}_i^{(1)},\vec{x}_j^{(2)}\right) \\ && \nonumber
+  -\kappa\left(\vec{x}_i^{(2)},\vec{x}_j^{(1)}\right)
+  +\kappa\left(\vec{x}_i^{(2)},\vec{x}_j^{(2)}\right)
+\end{eqnarray}
 and $\delta_{ij}$ is the Kronecker $\delta$ defined to be 1 iff $i=j$ and 0 otherwise.
 
 \subsection*{Kernel functions}
@@ -161,7 +168,7 @@ $i$-th component of all the feature variables in $\Phi$, namely,
 where $i\in\{1\ldots d\}$. 
 
 \section{Implementation}
-To linear ordinal regression, then it's best to use LIBLINEAR: A 
+To use linear ordinal regression, then it's best to use LIBLINEAR: A 
 Library for Large Linear Classification by \citet{main:LIBLINEAR}, which 
 contains implementations in several programming languages. The preferred choice 
 of the author was the R-package 
