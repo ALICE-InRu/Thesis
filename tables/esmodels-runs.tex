@@ -1,12 +1,17 @@
-\begin{table}[b!]\centering
+\begin{table}[t!]\centering
 \caption{Final results for CMA-ES optimisation; total number of generations and 
     function evaluations and its resulting fitness value for both objective 
     functions.}\label{tbl:cma:run}
+\noindent % otherwise minipages will indent page
+\begin{minipage}{\textwidth}\centering
 \begin{tabular}{llcrrrrrr}
     \toprule
     & & & \multicolumn{3}{c}{optimise \cref{eq:cma:makespan}} & 
     \multicolumn{3}{c}{optimise \cref{eq:cma:rho}} \\
-    \multicolumn{3}{r}{\Problem{\text{train}} \quad \#models} &
+    \multicolumn{3}{r}{\Problem{\text{train}} \quad 
+    $\abs{\text{Model}}$\footnote{Models are either stepwise (i.e. 
+        total of $K$ models) or fixed throughout the dispatching 
+        process.}} &
         \#gen & \#eval & $\minCmax$ & \#gen & \#eval & $\minRho$ \\ 
     \midrule
     $j.rnd$ & 6x5 & 1 & 1713 & 20544 & 476.34 & 4168 & 50004 & 6.23 \\ 
@@ -36,5 +41,6 @@
     \midrule
     $j.rnd$ & $10\times10$ & 1 & 966 & 11592 & 898.22 & 2997 & 35952 & 10.49 \\ 
     \bottomrule
-\end{tabular}    
+\end{tabular}
+\end{minipage}
 \end{table}
