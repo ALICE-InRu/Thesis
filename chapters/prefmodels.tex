@@ -5,99 +5,90 @@
 \FirstSentence{L}{earning models considered in this } dissertation are based on ordinal regression in which the learning task is formulated as learning preferences. In the case of scheduling, learning which operations are preferred to others. Ordinal regression has been previously presented in \cite{Ru06:PPSN}, and given in \cref{ch:ordinal} for completeness. 
 
 \section{Ordinal regression for \jsp}
-Let $\vphi_{o}\in\mathcal{F}$ denote the post-decision state when dispatching $J_o$ corresponds to an optimal schedule being built. All post-decisions states corresponding to suboptimal dispatches, $J_s$, are denoted by $\vphi_{s}\in\mathcal{F}$. One could label which feature sets were considered optimal, $\vec{z}_{o}=\vphi_{o}-\vphi_{s}$, and suboptimal, $\vec{z}_{s}=\vphi_{s}-\vphi_{o}$ by $y_o=+1$ and $y_s=-1$ respectively. 
-Note, a negative example is only created as long as $J_s$ actually results in a worse makespan, i.e., $C_{\max}^{(s)}\gneq C_{\max}^{(o)}$, since there can exist situations in which more than one operation can be considered optimal.
+Using the training set $\{\Phi^\pi,\mathcal{Y}^\pi\}$, given in 
+\cref{eq:trdat:metadata} by following some policy $\pi$, 
+let $\vphi_{o}\in\Phi^\pi$ denote the post-decision state when dispatching 
+job $J_o$ corresponds to an optimal schedule being built. All post-decisions 
+states corresponding to suboptimal dispatches, $J_s$, are denoted by 
+$\vphi_{s}\in\Phi^\pi$. 
 
+Let's label feature sets which were considered optimal, 
+$\vec{z}_{o}=\vphi_{o}-\vphi_{s}$, and suboptimal, 
+$\vec{z}_{s}=\vphi_{s}-\vphi_{o}$ by $y_o=+1$ and $y_s=-1$ respectively. 
 The preference learning problem is specified by a set of preference pairs,
 \begin{equation}\label{eq:Psi:jsp}
 	\Psi := \bigcup_{\{\vec{x}_i\}_{i=1}^{N_{\text{train}}}}
     \condset{
-        \left\{\vec{z}_o,+1\right\},\left\{\vec{z}_s,-1\right\}}{\forall (o,s) 
+        \left\{\vec{z}_o,+1\right\},\left\{\vec{z}_s,-1\right\}}{\forall 
+        (J_o,J_s) 
         \in \mathcal{O}^{(k)} \times \mathcal{S}^{(k)}}_{k=1}^K 
     \subset \Phi\times Y 
 \end{equation}
-where $\Phi\subset\mathcal{F}$ is the training set of $d$ features, 
-$Y=\{-1,+1\}$ is the outcome space, and at dispatch $k\in\{1,..,K\}$, 
-$o\in\mathcal{O}^{(k)},~s\in \mathcal{S}^{(k)}$
-are optimal and suboptimal dispatches, respectively.
-Note, $\mathcal{O}^{(k)}\cup\mathcal{S}^{(k)}=\mathcal{L}^{(k)}$, and 
-$\mathcal{O}^{(k)}\cap\mathcal{S}^{(k)}=\emptyset$. 
+where 
+\begin{enumerate*}
+  \item $\Phi\subset\mathcal{F}$ is the training set of $d=\NrFeatLocal$ 
+  features (cf. the local features from \cref{tbl:features}) 
+  \item $Y=\{-1,+1\}$ is the outcome space
+  \item at each dispatch $k\in\{1,\ldots,K\}$
+  \item $J_o\in\mathcal{O}^{(k)},~J_s\in \mathcal{S}^{(k)}$
+  are optimal and suboptimal dispatches, respectively
+\end{enumerate*}
 
-For \jsp\ there are $d=\NrFeatLocal$ features (cf. the local features from 
-\cref{tbl:features}), and the training set is created in the 
-manner described in \cref{ch:gentrdat}.
+A negative example is only created as long as $J_s$ actually 
+results in a worse makespan, i.e., $C_{\max}^{\pi_\star(\vchi^s)} \gneq 
+C_{\max}^{\pi_\star(\vchi^o)}$, since there can exist situations in which more 
+than one operation can be considered optimal. 
+Hence, $\mathcal{O}^{(k)}\cup\mathcal{S}^{(k)}=\mathcal{L}^{(k)}$, and 
+$\mathcal{O}^{(k)}\cap\mathcal{S}^{(k)}=\emptyset$.
+If the makespan would be unaltered, the pair is omitted from $\Psi$, since they 
+give the same optimal makespan. 
+This way, only features from a dispatch resulting in a suboptimal solution is 
+labelled undesirable.
+The approach taken here is to verify analytically, at each time step, by 
+retaining the current temporal schedule as an initial state, whether it can 
+indeed \emph{somehow} yield an optimal schedule by manipulating the remainder 
+of the sequence, i.e., $C_{\max}^{\pi_\star(\vchi^j)}$ for all 
+$J_j\in\mathcal{L}^{(k)}$. 
+This also takes care of the scenario that having dispatched a job resulting in 
+a different temporal makespan would have resulted in the same final makespan if 
+another optimal dispatching sequence would have been chosen. 
+That is to say the data generation takes into consideration when there are 
+multiple optimal solutions to the same problem instance. 
 
-\todoFind{Which is being used, ordinal or logistic regression?}
-Logistic regression makes decisions regarding optimal dispatches and at the 
-same time efficiently estimates a posteriori probabilities. When using linear 
-classification model (cf. \cref{sec:ord:linpref}) for \cref{eq:CDR:feat},
-then the optimal $\vec{w}^*$ obtained from the preference set can be used on 
-any new data point (i.e. partial schedule), $\vchi$, and their inner product is 
-proportional to probability estimate \cref{eq:prob}. 
+Since $Y=\{+1,-1\}$, we can use logistic regression, which makes decisions 
+regarding optimal dispatches and at the same time efficiently estimates a 
+posteriori probabilities. 
+When using linear classification model (cf. \cref{sec:ord:linpref}) for 
+\cref{eq:CDR:feat},then the optimal $\vec{w}^*$ obtained from the preference 
+set can be used on any new data point (i.e. partial schedule), $\vchi$, and 
+their inner product is proportional to probability estimate \cref{eq:prob}. 
 %Similarly for non-linear classification models. 
 Hence, for each job on the job-list, $J_j\in\mathcal{L}$, let $\vphi_j$ denote 
-its corresponding  post-decision state. Then the job chosen to be dispatched, 
-$J_{j^*}$, is the one corresponding to the highest preference estimate, i.e.,
-\begin{equation}\label{eq:lin}
-	J_{j^*}=\argmax_{J_j\in \mathcal{L}}\; \hat{\pi}(\vphi_j)
-\end{equation}
-where $\hat{\pi}(\cdot)$ is the classification model obtained by the preference 
-set, $\Psi$, defined by \cref{eq:Psi:jsp}. 
+its corresponding post-decision state. Then the job chosen to be dispatched, 
+$J_{j^*}$, is the one corresponding to the highest preference estimate
+from \cref{eq:CDR:feat} where $\pi(\cdot)$ is the classification model obtained 
+by the preference set, $\Psi$, defined by \cref{eq:Psi:jsp}. 
 
-
-\section{Interpreting linear classification models}
-
-When using a feature space based on SDRs, the linear classification models can 
-very easily be interpreted as composite dispatching rules with predetermined 
-weights. 
-%Similarly for non-linear classification models, however, they are harder to 
-%visualise since the features have to be projected on a kernel.
-Looking at the features description in \cref{tbl:features} it is possible for 
-the ordinal regression to `discover' the weights $\vec{w}$ in order for 
-\cref{eq:CDR:feat} corresponding applying a \sdr~from \cref{sec:SDR}. 
-
-The optimum makespan is known for each problem instance. 
-At each time step (i.e. layer of the game tree) a number of feature pairs are created. 
-They consist of the features $\vphi_o$ resulting from optimal dispatches $o\in\mathcal{O}^{(k)}$, versus features $\vphi_s$ resulting from suboptimal dispatches $s\in\mathcal{S}^{(k)}$ at time $k$. 
-In particular, each job is compared against another job of the job-list, 
-$\mathcal{L}^{(k)}$, and if the makespan differs, i.e., $C_{\max}^{(s)}\gneq 
-C_{\max}^{(o)}$, an optimal/suboptimal pair is created. 
-However if the makespan would be unaltered, the pair is omitted since they give the same optimal makespan. 
-This way, only features from a dispatch resulting in a suboptimal solution is labelled undesirable.
-
-The approach taken here is to verify analytically, at each time step, by retaining the current temporal schedule as an initial state, whether it can indeed \emph{somehow} yield an optimal schedule by manipulating the remainder of the sequence. 
-This also takes care of the scenario that having dispatched a job resulting in a different temporal makespan would have resulted in the same final makespan if another optimal dispatching sequence would have been chosen. 
-That is to say the data generation takes into consideration when there are multiple optimal solutions to the same problem instance. 
-
-\section{Time dependant dispatching rules}
-At each dispatch iteration $k$, a number of preference pairs are created, which is then repeated for all the $N_{\text{train}}$ problem instances created. 
-A separate data set is deliberately created for each dispatch iterations, as 
-the initial feeling is that dispatch rules used in the beginning of the 
-schedule building process may not necessarily be the same as in the middle or 
-end of the schedule. As a result there are $K$ linear scheduling rules for 
-solving a $n \times m$ \jsp. \todoWrite{No longer one model for all 
-steps}
-
-
-
-\section{Selecting preference pairs}\label{sec:trdat:param}
+\section{Selecting Preference Pairs}\label{sec:trdat:param}
 Defining the size of the preference set as $l=\abs{\Psi}$, then 
-\cref{eq:prefset} gives the size of the feature training set as 
-$\abs{\Phi}=\frac{1}{2}l$.
+\cref{eq:Psi:jsp} gives the size of the feature training set as 
+$\abs{\Phi}=\frac{1}{2}l$, which is given in 
+\cref{fig:size:trdat,tbl:size:trdat}.
 If $l$ is too large, than sampling needs to be done in order for the ordinal 
-regression in \cref{ch:prefmodels} to be computationally feasible.
+regression to be computationally feasible.
 
 The strategy approached in  \cref{InRu11a} was to follow a \emph{single} 
 optimal job $J_j\in\mathcal{O}^{(k)}$ (chosen at random), thus creating 
 $\abs{\mathcal{O}^{(k)}}\cdot\abs{\mathcal{S}^{(k)}}$ feature pairs at each 
-dispatch $k$, resulting in a training size of,
+dispatch $k$, resulting in a preference set of size,
 \begin{equation}\label{eq:sizePsi_b}
 l =  \sum_{i=1}^{N_{\text{train}}} \left(2 \abs{\mathcal{O}^{(k)}_i}\cdot 
 \abs{\mathcal{S}^{(k)}_i} \right)
 \end{equation}
-For the problem spaces considered there, that sort of simple sampling of the 
-state space was sufficient for a favourable outcome. However for a considerably 
-harder problem spaces (see \cref{ch:defdifficulty}), preliminary experiments 
+For the problem spaces considered in \cref{InRu11b}, that sort of simple 
+sampling of the state space was sufficient for a favourable outcome. 
+However for a considerably harder problem spaces (cf. \cref{ch:defdifficulty}), 
+not to mention increased number of jobs and machines, preliminary experiments 
 were not satisfactory. 
 
 A brute force approach was adopted to investigate the feasibility of finding 
@@ -112,14 +103,14 @@ The nature of the CMA-ES is to explore suboptimal routes until it converges to
 an optimal one. 
 Implying that the previous approach of only looking into one optimal route is 
 not sufficient information. 
-Suggesting that the training set should incorporate a more complete knowledge 
+Suggesting that the preference set should incorporate a more complete knowledge 
 about \emph{all} possible preferences, i.e., make also the distinction between 
 suboptimal and sub-suboptimal features, etc.  
 This would require a Pareto ranking for the job-list, $\mathcal{L}$, which can 
 be used to make the distinction to which feature sets are equivalent, better or 
 worse, and to what degree (i.e. giving a weight to the preference)? 
-By doing so, the training set becomes much greater, which of course would again 
-need to be sampled in order to be computationally feasible to learn. 
+By doing so, the preference set becomes much greater, which of course would 
+again need to be sampled in order to be computationally feasible to learn. 
 
 For instance \cite{Siggi05} used decision trees to `rediscover' LPT by using 
 the dispatching rule to create its training data. The limitations of using 
@@ -137,26 +128,25 @@ All problem instances are correctly labelled w.r.t. their optimum makespan,
 found with analytical means. %\footnote{Optimal solution were found using 
 %   \cite{gurobi}, a commercial software package for solving large-scale linear 
 %   optimization and a state-of-the-art solver for mixed integer programming.} 
-In order to create training instances (and subsequently preference pairs) both 
-a features resulting in optimal solutions are gathered (following optimal 
-trajectories) and features that would have been chosen if a dispatching rule 
-had been implemented (following DR trajectories). 
-In the latter case, the trajectories pursued here, will be the SDRs from 
-\cref{sec:SDR} as well as randomly dispatching operations.
 
-To summarise, one needs to consider two main aspects of the generation of the 
-training data
-\begin{enumerate*}[label={\emph{\Roman*})},
-    itemjoin={{? }}, itemjoin*={{? And }}, after={{}}]
-    \item what sort of rankings should be compared during each step
-    \item which path(s) should be investigated
-    \begin{enumerate*}[label=\textit{\Roman{enumi}.\roman*)}, before={{? }},
-        itemjoin={{? }}, itemjoin*={{? Or }}, after={{}}]
-        \item Pursuing solely optimal trajectories
-        \item Creating random dispatches
-        \item following other means: CMA-ES computed weights, \sdr s, etc.
-    \end{enumerate*}
-\end{enumerate*}
+To summarise, one needs to consider two main aspects of the generation $\Psi$
+\begin{enumerate}[after={{}}, leftmargin=*, label={\textbf{PREF.\arabic*}}, 
+ref={{PREF.\arabic*}}]
+    \item What sort of rankings should be compared during each step?
+    \item Which path(s) should be investigated to collect training instances 
+    (and subsequently preference pairs). Should they be features gathered 
+    resulting in
+    \begin{enumerate*}[
+      label=\textit{\roman*)},
+      before=\unskip{: }, 
+      itemjoin={{? }}, itemjoin*={{, or }},
+      after={{? }}]
+      \item optimal solutions (querying expert policy $\pi_\star$)
+      \item sub-optimal solutions when a DR is implemented (following a fixed 
+      policy $\pi$)
+      \item combination of both
+    \end{enumerate*}    
+\end{enumerate}
 
 \subsection{Ranking strategies}\label{sec:trdat:param:ranks}
 The following ranking strategies were implemented for adding preference pairs 
@@ -183,16 +173,23 @@ where $r_1>r_2>\ldots>r_{n'}$ ($n'\leq n$) are the rankings of the job-list,
 $\mathcal{L}^{(k)}$, at time step $k$.
 
 
+\section{Stepwise models}
+In \cref{InRu11a} a separate data set is deliberately created for each dispatch 
+iterations, as the initial feeling is that dispatch rules used in the beginning 
+of the schedule building process may not necessarily be the same as in the 
+middle or end of the schedule. As a result there are $K$ linear scheduling 
+rules for solving a $n \times m$ \jsp. 
+
+
 \subsection{Experimental study}\label{sec:sec:trdat:param:expr}
 To test the validity of different ranking and strategies from 
 \cref{sec:trdat:param}, a training set of $N_{\text{train}}$ problem instances 
 of $6\times5$ \jsp\ and \fsp\ summarised in \cref{tbl:data} (omitting the job 
 and machine variations of \jsp). The size of the preference set, $\Psi$, for 
 different trajectory and ranking strategies are depicted in 
-\cref{fig:sizeofprefset}. Note, for now $10\times10$ problem spaces will be 
-ignored, due to the extreme computational cost of correctly labelling each 
-trajectory. However, in \cref{sec:pref:scalability} an optimum path will be 
-pursued for said dimension.
+\cref{fig:sizeofprefset}. Note, for now \jrndn{10}{10} and \frnd{10}{10} will 
+be ignored, due to the extreme computational cost of correctly labelling each 
+trajectory. However, an optimum path will be pursued.
 
 A linear preference (PREF) model was created for each preference set, $\Psi$, 
 for every problem space considered. A box-plot with \fullnamerho, is presented 
@@ -202,8 +199,6 @@ in \cref{fig:boxplot:prefset}. %\Cref{fig:track:boxplot:p1} depicts different
 From the figures it is apparent there can be a performance edge gained by 
 implementing a particular ranking or trajectory strategy, moreover the 
 behaviour is analogous across different disciplines. 
-
-
 
 \begin{figure}[p]
     \includegraphics[width=\textwidth]{{prefdat.size.6x5}.pdf}
@@ -226,16 +221,17 @@ behaviour is analogous across different disciplines.
 
 \subsubsection{Ranking strategies}
 There is no statistical difference between $\Psi_f$ and $\Psi_p$ 
-ranking-schemes 
-across all disciplines (cf. \cref{fig:track:boxplot:p1,fig:track:boxplot:p2}), 
+ranking-schemes across all disciplines,
 which is expected since $\Psi_f$ is designed to contain the same preference 
 information as $\Psi_f$. However neither of the Pareto ranking-schemes 
 outperform 
 the original $\Psi_b$ set-up from \cref{InRu11a}. The results hold for the test 
 set as well. 
 
+\begin{comment}
 Combining the ranking schemes, $\Psi_a$, improves the individual 
 ranking-schemes across all disciplines, except in the case of 
+
 $\Psi_b^{opt}\big|_{\mathcal{P_1}}$ and $\Psi_b^{rnd}\big|$\!\Problem{2}, in 
 which 
 case there were no statistical difference. Now, for the test set, the results 
@@ -255,6 +251,7 @@ the fixed weights found via CMA-ES are only outperformed by linear ordinal
 regression models based on $\{\Psi_b^{cma},\Psi_a^{cma}\}$. This implies that 
 ranking scheme needs to be selected appropriately. Result hold for the test 
 data.
+\end{comment}
 
 \subsubsection{Trajectory strategies}
 Learning preference pairs from a good scheduling policies, such as $\Psi^{cma}$ 
