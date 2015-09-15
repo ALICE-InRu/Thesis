@@ -118,11 +118,12 @@ it variety.
 \section{Trajectory sampling strategies}\label{sec:trdat:tracks}
 For each feature in \cref{eq:Phi} we need to keep track of the resulting 
 makespan for its dispatched job. 
-As a result, we obtain the meta-data $\{\Phi,\mathcal{Y}\}$ from 
+As a result, we obtain the meta-data from 
 \cref{fig:rice} as follows, 
 \begin{equation}\label{eq:trdat:metadata}
+\{\Phi^\pi,\mathcal{Y}^\pi\} := 
 \condset{\{ \vphi_j, C_{\max}^{\pi_\star(\vchi^j)}
-    \}}{J_j\in\mathcal{L}^{(k)}}_{k=1}^K \in \Phi \times \mathcal{Y}
+    \}}{J_j\in\mathcal{L}^{(k)}}_{k=1}^K \in \mathcal{F} \times \mathcal{Y}
 \end{equation}
 for a single problem instance $\vec{x}\in\mathcal{P}_{\text{train}}$, and where 
 $C_{\max}^{\pi_\star(\vchi^j)}$ denotes the optimal makespan (i.e. following 
@@ -151,9 +152,9 @@ using from evolutionary search (cf. \cref{ch:esmodels}) will also be used.
 To clarify, the trajectory sampling strategies for collecting a feature set and 
 its corresponding labelling for \cref{eq:trdat:metadata} are the following:
 \begin{description}
-    \item[Optimum trajectory, \PhiSet{OPT},] at each dispatch some (random) 
-    optimal task is dispatched. This is also referred to following the expert 
-    policy, $\pi_\star$.
+    \item[Optimum trajectory, \PhiSet{OPT} or $\Phi^{\pi_\star}$,] at each 
+    dispatch some (random) optimal task is dispatched. This is also referred to 
+    following the expert policy, $\pi_\star$.
     \item[SPT trajectory, \PhiSet{SPT},] at each dispatch the task 
     corresponding to shortest processing time is dispatched, i.e., following 
     \sdr~SPT.
@@ -168,15 +169,15 @@ its corresponding labelling for \cref{eq:trdat:metadata} are the following:
     \sdr~MWR.
     \item[Random trajectory, \PhiSet{RND},] at each dispatch some random task 
     is dispatched.
-    \item[CMA-ES trajectory, $\Phi^{\minRho}$,] at each dispatch the task 
-    corresponding to highest priority, computed with fixed weights $\vec{w}$, 
-    which were obtained by optimising the mean for \fullnamerho, with CMA-ES 
-    optimisation from \cref{ch:esmodels}. 
+    \item[CMA-ES trajectories, $\Phi^{\minRho}$ and $\Phi^{\minCmax}$,] at each 
+    dispatch the task  corresponding to highest priority, computed with fixed 
+    weights $\vec{w}$, which were obtained by optimising the mean for 
+    \fullnamerho, with CMA-ES optimisation from \cref{ch:esmodels}. 
     \item[All trajectories, \PhiSet{ALL},] denotes all aforementioned 
     trajectories were explored, i.e., \vspace*{-18pt}
-    \begin{equation}
+    \begin{equation} \nonumber
     \Phi^{\text{ALL}}:=\condset{\Phi^{A}}{\forall A \in 
-    \left\{\text{OPT,~SPT,~LPT,~LWR,~MWR,~RND,~}\minRho\right\}}
+    \left\{\pi_\star,\text{~SPT,~LPT,~LWR,~MWR,~RND,~}\minRho,\minCmax\right\}}
     \end{equation}
 \end{description}
 
@@ -188,7 +189,8 @@ Hence it is appropriate to follow some random optimal path to begin with and
 then go after some (if not all possible) optimal paths until completion at step 
 $K$. 
 
-In the case of the $\Phi^{\langle \text{SDR} \rangle}$ and $\Phi^{\minRho}$ 
+In the case of the $\Phi^{\langle \text{SDR} \rangle}$ and 
+$\Phi^{\langle \text{CMA-ES} \rangle}$ 
 trajectories it is sufficient to explore each trajectory exactly once for each 
 problem instance. 
 Whereas, for \PhiSet{OPT} and \PhiSet{RND} there can be several 
@@ -215,49 +217,44 @@ $\abs{\mathcal{L}}$, until at $k>(K-n)$ then \mbox{$\abs{\mathcal{L}} \lneq
 \Cref{tbl:size:trdat} gives the total size for $\abs{\Phi}$, indicating the
 number of optimisations needed for obtaining $\mathcal{Y}$.
 
-\begin{figure}[t]
+\begin{figure}[p]
     \includegraphics[width=\textwidth]{{trdat.size.6x5}.pdf}
     \vspace{-24pt}
-    \caption[Size of training set, $\abs{\Phi}$]{Size of training set, 
-        $\abs{\Phi}$, for different trajectory strategies 
-        ($N_{\text{train}}=500$)}
+    \caption[Size of training set, $\abs{\Phi}$]{Size of $6\times5$ training 
+    set, $\abs{\Phi}$, over different trajectory strategies}
     \label{fig:size:trdat}
 \end{figure}
 
-\begin{table}[b]\centering
+\begin{table}[p]\centering
     \caption{Total number of features in $\Phi$ for all $K$ steps}
     \label{tbl:size:trdat}
     \vspace{-12pt}
 {\setlength{\tabcolsep}{2pt} \scriptsize
-\subcaptionbox{\Problem[6\times5]{\text{train}}, $N_{\text{train}}=500$}{
-\begin{tabular}{lccccccccc}
-  \toprule
-  Track & 
-  $j.rnd$ & $j.rndn$ & $j.rnd,J_1$& $j.rnd,M_1$ & $f.rnd$ & $f.rndn$ & $f.jc$ & 
-  $f.mc$ & $f.mxc$ \\ 
+\begin{tabular}{lcccccccccccc}
+  \toprule 
+  Track
+&\multicolumn{9}{c}{\Problem[6\times5]{\text{train}}, $N_{\text{train}}=500$} 
+&\multicolumn{3}{c}{\Problem[10\times10]{\text{train}}, $N_{\text{train}}=300$} 
+\\
+  & $j.rnd$ & $j.rndn$ & $j.rnd,J_1$& $j.rnd,M_1$ & $f.rnd$ & $f.rndn$ & 
+  $f.jc$ & $f.mc$ & $f.mxc$ & $j.rnd$ & $j.rndn$ & $f.rnd$ \\ 
   \midrule
-  SPT & 63197 & 63074 & 64560 & 61320 & 63287 & 63123 & 53678 & 66995 & 66216 \\
-  LPT & 63516 & 63374 & 63595 & 62864 & 63535 & 63320 & 53746 & 66356 & 65662 \\
-  LWR & 52500 & 52500 & 52500 & 52500 & 52500 & 52500 & 52500 & 52500 & 52500 \\
-  MWR & 79230 & 82500 & 78327 & 77934 & 79288 & 82500 & 80546 & 82498 & 82485 \\
-  RND & 71390 & 71608 & 71445 & 71463 & 71427 & 71945 & 71558 & 71456 & 71649 \\
-  OPT & 76592 & 78176 & 74109 & 74069 & 70037 & 69180 & 69716 & 71602 & 71102 \\
-  $\minRho$ & 79319 & 81423 & 79070 & 78501 & 72866 & 56428 & 60049 & 52710 & 
-  57177 \\
+  SPT & 63197 & 63074 & 64560 & 61320 & 63287 & 63123 & 53678 & 66995 & 66216 
+  & 211351 &   -- &   -- \\ 
+  LPT & 63516 & 63374 & 63595 & 62864 & 63535 & 63320 & 53746 & 66356 & 65662 
+  & 210490 &   -- &   -- \\ 
+  LWR & 52500 & 52500 & 52500 & 52500 & 52500 & 52500 & 52500 & 52500 & 5250 
+  & 165000 &   -- &   -- \\ 
+  MWR & 79230 & 82500 & 78327 & 77934 & 79288 & 82500 & 80546 & 82498 & 8245 
+  & 280739 &   -- &   -- \\  
+  RND & 71390 & 71608 & 71445 & 71463 & 71427 & 71945 & 71558 & 71456 & 7149 
+  & 252515 &   -- &   -- \\  
+  OPT & 76592 & 78176 & 74109 & 74069 & 70037 & 69180 & 69716 & 71602 & 7102 
+  & 272858 & 245313 & 211763 \\  
+  $\minRho$ & 78443 & 81248 & 78673 & 78866 & 68986 & 55943 & 60755 & 53707& 
+  74997 & -- & -- & -- \\ 
+  $\minCmax$ & 79343 & 81226 & 77903 & 79078 & 68602 & 56789 & 54781 & 52502 & 
+  52510 & -- & -- & -- \\
   \bottomrule
 \end{tabular}}
-\subcaptionbox{\Problem[10\times10]{\text{train}}, $N_{\text{train}}=300$}{
-\begin{tabular}{lccc}
-  \toprule
-  Track & $j.rnd$ & $j.rndn$ & $f.rnd$ \\ 
-  \midrule
-  SPT & 211351 &     -- &     -- \\ 
-  LPT & 210490 &     -- &     -- \\ 
-  LWR & 165000 &     -- &     -- \\ 
-  MWR & 280739 &     -- &     -- \\ 
-  RND & 252515 &     -- &     -- \\ 
-  OPT & 272858 & 245313 & 211763 \\ 
-  \bottomrule
-\end{tabular}
-}}
 \end{table}
