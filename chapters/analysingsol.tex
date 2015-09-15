@@ -74,7 +74,8 @@ optimality (yet still maintaining optimal trajectory) as,
 \end{equation}
 that is to say the mean likelihood of our policy $\pi$ being equivalent to the 
 expert policy $\pi_\star$, i.e., $Y^{\pi_\star}=Y^\pi$. Note, for $\xi_\pi$ we 
-only need $\{\Phi^{OPT},\mathcal{Y}\}$ from \cref{eq:trdat:metadata}
+only need $\{\Phi^{\pi_\star},\mathcal{Y}^{\pi_\star}\}$ from 
+\cref{eq:trdat:metadata}
 \begin{enumerate*}
     \item retrace $\pi_\star$ as done in \cref{pseudo:constructJSP}
     \item inspect if the job $J_{j^*}$ chosen by $\pi$ yields the same 
@@ -211,8 +212,8 @@ trajectory, thereby updating \cref{eq:tracc:opt} to
 \begin{equation} \label{eq:tracc:track}
 \hat{\xi}_{\pi} := \mathbb{E}\left\{\pi_{\star} = \pi \;\mid\; \pi \right\}
 \end{equation}
-As a result $\hat{\xi}_{\pi}$ is based on $\{\Phi^\pi,\mathcal{Y}\}$ meta-data 
-from \cref{eq:trdat:metadata}.
+As a result $\hat{\xi}_{\pi}$ is based on $\{\Phi^\pi,\mathcal{Y}^\pi\}$ 
+meta-data from \cref{eq:trdat:metadata}.
 \Cref{fig:diff:extr:SDR} shows the difference between $\xi_{\langle \text{SDR} 
     \rangle}$ and $\hat{\xi}_{\langle \text{SDR} \rangle}$.
 
@@ -261,54 +262,57 @@ utilise feature behaviour to motivate new, and \emph{hopefully} better,
 \dr s. 
 A na\"ive approach would be creating a simple blended \dr\ (BDR) which 
 would be for instance switch between two SDRs at a predetermined time point. 
-Hence, going back to \cref{fig:diff:extr:SDR:10x10} a presumably good BDR for 
+
+For instance, MWR and SPT hardly ever coincide for easy or hard schedules (cf. 
+\cref{tbl:easy:cnt:10x10,tbl:hard:cnt:10x10}), so its reasonable to believe 
+they could complement one another.
+Going back to \cref{fig:diff:extr:SDR:10x10} a presumably good BDR for 
 \jrnd{10}{10}  would be starting with ${\xi}_{\text{SPT}}$ and then switching 
 over to ${\xi}_{\text{MWR}}$ at around time step $k=40$, where the SDRs change 
-places in outperforming one another. 
+places in outperforming one another.
 In addition, we can see that even though $\hat{\xi}_{\text{SPT}}$ is generally 
 more likely to find optimal dispatches in the initial steps, then shortly after 
 $k=15$, $\hat{\xi}_{\text{MWR}}$ becomes a contender again. 
-Note, MWR$\cap$SPT hardly ever coincide for easy or hard schedules (cf. 
-\cref{tbl:easy:cnt:10x10,tbl:hard:cnt:10x10}), so its reasonable to believe 
-they could complement one another.
 A box-plot for \namerho, for \Problem[10\times10]{\text{train}} is 
-depicted in \cref{fig:diff:boxplot:BDR}. This little manipulation between SDRs 
-does outperform SPT immensely, yet doesn't manage to gain the performance edge 
-of MWR, save for \frnd{10}{10}. This gives us insight that for \jsp, the 
-attribute based on MWR is quite fruitful for good dispatches, whereas the same 
-cannot be said about SPT -- a more sophisticated DR is needed to improve upon 
-MWR. 
+depicted in \cref{fig:diff:boxplot:BDR} for a switch between SPT to MWR at time 
+steps $k=\{10,15,40\}$. 
+
+This little manipulation between SDRs does outperform SPT immensely, yet 
+doesn't manage to gain the performance edge of MWR. 
+This gives us insight that for \jsp, the attribute based on MWR is quite 
+fruitful for good dispatches, whereas the same cannot be said about SPT -- a 
+more sophisticated DR is needed to improve upon MWR. 
 
 A reason for this lack of performance of our proposed BDR at $k=40$ is perhaps 
-that by starting out with SPT in the beginning, 
-it sets up the schedules in such a way 
-that it's quite greedy and only takes into consideration jobs with shortest 
-immediate processing times. Now, even though it is possible to find optimal 
-schedules from this scenario, as \cref{fig:diff:extr:SDR} shows, the inherent 
-structure is already taking place, and might make it hard to come across 
-optimal moves by simple methods. Therefore it's by no means guaranteed that by 
-simply swapping over to MWR will handle the situation that applying SPT has 
-already created. \Cref{fig:diff:boxplot:BDR} does however show, that by 
-applying MWR instead of SPT in the latter stages, does help the schedule to be 
-more compact w.r.t. SPT. However, in the case of \jrnd{10}{10} and 
-\jrndn{10}{10} the fact remains that the schedules have diverged too far from 
-what MWR would have been able to achieve on its own, i.e., using SPT 
-downgrades the performance of MWR. 
-Preferably the blended dispatching rule should use  best of both worlds, and 
-outperform all of its inherited DRs, otherwise it goes without saying, one 
-would simply keep on still using the original DR that achieved the best results.
+that by starting out with SPT in the beginning, it sets up the schedules in 
+such a way that it's quite greedy and only takes into consideration jobs with 
+shortest immediate processing times. 
+Now, even though it is possible to find optimal schedules from this scenario, 
+as \cref{fig:diff:extr:SDR} shows, the inherent structure is already taking 
+place, and might make it hard to come across optimal moves by simple methods. 
+Therefore it's by no means guaranteed that by simply swapping over to MWR will 
+handle the situation that applying SPT has already created. 
+\Cref{fig:diff:boxplot:BDR} does however show, that by applying MWR instead of 
+SPT in the latter stages, does help the schedule to be more compact w.r.t. SPT. 
+However, the fact remains that the schedules have diverged too far from what 
+MWR would have been able to achieve on its own, i.e., using SPT downgrades the 
+performance of MWR. 
 
-Revisiting \cref{fig:diff:extr:SDR:10x10} for \jrnd{10}{10}, we can see that 
-even though $\hat{\xi}_{\text{SPT}}$ is generally more likely to find optimal 
-dispatches in the initial steps, then shortly after $k=15$, 
-$\hat{\xi}_{\text{MWR}}$ becomes a contender again. 
-This could explain why our BDR switch at $k=40$ in 
-\cref{fig:diff:boxplot:BDR} was unsuccessful. 
-However, changing to MWR at $k=10$ or $k=15$ is not statically significant from 
+Changing to MWR at $k=10$ or $k=15$ is not statically significant from 
 MWR (boost in mean $\rho$ is at most 1.25\%). 
 But as pointed in \cref{sec:diff:opt:sub}, it's not so fatal to make bad moves 
 in the very first dispatches for \jrnd{10}{10}, hence little is gained with 
-improved classification accuracy in that region.
+improved classification accuracy in that region. 
+But this does tell us that $\hat{\xi}_\pi$ is a more reliable indicator than 
+$\xi_\pi$ when it comes to choosing appropriate model parameters. 
+Alas, $\hat{\xi}_\pi$ requires collecting the meta-data 
+$\{\Phi^\pi,\mathcal{Y}^\pi\}$ from \cref{eq:trdat:metadata} for its policy 
+$\pi$, whereas $\xi_\pi$ reuses $\{\Phi^{\pi_\star},\mathcal{Y}^{\pi_\star}\}$ 
+for each new policy $\pi$.
+
+Preferably the blended dispatching rule should use  best of both worlds, and 
+outperform all of its inherited DRs, otherwise it goes without saying, one 
+would simply keep on still using the original DR that achieved the best results.
 
 \begin{figure}[t]
   \centering
@@ -533,4 +537,8 @@ complex algorithms, such as the learned preference models in
 illustrate the interaction of a specific algorithm on a given problem structure 
 and its properties. 
 
-
+\todoWrite{
+  In this \lcnamecref{ch:defdifficulty} we will find the footprint 
+  from \sdr s introduced in \cref{sec:SDR} on those problem spaces. Presumably, 
+  we could use that information to infer the complexity of our synthesised 
+  problem spaces summarised in \cref{tbl:data}.}
