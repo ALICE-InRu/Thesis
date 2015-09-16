@@ -1,0 +1,34 @@
+\begin{table}[b]\centering
+\caption[Total number of preferences in $\Psi_p$ for all $K$ steps]{Total 
+number of preferences in $l=\abs{\Psi_p}$ for all $K$ steps. Note `--' denotes 
+not available.}
+\label{tbl:size:Psi:K}
+{\setlength{\tabcolsep}{2pt} \scriptsize
+\begin{tabular}{lcccccccccccc}
+  \toprule 
+  Track 
+&\multicolumn{9}{c}{\Problem[6\times5]{\text{train}}, $N_{\text{train}}=500$} 
+&\multicolumn{3}{c}{\Problem[10\times10]{\text{train}}, $N_{\text{train}}=300$} 
+\\
+  & $j.rnd$ & $j.rndn$ & $j.rnd,J_1$& $j.rnd,M_1$ & $f.rnd$ & $f.rndn$ & 
+  $f.jc$ & $f.mc$ & $f.mxc$ & $j.rnd$ & $j.rndn$ & $f.rnd$ \\ 
+  \midrule
+  SPT & 73926 & 68410 & 74416 & 65150 & 79388 & 70808 & 68956 & 89788 & 92036 
+  & 285912 & -- & -- \\ 
+  LPT & 43456 & 58540 & 28498 & 34136 & 36162 & 54684 & 11548 & 23260 & 17308 
+  & 151444 & -- & -- \\ 
+  LWR & 46580 & 46306 & 32326 & 41554 & 64226 & 68628 & 69124 & 40150 & 40110 
+  & 163546 & -- & -- \\ 
+  MWR & 83756 & 102092 & 53246 & 62056 & 87376 & 111708 & 106226 & 65882 & 
+  64692 & 370104 & -- & -- \\ 
+  RND & 72824 & 80358 & 52210 & 61670 & 77148 & 77080 & 64550 & 55288 & 55398 
+  & 313346 & -- & -- \\ 
+  OPT & 100910 & 111736 & 79404 & 90948 & 95388 & 93036 & 81306 & 79836 & 78440 
+  & 453662 & 415328 & 299952 \\ 
+  $\minRho$ & 93006 & 111068 & 64050 & 89504 & 77142 & 63120 & 45404 & 36608 & 
+  74556 & -- & -- & -- \\ 
+  $\minCmax$ & 108390 & 111346 & 73168 & 95920 & 83058 & 61992 & 47412 & 35484 
+  & 36052 & -- & -- & -- \\ 
+  \bottomrule
+\end{tabular}}
+\end{table}

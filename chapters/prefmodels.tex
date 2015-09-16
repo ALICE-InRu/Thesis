@@ -73,7 +73,7 @@ by the preference set, $\Psi$, defined by \cref{eq:Psi:jsp}.
 Defining the size of the preference set as $l=\abs{\Psi}$, then 
 \cref{eq:Psi:jsp} gives the size of the feature training set as 
 $\abs{\Phi}=\frac{1}{2}l$, which is given in 
-\cref{fig:size:trdat,tbl:size:trdat}.
+\cref{fig:size:Phi:K,tbl:size:Phi:K}.
 If $l$ is too large, than sampling needs to be done in order for the ordinal 
 regression to be computationally feasible.
 
@@ -87,9 +87,9 @@ l =  \sum_{i=1}^{N_{\text{train}}} \left(2 \abs{\mathcal{O}^{(k)}_i}\cdot
 \end{equation}
 For the problem spaces considered in \cref{InRu11a}, that sort of simple 
 sampling of the state space was sufficient for a favourable outcome. 
-However for a considerably harder problem spaces (cf. \cref{ch:defdifficulty}), 
-not to mention increased number of jobs and machines, preliminary experiments 
-were not satisfactory. 
+However, for a considerably harder problem spaces (cf. \cref{ch:defdifficulty}) 
+and not to mention increased number of jobs and machines, preliminary 
+experiments were not satisfactory. 
 
 A brute force approach was adopted to investigate the feasibility of finding 
 optimal weights $\vec{w}$ for \cref{eq:CDR:feat}. 
@@ -158,6 +158,36 @@ easy to inspect, once $\Phi$ has been chosen.
 The following \lcnamecref{sec:trdat:param:ranks}s will try to address these 
 research questions. 
 
+\section{Scalability of \dr s}\label{sec:pref:scalability}
+
+In \cref{InRu11a} a separate data set was deliberately created for each 
+dispatch iterations, as the initial feeling is that dispatch rules used in the 
+beginning of the schedule building process may not necessarily be the same as 
+in the middle or end of the schedule. As a result there are $K$ linear 
+scheduling rules for solving a $n \times m$ \jsp. 
+Now, if we were to create a global rule, then there would have to be one 
+model for all dispatches iterations. The approach in \cref{InRu11a} was to take 
+the mean weight for all stepwise linear models, i.e., 
+$\bar{w}_i=\frac{1}{K}\sum_{k=1}^K w_i^{(k)}$ where $\vec{w}^{(k)}$ is 
+the linear weight resulting from learning preference set $\Psi^{(k)}$ at 
+dispatch $k$. 
+
+A more sophisticated way, would be to create a \emph{new} linear model, where 
+the preference set, $\Psi$, is the aggregation  of all preference pairs across 
+the $K$ dispatches. 
+This would amount to a substantial training set, and for $\Psi$ to 
+be computationally feasible to learn, $\Psi$ has to be filtered to size 
+$l_{\max}$. The default set-up will be, 
+\begin{equation}\label{eq:lmax}
+l_{\max} := \Bigg \{ \begin{array}{rccc} 
+5 \cdot 10^5 & \quad\text{for} & 10\times 10 & \text{\JSP} \\
+10^5 & \quad\text{for} & 6\times 5 & \text{\JSP}
+\end{array}
+\end{equation}
+which is roughly 60\%-70\% amount of preferences encountered from one pass of 
+sampling a \mbox{$K$-stepped} trajectory using a fixed policy $\hat{\pi}$ for 
+the default $N_{\text{train}}$ (cf. \cref{tbl:size:Psi:K}).
+
 \section{Ranking strategies}\label{sec:trdat:param:ranks}
 First let's address \ref{PREF:param:ranks}. 
 The various ranking strategies for adding preference pairs to $\Psi$ defined by 
@@ -182,39 +212,48 @@ The various ranking strategies for adding preference pairs to $\Psi$ defined by
 \end{description}
 where $r_1>r_2>\ldots>r_{n'}$ ($n'\leq n$) are the rankings of the job-list, 
 $\mathcal{L}^{(k)}$, at time step $k$.
+By definition the following property holds:
+\begin{equation}\label{eq:Psi:size}
+    \Psi_p \subset \Psi_f \subset \Psi_b \subset \Psi_a
+\end{equation}
 
 \subsection*{Experiments for \ref{PREF:param:ranks}}
-To test the validity of different ranking strategies from, a training set of 
+To test the validity of different ranking strategies, a training set of 
 $N_{\text{train}}=500$ problem instances of \jrnd{6}{5} and \frnd{6}{5}
 is collected for all trajectories described in \cref{sec:trdat:tracks}. 
-The size of the preference set, $\Psi$, is depicted in \cref{fig:size:prefset}.
+The size of the preference set, $\abs{\Psi}$, is depicted in 
+\cref{fig:size:Psi:K} for each iteration $k$. \Cref{tbl:size:Psi:K} reports the 
+total amount of preferences for all $K$ dispatches.
 From which, a linear preference model is created for each preference 
-set, $\Psi$. A box-plot with \fullnamerho, is presented in 
+set, $\Psi$. A box-plot for \fullnamerho, is presented in 
 \cref{fig:boxplot:prefset}. 
 From the figure it is apparent there can be a performance edge gained by 
-implementing a particular ranking or trajectory strategy, moreover the 
-behaviour is analogous across different disciplines (and result hold for 
-all other \Problem[6\times5]{\text{train}} in \cref{tbl:data}).
+implementing a particular trajectory strategy, yet ranking scheme seems to be 
+irrelevant. Moreover, the behaviour is analogous across all other 
+\Problem[6\times5]{\text{train}} in \cref{tbl:data}.
 
 There is no statistical difference between $\Psi_f$ and $\Psi_p$ 
 ranking-schemes across all disciplines,
 which is expected since $\Psi_f$ is designed to contain the same preference 
-information as $\Psi_f$. However neither of the Pareto ranking-schemes 
-outperform the original $\Psi_b$ set-up from \cref{InRu11a}. 
+information as $\Psi_f$ (cf. \cref{eq:Psi:size}). 
+However, neither of the Pareto ranking-schemes outperform the original $\Psi_b$ 
+set-up from \cref{InRu11a}. 
 The results hold for the test set as well. 
 Any statistical difference between ranking schemes were for $\Psi_a$, where it 
 was considered slightly lacking than some of its counterparts. 
 Since a smaller preference set is preferred, its opted to use the $\Psi_{p}$ 
 ranking scheme henceforth as the default set-up for \ref{PREF:param:ranks}. 
 
-\begin{figure}[p]
+\input{tables/size.prefdat.tex}
+
+\begin{figure}[t]
   \includegraphics[width=\textwidth]{{prefdat.size.6x5}.pdf}
   \vspace*{-30pt}
   \caption[Size of preference set, $\abs{\Psi}$]{Size of 
   \Problem[6\times5]{\text{train}} preference set, $l=\abs{\Psi}$, for 
   different trajectory strategies and ranking schemes (where 
   $N_{\text{train}}=500$) }
-  \label{fig:size:prefset}
+  \label{fig:size:Psi:K}
 \end{figure}
 
 \begin{figure}[p]
@@ -230,71 +269,43 @@ ranking scheme henceforth as the default set-up for \ref{PREF:param:ranks}.
 
 The different trajectories for all \Problem[6\times5]{\text{train}} and 
 \jrnd{10}{10} are now ordered w.r.t. their mean \namerho, and is 
-given in \cref{tbl:param:tracks}. Models that are statistically different are 
-denoted by `$\succ$', otherwise considered equivalent. Note, box-plots for 
-\jrnd{6}{5} and \frnd{6}{5} were given in \cref{fig:boxplot:prefset}.
+given in \cref{tbl:param:tracks}. Note, \cref{InRu15a} only considered 
+\jrnd{6}{5} and \jrndn{6}{5}. 
+Models that are statistically better are denoted by `$\succ$' (read left to 
+right), otherwise considered equivalent. 
+Box-plots for \jrnd{6}{5} and \frnd{6}{5} were given in 
+\cref{fig:boxplot:prefset}.
 
 \input{tables/PREF.track.ordering.tex}
 
-\section{Stepwise models}
-In \cref{InRu11a} a separate data set is deliberately created for each dispatch 
-iterations, as the initial feeling is that dispatch rules used in the beginning 
-of the schedule building process may not necessarily be the same as in the 
-middle or end of the schedule. As a result there are $K$ linear scheduling 
-rules for solving a $n \times m$ \jsp. 
+Learning preference pairs from a good scheduling policies, such as 
+$\Phi^{\minCmax},~\Phi^{\minRho}$ and \PhiSet{MWR}, gave considerably more 
+favourable results than tracking optimal paths, save for \fjc{6}{5} where the 
+ordering is reversed. Generally, suboptimal routes are preferred. 
 
-
-\subsection{Experimental study}\label{sec:sec:trdat:param:expr}
-
-\begin{comment}
-Combining the ranking schemes, $\Psi_a$, improves the individual 
-ranking-schemes across all disciplines, except in the case of 
-
-
-Moreover, it is noted that the learning algorithm is able to significantly 
-outperform the original heuristics, MWR and CMA-ES (white), used to create the 
-training data $\Psi^{mwr}$ (grey) and $\Psi^{cma}$ (yellow), respectively (cf. 
-\cref{fig:track:boxplot:p1,fig:track:boxplot:p2}). For both \Problem{1} and 
-\Problem{2}, linear ordinal regression models based on $\Psi^{mwr}$ are 
-significantly better than $MWR$, irrespective of the ranking schemes. Whereas 
-the fixed weights found via CMA-ES are only outperformed by linear ordinal 
-regression models based on $\{\Psi_b^{cma},\Psi_a^{cma}\}$. This implies that 
-ranking scheme needs to be selected appropriately. Result hold for the test 
-data.
-\end{comment}
-
-\subsubsection{Trajectory strategies}
-Learning preference pairs from a good scheduling policies, such as $\Psi^{cma}$ 
-and $\Psi^{mwr}$, gave considerably more favourable results than tracking 
-optimal paths (cf. \cref{fig:track:boxplot:p1,fig:track:boxplot:p2}). 
-Suboptimal routes are preferred when dealing with problem{1} (for all ranking 
-schemes), however when encountering problem{2} the choice of ranking schemes 
-can yield the exact opposite.
-
-It is particularly interesting there is no statistical difference between 
-$\Psi^{opt}$ and $\Psi^{rnd}$ for both $\{\Psi_{b},\Psi_{f}\}\big|$\Problem{1} 
-and 
-$\{\Psi_b,\Psi_f,\Psi_p\}\big|$\Problem{2} ranking-schemes. That is to say, 
-tracking 
-optimal dispatches gives the same performance as completely random dispatches. 
-This indicates that exploring only optimal trajectories can result in a 
+It is particularly interesting there is statistical difference between 
+\PhiSet{OPT} and \PhiSet{RND}, where the latter had improved performance for 
+all \JSP\ problem spaces. In those cases, tracking optimal dispatches gives 
+worse performance as pursuing completely random dispatches. 
+This indicates that exploring only expert policy can result in a 
 training set which the learning algorithm is inept to determine good dispatches 
 in the circumstances when newly encountered features have diverged from the 
 learned feature set labelled to optimum solutions. 
 
-Finally, $\Psi^{all}$ gave the best combination across all disciplines. Adding 
-suboptimal trajectories with the optimal trajectory gives the learning 
-algorithm a greater variety of preference pairs for getting out of local minima.
+Generally, adding suboptimal trajectories with the optimal trajectory, i.e., 
+\PhiSet{ALL},  gives the learning algorithm a greater variety of preference 
+pairs for getting out of local minima. However, for some problem spaces, e.g., 
+\frnd{6}{5} and \fmc{6}{5} then additional sub-optimal solutions that are too 
+diverse, yield a worse outcome than \PhiSet{OPT} on its own.
 
 \subsubsection{Following CMA-ES guided trajectory}
-The rational for using the $\Psi^{cma}$ strategy was mostly due to the fact a 
-linear classifier is creating the training data (using the weights found via 
-CMA-ES optimisation), hence the training data created should be linearly 
-separable, which in turn should boost the training accuracy for a linear 
-classification learning model. However, this strategy is easily outperformed by 
-the single priority based dispatching rule MWR guiding the training data 
-collection, $\Psi^{mwr}$. 
-
+The rational for using the $\Psi^{\langle \text{CMA-ES} \rangle}$ strategies 
+was mostly due to the fact a linear classifier is creating the training data 
+(using the weights found via CMA-ES optimisation in \cref{eq:cma:objfun}), 
+hence the training data created should be linearly separable, which in turn 
+should boost the training accuracy for a linear classification learning model. 
+However, this strategy is easily outperformed by the \sdr\ MWR guiding the 
+training data collection, \PhiSet{MWR}. \todoFind{Is this still accurate?}
 
 \subsection{Summary and conclusion}
 As the experimental results showed in \cref{sec:trdat:param:expr}, the ranking 
@@ -315,24 +326,7 @@ data will be generate with $\Psi_{ b}^{all}$ scheme.
 
 
 
-\section{Time independent dispatching rules}\label{sec:pref:scalability}
-As stated in \cref{sec:\Psi:strategies}, a separate data set is deliberately 
-created for each dispatch iteration, as it is initially assumed that dispatch 
-rules used in the schedule building might differ in the beginning, the middle 
-or towards the end of the process. As a result there is a local linear model 
-for each dispatch; a total of $K$ linear models for solving $n\times m$ 
-\jsp. Now, if we were to create a global rule, then there would have to be one 
-model for all dispatches iterations. The approach in \cref{InRu11a} was to take 
-the mean weight for all stepwise linear models, i.e., 
-$\bar{w}_i=\frac{1}{K}\sum_{k=1}^K w_i^{(k)}$ where $\vec{w}^{(k)}$ is 
-the linear weight resulting from learning preference set $\Psi^{(k)}$ at 
-dispatch $k$. 
 
-A more sophisticated way, would be to create a \emph{new} linear model, where 
-the preference set, $\Psi$, is the union of the preference pairs across the $K$ 
-dispatches. This would amount to a substantial training set, and for $\Psi$ to 
-be computationally feasible to learn, $\Psi$ has to be filtered to size 
-$l_{\max}$.
 
 \todoWrite{No longer the case, one model instead of $K$ stepwise-models}
 
@@ -977,17 +971,8 @@ In order to boost training accuracy, two strategies were explored
     EXT in experimental setting).
 \end{enumerate}
 Note, that in preliminary experiments for \ref{expr:boost:varylmax} showed no 
-statistical significance in boost of performance. Hence, the default set-up 
-will be, 
-\begin{equation}
-l_{\max} := \Bigg \{ \begin{array}{rccc} 
-5 \cdot 10^5 & \quad\text{for} & 10\times 10 & \text{\JSP} \\
-10^5 & \quad\text{for} & 6\times 5 & \text{\JSP}
-\end{array}
-\end{equation}
-which is roughly the amount of features encountered from one pass of sampling a 
-\mbox{$K$-stepped} trajectory using a fixed policy $\hat{\pi}$ for the 
-default $N_{\text{train}}$.
+statistical significance in boost of performance, hence $l_{\max}$ is the same 
+as set in \cref{eq:lmax}.
 However, \ref{expr:boost:newdata} strategy showed a considerable change in 
 performance. Summary of $N_{\text{train}}$ is given in \cref{tbl:Ntrain}. 
 Note, for the conventional $\Phi^{\text{OPT}}$ trajectory the extended training 

@@ -206,7 +206,7 @@ considered more favourable for \fsp\ rather than MWR (cf.
 
 The number of features that were collected on a step-by-step basis for 
 \Problem[6\times5]{\text{train}} in \cref{tbl:data} is illustrated in 
-\cref{fig:size:trdat}. 
+\cref{fig:size:Phi:K}. 
 There is an apparent stair-like structure for LWR, in accordance with its 
 motivation (cf. \cref{sec:SDR}), which is completing jobs advanced in their 
 progress, that is to say minimising $\mathcal{L}$ and from \cref{eq:Phi} we 
@@ -214,7 +214,7 @@ have $\abs{\Phi}\propto\abs{\mathcal{L}}$.
 Whereas MWR tries to keep the jobs more balanced, hence more steady 
 $\abs{\mathcal{L}}$, until at $k>(K-n)$ then \mbox{$\abs{\mathcal{L}} \lneq 
 (K-k)$}, which explains the sharp decent near the end for MWR.
-\Cref{tbl:size:trdat} gives the total size for $\abs{\Phi}$, indicating the
+\Cref{tbl:size:Phi:K} gives the total size for $\abs{\Phi}$, indicating the
 number of optimisations needed for obtaining $\mathcal{Y}$.
 
 \begin{figure}[p]
@@ -222,7 +222,7 @@ number of optimisations needed for obtaining $\mathcal{Y}$.
     \vspace{-24pt}
     \caption[Size of training set, $\abs{\Phi}$]{Size of $6\times5$ training 
     set, $\abs{\Phi}$, over different trajectory strategies}
-    \label{fig:size:trdat}
+    \label{fig:size:Phi:K}
 \end{figure}
 
 \input{tables/size.trdat.tex}
