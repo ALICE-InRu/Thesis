@@ -1,0 +1,33 @@
+\begin{table}[p]\centering
+\caption[Total number of features in $\Phi$ for all $K$ steps]{Total number of 
+features in $\Phi$ for all $K$ steps. Note `--' denotes not available.}
+\label{tbl:size:trdat}
+{\setlength{\tabcolsep}{2pt} \scriptsize
+\begin{tabular}{lcccccccccccc}
+  \toprule 
+  Track
+&\multicolumn{9}{c}{\Problem[6\times5]{\text{train}}, $N_{\text{train}}=500$} 
+&\multicolumn{3}{c}{\Problem[10\times10]{\text{train}}, $N_{\text{train}}=300$} 
+\\
+  & $j.rnd$ & $j.rndn$ & $j.rnd,J_1$& $j.rnd,M_1$ & $f.rnd$ & $f.rndn$ & 
+  $f.jc$ & $f.mc$ & $f.mxc$ & $j.rnd$ & $j.rndn$ & $f.rnd$ \\ 
+  \midrule
+  SPT & 63197 & 63074 & 64560 & 61320 & 63287 & 63123 & 53678 & 66995 & 66216 
+  & 211351 &   -- &   -- \\ 
+  LPT & 63516 & 63374 & 63595 & 62864 & 63535 & 63320 & 53746 & 66356 & 65662 
+  & 210490 &   -- &   -- \\ 
+  LWR & 52500 & 52500 & 52500 & 52500 & 52500 & 52500 & 52500 & 52500 & 5250 
+  & 165000 &   -- &   -- \\ 
+  MWR & 79230 & 82500 & 78327 & 77934 & 79288 & 82500 & 80546 & 82498 & 8245 
+  & 280739 &   -- &   -- \\  
+  RND & 71390 & 71608 & 71445 & 71463 & 71427 & 71945 & 71558 & 71456 & 7149 
+  & 252515 &   -- &   -- \\  
+  OPT & 76592 & 78176 & 74109 & 74069 & 70037 & 69180 & 69716 & 71602 & 7102 
+  & 272858 & 245313 & 211763 \\  
+  $\minRho$ & 78443 & 81248 & 78673 & 78866 & 68986 & 55943 & 60755 & 53707& 
+  74997 & -- & -- & -- \\ 
+  $\minCmax$ & 79343 & 81226 & 77903 & 79078 & 68602 & 56789 & 54781 & 52502 & 
+  52510 & -- & -- & -- \\
+  \bottomrule
+\end{tabular}}
+\end{table}
