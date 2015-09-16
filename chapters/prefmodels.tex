@@ -85,7 +85,7 @@ dispatch $k$, resulting in a preference set of size,
 l =  \sum_{i=1}^{N_{\text{train}}} \left(2 \abs{\mathcal{O}^{(k)}_i}\cdot 
 \abs{\mathcal{S}^{(k)}_i} \right)
 \end{equation}
-For the problem spaces considered in \cref{InRu11b}, that sort of simple 
+For the problem spaces considered in \cref{InRu11a}, that sort of simple 
 sampling of the state space was sufficient for a favourable outcome. 
 However for a considerably harder problem spaces (cf. \cref{ch:defdifficulty}), 
 not to mention increased number of jobs and machines, preliminary experiments 
@@ -122,43 +122,54 @@ to be correctly labelled. This drawback is confronted in
 \citep{Malik08,Russell09,Siggi10} by using an optimal scheduler, computed 
 off-line. 
 
-These aspects are the main motivation for the data generation in this 
-dissertation. 
 All problem instances are correctly labelled w.r.t. their optimum makespan, 
-found with analytical means. %\footnote{Optimal solution were found using 
-%   \cite{gurobi}, a commercial software package for solving large-scale linear 
-%   optimization and a state-of-the-art solver for mixed integer programming.} 
-
-To summarise, one needs to consider two main aspects of the generation $\Psi$
+found with analytical means.\footnote{Optimal solution were found using 
+  \cite{gurobi}, a commercial software package for solving large-scale linear 
+  optimisation and a state-of-the-art solver for mixed integer programming.} 
+The main motivation for the data generation of $\Psi$ that will be used in 
+preference learning, will now need to consider the following main aspects
 \begin{enumerate}[after={{}}, leftmargin=*, label={\textbf{PREF.\arabic*}}, 
 ref={{PREF.\arabic*}}]
-    \item What sort of rankings should be compared during each step?
-    \item Which path(s) should be investigated to collect training instances 
-    (and subsequently preference pairs). Should they be features gathered 
-    resulting in
-    \begin{enumerate*}[
-      label=\textit{\roman*)},
-      before=\unskip{: }, 
-      itemjoin={{? }}, itemjoin*={{, or }},
-      after={{? }}]
+    \item Which path(s) should be investigated to collect training instances, 
+    i.e., $\Phi$. Should they be features gathered resulting in
+    \label{PREF:param:tracks}
+    \begin{enumerate*}[label=\textit{\roman*)},before=\unskip{: }, itemjoin={{? 
+    }}, itemjoin*={{, or }},after={{? }}]
       \item optimal solutions (querying expert policy $\pi_\star$)
       \item sub-optimal solutions when a DR is implemented (following a fixed 
       policy $\pi$)
       \item combination of both
-    \end{enumerate*}    
+    \end{enumerate*}
+    \item What sort of rankings should be compared during each step?
+    \label{PREF:param:ranks}
+    \item What sort of stepwise sampling strategy is needed for a good
+    \emph{single} time independent model?
+    \label{PREF:param:sampling}
 \end{enumerate}
+The collection of the training set $\Phi$ in \ref{PREF:param:tracks} (which is 
+described in \cref{ch:gentrdat}) is of paramount of importance, as the 
+subsequent preference pairs in $\Psi$ are highly dependent on the quality of 
+$\Phi$. 
+Since the labelling of $\Phi$ is quite computationally intensive, its 
+collection should be done parsimoniously in order to not waste valuable time 
+and resources. 
+On the other hand, \ref{PREF:param:ranks} and \ref{PREF:param:sampling} are 
+easy to inspect, once $\Phi$ has been chosen.
+The following \lcnamecref{sec:trdat:param:ranks}s will try to address these 
+research questions. 
 
-\subsection{Ranking strategies}\label{sec:trdat:param:ranks}
-The following ranking strategies were implemented for adding preference pairs 
-to $\Psi$ defined by \cref{eq:Psi:jsp}, they were first reported in 
-\cref{InRu15a},
+\section{Ranking strategies}\label{sec:trdat:param:ranks}
+First let's address \ref{PREF:param:ranks}. 
+The various ranking strategies for adding preference pairs to $\Psi$ defined by 
+\cref{eq:Psi:jsp} were first reported in \cref{InRu15a}, and are the following,
 \begin{description}
     \item[Basic ranking, $\Psi_b$,] i.e., all optimum rankings $r_1$ versus all 
     possible suboptimum rankings $r_i$, $i\in\{2,\ldots,n'\}$, preference pairs 
     are added -- same basic set-up introduced in \cref{InRu11a}. Note, 
     $\abs{\Psi_b}$ is defined in \cref{eq:sizePsi_b}.
-    \item[Full subsequent rankings, $S_f$,] i.e., all possible combinations of 
-    $r_i$ and $r_{i+1}$ for $i\in\{1,\ldots,n'\}$, preference pairs are added.
+    \item[Full subsequent rankings, $\Psi_f$,] i.e., all possible combinations 
+    of $r_i$ and $r_{i+1}$ for $i\in\{1,\ldots,n'\}$, preference pairs are 
+    added.
     \item[Partial subsequent rankings, $\Psi_p$,] i.e., sufficient set of 
     combinations of $r_i$ and $r_{i+1}$ for $i\in\{1,\ldots,n'\}$, are added to 
     the training set -- e.g. in the cases that there are more than one 
@@ -172,6 +183,58 @@ to $\Psi$ defined by \cref{eq:Psi:jsp}, they were first reported in
 where $r_1>r_2>\ldots>r_{n'}$ ($n'\leq n$) are the rankings of the job-list, 
 $\mathcal{L}^{(k)}$, at time step $k$.
 
+\subsection*{Experiments for \ref{PREF:param:ranks}}
+To test the validity of different ranking strategies from, a training set of 
+$N_{\text{train}}=500$ problem instances of \jrnd{6}{5} and \frnd{6}{5}
+is collected for all trajectories described in \cref{sec:trdat:tracks}. 
+The size of the preference set, $\Psi$, is depicted in \cref{fig:size:prefset}.
+From which, a linear preference model is created for each preference 
+set, $\Psi$. A box-plot with \fullnamerho, is presented in 
+\cref{fig:boxplot:prefset}. 
+From the figure it is apparent there can be a performance edge gained by 
+implementing a particular ranking or trajectory strategy, moreover the 
+behaviour is analogous across different disciplines (and result hold for 
+all other \Problem[6\times5]{\text{train}} in \cref{tbl:data}).
+
+There is no statistical difference between $\Psi_f$ and $\Psi_p$ 
+ranking-schemes across all disciplines,
+which is expected since $\Psi_f$ is designed to contain the same preference 
+information as $\Psi_f$. However neither of the Pareto ranking-schemes 
+outperform the original $\Psi_b$ set-up from \cref{InRu11a}. 
+The results hold for the test set as well. 
+Any statistical difference between ranking schemes were for $\Psi_a$, where it 
+was considered slightly lacking than some of its counterparts. 
+Since a smaller preference set is preferred, its opted to use the $\Psi_{p}$ 
+ranking scheme henceforth as the default set-up for \ref{PREF:param:ranks}. 
+
+\begin{figure}[p]
+  \includegraphics[width=\textwidth]{{prefdat.size.6x5}.pdf}
+  \vspace*{-30pt}
+  \caption[Size of preference set, $\abs{\Psi}$]{Size of 
+  \Problem[6\times5]{\text{train}} preference set, $l=\abs{\Psi}$, for 
+  different trajectory strategies and ranking schemes (where 
+  $N_{\text{train}}=500$) }
+  \label{fig:size:prefset}
+\end{figure}
+
+\begin{figure}[p]
+  \includegraphics[width=\textwidth]{{prefdat.boxplot.6x5}.pdf}
+  \vspace*{-30pt}
+  \caption{Box-plot for various $\Phi$ and $\Psi$ set-up using
+    \Problem[6\times5]{\text{train}}. The trajectories 
+    the models are based on are depicted in white on the far right.}
+  \label{fig:boxplot:prefset}
+\end{figure}
+
+\subsection*{Preliminary results for \ref{PREF:param:tracks}}
+
+The different trajectories for all \Problem[6\times5]{\text{train}} and 
+\jrnd{10}{10} are now ordered w.r.t. their mean \namerho, and is 
+given in \cref{tbl:param:tracks}. Models that are statistically different are 
+denoted by `$\succ$', otherwise considered equivalent. Note, box-plots for 
+\jrnd{6}{5} and \frnd{6}{5} were given in \cref{fig:boxplot:prefset}.
+
+\input{tables/PREF.track.ordering.tex}
 
 \section{Stepwise models}
 In \cref{InRu11a} a separate data set is deliberately created for each dispatch 
@@ -182,64 +245,11 @@ rules for solving a $n \times m$ \jsp.
 
 
 \subsection{Experimental study}\label{sec:sec:trdat:param:expr}
-To test the validity of different ranking and strategies from 
-\cref{sec:trdat:param}, a training set of $N_{\text{train}}$ problem instances 
-of $6\times5$ \jsp\ and \fsp\ summarised in \cref{tbl:data} (omitting the job 
-and machine variations of \jsp). The size of the preference set, $\Psi$, for 
-different trajectory and ranking strategies are depicted in 
-\cref{fig:sizeofprefset}. Note, for now \jrndn{10}{10} and \frnd{10}{10} will 
-be ignored, due to the extreme computational cost of correctly labelling each 
-trajectory. However, an optimum path will be pursued.
-
-A linear preference (PREF) model was created for each preference set, $\Psi$, 
-for every problem space considered. A box-plot with \fullnamerho, is presented 
-in \cref{fig:boxplot:prefset}. %\Cref{fig:track:boxplot:p1} depicts different 
-%ranking strategies for a fixed trajectory, whereas \cref{fig:rank:boxplot:p1} 
-%depicts different trajectory strategies for a fixed ranking. 
-From the figures it is apparent there can be a performance edge gained by 
-implementing a particular ranking or trajectory strategy, moreover the 
-behaviour is analogous across different disciplines. 
-
-\begin{figure}[p]
-    \includegraphics[width=\textwidth]{{prefdat.size.6x5}.pdf}
-    \caption[Size of preference set, $\abs{\Psi}$]{Size of preference set, 
-        $l=\abs{\Psi}$, for different trajectory strategies and ranking schemes 
-        (where 
-        $N_{\text{train}}=500$) }
-    \label{fig:size:prefset}
-\end{figure}
-
-\begin{figure}[p]
-    \includegraphics[width=\textwidth]{{prefdat.boxplot.6x5}.pdf}
-    \caption{Box-plot for various $\Phi$ and $\Psi$ set-up. The trajectories 
-        the models are based on are depicted in white on the far right.}
-    \label{fig:boxplot:prefset}
-\end{figure}
-
-\todoFind{Add CMA-ES baseline to \cref{fig:boxplot:prefset}}
-
-
-\subsubsection{Ranking strategies}
-There is no statistical difference between $\Psi_f$ and $\Psi_p$ 
-ranking-schemes across all disciplines,
-which is expected since $\Psi_f$ is designed to contain the same preference 
-information as $\Psi_f$. However neither of the Pareto ranking-schemes 
-outperform 
-the original $\Psi_b$ set-up from \cref{InRu11a}. The results hold for the test 
-set as well. 
 
 \begin{comment}
 Combining the ranking schemes, $\Psi_a$, improves the individual 
 ranking-schemes across all disciplines, except in the case of 
 
-$\Psi_b^{opt}\big|_{\mathcal{P_1}}$ and $\Psi_b^{rnd}\big|$\!\Problem{2}, in 
-which 
-case there were no statistical difference. Now, for the test set, the results 
-hold, however there is no statistical difference between $\Psi_b$ and $\Psi_a$ 
-for most trajectories $\{\Psi^{opt},\Psi^{cma},\Psi^{rnd}\}\big|$\!\Problem{1} 
-and  $\{\Psi^{opt},\Psi^{rnd}\}\big|$\!\Problem{2}. Now, whereas a smaller 
-preference set is preferred, its opted to use the $\Psi^{b}$ ranking scheme 
-henceforth. 
 
 Moreover, it is noted that the learning algorithm is able to significantly 
 outperform the original heuristics, MWR and CMA-ES (white), used to create the 
@@ -301,7 +311,7 @@ data was not fruitful. However, inspired by the original work by
 \cite{Siggi05}, having DR guide the generation of training data (except 
 correctly labelling with analytic means) gave meaningful preference pairs which 
 the learning algorithm could learn. In conclusion, henceforth, the training 
-data will be generate with $\Psi_{b}^{all}$ scheme.
+data will be generate with $\Psi_{ b}^{all}$ scheme.
 
 
 
