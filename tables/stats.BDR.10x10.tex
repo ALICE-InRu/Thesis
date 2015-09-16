@@ -1,0 +1,25 @@
+\begin{table}[p]
+\caption{Main statistics for \jrnd{10}{10} \namerho, using BDR that changes 
+from SDR at a fixed time step $k$.}\label{tbl:BDR:stats} 
+\centering
+\begin{tabular}{ccrlrrrrrr}
+  \toprule
+  SDR \#1 & SDR \#2 & $k$ & Set & Min. & 1st Qu. & Median & Mean & 
+    3rd Qu. & Max. \\ \midrule
+  SPT & -- & $K$ & train & 20.38 & 41.15 & 50.70 & 51.31 & 59.18 & 94.20 \\ 
+  SPT & -- & $K$ & test & 22.75 & 41.39 & 49.53 & 50.52 & 58.60 & 93.03 \\ 
+  MWR & -- & $K$ & train & \textbf{4.42} & \textbf{17.84} & \textbf{21.74} & 
+  22.13 & 26.00 & 47.78 \\ 
+  MWR & -- & $K$ & test & \textbf{3.37} & \textbf{17.07} & 21.39 & 21.65 & 
+  25.98 & \textbf{41.80} \\ 
+  SPT & MWR & 10 & train & 5.54 & 17.98 & 21.75 & \textbf{21.99} & 
+  \textbf{25.43} & \textbf{44.02} \\ 
+  SPT & MWR & 10 & test & 5.87 & 17.29 & \textbf{20.78} & \textbf{21.28} & 
+  \textbf{24.67} & 44.47 \\ 
+  SPT & MWR & 15 & train & 4.76 & 18.24 & 22.04 & 22.49 & 26.65 & 49.86 \\ 
+  SPT & MWR & 15 & test & 7.42 & 17.60 & 21.38 & 21.83 & 25.45 & 45.98 \\ 
+  SPT & MWR & 40 & train & 13.04 & 23.42 & 28.12 & 28.94 & 33.67 & 54.98 \\ 
+  SPT & MWR & 40 & test & 8.55 & 24.20 & 28.16 & 28.98 & 33.20 & 57.21 \\ 
+  \bottomrule
+\end{tabular}
+\end{table}

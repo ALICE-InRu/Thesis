@@ -148,6 +148,7 @@ suboptimal decisions later in the decision process.
   \label{fig:diff:case:OPT}
 \end{figure}
 
+
 \section{Optimality of extremal features}\label{sec:diff:opt:ext}
 The training accuracy from \cref{eq:tracc:opt} of the aforementioned 
 features from \cref{tbl:features}, or probability of a job chosen by an 
@@ -193,6 +194,35 @@ competitive for $6\times5$.
     optimal}{fig:diff:extr:jrnd:6x5}{fig:diff:extr:jrnd:10x10}
 \end{figure}
 
+\begin{figure}\centering
+  \captionsetup{list=no}
+  \subcaptionbox{$6\times5$\label{fig:diff:extr:SDR:6x5}}{
+    \includegraphics[width=\textwidth]{figures/{stepwise.6x5.SDR}.pdf}}
+  \caption[Probability of SDR yielding optimal move]{
+    Probability of SDR yielding optimal move. 
+    Both optimal (solid: $\xi_{\langle \text{SDR}\rangle}$) and 
+    SDR-based (dashed: $\hat{\xi}_{\langle \text{SDR}\rangle}$) 
+    trajectories are inspected.}
+  \label{fig:diff:extr:SDR}
+\end{figure}
+\begin{figure}[t]\centering
+  \captionsetup{list=no}
+  \ContinuedFloat
+  \subcaptionbox{$10\times10$\label{fig:diff:extr:SDR:10x10}}{
+    \begin{tikzpicture}
+    \node[anchor=south west,inner sep=0] (image) at (0,0,0) 
+    {\includegraphics[width=\textwidth]{figures/{stepwise.10x10.SDR}.pdf}};
+    \begin{scope}[x={(image.south east)},y={(image.north west)}]
+    \node (zoom) at (0.27,.45)
+    {\includegraphics[width=0.24\textwidth]{figures/j.rnd/{stepwise.10x10.SDR.zoom}.pdf}};
+    \end{scope}
+    \end{tikzpicture}}
+  \caption{Note, due to computational complexity, only \jrnd{10}{10} has 
+    SDR-based trajectories also inspected. Otherwise, only optimal is pursued.}
+  \MyCaption{Probability of SDR being optimal 
+    move}{fig:diff:extr:SDR:6x5}{fig:diff:extr:SDR:10x10}
+\end{figure}
+
 \subsection*{Optimality of SDRs}
 Let's limit ourselves to only features that correspond to SDRs from 
 \cref{sec:SDR}. Namely, \cref{pref:SDR} yield
@@ -227,34 +257,6 @@ transcend to SPT having a lower $\rho$ value than LPT. Hence, it's not enough
 to just learn optimal behaviour, one needs to investigate what happens once we 
 encounter suboptimal state spaces.
 
-\begin{figure}\centering
-   \captionsetup{list=no}
-    \subcaptionbox{$6\times5$\label{fig:diff:extr:SDR:6x5}}{
-        \includegraphics[width=\textwidth]{figures/{stepwise.6x5.SDR}.pdf}}
-    \caption[Probability of SDR yielding optimal move]{
-      Probability of SDR yielding optimal move. 
-      Both optimal (solid: $\xi_{\langle \text{SDR}\rangle}$) and 
-      SDR-based (dashed: $\hat{\xi}_{\langle \text{SDR}\rangle}$) 
-      trajectories are inspected.}
-\label{fig:diff:extr:SDR}
-\end{figure}
-\begin{figure}[t]\centering
-    \captionsetup{list=no}
-    \ContinuedFloat
-    \subcaptionbox{$10\times10$\label{fig:diff:extr:SDR:10x10}}{
-      \begin{tikzpicture}
-      \node[anchor=south west,inner sep=0] (image) at (0,0,0) 
-      {\includegraphics[width=\textwidth]{figures/{stepwise.10x10.SDR}.pdf}};
-      \begin{scope}[x={(image.south east)},y={(image.north west)}]
-      \node (zoom) at (0.27,.45)
-      {\includegraphics[width=0.24\textwidth]{figures/j.rnd/{stepwise.10x10.SDR.zoom}.pdf}};
-      \end{scope}
-      \end{tikzpicture}}
-    \caption{Note, due to computational complexity, only \jrnd{10}{10} has 
-    SDR-based trajectories also inspected. Otherwise, only optimal is pursued.}
-    \MyCaption{Probability of SDR being optimal 
-    move}{fig:diff:extr:SDR:6x5}{fig:diff:extr:SDR:10x10}
-\end{figure}
 
 \section{Simple blended dispatching rule}\label{sec:diff:opt:bdr}
 As stated before, the goal of this \lcnamecref{ch:defdifficulty} is to 
@@ -275,7 +277,7 @@ more likely to find optimal dispatches in the initial steps, then shortly after
 $k=15$, $\hat{\xi}_{\text{MWR}}$ becomes a contender again. 
 A box-plot for \namerho, for \Problem[10\times10]{\text{train}} is 
 depicted in \cref{fig:diff:boxplot:BDR} for a switch between SPT to MWR at time 
-steps $k=\{10,15,40\}$. 
+steps $k=\{10,15,40\}$. Main statistics are given in \cref{tbl:BDR:stats}.
 
 This little manipulation between SDRs does outperform SPT immensely, yet 
 doesn't manage to gain the performance edge of MWR. 
@@ -314,7 +316,7 @@ Preferably the blended dispatching rule should use  best of both worlds, and
 outperform all of its inherited DRs, otherwise it goes without saying, one 
 would simply keep on still using the original DR that achieved the best results.
 
-\begin{figure}[t]
+\begin{figure}[p]
   \centering
   \includegraphics[width=\textwidth]{figures/{j.rnd}/{boxplotRho.BDR.10x10}.pdf}
   \vspace*{-24pt}
@@ -322,6 +324,8 @@ would simply keep on still using the original DR that achieved the best results.
   for the first 10\%, 15\% or 40\% of the dispatches, followed by MWR.}
   \label{fig:diff:boxplot:BDR}
 \end{figure}
+
+\input{tables/stats.BDR.10x10.tex}
 
 \section{Feature evolution}\label{sec:diff:opt:evol}
 In order to put the extremal features from \cref{fig:diff:extr:features} into 
