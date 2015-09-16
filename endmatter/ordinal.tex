@@ -78,7 +78,7 @@ or negative example respectively.
 
 Logistic regression learns the optimal parameters $\vec{w}\in\mathbb{R}^d$ 
 determined by solving the following task,
-\begin{equation}\label{eq:margin}
+\begin{equation}\label{eq:margin:logit}
 \min_{\vec{w}}\quad \tfrac{1}{2}\inner{\vec{w}}{\vec{w}} + C \sum_{i=1}^{N'} 
 \log\left(1 + e^{-y_i \inner{\vec{w}}{\vec{z}_i}}\right) 
 \end{equation}
@@ -88,11 +88,11 @@ follow the probability model,
 \begin{equation}\label{eq:prob}
 \mathcal{P}\big(y=\pm1|\vec{z},\vec{w}\big)=\frac{1}{1+e^{-y\inner{\vec{w}}{\vec{z}_i}}}.
 \end{equation}
-The logistic regression defined in \cref{eq:margin} is solved iteratively, in 
-particular using Trust Region Newton method 
+The logistic regression defined in \cref{eq:margin:logit} is solved 
+iteratively, in particular using Trust Region Newton method 
 \citep[cf.][]{Lin08:newtontrustregion}, which generates a sequence 
 $\{\vec{w}^{(k)}\}_{k=1}^\infty$ converging to the optimal solution $\vec{w}^*$ 
-of \cref{eq:margin}.
+of \cref{eq:margin:logit}.
 
 
 \section{Non-Linear Preference}\label{sec:ord:nonlinpref}
@@ -142,7 +142,8 @@ of order $p$, or the most commonly used kernel in the literature which implement
 for $\gamma>0$.
 
 \section{Parameter setting and tuning}
-The regulation parameter $C$ in \cref{eq:margin:linear,eq:margin:nonlinear}, 
+The regulation parameter $C$ in 
+\cref{eq:margin:linear,eq:margin:logit,eq:margin:nonlinear}, 
 controls the balance between model complexity and training errors, and must be 
 chosen appropriately. A high value for $C$ gives greater emphasis on correctly 
 distinguishing between different ranks, whereas a low $C$ value results in 
