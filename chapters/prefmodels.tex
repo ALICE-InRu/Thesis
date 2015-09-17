@@ -186,7 +186,8 @@ l_{\max} := \Bigg \{ \begin{array}{rccc}
 \end{equation}
 which is roughly 60\%-70\% amount of preferences encountered from one pass of 
 sampling a \mbox{$K$-stepped} trajectory using a fixed policy $\hat{\pi}$ for 
-the default $N_{\text{train}}$ (cf. \cref{tbl:size:Psi:K}).
+the default $N_{\text{train}}$ (cf. \cref{tbl:size:Psi:K}). 
+Sampling is done randomly, with equal probability.
 
 \section{Ranking strategies}\label{sec:trdat:param:ranks}
 First let's address \ref{PREF:param:ranks}. 
@@ -267,14 +268,18 @@ ranking scheme henceforth as the default set-up for \ref{PREF:param:ranks}.
 
 \subsection*{Preliminary results for \ref{PREF:param:tracks}}
 
-The different trajectories for all \Problem[6\times5]{\text{train}} and 
-\jrnd{10}{10} are now ordered w.r.t. their mean \namerho, and is 
-given in \cref{tbl:param:tracks}. Note, \cref{InRu15a} only considered 
-\jrnd{6}{5} and \jrndn{6}{5}. 
+Limiting ourselves to models corresponding to $\Phi_p$ in 
+\cref{fig:boxplot:prefset}. We'd like to inspect which trajectory is the best 
+to use for $\Psi$. \Cref{InRu15a} only considered \jrnd{6}{5} and \jrndn{6}{5}, 
+however, results for \Problem[6\times5]{\text{train}} and 
+\jrnd{10}{10} is currently available.\footnote{Additional box-plots can be 
+found in \shiny: Preference Models $>$ Trajectories \& ranks.}
+
+are now ordered w.r.t. their mean \namerho, and is 
+given in \cref{tbl:param:tracks}. 
 Models that are statistically better are denoted by `$\succ$' (read left to 
 right), otherwise considered equivalent. 
-Box-plots for \jrnd{6}{5} and \frnd{6}{5} were given in 
-\cref{fig:boxplot:prefset}.
+
 
 \input{tables/PREF.track.ordering.tex}
 
