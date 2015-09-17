@@ -218,10 +218,11 @@ By definition the following property holds:
     \Psi_p \subset \Psi_f \subset \Psi_b \subset \Psi_a
 \end{equation}
 
-\subsection{Experiments for \ref{PREF:param:ranks}}
-To test the validity of different ranking strategies, a training set of 
-$N_{\text{train}}=500$ problem instances of \jrnd{6}{5} and \frnd{6}{5}
-is collected for all trajectories described in \cref{sec:trdat:tracks}. 
+To test the validity of different ranking strategies for 
+\ref{PREF:param:ranks}, 
+a training set of $N_{\text{train}}=500$ problem instances of \jrnd{6}{5} and 
+\frnd{6}{5}is collected for all trajectories described in 
+\cref{sec:trdat:tracks}. 
 The size of the preference set, $\abs{\Psi}$, is depicted in 
 \cref{fig:size:Psi:K} for each iteration $k$. 
 From which, a linear preference model is created for each preference 
@@ -263,21 +264,20 @@ ranking scheme henceforth as the default set-up for \ref{PREF:param:ranks}.
   \label{fig:boxplot:prefset}
 \end{figure}
 
-\subsection{Preliminary results for \ref{PREF:param:tracks}}
-\label{sec:param:tracks:passive}
-
-Let's limit the to models corresponding to $\Phi_p$ in 
-\cref{fig:boxplot:prefset}. 
-\Cref{fig:size:Psi.p:K} jointly illustrates the size of the preference set 
-used, i.e., $\abs{\Psi_p}$ from \cref{fig:size:Psi:K}.
-\Cref{tbl:size:Psi:K} reports the total amount of preferences for all $K$ 
-dispatches.
+\section{Trajectory strategies}\label{sec:trdat:param:tracks:passive}
 
 We'd like to inspect which trajectory is the best to use for $\Psi$. 
 \Cref{InRu15a} only considered \jrnd{6}{5} and \jrndn{6}{5}, 
 however, results for \Problem[6\times5]{\text{train}} and 
 \jrnd{10}{10} is currently available.\footnote{Additional box-plots can be 
-found in \shiny: Preference Models $>$ Trajectories \& ranks.}
+  found in \shiny: Preference Models $>$ Trajectories \& ranks.}
+Models from \cref{fig:boxplot:prefset} are limited to the ones corresponding to 
+$\Psi_p$. 
+\Cref{fig:size:Psi.p:K} jointly illustrates the size of the preference set 
+used, i.e., $\abs{\Psi_p}$ from \cref{fig:size:Psi:K}.
+\Cref{tbl:size:Psi:K} reports the total amount of preferences for all $K$ 
+dispatches.
+
 \Cref{tbl:param:tracks} reports the relative ordering of trajectories, 
 ordered w.r.t. their mean \namerho, and their size of preference set, i.e., 
 $\abs{\Psi_p}$.
@@ -285,10 +285,10 @@ Models that are statistically better are denoted by `$\succ$' (read left to
 right), otherwise considered equivalent. 
 
 For most problem spaces \PsiSet{LPT}{p} was the worst trajectory to pursue. 
-Looking back at \cref{fig:size:Phi:K}, then even though \PhiSet{LPT} not the 
-trajectory with the least features, the amount of equivalent features w.r.t. 
-$C_{\max}$ are far too many to make a meaningful preference set out of it. 
-It's only for \jrndn{6}{5} that there is another trajectory with fewer 
+Looking back at \cref{fig:size:Phi:K}, then even though \PhiSet{LPT} was not 
+the trajectory with the least features, the amount of equivalent features 
+w.r.t. $C_{\max}$ are far too many to make a meaningful preference set out of 
+it. It's only for \jrndn{6}{5} that there is another trajectory with fewer 
 preferences, namely \PsiSet{LWR}{p} (cf. \cref{fig:size:Psi:K}), and in that 
 case LWR is worst model.
 Model that come on top, are those that have a varied $\Psi$. However, 
@@ -342,7 +342,7 @@ diverse, yield a worse outcome than \PhiSet{OPT} on its own.
 %     f.mxc       6x5 Track Track   SDR Track Track    SDR     SDR
 %     j.rnd     10x10 Track Track Track  SAME Track    N/A     N/A
 
-When comparing $\Psi{\langle\text{DR}\rangle}$ with its corresponding DR, then 
+When comparing $\Psi^{\langle\text{DR}\rangle}$ with its corresponding DR, then 
 usually the preference model outperformed the DR it was trying to mimic. 
 The exceptions being 
 \begin{enumerate*}
@@ -359,16 +359,11 @@ was mostly due to the fact a linear classifier is creating the training data
 (using the weights found via CMA-ES optimisation in \cref{eq:cma:objfun}), 
 hence the training data created should be linearly separable, which in turn 
 should boost the training accuracy for a linear classification learning model. 
-However, this strategy is not outperformed the original DR used in guiding the 
+However, this strategy is not outperforming the original DR used in guiding the 
 training data collection. 
 
-
-
 \subsection*{Summary and conclusion}
-As the experimental results showed, the ranking of optimal\footnote{Here the
-  tasks labelled `optimal' do not necessarily yield the optimum makespan except 
-  in the case of following expert policy $\pi_\star$), instead these are the 
-  optimal dispatches for the given partial schedule.} 
+As the experimental results showed, the ranking of optimal
 and suboptimal features are of paramount importance. The subsequent rankings 
 are not of much value, since they are disregarded anyway. However, the 
 trajectories to create training instances have to be varied.
