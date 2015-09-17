@@ -300,8 +300,10 @@ However, the fact remains that the schedules have diverged too far from what
 MWR would have been able to achieve on its own, i.e., using SPT downgrades the 
 performance of MWR. 
 
-Changing to MWR at $k=10$ or $k=15$ is not statically significant from 
-MWR (boost in mean $\rho$ is at most 1.25\%). 
+
+Changing to MWR at $k\leq20$ is not statically significant from MWR (boost in 
+mean $\rho$ is at most 0.5\%). 
+However, after $k>20$ then the BDR starts diverging from MWR. 
 But as pointed in \cref{sec:diff:opt:sub}, it's not so fatal to make bad moves 
 in the very first dispatches for \jrnd{10}{10}, hence little is gained with 
 improved classification accuracy in that region. 
@@ -320,8 +322,8 @@ would simply keep on still using the original DR that achieved the best results.
   \centering
   \includegraphics[width=\textwidth]{figures/{j.rnd}/{boxplotRho.BDR.10x10}.pdf}
   \vspace*{-24pt}
-  \caption{Box plot of \jrnd{10}{10} \namerho, for BDR where SPT is applied 
-  for the first 10\%, 15\% or 40\% of the dispatches, followed by MWR.}
+  \caption{Box plot of \jrnd{10}{10} \namerho, for BDR where SPT is applied for 
+  the first 10\%, 15\%, 20\%, 30\% or 40\% of the dispatches, followed by MWR.}
   \label{fig:diff:boxplot:BDR}
 \end{figure}
 
