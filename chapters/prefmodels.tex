@@ -274,12 +274,10 @@ to use for $\Psi$. \Cref{InRu15a} only considered \jrnd{6}{5} and \jrndn{6}{5},
 however, results for \Problem[6\times5]{\text{train}} and 
 \jrnd{10}{10} is currently available.\footnote{Additional box-plots can be 
 found in \shiny: Preference Models $>$ Trajectories \& ranks.}
-
-are now ordered w.r.t. their mean \namerho, and is 
-given in \cref{tbl:param:tracks}. 
+\Cref{tbl:param:tracks} reports the relative ordering of trajectories, 
+ordered w.r.t. their mean \namerho.
 Models that are statistically better are denoted by `$\succ$' (read left to 
 right), otherwise considered equivalent. 
-
 
 \input{tables/PREF.track.ordering.tex}
 
@@ -304,7 +302,7 @@ pairs for getting out of local minima. However, for some problem spaces, e.g.,
 diverse, yield a worse outcome than \PhiSet{OPT} on its own.
 
 \subsubsection{Following CMA-ES guided trajectory}
-The rational for using the $\Psi^{\langle \text{CMA-ES} \rangle}$ strategies 
+The rational for using the $\Phi^{\langle \text{CMA-ES} \rangle}$ strategies 
 was mostly due to the fact a linear classifier is creating the training data 
 (using the weights found via CMA-ES optimisation in \cref{eq:cma:objfun}), 
 hence the training data created should be linearly separable, which in turn 
