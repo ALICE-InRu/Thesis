@@ -6,6 +6,18 @@
 \FirstSentence{L}{orem ipsum dolor sit amet}, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque, id pulvinar odio lorem non turpis. Nullam sit amet enim. Suspendisse id velit vitae ligula volutpat condimentum. Aliquam erat volutpat. Sed quis velit. Nulla facilisi. Nulla libero. Vivamus pharetra posuere sapien. Nam consectetuer. Sed aliquam, nunc eget euismod ullamcorper, lectus nunc ullamcorper 
 
 
+We saw in \cref{sec:param:tracks:passive} that preference models using training 
+data from following SDR policy, i.e., $\Phi^{\langle \text{SDR} \rangle}$, are 
+good for improving its original heuristic. However, this did not transcend for 
+$\Psi^{\langle \text{CMA-ES} \rangle}$. 
+Perhaps, if $\Phi^{\langle \text{CMA-ES} \rangle}$ wasn't based on following 
+the CMA-ES trajectory, but rather using the actual features encountered during 
+its optimisation. Alas, CMA-ES used a computational budget of 50,000 function 
+evaluations, each consisting of the expectation of $N_{\textwidth}$ problem 
+instances. So even though \cref{fig:cma:fit} becomes relatively stable after a 
+few generations, it would still yield a gigantic feature set that needs to be 
+filtered before going through the optimisation phase of correctly labelling 
+them.
 
 
 

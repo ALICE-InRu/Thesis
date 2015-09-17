@@ -218,13 +218,12 @@ By definition the following property holds:
     \Psi_p \subset \Psi_f \subset \Psi_b \subset \Psi_a
 \end{equation}
 
-\subsection*{Experiments for \ref{PREF:param:ranks}}
+\subsection{Experiments for \ref{PREF:param:ranks}}
 To test the validity of different ranking strategies, a training set of 
 $N_{\text{train}}=500$ problem instances of \jrnd{6}{5} and \frnd{6}{5}
 is collected for all trajectories described in \cref{sec:trdat:tracks}. 
 The size of the preference set, $\abs{\Psi}$, is depicted in 
-\cref{fig:size:Psi:K} for each iteration $k$. \Cref{tbl:size:Psi:K} reports the 
-total amount of preferences for all $K$ dispatches.
+\cref{fig:size:Psi:K} for each iteration $k$. 
 From which, a linear preference model is created for each preference 
 set, $\Psi$. A box-plot for \fullnamerho, is presented in 
 \cref{fig:boxplot:prefset}. 
@@ -245,9 +244,7 @@ was considered slightly lacking than some of its counterparts.
 Since a smaller preference set is preferred, its opted to use the $\Psi_{p}$ 
 ranking scheme henceforth as the default set-up for \ref{PREF:param:ranks}. 
 
-\input{tables/size.prefdat.tex}
-
-\begin{figure}[t]
+\begin{figure}[p]
   \includegraphics[width=\textwidth]{{prefdat.size.6x5}.pdf}
   \vspace*{-30pt}
   \caption[Size of preference set, $\abs{\Psi}$]{Size of 
@@ -266,25 +263,57 @@ ranking scheme henceforth as the default set-up for \ref{PREF:param:ranks}.
   \label{fig:boxplot:prefset}
 \end{figure}
 
-\subsection*{Preliminary results for \ref{PREF:param:tracks}}
+\subsection{Preliminary results for \ref{PREF:param:tracks}}
+\label{sec:param:tracks:passive}
 
-Limiting ourselves to models corresponding to $\Phi_p$ in 
-\cref{fig:boxplot:prefset}. We'd like to inspect which trajectory is the best 
-to use for $\Psi$. \Cref{InRu15a} only considered \jrnd{6}{5} and \jrndn{6}{5}, 
+Let's limit the to models corresponding to $\Phi_p$ in 
+\cref{fig:boxplot:prefset}. 
+\Cref{fig:size:Psi.p:K} jointly illustrates the size of the preference set 
+used, i.e., $\abs{\Psi_p}$ from \cref{fig:size:Psi:K}.
+\Cref{tbl:size:Psi:K} reports the total amount of preferences for all $K$ 
+dispatches.
+
+We'd like to inspect which trajectory is the best to use for $\Psi$. 
+\Cref{InRu15a} only considered \jrnd{6}{5} and \jrndn{6}{5}, 
 however, results for \Problem[6\times5]{\text{train}} and 
 \jrnd{10}{10} is currently available.\footnote{Additional box-plots can be 
 found in \shiny: Preference Models $>$ Trajectories \& ranks.}
 \Cref{tbl:param:tracks} reports the relative ordering of trajectories, 
-ordered w.r.t. their mean \namerho.
+ordered w.r.t. their mean \namerho, and their size of preference set, i.e., 
+$\abs{\Psi_p}$.
 Models that are statistically better are denoted by `$\succ$' (read left to 
 right), otherwise considered equivalent. 
 
+For most problem spaces \PsiSet{LPT}{p} was the worst trajectory to pursue. 
+Looking back at \cref{fig:size:Phi:K}, then even though \PhiSet{LPT} not the 
+trajectory with the least features, the amount of equivalent features w.r.t. 
+$C_{\max}$ are far too many to make a meaningful preference set out of it. 
+It's only for \jrndn{6}{5} that there is another trajectory with fewer 
+preferences, namely \PsiSet{LWR}{p} (cf. \cref{fig:size:Psi:K}), and in that 
+case LWR is worst model.
+Model that come on top, are those that have a varied $\Psi$. However, 
+aggregating features from all trajectories is not a good idea, as the 
+preference set then becomes too varied for an satisfactory result. 
+
+\input{tables/size.prefdat.tex}
 \input{tables/PREF.track.ordering.tex}
+
+\begin{figure}[t]
+  \includegraphics[width=\textwidth]{{prefdat.p.size.6x5}.pdf}
+  \vspace*{-30pt}
+  \caption[Size of preference set, $\abs{\Psi_p}$]{Size of 
+    \Problem[6\times5]{\text{train}} preference set, $l=\abs{\Psi_p}$, for 
+    different trajectory strategies}
+  \label{fig:size:Psi.p:K}
+\end{figure}
 
 Learning preference pairs from a good scheduling policies, such as 
 $\Phi^{\minCmax},~\Phi^{\minRho}$ and \PhiSet{MWR}, gave considerably more 
 favourable results than tracking optimal paths, save for \fjc{6}{5} where the 
 ordering is reversed. Generally, suboptimal routes are preferred. 
+However, even though LWR is a better policy than MWR for \FSP, then 
+\PhiSet{LWR} is a worse candidate than e.g. \PhiSet{MWR}, but as discussed 
+before, it's due to the lack of varied dispatches for the trajectory.
 
 It is particularly interesting there is statistical difference between 
 \PhiSet{OPT} and \PhiSet{RND}, where the latter had improved performance for 
@@ -301,21 +330,45 @@ pairs for getting out of local minima. However, for some problem spaces, e.g.,
 \frnd{6}{5} and \fmc{6}{5} then additional sub-optimal solutions that are too 
 diverse, yield a worse outcome than \PhiSet{OPT} on its own.
 
-\subsubsection{Following CMA-ES guided trajectory}
+%   Problem Dimension   SPT   LPT   LWR   MWR   RND ES.rho ES.Cmax
+%     j.rnd       6x5 Track Track Track Track Track    SDR     SDR
+%    j.rndn       6x5 Track Track Track Track Track   SAME    SAME
+%  j.rnd,J1       6x5 Track Track Track   SDR Track    SDR     SDR
+%  j.rnd,M1       6x5 Track  SAME Track   SDR Track    SDR     SDR
+%     f.rnd       6x5 Track Track Track Track Track    SDR     SDR
+%    f.rndn       6x5 Track Track Track Track Track    SDR     SDR
+%      f.jc       6x5 Track Track Track Track Track    SDR     SDR
+%      f.mc       6x5 Track Track   SDR Track Track    SDR     SDR
+%     f.mxc       6x5 Track Track   SDR Track Track    SDR     SDR
+%     j.rnd     10x10 Track Track Track  SAME Track    N/A     N/A
+
+When comparing $\Psi{\langle\text{DR}\rangle}$ with its corresponding DR, then 
+usually the preference model outperformed the DR it was trying to mimic. 
+The exceptions being 
+\begin{enumerate*}
+  \item MWR for \jrndJ{6}{5} and \jrndM{6}{5}. Note \jrnd{10}{10} was 
+  statistically insignificant
+  \item LWR for \fmc{6}{5} and \fmxc{6}{5}
+  \item LPT was statistically insignificant for \jrndM{6}{5}
+  \item $\minCmax$ and $\minRho$ for all problem spaces, save for \jrndn{6}{5} 
+  which was statistically insignificant
+\end{enumerate*}
+
 The rational for using the $\Phi^{\langle \text{CMA-ES} \rangle}$ strategies 
 was mostly due to the fact a linear classifier is creating the training data 
 (using the weights found via CMA-ES optimisation in \cref{eq:cma:objfun}), 
 hence the training data created should be linearly separable, which in turn 
 should boost the training accuracy for a linear classification learning model. 
-However, this strategy is easily outperformed by the \sdr\ MWR guiding the 
-training data collection, \PhiSet{MWR}. \todoFind{Is this still accurate?}
+However, this strategy is not outperformed the original DR used in guiding the 
+training data collection. 
 
-\subsection{Summary and conclusion}
-As the experimental results showed in \cref{sec:trdat:param:expr}, the ranking 
-of optimal\footnote{Here the tasks labelled `optimal' do not necessarily yield 
-    the optimum makespan (except in the case of following expert policy 
-    $\pi_\star$), instead these are the optimal dispatches for the given 
-    partial schedule.} 
+
+
+\subsection*{Summary and conclusion}
+As the experimental results showed, the ranking of optimal\footnote{Here the
+  tasks labelled `optimal' do not necessarily yield the optimum makespan except 
+  in the case of following expert policy $\pi_\star$), instead these are the 
+  optimal dispatches for the given partial schedule.} 
 and suboptimal features are of paramount importance. The subsequent rankings 
 are not of much value, since they are disregarded anyway. However, the 
 trajectories to create training instances have to be varied.
@@ -324,22 +377,11 @@ Unlike \citep{Siggi10,Malik08,Russell09}, learning only on optimal training
 data was not fruitful. However, inspired by the original work by 
 \cite{Siggi05}, having DR guide the generation of training data (except 
 correctly labelling with analytic means) gave meaningful preference pairs which 
-the learning algorithm could learn. In conclusion, henceforth, the training 
-data will be generate with $\Psi_{ b}^{all}$ scheme.
+the learning algorithm could learn. 
 
 
 
-
-
-\todoWrite{No longer the case, one model instead of $K$ stepwise-models}
-
-\section{Discussion and conclusions}
-
-
-
-\section{JOH.tex}
-
-\subsection{Feature Selection}
+\section{Feature Selection}
 The SDRs we've inspected so-far are based on two job-attributes from
 \cref{tbl:jssp:feat}, namely
 \begin{enumerate*}[after={{,}}]

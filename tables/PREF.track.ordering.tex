@@ -1,30 +1,60 @@
-\begin{table}
-  \caption{Relative ordering w.r.t. mean $\rho$ for trajectories in 
-    \cref{sec:trdat:tracks}} \label{tbl:param:tracks}
-  \begin{tabular}{lc}
+\begin{table}[p]
+  \centering
+  \caption{Relative ordering w.r.t. mean $\rho$ and size of its preference set, 
+  $l=\abs{\Psi_p}$, for trajectories in \cref{sec:trdat:tracks}} 
+  \label{tbl:param:tracks}
+  {\small
+  \begin{tabular}{lcc}
     \toprule
-    Problem & Ordering of trajectories \\ \midrule
-    \jrnd{6}{5} & $\minCmax$ $\succ$ $\minRho$ $\succ$ ALL $\equiv$ SPT 
-    $\equiv$ MWR $\equiv$ RND $\succ$ OPT $\succ$ LWR $\succ$ LPT \\
-    \jrndn{6}{5} & $\minCmax$ $\equiv$ $\minRho$ $\equiv$ MWR $\equiv$ RND 
-    $\equiv$ ALL $\equiv$ SPT $\succ$ LPT $\succ$ LWR $\succ$ OPT \\
-    \jrndJ{6}{5} & $\minCmax$ $\succ$ $\minRho$ $\succ$ SPT $\succ$ ALL 
-    $\equiv$ RND $\succ$ OPT $\equiv$ LWR $\equiv$ MWR $\succ$ LPT \\
-    \jrndM{6}{5} & $\minCmax$ $\equiv$ $\minRho$ $\succ$ SPT $\equiv$ ALL 
-    $\equiv$ RND $\succ$ LWR $\succ$ OPT $\succ$ MWR $\succ$ LPT\\
-    \frnd{6}{5} & SPT $\equiv$ $\minCmax$ $\equiv$ OPT $\equiv$ $\minRho$ 
-    $\succ$ ALL $\succ$ LWR $\succ$ MWR $\equiv$ RND $\equiv$ LPT \\
-    \frndn{6}{5} & $\minRho$ $\equiv$ $\minCmax$ $\equiv$ RND $\equiv$ LWR 
-    $\equiv$ ALL $\succ$ SPT $\equiv$ LPT $\equiv$ OPT $\succ$ MWR\\
-    \fjc{6}{5} & OPT $\succ$ SPT $\equiv$ LWR $\succ$ RND $\equiv$ MWR $\succ$ 
-    LPT $\equiv$ $\minCmax$ $\equiv$ $\minRho$ $\succ$ ALL\\
-    \fmc{6}{5} &$\minRho$ $\succ$ LWR $\succ$ $\minCmax$ $\equiv$ MWR $\succ$ 
-    OPT $\equiv$ LPT $\equiv$ RND $\equiv$ SPT $\succ$ ALL \\
-    \fmxc{6}{5} & RND $\equiv$ OPT $\equiv$ $\minRho$ 
+    \multicolumn{2}{l}{Problem} & Ordering of trajectories \\ \midrule
+    \multirow{2}{*}{\jrnd{6}{5}} & $\rho$ & $\minCmax$ $\succ$ $\minRho$ 
+    $\succ$ ALL $\equiv$ SPT $\equiv$ MWR $\equiv$ RND $\succ$ OPT $\succ$ LWR 
+    $\succ$ LPT \\
+    & $l$ & ALL $\gg$ $\minCmax$ $>$ OPT $>$ $\minRho$ $>$ MWR $>$ SPT $>$ RND 
+    $>$ LWR $>$ LPT \\ \midrule
+    \multirow{2}{*}{\jrndn{6}{5}} & $\rho$ & $\minCmax$ $\equiv$ $\minRho$ 
+    $\equiv$ MWR $\equiv$ RND $\equiv$ ALL $\equiv$ SPT $\succ$ LPT $\succ$ LWR 
+    $\succ$ OPT \\
+    & $l$ & ALL $\gg$ OPT $>$ $\minCmax$ $>$ $\minRho$ $>$ MWR $>$ RND $>$ SPT 
+    $>$ LPT $>$ LWR \\ \midrule
+    \multirow{2}{*}{\jrndJ{6}{5}} & $\rho$ & $\minCmax$ $\succ$ $\minRho$ 
+    $\succ$ SPT $\succ$ ALL $\equiv$ RND $\succ$ OPT $\equiv$ LWR $\equiv$ MWR 
+    $\succ$ LPT \\
+    & $l$ & ALL $\gg$ OPT $>$ SPT $>$ $\minCmax$ $>$ $\minRho$ $>$ MWR $>$ RND 
+    $>$ LWR $>$ LPT \\ \midrule
+    \multirow{2}{*}{\jrndM{6}{5}} & $\rho$ & $\minCmax$ $\equiv$ $\minRho$ 
+    $\succ$ SPT $\equiv$ ALL $\equiv$ RND $\succ$ LWR $\succ$ OPT $\succ$ MWR 
+    $\succ$ LPT \\
+    & $l$ & ALL $\gg$ $\minCmax$ $>$ OPT $>$ $\minRho$ $>$ SPT $>$ MWR $>$ RND 
+    $>$ LWR $>$ LPT \\ \midrule
+    \multirow{2}{*}{\frnd{6}{5}} & $\rho$ & SPT $\equiv$ $\minCmax$ $\equiv$ 
+    OPT $\equiv$ $\minRho$ $\succ$ ALL $\succ$ LWR $\succ$ MWR $\equiv$ RND 
+    $\equiv$ LPT \\
+    & $l$ & ALL $\gg$ OPT $>$ MWR $>$ $\minCmax$ $>$ SPT $>$ RND $>$ $\minRho$ 
+    $>$ LWR $>$ LPT \\ \midrule
+    \multirow{2}{*}{\frndn{6}{5}} & $\rho$ & $\minRho$ $\equiv$ $\minCmax$ 
+    $\equiv$ RND $\equiv$ LWR $\equiv$ ALL $\succ$ SPT $\equiv$ LPT $\equiv$ 
+    OPT $\succ$ MWR\\
+    & $l$ & ALL $\gg$ MWR $>$ OPT $>$ RND $>$ SPT $>$ LWR $>$ $\minRho$ $>$ 
+    $\minCmax$ $>$ LPT \\ \midrule
+    \multirow{2}{*}{\fjc{6}{5}} & $\rho$ & OPT $\succ$ SPT $\equiv$ LWR $\succ$ 
+    RND $\equiv$ MWR $\succ$ LPT $\equiv$ $\minCmax$ $\equiv$ $\minRho$ $\succ$ 
+    ALL\\
+    & $l$ & ALL $\gg$ MWR $>$ OPT $>$ LWR $>$ SPT $>$ RND $>$ $\minCmax$ $>$ 
+    $\minRho$ $>$ LPT \\ \midrule
+    \multirow{2}{*}{\fmc{6}{5}} & $\rho$ & $\minRho$ $\succ$ LWR $\succ$ 
+    $\minCmax$ $\equiv$ MWR $\succ$ OPT $\equiv$ LPT $\equiv$ RND $\equiv$ SPT 
+    $\succ$ ALL \\
+    & $l$ & ALL $\gg$ SPT $>$ OPT $>$ MWR $>$ RND $>$ LWR $>$ $\minRho$ $>$ 
+    $\minCmax$ $>$ LPT \\ \midrule
+    \multirow{2}{*}{\fmxc{6}{5}} & $\rho$ & RND $\equiv$ OPT $\equiv$ $\minRho$ 
     $\equiv$ SPT $\equiv$ ALL $\equiv$ MWR $\succ$ LWR $\succ$ $\minCmax$ 
     $\succ$ LPT\\
-    \jrnd{10}{10} & MWR $\succ$ RND $\succ$ SPT $\equiv$ OPT $\succ$ ALL 
-    $\equiv$ LPT $\equiv$ LWR \\
+    & $l$ & ALL $\gg$ SPT $>$ OPT $>$ $\minRho$ $>$ MWR $>$ RND $>$ LWR $>$ 
+    $\minCmax$ $>$ LPT \\ \midrule
+    \multirow{2}{*}{\jrnd{10}{10}} & $\rho$ & MWR $\succ$ RND 
+    $\succ$ SPT $\equiv$ OPT $\succ$ ALL $\equiv$ LPT $\equiv$ LWR \\    
+    & $l$ & ALL $\gg$ OPT $>$ MWR $>$ RND $>$ SPT $>$ LWR $>$ LPT \\
     \bottomrule
-  \end{tabular}
+  \end{tabular}}
 \end{table}
