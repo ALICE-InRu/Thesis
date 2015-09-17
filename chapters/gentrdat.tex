@@ -84,8 +84,11 @@ In addition, varying permutations of the dispatching sequence (however given
 the same partial initial sequence) can result in very different complete 
 schedules but can still achieve the same makespan, and thus same \fullnamerho\ 
 (which is the measure under consideration). 
-Care must be taken in this case that neither resulting features are labelled as 
-undesirable. 
+Care must be taken in this case that neither resulting features are labelled 
+\footnote{Here the tasks labelled `optimal' do not necessarily yield the
+  optimum makespan (except in the case of following expert policy $\pi_\star$), 
+  instead these are the optimal dispatches for the given partial schedule.} 
+as undesirable. 
 Only the features from a dispatch yielding a truly suboptimal solution should 
 be labelled undesirable. 
 
@@ -93,11 +96,13 @@ be labelled undesirable.
 The creation of the game tree for \JSP\ can be done recursively for all 
 possible permutations of dispatches, resulting in a full \mbox{$n$-ary} tree 
 (since $|\mathcal{L}|\leq n$) of height $K$. 
-Such an exhaustive search would yield at the most $n^K$ leaf nodes (worst case 
-scenario being no sub-trees merge). Since the internal vertices (i.e. 
-partial schedules) are only of interest to learn,\footnote{The root is 
-  the empty initial schedule and for the last dispatch there is only one option 
-  left to choose from, so there is no preferred `choice' to learn.} 
+Such an exhaustive search would yield at the most $n^K$ leaf nodes. Worst case 
+scenario being no sub-trees merge.
+
+\noindent Since the internal vertices (i.e. partial schedules) are only of 
+interest to learn,\footnote{The root is the empty initial schedule and for the
+  last dispatch there is only one option left to choose from, so there is no 
+  preferred `choice' to learn.} 
 the number of those can be at the most \mbox{${}^{n^K-1}/_{n-1}$}.
 Even for small dimensions of $n$ and $m$ the number of internal vertices are 
 quite substantial and thus too computationally expensive to investigate them 
