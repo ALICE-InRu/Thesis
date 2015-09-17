@@ -1,6 +1,11 @@
 source('global.R')
 source('pref.trajectories.R')
 
+source('gantt.R')
+trdat <- get.files.TRDAT('j.rnd', '4x5', 'ALL', useDiff = F)
+gantt=get.gantt('4x5','j.rnd','SPT',1,trdat)
+plot.gantt(gantt,10,TightTime = T, plotPhi = T,plotStep = T)
+
 input=list(dimension='6x5',problem='j.rnd',problems=c('j.rnd','j.rndn','f.rnd','f.rndn','f.jc','f.mc','f.mxc','j.rnd_pj1doubled','j.rnd_p1mdoubled'))
 SDR=subset(dataset.SDR,Problem %in% input$problems & Dimension %in% input$dimension)
 
