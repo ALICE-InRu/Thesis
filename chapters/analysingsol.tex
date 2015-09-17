@@ -70,10 +70,11 @@ To generalise, we could consider the probability of optimality as a sort of
 stepwise `training accuracy.' Then for a given policy $\pi$, we'd formalise its 
 optimality (yet still maintaining optimal trajectory) as, 
 \begin{equation} \label{eq:tracc:opt}
-    \xi_{\pi} := \Exp{\given{\pi_{\star} = \pi}{\pi_{\star}}}
+    \xi^\star_{\pi} := \Exp[\pi_{\star}]{\pi_{\star} = \pi}
 \end{equation}
 that is to say the mean likelihood of our policy $\pi$ being equivalent to the 
-expert policy $\pi_\star$, i.e., $Y^{\pi_\star}=Y^\pi$. Note, for $\xi_\pi$ we 
+expert policy $\pi_\star$, i.e., $Y^{\pi_\star}=Y^\pi$. Note, for 
+$\xi^\star_\pi$ we 
 only need $\{\Phi^{\pi_\star},\mathcal{Y}^{\pi_\star}\}$ from 
 \cref{eq:trdat:metadata}
 \begin{enumerate*}
@@ -113,7 +114,16 @@ keep making optimal decisions, because once off the optimal track the
 consequences can be dire. To demonstrate this interaction, 
 \cref{fig:diff:case:OPT} 
 depicts the worst and best case scenario of \namerho, once you've fallen off 
-the optimal track. Note, that this is given that you make \emph{one} wrong 
+the optimal track, defined as follows,
+\begin{subequations}\label{eq:bwc:opt}
+  \begin{eqnarray} 
+  \zeta_{\min}^{\star} &:=& \Exp[\pi_\star]{\given{\min(\rho)}{
+      \forall C_{\max}^{\vchi^j} \gneq C_{\max}^{\pi_\star} }} \\
+  \zeta_{\max}^{\star} &:=& \Exp[\pi_\star]{\given{\max(\rho)}{
+      \forall C_{\max}^{\vchi^j} \gneq C_{\max}^{\pi_\star} }}
+  \end{eqnarray}
+\end{subequations}
+Note, that this is given that you make \emph{one} wrong 
 turn. Generally, there will be many mistakes made, and then the compound 
 effects of making suboptimal decisions really start adding up. 
 In fact, \cref{fig:diff:extr:SDR} shows the probability of optimality when 
@@ -153,11 +163,11 @@ suboptimal decisions later in the decision process.
 The training accuracy from \cref{eq:tracc:opt} of the aforementioned 
 features from \cref{tbl:features}, or probability of a job chosen by an 
 extremal value for a feature being able to yield an optimal makespan on a 
-step-by-step basis, i.e., $\xi_{\pm\phi_i}$, 
+step-by-step basis, i.e., $\xi^\star_{\pm\phi_i}$, 
 is depicted in \cref{fig:diff:extr:features}, for both \jrnd{6}{5} and 
 \jrnd{10}{10}.
 Moreover, the dashed line represents the benchmark of randomly guessing the 
-optimum, $\xi_{\text{RND}}$ (cf. \cref{fig:diff:opt:rnd}).
+optimum, $\xi^\star_{\text{RND}}$ (cf. \cref{fig:diff:opt:rnd}).
 Furthermore, the \lcnamecref{fig:diff:extr:features}s are annotated with the 
 corresponding mean \namerho, for the training set if it were scheduled solely 
 w.r.t. that extremal feature.
@@ -200,8 +210,8 @@ competitive for $6\times5$.
     \includegraphics[width=\textwidth]{figures/{stepwise.6x5.SDR}.pdf}}
   \caption[Probability of SDR yielding optimal move]{
     Probability of SDR yielding optimal move. 
-    Both optimal (solid: $\xi_{\langle \text{SDR}\rangle}$) and 
-    SDR-based (dashed: $\hat{\xi}_{\langle \text{SDR}\rangle}$) 
+    Both optimal (solid: $\xi^\star_{\langle \text{SDR}\rangle}$) and 
+    SDR-based (dashed: $\xi_{\langle \text{SDR}\rangle}$) 
     trajectories are inspected.}
   \label{fig:diff:extr:SDR}
 \end{figure}
@@ -235,27 +245,45 @@ latter SDR, i.e., the extremal values for those given features.
 \Cref{fig:diff:extr:SDR} depicts the corresponding probabilities from 
 \cref{fig:diff:extr:features} in one graph, for all problem spaces in 
 \cref{tbl:data}.
-Furthermore, we know that our SDR heuristics aren't  perfect, and they're bound 
-to make mistakes at some point. 
-It's interesting to see how that stepwise optimality evolves for its intended 
-trajectory, thereby updating \cref{eq:tracc:opt} to
-\begin{equation} \label{eq:tracc:track}
-\hat{\xi}_{\pi} := \mathbb{E}\left\{\pi_{\star} = \pi \;\mid\; \pi \right\}
-\end{equation}
-As a result $\hat{\xi}_{\pi}$ is based on $\{\Phi^\pi,\mathcal{Y}^\pi\}$ 
-meta-data from \cref{eq:trdat:metadata}.
-\Cref{fig:diff:extr:SDR} shows the difference between $\xi_{\langle \text{SDR} 
-    \rangle}$ and $\hat{\xi}_{\langle \text{SDR} \rangle}$.
 
 Now, let's bare in mind \namerho, of applying SDRs throughout the dispatching 
 process (cf. box-plots of which in \cref{fig:SDR:boxplot}), then there is a 
 some correspondence between high probability of stepwise optimality and low 
 $\rho$. Alas, this isn't always the case, for \jrnd{10}{10} 
-${\xi}_{\text{SPT}}$ always outperforms ${\xi}_{\text{LPT}}$ in choosing a 
+$\xi^\star_{\text{SPT}}$ always outperforms $\xi^\star_{\text{LPT}}$ in 
+choosing a 
 dispatch which may result in an optimal schedule. However, this does not 
 transcend to SPT having a lower $\rho$ value than LPT. Hence, it's not enough 
 to just learn optimal behaviour, one needs to investigate what happens once we 
 encounter suboptimal state spaces.
+
+Since we know that our SDR heuristics aren't  perfect, and they're bound 
+to make mistakes at some point. 
+It's interesting to see how that stepwise optimality evolves for its intended 
+trajectory, thereby updating \cref{eq:tracc:opt} to
+\begin{equation} \label{eq:tracc:track}
+    \xi_{\pi} := \Exp[\pi]{\pi_{\star} = \pi}
+\end{equation}
+\Cref{fig:diff:extr:SDR} shows the difference between $\xi^\star_{\langle 
+\text{SDR} \rangle}$ and $\xi_{\langle \text{SDR} \rangle}$.
+Similarly for \cref{eq:bwc:opt}, 
+\begin{subequations}\label{eq:bwc:track}
+\begin{eqnarray} 
+  \zeta_{\min}^{\pi} := \Exp[\pi_\star]{\given{\min(\rho)}{
+      \forall C_{\max}^{\pi_\star(\vchi^{j})} \neq 
+      C_{\max}^{\pi_\star(\vchi^{j^*})} \wedge j^* = \argmax_j\{\pi(\vphi^j)\}
+      }} \\
+  \zeta_{\max}^{\pi} := \Exp[\pi_\star]{\given{\max(\rho)}{
+      \forall C_{\max}^{\pi_\star(\vchi^j)} \neq 
+      C_{\max}^{\pi_\star(\vchi^{j^*})} \wedge j^* = \argmax_j\{\pi(\vphi^j)\} 
+      }}
+\end{eqnarray}
+\end{subequations}
+Note, $\zeta^{\star}=\zeta^{\pi_{\star}}$.
+As a result $\xi_{\pi}$ and $\{\zeta_{\min}^{\pi},\zeta_{\max}^{\pi}\}$ 
+are based on $\{\Phi^\pi,\mathcal{Y}^\pi\}$ meta-data from 
+\cref{eq:trdat:metadata}.
+
 
 
 \section{Simple blended dispatching rule}\label{sec:diff:opt:bdr}
@@ -269,12 +297,14 @@ For instance, MWR and SPT hardly ever coincide for easy or hard schedules (cf.
 \cref{tbl:easy:cnt:10x10,tbl:hard:cnt:10x10}), so its reasonable to believe 
 they could complement one another.
 Going back to \cref{fig:diff:extr:SDR:10x10} a presumably good BDR for 
-\jrnd{10}{10}  would be starting with ${\xi}_{\text{SPT}}$ and then switching 
-over to ${\xi}_{\text{MWR}}$ at around time step $k=40$, where the SDRs change 
+\jrnd{10}{10}  would be starting with $\xi^\star_{\text{SPT}}$ and then 
+switching 
+over to $\xi^\star_{\text{MWR}}$ at around time step $k=40$, where the SDRs 
+change 
 places in outperforming one another.
-In addition, we can see that even though $\hat{\xi}_{\text{SPT}}$ is generally 
+In addition, we can see that even though $\xi_{\text{SPT}}$ is generally 
 more likely to find optimal dispatches in the initial steps, then shortly after 
-$k=15$, $\hat{\xi}_{\text{MWR}}$ becomes a contender again. 
+$k=15$, $\xi_{\text{MWR}}$ becomes a contender again. 
 A box-plot for \namerho, for \Problem[10\times10]{\text{train}} is 
 depicted in \cref{fig:diff:boxplot:BDR} for a switch between SPT to MWR at time 
 steps $k=\{10,15,40\}$. Main statistics are given in \cref{tbl:BDR:stats}.
@@ -307,11 +337,12 @@ However, after $k>20$ then the BDR starts diverging from MWR.
 But as pointed in \cref{sec:diff:opt:sub}, it's not so fatal to make bad moves 
 in the very first dispatches for \jrnd{10}{10}, hence little is gained with 
 improved classification accuracy in that region. 
-But this does tell us that $\hat{\xi}_\pi$ is a more reliable indicator than 
-$\xi_\pi$ when it comes to choosing appropriate model parameters. 
-Alas, $\hat{\xi}_\pi$ requires collecting the meta-data 
+But this does tell us that $\xi_\pi$ is a more reliable indicator than 
+$\xi^\star_\pi$ when it comes to choosing appropriate model parameters. 
+Alas, $\xi_\pi$ requires collecting the meta-data 
 $\{\Phi^\pi,\mathcal{Y}^\pi\}$ from \cref{eq:trdat:metadata} for its policy 
-$\pi$, whereas $\xi_\pi$ reuses $\{\Phi^{\pi_\star},\mathcal{Y}^{\pi_\star}\}$ 
+$\pi$, whereas $\xi^\star_\pi$ reuses 
+$\{\Phi^{\pi_\star},\mathcal{Y}^{\pi_\star}\}$ 
 for each new policy $\pi$.
 
 Preferably the blended dispatching rule should use  best of both worlds, and 
