@@ -117,10 +117,12 @@ depicts the worst and best case scenario of \namerho, once you've fallen off
 the optimal track, defined as follows,
 \begin{subequations}\label{eq:bwc:opt}
   \begin{eqnarray} 
-  \zeta_{\min}^{\star} &:=& \Exp[\pi_\star]{\given{\min(\rho)}{
-      \forall C_{\max}^{\vchi^j} \gneq C_{\max}^{\pi_\star} }} \\
-  \zeta_{\max}^{\star} &:=& \Exp[\pi_\star]{\given{\max(\rho)}{
-      \forall C_{\max}^{\vchi^j} \gneq C_{\max}^{\pi_\star} }}
+  \zeta_{\min}^{\star}(k) &:=& \Exp[\pi_\star]{\given{\min(\rho)}{
+      \forall C_{\max}^{\vchi^j} \gneq C_{\max}^{\pi_\star} 
+      \wedge J_j\in\mathcal{L}^{(k)} }} \\
+  \zeta_{\max}^{\star}(k) &:=& \Exp[\pi_\star]{\given{\max(\rho)}{
+      \forall C_{\max}^{\vchi^j} \gneq C_{\max}^{\pi_\star}
+      \wedge J_j\in\mathcal{L}^{(k)} }}
   \end{eqnarray}
 \end{subequations}
 Note, that this is given that you make \emph{one} wrong 
@@ -269,28 +271,30 @@ trajectory, thereby updating \cref{eq:tracc:opt} to
 \text{SDR} \rangle}$ and $\xi_{\langle \text{SDR} \rangle}$.
 Similarly for \cref{eq:bwc:opt}, 
 \begin{subequations}\label{eq:bwc:track}
-\begin{eqnarray} 
-  \zeta_{\min}^{\pi} &:=& \Exp[\pi]{\given{\min(\rho)}{
+\begin{IEEEeqnarray}{rCl}
+  \zeta_{\min}^{\pi}(k) &:=& \Exp[\pi]{\given{\min(\rho)}{
       \forall C_{\max}^{\pi_\star(\vchi^{j})} \neq 
-      C_{\max}^{\pi_\star(\vchi^{j^*})} \wedge j^* = \argmax_j\{\pi(\vphi^j)\}
+      C_{\max}^{\pi_\star(\vchi^{j^*})} \wedge j^* = 
+      \argmax_{J_j\in\mathcal{L}^{(k)}}\{\pi(\vphi^j)\}
       }} \\
-  \zeta_{\max}^{\pi} &:=& \Exp[\pi]{\given{\max(\rho)}{
+  \zeta_{\max}^{\pi}(k) &:=& \Exp[\pi]{\given{\max(\rho)}{
       \forall C_{\max}^{\pi_\star(\vchi^j)} \neq 
-      C_{\max}^{\pi_\star(\vchi^{j^*})} \wedge j^* = \argmax_j\{\pi(\vphi^j)\} 
+      C_{\max}^{\pi_\star(\vchi^{j^*})} \wedge j^* = 
+      \argmax_{J_j\in\mathcal{L}^{(k)}}\{\pi(\vphi^j)\} 
       }} \\
-  \zeta_{\mu}^{\pi} &:=& \Exp[\pi]{\given{\rho}{
+  \zeta_{\mu}^{\pi}(k) &:=& \Exp[\pi]{\given{\rho}{
           C_{\max}^{\pi_\star(\vchi^{j^*})} \wedge j^* = 
-          \argmax_j\{\pi(\vphi^j)\} 
+          \argmax_{J_j\in\mathcal{L}^{(k)}}\{\pi(\vphi^j)\} 
       }} \label{eq:bwc:track:mu}
-\end{eqnarray}
+\end{IEEEeqnarray}
 \end{subequations}
 with the additional metric $\zeta_{\mu}^{\pi}$, which gives the mean evolution 
 for \namerho, when following a fixed policy $\pi$.
 Note, $\zeta^{\pi_{\star}}_{\min}=\zeta^{\star}_{\min}, 
 \zeta^{\pi_{\star}}_{\max}=\zeta^{\star}_{\max}$ and 
 $\zeta^{\pi_{\star}}_{\mu}=0$.
-\Cref{fig:diff:case:SDR} depicts $\{\zeta_{\min}^{\pi},\zeta_{\max}^{\pi}\}$
-for expert policy $\pi_\star$ and SDRs.
+\Cref{fig:diff:case:SDR} depicts \cref{eq:bwc:track} for expert policy 
+$\pi_\star$ and SDRs.
 
 \begin{figure}[p]\centering
     \captionsetup{list=no}
@@ -413,10 +417,8 @@ perspective, it's worth comparing them with how the evolution of the features
 are over time, depicted in \cref{fig:diff:opt:evol}. 
 Note that the optimal trajectory describes  how `good' features should aspire 
 to be like.
-Note, $\zeta_{\mu}^{\pi}\propto \phi_{16}^\pi$ %\phimakespan$^\pi$
-from \cref{eq:bwc:track:mu}.
 We can also notice that the relative ranking in \phiGlobalRelated\ is 
-proportional their expected mean \namerho, $\zeta_{\mu}^{\pi}(K)$. 
+proportional their expected mean \namerho\ (i.e. $\zeta_{\mu}^{\pi}(K)$). 
 Although $(K-k)$-step lookahead give consistently the best (single) indicators 
 for finding good solutions. 
 Sadly, they are not practical features for high dimensional data due to 
