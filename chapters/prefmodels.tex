@@ -136,7 +136,7 @@ ref={{PREF.\arabic*}}]
     \begin{enumerate*}[label=\textit{\roman*)},before=\unskip{: }, itemjoin={{? 
     }}, itemjoin*={{, or }},after={{? }}]
       \item optimal solutions (querying expert policy $\pi_\star$)
-      \item sub-optimal solutions when a DR is implemented (following a fixed 
+      \item suboptimal solutions when a DR is implemented (following a fixed 
       policy $\pi$)
       \item combination of both
     \end{enumerate*}
@@ -233,6 +233,7 @@ implementing a particular trajectory strategy, yet ranking scheme seems to be
 irrelevant. Moreover, the behaviour is analogous across all other 
 \Problem[6\times5]{\text{train}} in \cref{tbl:data}.
 
+First let's restrict  the models to \Problem{6\times5}{\text{train}}. 
 There is no statistical difference between $\Psi_f$ and $\Psi_p$ 
 ranking-schemes across all disciplines,
 which is expected since $\Psi_f$ is designed to contain the same preference 
@@ -244,6 +245,13 @@ Any statistical difference between ranking schemes were for $\Psi_a$, where it
 was considered slightly lacking than some of its counterparts. 
 Since a smaller preference set is preferred, its opted to use the $\Psi_{p}$ 
 ranking scheme henceforth as the default set-up for \ref{PREF:param:ranks}. 
+
+Moving on to higher dimension, results for \jrnd{10}{10} were similar to 
+\Problem[6\times5]{\text{train}}. Only exception begin that ranking schemes 
+showed difference in performance when using \PhiSet{OPT}, where 
+$\Psi_{p}^{\text{OPT}}$ come on top. Strengthening our previous choice of 
+$\Psi_{p}$ as standard ranking scheme.
+
 
 \begin{figure}[p]
   \includegraphics[width=\textwidth]{{prefdat.size.6x5}.pdf}
@@ -290,10 +298,10 @@ the trajectory with the least features, the amount of equivalent features
 w.r.t. $C_{\max}$ are far too many to make a meaningful preference set out of 
 it. It's only for \jrndn{6}{5} that there is another trajectory with fewer 
 preferences, namely \PsiSet{LWR}{p} (cf. \cref{fig:size:Psi:K}), and in that 
-case LWR is worst model.
+case LWR is the worst model.
 Model that come on top, are those that have a varied $\Psi$. However, 
 aggregating features from all trajectories is not a good idea, as the 
-preference set then becomes too varied for an satisfactory result. 
+preference set then becomes too varied for a satisfactory result. 
 
 \input{tables/size.prefdat.tex}
 \input{tables/PREF.track.ordering.tex}
@@ -327,7 +335,7 @@ learned feature set labelled to optimum solutions.
 Generally, adding suboptimal trajectories with the optimal trajectory, i.e., 
 \PhiSet{ALL},  gives the learning algorithm a greater variety of preference 
 pairs for getting out of local minima. However, for some problem spaces, e.g., 
-\frnd{6}{5} and \fmc{6}{5} then additional sub-optimal solutions that are too 
+\frnd{6}{5} and \fmc{6}{5} then additional suboptimal solutions that are too 
 diverse, yield a worse outcome than \PhiSet{OPT} on its own.
 
 %   Problem Dimension   SPT   LPT   LWR   MWR   RND ES.rho ES.Cmax
