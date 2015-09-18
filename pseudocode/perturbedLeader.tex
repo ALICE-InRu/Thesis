@@ -1,4 +1,4 @@
-\begin{algorithm}[t]
+t\begin{algorithm}[t]
     \caption[Perturbed leader]{Pseudo code for choosing job 
     $J_{j^*}$ following a perturbed leader.}
     \label{pseudo:perturbedLeader}
@@ -12,7 +12,7 @@
         \State $\mathcal{O} \gets \condset{j\in\mathcal{L}}{r_j=r_1}$ 
         \Comment{optimal job-list}
         \State $\mathcal{S} \gets \condset{j\in\mathcal{L}}{r_j>r_1}$
-        \Comment{sub-optimal job-list}
+        \Comment{suboptimal job-list}
         \If {$p < \epsilon \algorithmicand n'>1$} 
         \State \Return $j^* \in \condset{j\in\mathcal{S}}{r_j=r_2}$ 
         \Comment{any second best job}
