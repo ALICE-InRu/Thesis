@@ -550,7 +550,7 @@ Since we're using a feature space based on job-attributes, then it's trivial to
 interpret \cref{eq:CDR:feat} as the SDRs from \cref{sec:SDR}. 
 Then for $i\in\{1,\ldots,d\}$, they're simply,
 
-\begin{subequations}
+\begin{subequations}\label{eq:CDR:SDR}
     \begin{IEEEeqnarray}{s"rCl} 
         SPT:& w_i&=&\bigg\{ \begin{array}{rl}-1&\text{if 
             }i=1\\0&\text{otherwise}\end{array}  \\
@@ -559,7 +559,7 @@ Then for $i\in\{1,\ldots,d\}$, they're simply,
         MWR:& w_i&=&\bigg\{ \begin{array}{rl} 1&\text{if 
             }i=7\\0&\text{otherwise}\end{array}  \\
         LWR:& w_i&=&\bigg\{ \begin{array}{rl}-1&\text{if 
-            }i=7\\0&\text{otherwise}\end{array} \label{pref:SDR}
+            }i=7\\0&\text{otherwise}\end{array} 
     \end{IEEEeqnarray} 
 \end{subequations}
 
@@ -578,7 +578,6 @@ fabrication facilities.
 However, \citeauthor{Monch13} note that this sort of investigation is still in 
 its infancy and subject for future research.
 
-\clearpage
 A recent editorial of the state-of-the-art approaches in advanced dispatching 
 rules for large-scale manufacturing systems by \citet{Chen13} points out that:
 \begin{quote}

@@ -332,11 +332,11 @@ training set which the learning algorithm is inept to determine good dispatches
 in the circumstances when newly encountered features have diverged from the 
 learned feature set labelled to optimum solutions. 
 
-Generally, adding suboptimal trajectories with the optimal trajectory, i.e., 
-\PhiSet{ALL},  gives the learning algorithm a greater variety of preference 
+Generally, adding suboptimal trajectories with the expert policy, i.e., 
+\PhiSet{ALL}, gives the learning algorithm a greater variety of preference 
 pairs for getting out of local minima. However, for some problem spaces, e.g., 
 \frnd{6}{5} and \fmc{6}{5} then additional suboptimal solutions that are too 
-diverse, thus yielding a worse outcome than \PhiSet{OPT} on its own.
+diverse yield a worse outcome than \PhiSet{OPT} would achieve on its own.
 
 %   Problem Dimension   SPT   LPT   LWR   MWR   RND ES.rho ES.Cmax
 %     j.rnd       6x5 Track Track Track Track Track    SDR     SDR
@@ -350,6 +350,7 @@ diverse, thus yielding a worse outcome than \PhiSet{OPT} on its own.
 %     f.mxc       6x5 Track Track   SDR Track Track    SDR     SDR
 %     j.rnd     10x10 Track Track Track  SAME Track    SDR     SDR
 
+\pagebreak
 Comparing $\Psi^{\langle\text{DR}\rangle}$ to its corresponding DR used to 
 guide its collection, then usually the preference model outperformed the DR it 
 was trying to mimic. The exceptions being 
@@ -371,10 +372,10 @@ $\zeta_{\min}^{\langle\pi\rangle}$.
 Therefore, a good preference set based on $\Phi^\pi$ not only has to have a low 
 $\zeta_{\mu}^\pi$ to mimic, but also the policy $\pi$ needs to be sufficiently 
 different from $\zeta_{\min}^{\pi}$ and $\zeta_{\max}^{\pi}$ for adequate 
-learning. That is why the $\Phi^{\langle \text{CMA-ES} \rangle}$ strategies 
+learning. That is why $\Phi^{\langle \text{CMA-ES} \rangle}$ strategies 
 were not good enough for preference learning, as their 
 $\zeta^\pi_{\langle\cdot\rangle}$ spread was the lowest compared to the other 
-fixed DRs. 
+fixed DRs.
 
 The rational for using the $\Phi^{\langle \text{CMA-ES} \rangle}$ strategies
 was mostly due to the fact a linear classifier is creating the training data 
@@ -391,57 +392,67 @@ data was not fruitful. However, inspired by the original work by
 correctly labelling with analytic means) gives meaningful preference pairs 
 which the learning algorithm could learn. 
 
+\section{Feature Selection}\label{sec:pref:featselect}
 
-\section{Feature Selection}
-The SDRs we've inspected so-far are based on two job-attributes from
-\cref{tbl:jssp:feat}, namely
+We know from \cref{ch:esmodels} there exists linear weights $\vec{w}$ for 
+\cref{eq:CDR:feat} found with evolutionary optimisation that achieve a lower 
+\namerho, than any of the aforementioned preference models have been able to 
+learn. This goes to show that the $d=\NrFeatLocal$ features are `enough' -- 
+meaning there is not a need for defining new ones just yet. 
+However, the optimal weights for \cref{eq:cma:objfun} were quite erratic (cf. 
+\cref{fig:cma:wei}). 
+Perhaps the features from $\Phi^{\langle\text{CMA-ES}\rangle}$ are 
+contradictory, and therefore not suitable for preference learning. 
+Furthermore, the SDRs we've inspected so-far are based on two job-attributes 
+from \cref{tbl:features}, namely
 \begin{enumerate*}[after={{,}}]
   \item \phiproc\ for SPT and LPT 
   \item \phijobWrm\ for LWR and MWR 
 \end{enumerate*}
 by choosing the lowest value for SPT and LWR, and highest value for LPT and 
 MWR, i.e., the extremal values for those attributes. 
-There is nothing that limits us to using just only these two attributes. 
+These SDRs achieve a remarkably low $\rho$, so perhaps not that many additional 
+features are needed to achieve a competitive result.
 
-For this study we will consider all combinations of attributes using either one,
-two, three or all $d$ of them, for a total of
+For this study we will consider all combinations of 
+feature attributes using either one, two, three or all $d=\NrFeatLocal$ of 
+them, for a total of
 \begin{equation}
-{d \choose 1}+{d \choose 2}+{d \choose 3}+{d \choose d} 
-\stackrel{d=\NrFeatLocal}{=} 697
+{d \choose 1}+{d \choose 2}+{d \choose 3}+{d \choose d} = 697
 \end{equation}
-The reason for such a limiting number of active attributes,
-are due to the fact we want to keep the models simple enough for improved model
-interpretability.
+The reason for such a limiting number of active features, are due to the fact 
+we want to keep the models simple enough for improved model interpretability.
 
 For each feature combination, a linear preference model is created, where 
-$\Phi$ is limited to the predetermined feature combination. 
-This was done with the software package from
-\cite{liblinear},\footnote{Software available at
-  \url{http://www.csie.ntu.edu.tw/~cjlin/liblinear}}
-by training on the full preference set $\Psi$ obtained from 
-\mbox{$N_{\text{train}}=300$} problem instances following the framework set up 
-in \cref{sec:liblinear}. 
-Note, in order to report the validation accuracy, 20\% ($N_{\text{val}}=60$) of 
-the training set was set aside for validation of reporting the accuracy.
+$\Psi_p$ is limited to the predetermined feature combination. 
+This was done for all \Problem[10\times10]{\text{train}} in \cref{tbl:data}, 
+each consisting of $N_{\text{train}}=300$ problem instances.
+Moreover, in order to report the validation accuracy, 20\% 
+(i.e. $N_{\text{val}}=60$) of the training set was set aside for 
+reporting the accuracy.
 
 \subsection{Validation accuracy}\label{sec:CDR:acc}
-As the preference set $\Psi$ has both preference pairs belonging to optimal
+As the preference set $\Psi_p$ has both preference pairs belonging to optimal
 ranking, and subsequent rankings, it is not of primary importance to classify
 \emph{all} rankings correctly, just the optimal ones. Therefore, instead of
 reporting the validation accuracy based on the classification problem of the
-correctly labelling the problem set $\Psi$, it's opted the validation accuracy 
-is
-obtained in the same manner as done in \cref{sec:opt:sdr} for SDRs, i.e., the
-probability of choosing optimal decision given the resulting linear weights,
-however, in this context, the mean throughout the dispatching process is
-reported. \Cref{fig:stepwise_vs_classification} shows the difference between
-the two measures of reporting validation accuracy. Validation accuracy based on
-stepwise optimality only takes into consideration the likelihood of choosing
-the optimal move at each time step. However, the classification accuracy is
-also trying to correctly distinguish all subsequent rankings in addition of
-choosing the optimal move, as expected that measure is considerably lower. 
+correctly labelling the entire problem set $\Psi_p$, it's opted that the 
+validation accuracy is obtained using \cref{eq:tracc:opt}, namely the 
+probability of choosing an optimal decision given the resulting linear 
+weights.\footnote{Due to the superabundant number of models then calculating 
+    the \emph{preferable} $\xi_{\pi}$ from \cref{eq:tracc:track} is not viable.}
+However, in this context, the mean throughout the dispatching process is
+reported, i.e., $\frac{1}{K}\sum_{k=k'}^K \xi^{\star}_{\pi}(k')$. 
+\Cref{fig:stepwise_vs_classification} shows the difference between
+the two measures of reporting validation accuracy. 
 
-\begin{figure}[th!]
+Validation accuracy based on $\xi^{\star}_{\pi}$ only takes into consideration 
+the likelihood of choosing the optimal move at each time step. However, the 
+classification accuracy is also trying to correctly distinguish all subsequent 
+rankings in addition of choosing the optimal move, as expected that measure is 
+considerably lower. 
+
+\begin{figure}[p]
   \centering
   \includegraphics[width=\linewidth]{figures/{training.accuracy}.pdf}
   \caption{Various methods of reporting validation accuracy for preference 
@@ -462,16 +473,15 @@ front over all 697 models, irrespective of active feature count, is denoted
 with triangles. Moreover, their values are reported in \cref{tbl:CDR:pareto}, 
 where the best objective is given in boldface. 
 
-\begin{table}
+\begin{table}[p]
   \caption{Mean validation accuracy and mean expected deviation from 
     optimality, $\rho$, for all CDR models on the Pareto front from 
     \cref{fig:CDR:scatter}.}\label{tbl:CDR:pareto}
   \input{tables/PREF-equal}
 \end{table}
 
-\Cref{eq:jssp:linweights} showed how to interpret the linear preference models 
-by their weights $\vec{w}$. \Cref{fig:CDR:weights} depicts $\vec{w}$ for all of 
-the CDR models reported in \cref{tbl:CDR:pareto}. 
+\Cref{fig:CDR:weights} depicts $\vec{w}$ for all of the learned CDR models 
+reported in \cref{tbl:CDR:pareto}. 
 The weights have been normalised for clarity purposes, such that it is scaled 
 to $\norm{\vec{w}}=1$, thereby giving each feature their proportional 
 contribution to the preference $I_j^{\pi}$ defined by \cref{eq:CDR}. 
@@ -499,14 +509,14 @@ schedules are rarely able to dispatch in earlier slots, i.e.,
 In addition, (2.111, 3.300) and (16.1, 3.355) are statistically insignificant 
 w.r.t. validation accuracy for \jrnd{10}{10}. However, they have considerable 
 performance difference w.r.t. $\rho$ ($\Delta\rho \approx 18\%$). 
-So even looking at stepwise optimality by itself is very fickle, because slight 
-variations can be quite dramatic to the end result. 
+So even looking at stepwise optimality, $\xi_{\pi}^{\star}$ by itself is very 
+fickle, because slight variations can be quite dramatic to the end result. 
 
 The solutions on the Pareto front for \jrndn{10}{10} are quite a few models
 with no (or minimal) statistical difference w.r.t. $\rho$, and 
 considerably more w.r.t. validation accuracy. 
-Most notably are (3.281, 2.73, 2.75, 1.13), 
-(note, first one has the lowest mean $\rho$) which are all statistically 
+Most notably are (3.281, 2.73, 2.75, 1.13)
+(note, first one has the lowest mean $\rho$), which are all statistically 
 insignificant w.r.t. validation accuracy yet none w.r.t. $\rho$, with 
 difference up to $\Delta\rho=6.32\%$.
 
@@ -535,7 +545,7 @@ performance by 1.33\%.
 Note, for both \jrnd{10}{10} and \jrndn{10}{10}, model 1.13 is on the Pareto 
 front. The model corresponds to feature \phijobWrm, and in both cases has a 
 weight strictly greater than zero (cf. \cref{fig:CDR:weights}). Revisiting 
-\cref{eq:jssp:linweights}, we observe that this implies the learning 
+\cref{eq:CDR:SDR}, we observe that this implies the learning 
 model was able to discover MWR as one of the Pareto solutions, and as is 
 expected, there is no statistical difference to between 1.13 and MWR.
 
@@ -621,9 +631,9 @@ model is over-fitting the training data. Results hold for the test set.
   \label{fig:boxplot:CDR}
 \end{figure}
 
-\section{Conclusions}\label{sec:con}
-Current literature still hold \sdr s in high regard, 
-as they are simple to implement and quite efficient. 
+\subsection{Conclusions}
+Current literature still hold \sdr s in high regard, as they are simple to 
+implement and quite efficient. 
 However, they are generally taken for granted as there is clear lack of 
 investigation of \emph{how} these \dr s actually work, and what 
 makes them so successful (or in some cases unsuccessful)? 
@@ -645,17 +655,22 @@ Due to this artefact, feature selection is of paramount importance, and then it
 becomes the case of not having too many features, as they are likely to hinder 
 generalisation due to over-fitting in training. However, the features need to 
 be explanatory enough to maintain predictive ability. 
-For this reason \cref{ch:expr:CDR} was limited to up to three active features, 
-as the full feature set was clearly suboptimal w.r.t. the SDRs used as a 
-benchmark. 
+For this reason \cref{eq:CDR:feat} was limited to up to three active features, 
+as the full feature set was clearly suboptimal w.r.t. its CMA-ES benchmark from 
+\cref{ch:esmodels}. 
 By using features based on the SDRs, along with some additional local features 
 describing the current schedule, it was possible to `discover' the SDRs when 
-given only one active feature. %Although there is not much to be gained by 
-%these models, they at least are a sanity check the learning models are on the 
-%right track. 
+given only one active feature. 
+Although there is not much to be gained by these models, they at least serve as 
+a sanity check for the learning models are on the right track. 
 Furthermore, by adding on additional features, a boost in performance was 
-gained, resulting in a \cdr\ that outperformed all of the 
-SDR baseline. 
+gained, resulting in a \cdr\ that outperformed all of the SDR baseline. 
+Although, the best preference model of 3 active features is still not better 
+than the CMA-ES model for \jrnd{10}{10} using \NrFeatLocal\ features. 
+However, we're starting to close in on the gap, as previously 
+$\Delta\rho\approx6\%$ (using $\Psi_p^{\minCmax}$) and now 
+$\Delta\rho\approx2\%$ (using CDR 3.524) in favour of evolutionary search (cf. 
+\cref{tbl:cma:boxplot:set}).
 
 When training the learning model, it's not sufficient to only optimize w.r.t. 
 highest mean validation accuracy. As \cref{sec:CDR:pareto} showed, there is a 
