@@ -277,8 +277,8 @@ $\Psi_{p}$ as standard ranking scheme.
 We'd like to inspect which trajectory is the best to use for $\Psi$. 
 \Cref{InRu15a} only considered \jrnd{6}{5} and \jrndn{6}{5}, 
 however, results for \Problem[6\times5]{\text{train}} and 
-\jrnd{10}{10} is currently available.\footnote{Additional box-plots can be 
-  found in \shiny: Preference Models $>$ Trajectories \& ranks.}
+\jrnd{10}{10} are currently available.\footnote{Additional problem spaces can 
+    be found in \shiny: Preference Models $>$ Trajectories \& ranks.}
 Models from \cref{fig:boxplot:prefset} are limited to the ones corresponding to 
 $\Psi_p$. 
 \Cref{fig:size:Psi.p:K} jointly illustrates the size of the preference set 
@@ -289,8 +289,8 @@ dispatches.
 \Cref{tbl:param:tracks} reports the relative ordering of trajectories, 
 ordered w.r.t. their mean \namerho, and their size of preference set, i.e., 
 $\abs{\Psi_p}$.
-Models that are statistically better are denoted by `$\succ$' (read left to 
-right), otherwise considered equivalent. 
+Models that are statistically better are denoted by `$\succ$' otherwise 
+considered equivalent. 
 
 For most problem spaces \PsiSet{LPT}{p} was the worst trajectory to pursue. 
 Looking back at \cref{fig:size:Phi:K}, then even though \PhiSet{LPT} was not 
@@ -336,7 +336,7 @@ Generally, adding suboptimal trajectories with the optimal trajectory, i.e.,
 \PhiSet{ALL},  gives the learning algorithm a greater variety of preference 
 pairs for getting out of local minima. However, for some problem spaces, e.g., 
 \frnd{6}{5} and \fmc{6}{5} then additional suboptimal solutions that are too 
-diverse, yield a worse outcome than \PhiSet{OPT} on its own.
+diverse, thus yielding a worse outcome than \PhiSet{OPT} on its own.
 
 %   Problem Dimension   SPT   LPT   LWR   MWR   RND ES.rho ES.Cmax
 %     j.rnd       6x5 Track Track Track Track Track    SDR     SDR
@@ -348,40 +348,48 @@ diverse, yield a worse outcome than \PhiSet{OPT} on its own.
 %      f.jc       6x5 Track Track Track Track Track    SDR     SDR
 %      f.mc       6x5 Track Track   SDR Track Track    SDR     SDR
 %     f.mxc       6x5 Track Track   SDR Track Track    SDR     SDR
-%     j.rnd     10x10 Track Track Track  SAME Track    N/A     N/A
+%     j.rnd     10x10 Track Track Track  SAME Track    SDR     SDR
 
-When comparing $\Psi^{\langle\text{DR}\rangle}$ with its corresponding DR, then 
-usually the preference model outperformed the DR it was trying to mimic. 
-The exceptions being 
+Comparing $\Psi^{\langle\text{DR}\rangle}$ to its corresponding DR used to 
+guide its collection, then usually the preference model outperformed the DR it 
+was trying to mimic. The exceptions being 
 \begin{enumerate*}
-  \item MWR for \jrndJ{6}{5} and \jrndM{6}{5}. Note \jrnd{10}{10} was 
-  statistically insignificant
+  \item MWR for \jrndJ{6}{5} and \jrndM{6}{5} (and \jrnd{10}{10} was 
+  statistically insignificant)
   \item LWR for \fmc{6}{5} and \fmxc{6}{5}
   \item LPT was statistically insignificant for \jrndM{6}{5}
   \item $\minCmax$ and $\minRho$ for all problem spaces, save for \jrndn{6}{5} 
   which was statistically insignificant
 \end{enumerate*}
+Revisiting \cref{fig:diff:case:SDR}, then when $\Psi^{\langle\pi\rangle}$ 
+succeeds its original policy $\pi$, it implies the learning model was able to 
+steer the learned policy towards $\zeta_{\min}^{\langle\pi\rangle}$. 
+In fact, its improvement is proportional to its spread\footnote{Consult \shiny:
+    Optimality $>$ Best and worst case scenario.}  
+from $\zeta_{\mu}^{\langle\pi\rangle}$ to $\zeta_{\mu}^{\langle\pi\rangle}$ or 
+$\zeta_{\min}^{\langle\pi\rangle}$.
+Therefore, a good preference set based on $\Phi^\pi$ not only has to have a low 
+$\zeta_{\mu}^\pi$ to mimic, but also the policy $\pi$ needs to be sufficiently 
+different from $\zeta_{\min}^{\pi}$ and $\zeta_{\max}^{\pi}$ for adequate 
+learning. That is why the $\Phi^{\langle \text{CMA-ES} \rangle}$ strategies 
+were not good enough for preference learning, as their 
+$\zeta^\pi_{\langle\cdot\rangle}$ spread was the lowest compared to the other 
+fixed DRs. 
 
-The rational for using the $\Phi^{\langle \text{CMA-ES} \rangle}$ strategies 
+The rational for using the $\Phi^{\langle \text{CMA-ES} \rangle}$ strategies
 was mostly due to the fact a linear classifier is creating the training data 
 (using the weights found via CMA-ES optimisation in \cref{eq:cma:objfun}), 
 hence the training data created should be linearly separable, which in turn 
 should boost the training accuracy for a linear classification learning model. 
-However, this strategy is not outperforming the original DR used in guiding the 
-training data collection. 
+However, these strategies is not outperforming the original DR used in guiding 
+the training data collection. 
 
-\subsection*{Summary and conclusion}
-As the experimental results showed, the ranking of optimal
-and suboptimal features are of paramount importance. The subsequent rankings 
-are not of much value, since they are disregarded anyway. However, the 
-trajectories to create training instances have to be varied.
-
-Unlike \citep{Siggi10,Malik08,Russell09}, learning only on optimal training 
+As the experimental results showed, that unlike 
+\citep{Siggi10,Malik08,Russell09}, learning only on optimal training 
 data was not fruitful. However, inspired by the original work by 
 \cite{Siggi05}, having DR guide the generation of training data (except 
-correctly labelling with analytic means) gave meaningful preference pairs which 
-the learning algorithm could learn. 
-
+correctly labelling with analytic means) gives meaningful preference pairs 
+which the learning algorithm could learn. 
 
 
 \section{Feature Selection}
