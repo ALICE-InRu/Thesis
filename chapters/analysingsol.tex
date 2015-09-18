@@ -87,10 +87,10 @@ only need $\{\Phi^{\pi_\star},\mathcal{Y}^{\pi_\star}\}$ from
 \begin{figure}
   \centering
   \subcaptionbox{$6\times5$\label{fig:diff:opt:unique:6x5}}{
-    \includegraphics[width=\textwidth]{figures/{stepwise.6x5.OPT.unique}.pdf}}
+    \includegraphics[width=\linewidth]{figures/{stepwise.6x5.OPT.unique}.pdf}}
   \\
   \subcaptionbox{$10\times10$\label{fig:diff:opt:unique:10x10}}{
-    \includegraphics[width=\textwidth]{figures/{stepwise.10x10.OPT.unique}.pdf}}
+    \includegraphics[width=\linewidth]{figures/{stepwise.10x10.OPT.unique}.pdf}}
   \caption[Number of unique optimal dispatches]{Number of unique optimal 
     dispatches (lower bound).}
   \label{fig:diff:opt:unique}
@@ -98,10 +98,10 @@ only need $\{\Phi^{\pi_\star},\mathcal{Y}^{\pi_\star}\}$ from
 
 \begin{figure}\centering
   \subcaptionbox{$6\times5$\label{fig:diff:opt:rnd:6x5}}{
-    \includegraphics[width=\textwidth]{figures/{stepwise.6x5.OPT}.pdf}}
+    \includegraphics[width=\linewidth]{figures/{stepwise.6x5.OPT}.pdf}}
   \\
   \subcaptionbox{$10\times10$\label{fig:diff:opt:rnd:10x10}}{
-    \includegraphics[width=\textwidth]{figures/{stepwise.10x10.OPT}.pdf}}
+    \includegraphics[width=\linewidth]{figures/{stepwise.10x10.OPT}.pdf}}
   \caption{Probability of choosing optimal move (at random)}
   \label{fig:diff:opt:rnd}
 \end{figure}
@@ -146,15 +146,15 @@ suboptimal decisions later in the decision process.
 
 \begin{figure}\centering
   \subcaptionbox{$6\times5$\label{fig:diff:case:OPT:6x5}}{
-    \includegraphics[width=0.95\textwidth]{figures/ALL/{stepwise.6x5.OPT.casescenario}.pdf}}
+    \includegraphics[width=\linewidth]{figures/ALL/{stepwise.6x5.OPT.casescenario}.pdf}\vspace*{-12pt}}
   \\
   \subcaptionbox{$10\times10$\label{fig:diff:case:OPT:10x10}}{
-    \includegraphics[width=0.95\textwidth]{figures/ALL/{stepwise.10x10.OPT.casescenario}.pdf}}
+    \includegraphics[width=\linewidth]{figures/ALL/{stepwise.10x10.OPT.casescenario}.pdf}\vspace*{-12pt}}
   \caption[Mean \namerho, for best and worst case scenario for making one 
   suboptimal move]{Mean \namerho, for best and worst case scenario of when 
-  making
-    \emph{one} suboptimal dispatch, depicted as lower and upper bound, 
-    respectively. Moreover, mean suboptimal move is given as dashed line.}
+  making \emph{one} suboptimal dispatch (i.e. $\zeta_{\min}^{\star}$ and 
+  $\zeta_{\max}^{\star}$), depicted as lower and upper bound, 
+  respectively. Moreover, mean suboptimal move is given as dashed line.}
   \label{fig:diff:case:OPT}
 \end{figure}
 
@@ -180,6 +180,7 @@ Unfortunately, it's not always so predictable. Take for instance \phiproc, then
 the minimum value gives a better $\rho$, even though it's unlikelier to be 
 optimal than it's maximum counterpart.
 
+\clearpage
 Before inspecting the local based features further. Notice that the staggering 
 performance edge for \phiRNDmin\ is lost when going to a higher dimension (cf. 
 \phiRNDmin\ in \cref{fig:diff:extr:jrnd:6x5} has $\rho=1.3\%$ and increases to 
@@ -190,7 +191,7 @@ competitive for $6\times5$.
 \begin{figure}\centering
     \captionsetup{list=no}
     \subcaptionbox{\jrnd{6}{5}\label{fig:diff:extr:jrnd:6x5}}{
-        \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.6x5.OPT.extremal}.pdf}}
+        \includegraphics[width=\linewidth]{figures/{j.rnd}/{stepwise.6x5.OPT.extremal}.pdf}}
     \caption{Probability of extremal feature being optimal}
     \label{fig:diff:extr:features}
 \end{figure}
@@ -198,16 +199,16 @@ competitive for $6\times5$.
     \captionsetup{list=no}
     \ContinuedFloat
     \subcaptionbox{\jrnd{10}{10}\label{fig:diff:extr:jrnd:10x10}}{
-        \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.10x10.OPT.extremal}.pdf}}
+        \includegraphics[width=\linewidth]{figures/{j.rnd}/{stepwise.10x10.OPT.extremal}.pdf}}
     \caption{}
     \MyCaption{Probability of extremal feature being 
     optimal}{fig:diff:extr:jrnd:6x5}{fig:diff:extr:jrnd:10x10}
 \end{figure}
 
-\begin{figure}\centering
+\begin{figure}[p]\centering
   \captionsetup{list=no}
   \subcaptionbox{$6\times5$\label{fig:diff:extr:SDR:6x5}}{
-    \includegraphics[width=\textwidth]{figures/{stepwise.6x5.SDR}.pdf}}
+    \includegraphics[width=\linewidth]{figures/{stepwise.6x5.SDR}.pdf}}
   \caption[Probability of SDR yielding optimal move]{
     Probability of SDR yielding optimal move. 
     Both optimal (solid: $\xi^\star_{\langle \text{SDR}\rangle}$) and 
@@ -215,18 +216,18 @@ competitive for $6\times5$.
     trajectories are inspected.}
   \label{fig:diff:extr:SDR}
 \end{figure}
-\begin{figure}[t]\centering
+\begin{figure}[p]\centering
   \captionsetup{list=no}
   \ContinuedFloat
   \subcaptionbox{$10\times10$\label{fig:diff:extr:SDR:10x10}}{
     \begin{tikzpicture}
     \node[anchor=south west,inner sep=0] (image) at (0,0,0) 
-    {\includegraphics[width=\textwidth]{figures/{stepwise.10x10.SDR}.pdf}};
+    {\includegraphics[width=\linewidth]{figures/{stepwise.10x10.SDR}.pdf}};
     \begin{scope}[x={(image.south east)},y={(image.north west)}]
     \node (zoom) at (0.27,.45)
-    {\includegraphics[width=0.24\textwidth]{figures/j.rnd/{stepwise.10x10.SDR.zoom}.pdf}};
+    {\includegraphics[width=0.24\linewidth]{figures/j.rnd/{stepwise.10x10.SDR.zoom}.pdf}};
     \end{scope}
-    \end{tikzpicture}}
+    \end{tikzpicture}\vspace*{-12pt}}
   \caption{Note, due to computational complexity, only \jrnd{10}{10} has 
     SDR-based trajectories also inspected. Otherwise, only optimal is pursued.}
   \MyCaption{Probability of SDR being optimal 
@@ -269,45 +270,84 @@ trajectory, thereby updating \cref{eq:tracc:opt} to
 Similarly for \cref{eq:bwc:opt}, 
 \begin{subequations}\label{eq:bwc:track}
 \begin{eqnarray} 
-  \zeta_{\min}^{\pi} := \Exp[\pi_\star]{\given{\min(\rho)}{
+  \zeta_{\min}^{\pi} &:=& \Exp[\pi]{\given{\min(\rho)}{
       \forall C_{\max}^{\pi_\star(\vchi^{j})} \neq 
       C_{\max}^{\pi_\star(\vchi^{j^*})} \wedge j^* = \argmax_j\{\pi(\vphi^j)\}
       }} \\
-  \zeta_{\max}^{\pi} := \Exp[\pi_\star]{\given{\max(\rho)}{
+  \zeta_{\max}^{\pi} &:=& \Exp[\pi]{\given{\max(\rho)}{
       \forall C_{\max}^{\pi_\star(\vchi^j)} \neq 
       C_{\max}^{\pi_\star(\vchi^{j^*})} \wedge j^* = \argmax_j\{\pi(\vphi^j)\} 
-      }}
+      }} \\
+  \zeta_{\mu}^{\pi} &:=& \Exp[\pi]{\given{\rho}{
+          C_{\max}^{\pi_\star(\vchi^{j^*})} \wedge j^* = 
+          \argmax_j\{\pi(\vphi^j)\} 
+      }} \label{eq:bwc:track:mu}
 \end{eqnarray}
 \end{subequations}
-Note, $\zeta^{\star}=\zeta^{\pi_{\star}}$.
-As a result $\xi_{\pi}$ and $\{\zeta_{\min}^{\pi},\zeta_{\max}^{\pi}\}$ 
-are based on $\{\Phi^\pi,\mathcal{Y}^\pi\}$ meta-data from 
-\cref{eq:trdat:metadata}.
+with the additional metric $\zeta_{\mu}^{\pi}$, which gives the mean evolution 
+for \namerho, when following a fixed policy $\pi$.
+Note, $\zeta^{\pi_{\star}}_{\min}=\zeta^{\star}_{\min}, 
+\zeta^{\pi_{\star}}_{\max}=\zeta^{\star}_{\max}$ and 
+$\zeta^{\pi_{\star}}_{\mu}=0$.
+\Cref{fig:diff:case:SDR} depicts $\{\zeta_{\min}^{\pi},\zeta_{\max}^{\pi}\}$
+for expert policy $\pi_\star$ and SDRs.
 
+\begin{figure}[p]\centering
+    \captionsetup{list=no}
+    \subcaptionbox{$10\times10$\label{fig:diff:case:SDR:10x10}}{
+        \includegraphics[width=0.8\linewidth]{figures/{j.rnd}/{stepwise.10x10.ALL.casescenario}.pdf}\vspace*{-12pt}}
+    \caption{Mean \namerho, for best and worst case scenario when not
+        following a fixed policy $\pi$ (i.e. $\zeta_{\min}^\pi$ and 
+        $\zeta_{\max}^\pi$), depicted as lower and upper bound, respectively. 
+        Moreover, mean evolution of $\rho$ for $\pi$ (i.e. $\zeta_{\mu}^{\pi}$) 
+        is given as a dashed line.}
+\end{figure}
+\begin{figure}[p]\centering
+    \captionsetup{list=no}
+    \ContinuedFloat
+    \subcaptionbox{$6\times5$\label{fig:diff:case:SDR:6x5}}{
+        \includegraphics[width=\linewidth]{figures/ALL/{stepwise.6x5.ALL.casescenario}.pdf}}
+    \caption{Note, $\{\zeta^{\pi^\star}_{\min},\zeta^{\pi^\star}_{\max}\}$ are 
+    illustrated jointly for \Problem{\text{train}} in \cref{fig:diff:case:OPT}}
+    \MyCaption{Mean \namerho, for best and worst case scenario for not following
+    a fixed policy}{fig:diff:case:SDR:10x10}{fig:diff:case:SDR:6x5}
+    \label{fig:diff:case:SDR}
+\end{figure}
 
+\clearpage
+
+A means of interpreting \cref{eq:bwc:track}, is that given a fixed policy 
+$\pi$, then $\zeta_{\min}^{\pi}$ describes the potential improvement (iff 
+$\zeta_{\min}^{\pi}<\zeta_{\mu}^{\pi}$) for changing the policy. Whereas, 
+$\zeta_{\max}^{\pi}$ indicates the disadvantages of changing course. 
+When $\zeta_{\min}^{\pi}>\zeta_{\mu}^{\pi}$, then clearly $\pi$ is not a good 
+policy for said problem space, e.g., for the final dispatches of 
+$\zeta_{\mu}^{\text{SPT}}$ for \jrndJ{6}{5} or \jrnd{10}{10}. 
+
+\emph{Remark}: \cref{eq:tracc:track,eq:bwc:track} are based on corresponding 
+meta-data, $\{\Phi^\pi,\mathcal{Y}^\pi\}$ , from \cref{eq:trdat:metadata}, 
+whereas \cref{eq:tracc:opt,eq:bwc:opt} reuse the same expert meta-data,
+$\{\Phi^{\pi_\star},\mathcal{Y}^{\pi_\star}\}$.
 
 \section{Simple blended dispatching rule}\label{sec:diff:opt:bdr}
-As stated before, the goal of this \lcnamecref{ch:defdifficulty} is to 
-utilise feature behaviour to motivate new (and \emph{hopefully} better) 
-\dr s. 
+The goal of this \lcnamecref{ch:defdifficulty} is to utilise feature behaviour 
+to motivate new (and \emph{hopefully} better) \dr s. 
 A na\"ive approach would be creating a simple blended \dr\ (BDR) which 
-would be for instance switch between two SDRs at a predetermined time point. 
+would be for instance switching between two SDRs at a predetermined time point. 
 
 For instance, MWR and SPT hardly ever coincide for easy or hard schedules (cf. 
 \cref{tbl:easy:cnt:10x10,tbl:hard:cnt:10x10}), so its reasonable to believe 
 they could complement one another.
 Going back to \cref{fig:diff:extr:SDR:10x10} a presumably good BDR for 
-\jrnd{10}{10}  would be starting with $\xi^\star_{\text{SPT}}$ and then 
-switching 
-over to $\xi^\star_{\text{MWR}}$ at around time step $k=40$, where the SDRs 
-change 
-places in outperforming one another.
-In addition, we can see that even though $\xi_{\text{SPT}}$ is generally 
-more likely to find optimal dispatches in the initial steps, then shortly after 
-$k=15$, $\xi_{\text{MWR}}$ becomes a contender again. 
-A box-plot for \namerho, for \Problem[10\times10]{\text{train}} is 
+\jrnd{10}{10}  would be starting with $\xi^\star_{\text{SPT}}(k)$ and then 
+switching over to $\xi^\star_{\text{MWR}}(k)$ at around time step $k=40$, where 
+the SDRs change places in outperforming one another.
+In addition, we can see that even though $\xi_{\text{SPT}}(k)$ is generally 
+more likely to find optimal dispatches in the initial steps, shortly after 
+$k=15$ then $\xi_{\text{MWR}}(k)$ becomes a contender again. 
+A box-plot of \namerho, for \Problem[10\times10]{\text{train}} is 
 depicted in \cref{fig:diff:boxplot:BDR} for a switch between SPT to MWR at time 
-steps $k=\{10,15,40\}$. Main statistics are given in \cref{tbl:BDR:stats}.
+steps $k=\{10,15,20,30,40\}$. Main statistics are given in \cref{tbl:BDR:stats}.
 
 This little manipulation between SDRs does outperform SPT immensely, yet 
 doesn't manage to gain the performance edge of MWR. 
@@ -330,7 +370,6 @@ However, the fact remains that the schedules have diverged too far from what
 MWR would have been able to achieve on its own, i.e., using SPT downgrades the 
 performance of MWR. 
 
-
 Changing to MWR at $k\leq20$ is not statically significant from MWR (boost in 
 mean $\rho$ is at most 0.5\%). 
 However, after $k>20$ then the BDR starts diverging from MWR. 
@@ -345,13 +384,21 @@ $\pi$, whereas $\xi^\star_\pi$ reuses
 $\{\Phi^{\pi_\star},\mathcal{Y}^{\pi_\star}\}$ 
 for each new policy $\pi$.
 
-Preferably the blended dispatching rule should use  best of both worlds, and 
+Revisiting \cref{fig:diff:case:SDR:10x10}, then we see 
+$\zeta_{\mu}^{\text{SPT}}(40)$ has already surpassed 
+$\zeta_{\mu}^{\text{MWR}}(K)$ and there are 60 operations left to dispatch. So 
+a switch for BDR at $k=40$ never had a chance of improvement. 
+However, at $k\leq15$ then $\zeta_{\mu}^{\text{SPT}}(k) < 
+\zeta_{\mu}^{\text{MWR}}(k)$, which were appropriate turning points for BDR 
+(although not statistically significant).
+
+Preferably the blended dispatching rule should use best of both worlds, and 
 outperform all of its inherited DRs, otherwise it goes without saying, one 
 would simply keep on still using the original DR that achieved the best results.
 
 \begin{figure}[p]
   \centering
-  \includegraphics[width=\textwidth]{figures/{j.rnd}/{boxplotRho.BDR.10x10}.pdf}
+  \includegraphics[width=\linewidth]{figures/{j.rnd}/{boxplotRho.BDR.10x10}.pdf}
   \vspace*{-24pt}
   \caption{Box plot of \jrnd{10}{10} \namerho, for BDR where SPT is applied for 
   the first 10\%, 15\%, 20\%, 30\% or 40\% of the dispatches, followed by MWR.}
@@ -366,11 +413,15 @@ perspective, it's worth comparing them with how the evolution of the features
 are over time, depicted in \cref{fig:diff:opt:evol}. 
 Note that the optimal trajectory describes  how `good' features should aspire 
 to be like.
+Note, $\zeta_{\mu}^{\pi}\propto \phi_{16}^\pi$ %\phimakespan$^\pi$
+from \cref{eq:bwc:track:mu}.
 We can also notice that the relative ranking in \phiGlobalRelated\ is 
-proportional their expected mean \namerho. Although $(K-k)$-step lookahead give 
-consistently the best (single) indicators for finding good solutions. Sadly, 
-they are not practical features for high dimensional data due to computational 
-cost. Nevertheless, bearing \cref{fig:diff:case:OPT:10x10} in mind then it 
+proportional their expected mean \namerho, $\zeta_{\mu}^{\pi}(K)$. 
+Although $(K-k)$-step lookahead give consistently the best (single) indicators 
+for finding good solutions. 
+Sadly, they are not practical features for high dimensional data due to 
+computational cost. 
+Nevertheless, bearing \cref{fig:diff:case:OPT:10x10} in mind then it 
 might be sufficient to do only a few steps lookahead at some key times in the 
 dispatching process. For instance, let the computational budget for 
 \frnd{10}{10} roll-outs be full $K$-solutions in the beginning phases, as 
@@ -384,7 +435,7 @@ remaining dispatches from that point are optimised with some exact methods.
 \begin{figure}\centering
   \captionsetup{list=no}
   \subcaptionbox{\jrnd{6}{5}\label{diff:evol:jrnd:6x5}}{
-    \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.6x5.evolution}.pdf}}
+    \includegraphics[width=\linewidth]{figures/{j.rnd}/{stepwise.6x5.evolution}.pdf}}
   \caption{Mean stepwise evolution of $\tilde{\vphi}$, which is scaled 
   according to \cref{eq:scale}}
   \label{fig:diff:opt:evol}
@@ -393,7 +444,7 @@ remaining dispatches from that point are optimised with some exact methods.
   \captionsetup{list=no}
   \ContinuedFloat
   \subcaptionbox{\jrnd{10}{10}\label{diff:evol:jrnd:10x10}}{
-    \includegraphics[width=\textwidth]{figures/{j.rnd}/{stepwise.10x10.evolution}.pdf}}
+    \includegraphics[width=\linewidth]{figures/{j.rnd}/{stepwise.10x10.evolution}.pdf}}
   \caption{}
   \MyCaption{Mean stepwise evolution of 
   $\tilde{\vphi}$}{diff:evol:jrnd:6x5}{diff:evol:jrnd:10x10}
@@ -472,15 +523,15 @@ $\sum_{k=1}^K\alpha_k=\alpha$ significance level.
 \end{table}}
 
 \begin{figure}[t]
-    \includegraphics[width=\textwidth]{{j.rnd/phi.ks.SDR.6x5}.pdf}
+    \includegraphics[width=\linewidth]{{j.rnd/phi.ks.SDR.6x5}.pdf}
     \caption{Stepwise K-S Test for features $\vphi$ segregated w.r.t. easy and 
         hard problems are drawn from the same data distribution.}
     \label{fig:jrnd:feat:KStest}
 \end{figure}
 
 \begin{figure}
-    \includegraphics[width=\textwidth]{{j.rnd/phi.corr.SDR.6x5}.pdf}
-    \includegraphics[width=\textwidth]{{j.rnd/phi.corr.ALL.6x5}.pdf}
+    \includegraphics[width=\linewidth]{{j.rnd/phi.corr.SDR.6x5}.pdf}
+    \includegraphics[width=\linewidth]{{j.rnd/phi.corr.ALL.6x5}.pdf}
     \caption{Stepwise significance of a correlation coefficient for \jrnd{6}{5} 
         features $\vphi$, segregated w.r.t. easy and hard problems, with 
         resulting 
