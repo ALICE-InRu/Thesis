@@ -32,8 +32,7 @@ be avoided by inspecting how $\rho$ is evolving as a function of time (cf.
 intersect and subsequently diverge in performance. 
 Moreover, the improved classification accuracy is proportional to its 
 difference in performance spread (i.e. 
-$\abs{\zeta^{\text{MWR}}_{\langle\cdot\rangle} - 
-\zeta^{\text{SPT}}}_{\langle\cdot\rangle}$) in that region.
+$\abs{\zeta^{\MWR}_{\any} - \zeta^{\SPT}}_{\any}$) in that region.
 
 Creating new \dr s is by no means trivial. For \jsp\ there is 
 the hidden interaction between processing times and machine ordering that's 
@@ -65,10 +64,10 @@ CDR \#3.524 from \cref{tbl:CDR:pareto}) in favour of evolutionary search (cf.
 
 
 We saw in \cref{sec:trdat:param:tracks:passive} that preference models using 
-training data from following SDR policy, i.e., $\Phi^{\langle \text{SDR} 
-\rangle}$, are good for improving its original heuristic. However, this did not 
-transcend for $\Psi^{\langle \text{CMA-ES} \rangle}$. 
-Perhaps, if $\Phi^{\langle \text{CMA-ES} \rangle}$ wasn't based on following 
+training data from following SDR policy, i.e., $\Phi^{\SDR}$, are good for 
+improving its original heuristic. However, this did not transcend for 
+$\Psi^{\CMAES}$. 
+Perhaps, if $\Phi^{\CMAES}$ wasn't based on following 
 the CMA-ES trajectory, but rather using the actual features encountered during 
 its optimisation. Alas, CMA-ES used a computational budget of 50,000 function 
 evaluations, each consisting of the expectation of $N_{\train}$ problem 

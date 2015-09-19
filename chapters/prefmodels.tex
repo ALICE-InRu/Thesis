@@ -248,9 +248,9 @@ ranking scheme henceforth as the default set-up for \ref{PREF:param:ranks}.
 
 Moving on to higher dimension, results for \jrnd{10}{10} were similar to 
 \Problem[6\times5]{\train}. Only exception begin that ranking schemes 
-showed difference in performance when using \PhiSet{OPT}, where 
-$\Psi_{p}^{\text{OPT}}$ come on top. Strengthening our previous choice of 
-$\Psi_{p}$ as standard ranking scheme.
+showed difference in performance when using \PhiSet{OPT}, where \PsiSet[OPT]{p} 
+come on top. Strengthening our previous choice of \PsiSet{p} as 
+standard ranking scheme.
 
 
 \begin{figure}[p]
@@ -351,7 +351,7 @@ diverse yield a worse outcome than \PhiSet{OPT} would achieve on its own.
 %     j.rnd     10x10 Track Track Track  SAME Track    SDR     SDR
 
 \pagebreak
-Comparing $\Psi^{\langle\text{DR}\rangle}$ to its corresponding DR used to 
+Comparing $\Psi^{\angles{\text{DR}}}$ to its corresponding DR used to 
 guide its collection, then usually the preference model outperformed the DR it 
 was trying to mimic. The exceptions being 
 \begin{enumerate*}
@@ -362,22 +362,20 @@ was trying to mimic. The exceptions being
   \item $\minCmax$ and $\minRho$ for all problem spaces, save for \jrndn{6}{5} 
   which was statistically insignificant
 \end{enumerate*}
-Revisiting \cref{fig:diff:case:SDR}, then when $\Psi^{\langle\pi\rangle}$ 
+Revisiting \cref{fig:diff:case:SDR}, then when $\Psi^{\pi}$ 
 succeeds its original policy $\pi$, it implies the learning model was able to 
-steer the learned policy towards $\zeta_{\min}^{\langle\pi\rangle}$. 
+steer the learned policy towards $\zeta_{\min}^{\pi}$. 
 In fact, its improvement is proportional to its spread\footnote{Consult \shiny:
     Optimality $>$ Best and worst case scenario.}  
-from $\zeta_{\mu}^{\langle\pi\rangle}$ to $\zeta_{\mu}^{\langle\pi\rangle}$ or 
-$\zeta_{\min}^{\langle\pi\rangle}$.
+from $\zeta_{\mu}^{\pi}$ to $\zeta_{\min}^{\pi}$ or $\zeta_{\max}^{\pi}$.
 Therefore, a good preference set based on $\Phi^\pi$ not only has to have a low 
 $\zeta_{\mu}^\pi$ to mimic, but also the policy $\pi$ needs to be sufficiently 
 different from $\zeta_{\min}^{\pi}$ and $\zeta_{\max}^{\pi}$ for adequate 
-learning. That is why $\Phi^{\langle \text{CMA-ES} \rangle}$ strategies 
+learning. That is why $\Phi^{\CMAES}$ strategies 
 were not good enough for preference learning, as their 
-$\zeta^\pi_{\langle\cdot\rangle}$ spread was the lowest compared to the other 
-fixed DRs.
+$\zeta^\pi_{\any}$ spread was the lowest compared to the other fixed DRs.
 
-The rational for using the $\Phi^{\langle \text{CMA-ES} \rangle}$ strategies
+The rational for using the $\Phi^{\CMAES}$ strategies
 was mostly due to the fact a linear classifier is creating the training data 
 (using the weights found via CMA-ES optimisation in \cref{eq:cma:objfun}), 
 hence the training data created should be linearly separable, which in turn 
@@ -401,7 +399,7 @@ learn. This goes to show that the $d=\NrFeatLocal$ features are `enough' --
 meaning there is not a need for defining new ones just yet. 
 However, the optimal weights for \cref{eq:cma:objfun} were quite erratic (cf. 
 \cref{fig:cma:wei}). 
-Perhaps the features from $\Phi^{\langle\text{CMA-ES}\rangle}$ are 
+Perhaps the features from $\Phi^{\CMAES}$ are 
 contradictory, and therefore not suitable for preference learning. 
 Furthermore, the SDRs we've inspected so-far are based on two job-attributes 
 from \cref{tbl:features}, namely
@@ -582,7 +580,7 @@ Now, let's inspect the models corresponding to the minimum mean $\rho$ and
 highest mean validation accuracy, highlighted in \cref{tbl:CDR:pareto} and 
 inspect the stepwise optimality for those models in \cref{fig:CDR:opt}, again 
 using probability of randomly guessing an optimal move (i.e. 
-$\xi^{\star}_{\text{RND}}$ from \cref{fig:diff:opt:rnd}) as a benchmark.
+$\xi^{\star}_{\RND}$ from \cref{fig:diff:opt:rnd}) as a benchmark.
 As one can see for both \jrnd{10}{10} and \jrndn{10}{10}, despite having a 
 higher mean validation accuracy overall, the probabilities vary significantly. 
 A lower mean $\rho$ is obtained when the validation accuracy is gradually 

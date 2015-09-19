@@ -82,7 +82,7 @@ Let's assume we know the expert policy $\pi^\star$, which we can query what
 is the optimal choice of $\chi_k={j^*}$ at any given time step $k$. 
 Now we can use \cref{eq:jstar} to back-propagate the relationship between 
 post-decision states and $\hat{\pi}$ with preference learning via our collected 
-feature set, denoted $\Phi^\text{OPT}$, i.e., we collect the features set 
+feature set, denoted \PhiSet{OPT}, i.e., we collect the features set 
 corresponding following optimal tasks $J_{j^*}$ from $\pi^\star$ in 
 \cref{pseudo:constructJSP}.
 This baseline trajectory sampling for adding features to the feature set 
@@ -185,9 +185,9 @@ $\bigOh{\epsilon K}$, if it were i.i.d.
 
 \section{Active Imitation Learning}\label{sec:il:active}
 
-To amend performance from $\Phi^{\text{OPT}}$-based models, suboptimal 
+To amend performance from \PhiSet{OPT}-based models, suboptimal 
 state-spaces were explored in \cite{InRu15a} by inspecting the features from 
-successful SDRs, $\Phi^{\langle\text{SDR}\rangle}$, by passively observing a 
+successful SDRs, $\Phi^{\SDR}$, by passively observing a 
 full execution of following the task chosen by the corresponding SDR. 
 This required some trial-and-error as the experiments showed that features 
 obtained by SDR trajectories were not equally useful for learning.
@@ -269,7 +269,7 @@ where $\pi_\star$ is the expert policy and $\hat{\pi}_{i-1}$ is the learned
 model from the previous iteration. 
 Note, for the initial iteration, $i=0$, a pure strategy of $\pi_\star$ is 
 followed. Hence, $\hat{\pi}_0$ corresponds to the preference model from 
-\cref{sec:expertPolicy} (i.e. $\Phi^{\text{IL}0}=\Phi^{\text{OPT}}$). 
+\cref{sec:expertPolicy} (i.e. $\Phi^{\IL{0}}=\Phi^{\OPT}$). 
 
 \Cref{eq:il} shows that $\beta$ controls the probability distribution of 
 querying the expert policy $\pi_\star$ instead of the previous imitation model, 
@@ -284,12 +284,12 @@ its own state distribution limit.
 %    -- direct quote from \cite{CesaBianchi06}}
 
 \Cref{pseudo:imitationLearning} explains the pseudo code for how to collect 
-partial training set, $\Phi^{\text{IL}i}$ for $i$-th iteration of imitation 
+partial training set, $\Phi^{\IL{i}}$ for $i$-th iteration of imitation 
 learning.
 Subsequently, the resulting preference model, $\hat{\pi}_i$, learns on the 
 aggregated datasets from all previous iterations, namely,  
 \begin{equation}\label{eq:DAgger}
-\Phi^{\text{DA}i}=\bigcup_{i'=0}^{i}\Phi^{\text{IL}i'}
+\Phi^{\DA{i}}=\bigcup_{i'=0}^{i}\Phi^{\IL{i'}}
 \end{equation}
 and its update procedure is detailed in \cref{pseudo:DAgger}.
 
@@ -314,13 +314,13 @@ statistical significance in boost of performance, hence $l_{\max}$ is the same
 as set in \cref{eq:lmax}.
 However, \ref{expr:boost:newdata} strategy showed a considerable change in 
 performance. Summary of $N_{\train}$ is given in \cref{tbl:Ntrain}. 
-Note, for the conventional $\Phi^{\text{OPT}}$ trajectory the extended training 
+Note, for the conventional \PhiSet{OPT} trajectory the extended training 
 set was simply obtained by iterating over more examples. 
 However, for the DAgger trajectories the extended set consisted of each 
 iteration encountering $N_{\train}$ \emph{new} problem 
 instances. For a grand total of 
 \begin{equation}
-N^{\text{DA}i}_{\text{train, EXT}}=N_{\train}\cdot (i+1) 
+N^{\DA{i}}_{\text{train, EXT}}=N_{\train}\cdot (i+1) 
 \end{equation}
 problem instances explored for the aggregated extended training set used for 
 the learning model at iteration $i$.

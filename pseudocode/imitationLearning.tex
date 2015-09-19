@@ -6,9 +6,9 @@
 \begin{algorithm}[t]
     \caption[Imitation learning]{Pseudo code for choosing job 
     $J_{j^*}$ using imitation learning (dependent on iteration $i$) to collect 
-    training set $\Phi^{\text{IL}i}$; either by following optimal trajectory, 
+    training set $\Phi^{\IL{i}}$; either by following optimal trajectory, 
     $\pi_\star$, or preference model 
-    %based on aggregated preference sets, $\bigcup_{i'=0}^{i-1}S^{\text{IL}i'}$,
+    %based on aggregated preference sets, $\bigcup_{i'=0}^{i-1}S^{\IL{i'}}$,
     from previous iterations, $\hat{\pi}_{i-1}$.}
     \label{pseudo:imitationLearning}
     \begin{algorithmic}[1]

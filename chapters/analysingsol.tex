@@ -48,7 +48,7 @@ spaces, which is also done here for
 In order to create successful \dr, a good starting point is 
 to investigate the properties of optimal solutions and hopefully be able to 
 learn how to mimic such `good' behaviour. 
-For this, we follow an optimal solution (cf. $\Phi^\text{OPT}$ in 
+For this, we follow an optimal solution (cf. $\Phi^\OPT$ in 
 \cref{sec:trdat:tracks}),
 and inspect the evolution of its features  (defined in \cref{tbl:features}) 
 throughout the dispatching process, which is detailed in \cref{ch:gentrdat}. 
@@ -170,7 +170,7 @@ is depicted in \cref{fig:diff:extr:features}, for both \jrnd{6}{5} and
 \jrnd{10}{10}.\footnote{Additional problem spaces for $\xi^\star_{\pm\phi_i}$
     can be found in \shiny: Features $>$ Extremal.}
 Moreover, the dashed line represents the benchmark of randomly guessing the 
-optimum, $\xi^\star_{\text{RND}}$ (cf. \cref{fig:diff:opt:rnd}).
+optimum, $\xi^\star_{\RND}$ (cf. \cref{fig:diff:opt:rnd}).
 Furthermore, the \lcnamecref{fig:diff:extr:features}s are annotated with the 
 corresponding mean \namerho, for the training set if it were scheduled solely 
 w.r.t. that extremal feature.
@@ -214,9 +214,8 @@ competitive for $6\times5$.
     \includegraphics[width=\linewidth]{figures/{stepwise.6x5.SDR}.pdf}}
   \caption[Probability of SDR yielding optimal move]{
     Probability of SDR yielding optimal move. 
-    Both optimal (solid: $\xi^\star_{\langle \text{SDR}\rangle}$) and 
-    SDR-based (dashed: $\xi_{\langle \text{SDR}\rangle}$) 
-    trajectories are inspected.}
+    Both optimal (solid: $\xi^\star_{\SDR}$) and SDR-based (dashed: 
+    $\xi_{\SDR}$) trajectories are inspected.}
   \label{fig:diff:extr:SDR}
 \end{figure}
 \begin{figure}[p]\centering
@@ -254,7 +253,7 @@ Now, let's bare in mind \namerho, of applying SDRs throughout the dispatching
 process (cf. box-plots of which in \cref{fig:SDR:boxplot}), then there is a 
 some correspondence between high probability of stepwise optimality and low 
 $\rho$. Alas, this isn't always the case, for \jrnd{10}{10} 
-$\xi^\star_{\text{SPT}}$ always outperforms $\xi^\star_{\text{LPT}}$ in 
+$\xi^\star_{\SPT}$ always outperforms $\xi^\star_{\LPT}$ in 
 choosing a 
 dispatch which may result in an optimal schedule. However, this does not 
 transcend to SPT having a lower $\rho$ value than LPT. Hence, it's not enough 
@@ -268,8 +267,8 @@ trajectory, thereby updating \cref{eq:tracc:opt} to
 \begin{equation} \label{eq:tracc:track}
     \xi_{\pi} := \Exp[\pi]{\pi_{\star} = \pi}
 \end{equation}
-\Cref{fig:diff:extr:SDR} shows the difference between $\xi^\star_{\langle 
-\text{SDR} \rangle}$ and $\xi_{\langle \text{SDR} \rangle}$.
+\Cref{fig:diff:extr:SDR} shows the difference between $\xi^\star_{\SDR}$ and 
+$\xi_{\SDR}$.
 Similarly for \cref{eq:bwc:opt}, 
 \begin{subequations}\label{eq:bwc:track}
 \begin{IEEEeqnarray}{rCl}
@@ -327,7 +326,7 @@ $\zeta_{\min}^{\pi}<\zeta_{\mu}^{\pi}$) for changing the policy. Whereas,
 $\zeta_{\max}^{\pi}$ indicates the disadvantages of changing course. 
 When $\zeta_{\min}^{\pi}>\zeta_{\mu}^{\pi}$, then clearly $\pi$ is not a good 
 policy for said problem space, e.g., for the final dispatches of 
-$\zeta_{\mu}^{\text{SPT}}$ for \jrndJ{6}{5} or \jrnd{10}{10}. 
+$\zeta_{\mu}^{\SPT}$ for \jrndJ{6}{5} or \jrnd{10}{10}. 
 
 \emph{Remark}: \cref{eq:tracc:track,eq:bwc:track} are based on corresponding 
 meta-data, $\{\Phi^\pi,\mathcal{Y}^\pi\}$ , from \cref{eq:trdat:metadata}, 
@@ -344,12 +343,12 @@ For instance, MWR and SPT hardly ever coincide for easy or hard schedules (cf.
 \cref{tbl:easy:cnt:10x10,tbl:hard:cnt:10x10}), so its reasonable to believe 
 they could complement one another.
 Going back to \cref{fig:diff:extr:SDR:10x10} a presumably good BDR for 
-\jrnd{10}{10}  would be starting with $\xi^\star_{\text{SPT}}(k)$ and then 
-switching over to $\xi^\star_{\text{MWR}}(k)$ at around time step $k=40$, where 
+\jrnd{10}{10}  would be starting with $\xi^\star_{\SPT}(k)$ and then 
+switching over to $\xi^\star_{\MWR}(k)$ at around time step $k=40$, where 
 the SDRs change places in outperforming one another.
-In addition, we can see that even though $\xi_{\text{SPT}}(k)$ is generally 
+In addition, we can see that even though $\xi_{\SPT}(k)$ is generally 
 more likely to find optimal dispatches in the initial steps, shortly after 
-$k=15$ then $\xi_{\text{MWR}}(k)$ becomes a contender again. 
+$k=15$ then $\xi_{\MWR}(k)$ becomes a contender again. 
 A box-plot of \namerho, for \Problem[10\times10]{\train} is 
 depicted in \cref{fig:diff:boxplot:BDR} for a switch between SPT to MWR at time 
 steps $k=\{10,15,20,30,40\}$. Main statistics are given in \cref{tbl:BDR:stats}.
@@ -390,11 +389,11 @@ $\{\Phi^{\pi_\star},\mathcal{Y}^{\pi_\star}\}$
 for each new policy $\pi$.
 
 Revisiting \cref{fig:diff:case:SDR:10x10}, then we see 
-$\zeta_{\mu}^{\text{SPT}}(40)$ has already surpassed 
-$\zeta_{\mu}^{\text{MWR}}(K)$ and there are 60 operations left to dispatch. So 
+$\zeta_{\mu}^{\SPT}(40)$ has already surpassed 
+$\zeta_{\mu}^{\MWR}(K)$ and there are 60 operations left to dispatch. So 
 a switch for BDR at $k=40$ never had a chance of improvement. 
-However, at $k\leq15$ then $\zeta_{\mu}^{\text{SPT}}(k) < 
-\zeta_{\mu}^{\text{MWR}}(k)$, which were appropriate turning points for BDR 
+However, at $k\leq15$ then $\zeta_{\mu}^{\SPT}(k) < 
+\zeta_{\mu}^{\MWR}(k)$, which were appropriate turning points for BDR 
 (although not statistically significant).
 
 Preferably the blended dispatching rule should use best of both worlds, and 
@@ -468,9 +467,9 @@ The main focus now is on knowing \emph{when} during the scheduling process easy
 and hard problems (using the difficulty definition from \cref{eq:easy.vs.hard}) 
 diverge and explore in further detail \emph{why} they diverged. The number of 
 segregated problem instances for \PhiSet{ALL} and 
-$\Phi^{\langle\text{SDR}\rangle}$ (conditioned on the followed trajectory) for 
-\jrnd{6}{5} are given in \cref{tbl:jrnd:feat:cnt}.\footnote{Additional problem 
-    spaces can be found in \shiny: Footprints $>$ Stepwise.} 
+$\Phi^{\SDR}$ (conditioned on the followed trajectory) for \jrnd{6}{5} are 
+given in \cref{tbl:jrnd:feat:cnt}.\footnote{Additional problem spaces can be
+     found in \shiny: Footprints $>$ Stepwise.} 
 
 Rather than visualising high-dimensional data projected onto two dimensional 
 space (as was the focus in \cite{SmithMilesLion5} with SOM), 
