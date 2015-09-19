@@ -54,7 +54,7 @@ and inspect the evolution of its features  (defined in \cref{tbl:features})
 throughout the dispatching process, which is detailed in \cref{ch:gentrdat}. 
 Moreover, it is noted, that there are several optimal solutions available for 
 each problem instance. However, it is deemed sufficient to inspect only one 
-optimal trajectory per problem instance as there are $N_{\text{train}}$ 
+optimal trajectory per problem instance as there are $N_{\train}$ 
 independent instances which gives the training data variety. 
 
 Firstly, we can observe that on a step-by-step basis there are several optimal 
@@ -313,7 +313,7 @@ $\pi_\star$ and SDRs.
     \subcaptionbox{$6\times5$\label{fig:diff:case:SDR:6x5}}{
         \includegraphics[width=\linewidth]{figures/ALL/{stepwise.6x5.ALL.casescenario}.pdf}}
     \caption{Note, $\{\zeta^{\pi^\star}_{\min},\zeta^{\pi^\star}_{\max}\}$ are 
-    illustrated jointly for \Problem{\text{train}} in \cref{fig:diff:case:OPT}}
+    illustrated jointly for \Problem{\train} in \cref{fig:diff:case:OPT}}
     \MyCaption{Mean \namerho, for best and worst case scenario for not following
     a fixed policy}{fig:diff:case:SDR:10x10}{fig:diff:case:SDR:6x5}
     \label{fig:diff:case:SDR}
@@ -350,7 +350,7 @@ the SDRs change places in outperforming one another.
 In addition, we can see that even though $\xi_{\text{SPT}}(k)$ is generally 
 more likely to find optimal dispatches in the initial steps, shortly after 
 $k=15$ then $\xi_{\text{MWR}}(k)$ becomes a contender again. 
-A box-plot of \namerho, for \Problem[10\times10]{\text{train}} is 
+A box-plot of \namerho, for \Problem[10\times10]{\train} is 
 depicted in \cref{fig:diff:boxplot:BDR} for a switch between SPT to MWR at time 
 steps $k=\{10,15,20,30,40\}$. Main statistics are given in \cref{tbl:BDR:stats}.
 

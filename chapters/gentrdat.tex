@@ -19,9 +19,9 @@ all features from \cref{tbl:features} at every post-decision state visited in
 line \ref{pseudo:constructJSP:phi}. 
 These collected features are denoted $\Phi$, where, 
 \begin{equation}\label{eq:Phi}
-\Phi:= \bigcup_{i=1}^{N_{\text{train}}} 
+\Phi:= \bigcup_{i=1}^{N_{\train}} 
 \bigcup_{k=1}^K\bigcup_{J_j\in\mathcal{L}^{(k)}} 
-\condset{\vphi_j}{\vec{x}_i\in\mathcal{P}^{n\times m}_{\text{train}} }.
+\condset{\vphi_j}{\vec{x}_i\in\mathcal{P}^{n\times m}_{\train} }.
 \end{equation}
 
 \begin{figure}[p]
@@ -106,7 +106,7 @@ interest to learn,\footnote{The root is the empty initial schedule and for the
 the number of those can be at the most \mbox{${}^{n^K-1}/_{n-1}$}.
 Even for small dimensions of $n$ and $m$ the number of internal vertices are 
 quite substantial and thus too computationally expensive to investigate them 
-all. Not to mention that this is done iteratively for all $N_{\text{train}}$ 
+all. Not to mention that this is done iteratively for all $N_{\train}$ 
 problem instances.
 
 Since we know that once a job is processed on all of its machines, then it 
@@ -116,7 +116,7 @@ examination of $(n!)^m$ \citep{Giffler60}, thus a $6\times5$ problem may have
 at most $1.93\cdot10^{14}$ possible solutions, and for $10\times10$ problem 
 then it's $3.96\cdot10^{65}$ solutions! Thus the factorial growth makes it 
 infeasible for exploring all nodes to completion. However, our training data 
-consist of relatively large $N_{\text{train}}$, so even though we will only 
+consist of relatively large $N_{\train}$, so even though we will only 
 pursue one trajectory per instance, then the aggregated training data will give 
 it variety.
 
@@ -130,7 +130,7 @@ As a result, we obtain the meta-data from
 \condset{\{ \vphi_j, C_{\max}^{\pi_\star(\vchi^j)}
     \}}{J_j\in\mathcal{L}^{(k)}}_{k=1}^K \in \mathcal{F} \times \mathcal{Y}
 \end{equation}
-for a single problem instance $\vec{x}\in\mathcal{P}_{\text{train}}$, and where 
+for a single problem instance $\vec{x}\in\mathcal{P}_{\train}$, and where 
 $C_{\max}^{\pi_\star(\vchi^j)}$ denotes the optimal makespan (i.e. following 
 the expert policy $\pi_\star$) from the resulting post-decision state $\vchi^j$.
 
@@ -142,8 +142,8 @@ valuable outcome. Especially considering the cost of correctly labelling
     by \citet{glpk} has a free licence. Alas, GLPK has a lacklustre performance 
     w.r.t. speed for solving $10\times10$ \JSP.}
 each dispatch that is encountered.\footnote{Generally it takes 
-    only several hours to collect $N_{\text{train}}^{6\times5}=500$. Alas, when 
-    going to higher dimension, $N_{\text{train}}^{10\times10}=300$ 
+    only several hours to collect $N_{\train}^{6\times5}=500$. Alas, when 
+    going to higher dimension, $N_{\train}^{10\times10}=300$ 
     really becomes an issue, as \jrnd{10}{10} needs a few days, and 
     \jrndn{10}{10} or \frnd{10}{10} require several weeks!}
 Obviously we'd like to inspect optimal solutions as they are what we'd like to 
@@ -200,7 +200,7 @@ trajectories it is sufficient to explore each trajectory exactly once for each
 problem instance. 
 Whereas, for \PhiSet{OPT} and \PhiSet{RND} there can be several 
 trajectories worth exploring, however, only one is chosen (at random). It is 
-noted that since the number of problem instances, $N_{\text{train}}$, is 
+noted that since the number of problem instances, $N_{\train}$, is 
 relatively large, it is deemed sufficient to explore one trajectory for each 
 instance, in those cases as well.
 
@@ -210,7 +210,7 @@ considered more favourable for \fsp\ rather than MWR (cf.
 \cref{ch:defdifficulty}). 
 
 The number of features that were collected on a step-by-step basis for 
-\Problem[6\times5]{\text{train}} in \cref{tbl:data} is illustrated in 
+\Problem[6\times5]{\train} in \cref{tbl:data} is illustrated in 
 \cref{fig:size:Phi:K}. 
 There is an apparent stair-like structure for LWR, in accordance with its 
 motivation (cf. \cref{sec:SDR}), which is completing jobs advanced in their 

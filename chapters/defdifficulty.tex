@@ -177,16 +177,16 @@ classification is defined as follows,
   \end{equation}  
 \end{description}
 \end{subequations}
-where $\vec{x}\in\mathcal{P}_{\text{train}}$ for a given $a\in\mathcal{A}$ from 
+where $\vec{x}\in\mathcal{P}_{\train}$ for a given $a\in\mathcal{A}$ from 
 \cref{eq:SDRset}.
 \input{tables/quartiles.EasyHard} 
 \Cref{tbl:easyhard:quartile} reports the first and third quartiles for each 
 problem space, i.e., the cut-off values that determine the SDRs difficulty, 
 whose division, defined as percentage of problem instances, i.e., 
 \begin{equation}\label{eq:easyhard:cnt}
-  \frac{\abs{\mathcal{E}(a)}}{N_{\text{train}}} \cdot 100\%
+  \frac{\abs{\mathcal{E}(a)}}{N_{\train}} \cdot 100\%
   \quad \text{and} \quad 
-  \frac{\abs{\mathcal{H}(a)}}{N_{\text{train}}}\cdot 100\%
+  \frac{\abs{\mathcal{H}(a)}}{N_{\train}}\cdot 100\%
 \end{equation}
 for each $a\in\mathcal{A}$, are given in 
 \cref{tbl:easyhard:cnt:6x5,tbl:easyhard:cnt:10x10}, respectively. 
@@ -200,10 +200,10 @@ for each $a\in\mathcal{A}$, are given in
 \section{Consistency of problem instances}
 The intersection of pairwise SDRs being simultaneously easy or hard are given in \cref{tbl:easy:cnt:6x5,tbl:easy:cnt:10x10,tbl:hard:cnt:6x5,tbl:hard:cnt:10x10}, i.e., 
 \begin{equation}\label{eq:easyorhard:cnt}
-  \frac{\abs{\mathcal{E}(a_i)\cap \mathcal{E}(a_j) }}{N_{\text{train}}} \cdot 
+  \frac{\abs{\mathcal{E}(a_i)\cap \mathcal{E}(a_j) }}{N_{\train}} \cdot 
   100\%
   \quad \text{or} \quad 
-  \frac{\abs{\mathcal{H}(a_i)\cap \mathcal{H}(a_j)}}{N_{\text{train}}}\cdot 
+  \frac{\abs{\mathcal{H}(a_i)\cap \mathcal{H}(a_j)}}{N_{\train}}\cdot 
   100\%
 \end{equation}
 where $a_i,a_j\in\mathcal{A}$. Note, when $a_i=a_j$ then \cref{eq:easyorhard:cnt} is equivalent to \cref{eq:easyhard:cnt}.
@@ -253,12 +253,12 @@ Namely, by exploiting feature behaviour that is considered more favourable. The 
 Note, this \lcnamecref{sec:diff:easyhard} gave the definition of what 
 constitutes an `easy' and `hard' schedule. Since these are based on four SDRs 
 (cf. \cref{eq:SDRset}) the training data for the experiments done in this 
-\lcnamecref{ch:defdifficulty} is based on $4N_{\text{train}}$ problem 
+\lcnamecref{ch:defdifficulty} is based on $4N_{\train}$ problem 
 instances, per problem space, therefore,
 \begin{equation}\label{eq:easyhard:all}
-  \sum_{a\in\mathcal{A}}\abs{\mathcal{E}(a)} \approx N_{\text{train}}
+  \sum_{a\in\mathcal{A}}\abs{\mathcal{E}(a)} \approx N_{\train}
   \quad\text{and}\quad
-  \sum_{a\in\mathcal{A}}\abs{\mathcal{H}(a)} \approx N_{\text{train}}
+  \sum_{a\in\mathcal{A}}\abs{\mathcal{H}(a)} \approx N_{\train}
 \end{equation} 
 due to the fact \cref{eq:easy.vs.hard} are based on the first and third 
 quartiles of the entire training set.

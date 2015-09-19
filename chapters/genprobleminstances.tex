@@ -30,7 +30,9 @@ Two different processing times distributions were explored, namely,
 	\item[\Jrndn] \jrndn{n}{m} \hfill \\ where $\vec{p}\sim\mathcal{U}(45,55)$.
 \end{description}
 The machine ordering is a random permutation of all of the machines in the \jsp. 
-For each \JSP\ class $N_{\text{train}}$  and $N_{\text{test}}$ instances were generated for training and testing, respectively. Values for $N$ are given in \cref{tbl:data}. 
+For each \JSP\ class $N_{\train}$  and $N_{\test}$ instances were 
+generated for training and testing, respectively. Values for $N$ are given in 
+\cref{tbl:data}. 
 
 Although in the case of \jrnd{n}{m}\ this may be an excessively large range for 
 the uniform distribution, it is however, chosen in accordance with the 
@@ -117,7 +119,7 @@ are on the vertical axis.
   \label{fig:fsp:structure}
 \end{figure}
 
-For each \FSP\  class $N_{\text{train}}$  and $N_{\text{test}}$ instances were 
+For each \FSP\  class $N_{\train}$  and $N_{\test}$ instances were 
 generated for training and testing, respectively. Values for $N$ are given in 
 \cref{tbl:data}. 
 
@@ -127,8 +129,8 @@ generated for training and testing, respectively. Values for $N$ are given in
   }\label{tbl:data}
 	{\renewcommand{\arraystretch}{1.5}
 		\begin{tabular}{llcccl}\toprule
-			& name           & size ($n\times m$) & $N_{\text{train}}$ & 
-			$N_{\text{test}}$ & note                          
+			& name           & size ($n\times m$) & $N_{\train}$ & 
+			$N_{\test}$ & note                          
 			\\ \midrule
 			\multirow{8}{*}{\rot{\JSP}}
 			& \jrnd{6}{5}   &$6\times5$ & 500 & 500 & random \\
@@ -210,7 +212,7 @@ omitted \Problem[75 \times 20]{reC} instances in their comparison.
   \caption{Benchmark problems from OR-Library used in experimental studies.}
   \label{tbl:data:orlib}
   \begin{tabular}{llrrll}\toprule
-    & name & $n\times m$ & $N_{\text{test}}$ & note & shorthand  \\
+    & name & $n\times m$ & $N_{\test}$ & note & shorthand  \\
     \midrule \multirow{6}{*}{\rot{\JSP}}
     &\Problem{ft} & various &  3 &\citet{orlib_ft} & \texttt{ft06,ft10,ft20}\\
     &\Problem{la} & various & 40 &\citet{orlib_la} & \texttt{la01-la40}     \\

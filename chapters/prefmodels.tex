@@ -17,7 +17,7 @@ $\vec{z}_{o}=\vphi_{o}-\vphi_{s}$, and suboptimal,
 $\vec{z}_{s}=\vphi_{s}-\vphi_{o}$ by $y_o=+1$ and $y_s=-1$ respectively. 
 The preference learning problem is specified by a set of preference pairs,
 \begin{equation}\label{eq:Psi:jsp}
-	\Psi := \bigcup_{\{\vec{x}_i\}_{i=1}^{N_{\text{train}}}}
+	\Psi := \bigcup_{\{\vec{x}_i\}_{i=1}^{N_{\train}}}
     \condset{
         \left\{\vec{z}_o,+1\right\},\left\{\vec{z}_s,-1\right\}}{\forall 
         (J_o,J_s) 
@@ -82,7 +82,7 @@ optimal job $J_j\in\mathcal{O}^{(k)}$ (chosen at random), thus creating
 $\abs{\mathcal{O}^{(k)}}\cdot\abs{\mathcal{S}^{(k)}}$ feature pairs at each 
 dispatch $k$, resulting in a preference set of size,
 \begin{equation}\label{eq:sizePsi_b}
-l =  \sum_{i=1}^{N_{\text{train}}} \left(2 \abs{\mathcal{O}^{(k)}_i}\cdot 
+l =  \sum_{i=1}^{N_{\train}} \left(2 \abs{\mathcal{O}^{(k)}_i}\cdot 
 \abs{\mathcal{S}^{(k)}_i} \right)
 \end{equation}
 For the problem spaces considered in \cref{InRu11a}, that sort of simple 
@@ -186,7 +186,7 @@ l_{\max} := \Bigg \{ \begin{array}{rccc}
 \end{equation}
 which is roughly 60\%-70\% amount of preferences encountered from one pass of 
 sampling a \mbox{$K$-stepped} trajectory using a fixed policy $\hat{\pi}$ for 
-the default $N_{\text{train}}$ (cf. \cref{tbl:size:Psi:K}). 
+the default $N_{\train}$ (cf. \cref{tbl:size:Psi:K}). 
 Sampling is done randomly, with equal probability.
 
 \section{Ranking strategies}\label{sec:trdat:param:ranks}
@@ -220,7 +220,7 @@ By definition the following property holds:
 
 To test the validity of different ranking strategies for 
 \ref{PREF:param:ranks}, 
-a training set of $N_{\text{train}}=500$ problem instances of \jrnd{6}{5} and 
+a training set of $N_{\train}=500$ problem instances of \jrnd{6}{5} and 
 \frnd{6}{5}is collected for all trajectories described in 
 \cref{sec:trdat:tracks}. 
 The size of the preference set, $\abs{\Psi}$, is depicted in 
@@ -231,9 +231,9 @@ set, $\Psi$. A box-plot for \fullnamerho, is presented in
 From the figure it is apparent there can be a performance edge gained by 
 implementing a particular trajectory strategy, yet ranking scheme seems to be 
 irrelevant. Moreover, the behaviour is analogous across all other 
-\Problem[6\times5]{\text{train}} in \cref{tbl:data}.
+\Problem[6\times5]{\train} in \cref{tbl:data}.
 
-First let's restrict  the models to \Problem{6\times5}{\text{train}}. 
+First let's restrict  the models to \Problem{6\times5}{\train}. 
 There is no statistical difference between $\Psi_f$ and $\Psi_p$ 
 ranking-schemes across all disciplines,
 which is expected since $\Psi_f$ is designed to contain the same preference 
@@ -247,7 +247,7 @@ Since a smaller preference set is preferred, its opted to use the $\Psi_{p}$
 ranking scheme henceforth as the default set-up for \ref{PREF:param:ranks}. 
 
 Moving on to higher dimension, results for \jrnd{10}{10} were similar to 
-\Problem[6\times5]{\text{train}}. Only exception begin that ranking schemes 
+\Problem[6\times5]{\train}. Only exception begin that ranking schemes 
 showed difference in performance when using \PhiSet{OPT}, where 
 $\Psi_{p}^{\text{OPT}}$ come on top. Strengthening our previous choice of 
 $\Psi_{p}$ as standard ranking scheme.
@@ -257,9 +257,9 @@ $\Psi_{p}$ as standard ranking scheme.
   \includegraphics[width=\textwidth]{{prefdat.size.6x5}.pdf}
   \vspace*{-30pt}
   \caption[Size of preference set, $\abs{\Psi}$]{Size of 
-  \Problem[6\times5]{\text{train}} preference set, $l=\abs{\Psi}$, for 
+  \Problem[6\times5]{\train} preference set, $l=\abs{\Psi}$, for 
   different trajectory strategies and ranking schemes (where 
-  $N_{\text{train}}=500$) }
+  $N_{\train}=500$) }
   \label{fig:size:Psi:K}
 \end{figure}
 
@@ -267,7 +267,7 @@ $\Psi_{p}$ as standard ranking scheme.
   \includegraphics[width=\textwidth]{{prefdat.boxplot.6x5}.pdf}
   \vspace*{-30pt}
   \caption{Box-plot for various $\Phi$ and $\Psi$ set-up using
-    \Problem[6\times5]{\text{train}}. The trajectories 
+    \Problem[6\times5]{\train}. The trajectories 
     the models are based on are depicted in white on the far right.}
   \label{fig:boxplot:prefset}
 \end{figure}
@@ -276,7 +276,7 @@ $\Psi_{p}$ as standard ranking scheme.
 
 We'd like to inspect which trajectory is the best to use for $\Psi$. 
 \Cref{InRu15a} only considered \jrnd{6}{5} and \jrndn{6}{5}, 
-however, results for \Problem[6\times5]{\text{train}} and 
+however, results for \Problem[6\times5]{\train} and 
 \jrnd{10}{10} are currently available.\footnote{Additional problem spaces can 
     be found in \shiny: Preference Models $>$ Trajectories \& ranks.}
 Models from \cref{fig:boxplot:prefset} are limited to the ones corresponding to 
@@ -310,7 +310,7 @@ preference set then becomes too varied for a satisfactory result.
   \includegraphics[width=\textwidth]{{prefdat.p.size.6x5}.pdf}
   \vspace*{-30pt}
   \caption[Size of preference set, $\abs{\Psi_p}$]{Size of 
-    \Problem[6\times5]{\text{train}} preference set, $l=\abs{\Psi_p}$, for 
+    \Problem[6\times5]{\train} preference set, $l=\abs{\Psi_p}$, for 
     different trajectory strategies}
   \label{fig:size:Psi.p:K}
 \end{figure}
@@ -425,8 +425,8 @@ we want to keep the models simple enough for improved model interpretability.
 
 For each feature combination, a linear preference model is created, where 
 $\Psi_p$ is limited to the predetermined feature combination. 
-This was done for all \Problem[10\times10]{\text{train}} in \cref{tbl:data}, 
-each consisting of $N_{\text{train}}=300$ problem instances.
+This was done for all \Problem[10\times10]{\train} in \cref{tbl:data}, 
+each consisting of $N_{\train}=300$ problem instances.
 Moreover, in order to report the validation accuracy, 20\% 
 (i.e. $N_{\text{val}}=60$) of the training set was set aside for 
 reporting the accuracy.

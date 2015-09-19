@@ -31,8 +31,9 @@ be avoided by inspecting how $\rho$ is evolving as a function of time (cf.
 \cref{fig:diff:case:SDR}) and only consider swapping trajectories before they 
 intersect and subsequently diverge in performance. 
 Moreover, the improved classification accuracy is proportional to its 
-difference in performance spread (i.e. $\abs{\zeta^{\text{MWR}} - 
-\zeta^{\text{SPT}}}$) in that region.
+difference in performance spread (i.e. 
+$\abs{\zeta^{\text{MWR}}_{\langle\cdot\rangle} - 
+\zeta^{\text{SPT}}}_{\langle\cdot\rangle}$) in that region.
 
 Creating new \dr s is by no means trivial. For \jsp\ there is 
 the hidden interaction between processing times and machine ordering that's 
@@ -70,7 +71,7 @@ transcend for $\Psi^{\langle \text{CMA-ES} \rangle}$.
 Perhaps, if $\Phi^{\langle \text{CMA-ES} \rangle}$ wasn't based on following 
 the CMA-ES trajectory, but rather using the actual features encountered during 
 its optimisation. Alas, CMA-ES used a computational budget of 50,000 function 
-evaluations, each consisting of the expectation of $N_{\text{train}}$ problem 
+evaluations, each consisting of the expectation of $N_{\train}$ problem 
 instances. So even though \cref{fig:cma:fit} becomes relatively stable after a 
 few generations, it would still yield a gigantic feature set that needs to be 
 filtered before going through the optimisation phase of correctly labelling 

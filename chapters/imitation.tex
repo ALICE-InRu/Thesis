@@ -106,7 +106,7 @@ commercial software package such as \cite{gurobi}.
 
 When $\abs{\mathcal{O}^{(k)}}>1$, there can be several trajectories worth 
 exploring. However, only one is chosen at random. This is deemed sufficient as 
-the number of problem instances, $N_{\text{train}}$, is relatively large.
+the number of problem instances, $N_{\train}$, is relatively large.
 
 Experiments in \cite{InRu15b} clearly showed that following the expert policy 
 is not without its faults. There are many obstacles to consider to improve the 
@@ -313,14 +313,14 @@ Note, that in preliminary experiments for \ref{expr:boost:varylmax} showed no
 statistical significance in boost of performance, hence $l_{\max}$ is the same 
 as set in \cref{eq:lmax}.
 However, \ref{expr:boost:newdata} strategy showed a considerable change in 
-performance. Summary of $N_{\text{train}}$ is given in \cref{tbl:Ntrain}. 
+performance. Summary of $N_{\train}$ is given in \cref{tbl:Ntrain}. 
 Note, for the conventional $\Phi^{\text{OPT}}$ trajectory the extended training 
 set was simply obtained by iterating over more examples. 
 However, for the DAgger trajectories the extended set consisted of each 
-iteration encountering $N_{\text{train}}$ \emph{new} problem 
+iteration encountering $N_{\train}$ \emph{new} problem 
 instances. For a grand total of 
 \begin{equation}
-N^{\text{DA}i}_{\text{train, EXT}}=N_{\text{train}}\cdot (i+1) 
+N^{\text{DA}i}_{\text{train, EXT}}=N_{\train}\cdot (i+1) 
 \end{equation}
 problem instances explored for the aggregated extended training set used for 
 the learning model at iteration $i$.
