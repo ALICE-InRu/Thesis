@@ -581,9 +581,8 @@ considerably worse off due to overfitting of classifying the preference set.
 Now, let's inspect the models corresponding to the minimum mean $\rho$ and 
 highest mean validation accuracy, highlighted in \cref{tbl:CDR:pareto} and 
 inspect the stepwise optimality for those models in \cref{fig:CDR:opt}, again 
-using probability of randomly guessing an optimal move from \cref{fig:opt:SDR} 
-(denoted RND) 
-as a benchmark.
+using probability of randomly guessing an optimal move (i.e. 
+$\xi^{\star}_{\text{RND}}$ from \cref{fig:diff:opt:rnd}) as a benchmark.
 As one can see for both \jrnd{10}{10} and \jrndn{10}{10}, despite having a 
 higher mean validation accuracy overall, the probabilities vary significantly. 
 A lower mean $\rho$ is obtained when the validation accuracy is gradually 
@@ -600,8 +599,8 @@ later stages, than at earlier stages. Therefore, it's imperative to make the
 performance. 
 Hence, the measure of validation accuracy as discussed in \cref{sec:CDR:acc} 
 should take into consideration the impact a suboptimal move yields on a 
-step-by-step basis, e.g., weighted w.r.t. a curve such as depicted in 
-\cref{fig:case}.
+step-by-step basis, e.g., \cref{eq:tracc:opt} is weighted w.r.t. a curve such 
+as \cref{eq:bwc:opt}.
 
 \begin{figure}
   \centering
@@ -632,45 +631,6 @@ model is over-fitting the training data. Results hold for the test set.
 \end{figure}
 
 \subsection{Conclusions}
-Current literature still hold \sdr s in high regard, as they are simple to 
-implement and quite efficient. 
-However, they are generally taken for granted as there is clear lack of 
-investigation of \emph{how} these \dr s actually work, and what 
-makes them so successful (or in some cases unsuccessful)? 
-For instance, of the four SDRs this study focuses on, why does MWR outperform 
-so significantly for \jsp\, yet completely fail for \fsp? 
-MWR seems to be able to adapt to varying distributions of processing times, 
-however, manipulating the machine ordering causes MWR to break down. 
-By inspecting optimal schedules, and meticulously researching what's going on, 
-every step of the way of the dispatching sequence, some light is shed where 
-these SDRs vary w.r.t. the problem space at hand. 
-Once these simple rules are understood, then it's feasible to extrapolate the 
-knowledge gained and create new \cdr s that are likely to be 
-successful. 
-
-Creating new \dr s is by no means trivial. For \jsp\ there is 
-the hidden interaction between processing times and machine ordering that's 
-hard to measure.
-Due to this artefact, feature selection is of paramount importance, and then it 
-becomes the case of not having too many features, as they are likely to hinder 
-generalisation due to over-fitting in training. However, the features need to 
-be explanatory enough to maintain predictive ability. 
-For this reason \cref{eq:CDR:feat} was limited to up to three active features, 
-as the full feature set was clearly suboptimal w.r.t. its CMA-ES benchmark from 
-\cref{ch:esmodels}. 
-By using features based on the SDRs, along with some additional local features 
-describing the current schedule, it was possible to `discover' the SDRs when 
-given only one active feature. 
-Although there is not much to be gained by these models, they at least serve as 
-a sanity check for the learning models are on the right track. 
-Furthermore, by adding on additional features, a boost in performance was 
-gained, resulting in a \cdr\ that outperformed all of the SDR baseline. 
-Although, the best preference model of 3 active features is still not better 
-than the CMA-ES model for \jrnd{10}{10} using \NrFeatLocal\ features. 
-However, we're starting to close in on the gap, as previously 
-$\Delta\rho\approx6\%$ (using $\Psi_p^{\minCmax}$) and now 
-$\Delta\rho\approx2\%$ (using CDR 3.524) in favour of evolutionary search (cf. 
-\cref{tbl:cma:boxplot:set}).
 
 When training the learning model, it's not sufficient to only optimize w.r.t. 
 highest mean validation accuracy. As \cref{sec:CDR:pareto} showed, there is a 

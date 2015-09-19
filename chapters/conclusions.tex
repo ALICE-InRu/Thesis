@@ -1,9 +1,66 @@
 \HeaderQuote{Tut, tut, child! Everything's got a moral, if only you can find it.}{The Duchess} 
 
 \chapter{Conclusions}\label{ch:conclusions} 
-\todoWrite{Write overall conclusions of dissertation!}
+\FirstSentence{C}{urrent literature still hold} \sdr s in high regard, as they 
+are simple to implement and quite efficient. 
+However, they are generally taken for granted as there is clear lack of 
+investigation of \emph{how} these \dr s actually work, and what 
+makes them so successful (or in some cases unsuccessful)? 
 
-\FirstSentence{L}{orem ipsum dolor sit amet}, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque, id pulvinar odio lorem non turpis. Nullam sit amet enim. Suspendisse id velit vitae ligula volutpat condimentum. Aliquam erat volutpat. Sed quis velit. Nulla facilisi. Nulla libero. Vivamus pharetra posuere sapien. Nam consectetuer. Sed aliquam, nunc eget euismod ullamcorper, lectus nunc ullamcorper 
+For instance, of the four SDRs from \cref{sec:SDR} this dissertation focused 
+on, why does MWR outperform so significantly for \jsp\, yet completely fail for 
+\fsp? 
+MWR seems to be able to adapt to varying distributions of processing times, 
+however, manipulating the machine ordering causes MWR to break down. 
+By inspecting optimal schedules, and meticulously researching what's going on, 
+every step of the way of the dispatching sequence as was done in 
+\cref{ch:analysingsol}, some light is shed where these SDRs vary w.r.t. the 
+problem space at hand. 
+Once these simple rules are understood, then it's feasible to extrapolate the 
+knowledge gained and create new \cdr s that are likely to be successful. 
+An example of which was a blended \dr\ in \cref{sec:diff:opt:bdr}, where we 
+start with the SPT heuristic and switch over to MWR at a predetermined time 
+points. Those pivotal time steps were chosen by inspecting where SPT succeeds 
+MWR (and vice versa). 
+By achieving a higher classification accuracy using the new BDR model, it 
+substantially improve its inherited rule SPT.
+Although, it doesn't transcend to a significantly lower \namerho, when compared 
+to its other inherited rule MWR. 
+Special care must be taken not to let SPT downgrade MWR performance. This can 
+be avoided by inspecting how $\rho$ is evolving as a function of time (cf. 
+\cref{fig:diff:case:SDR}) and only consider swapping trajectories before they 
+intersect and subsequently diverge in performance. 
+Moreover, the improved classification accuracy is proportional to its 
+difference in performance spread (i.e. $\abs{\zeta^{\text{MWR}} - 
+\zeta^{\text{SPT}}}$) in that region.
+
+Creating new \dr s is by no means trivial. For \jsp\ there is 
+the hidden interaction between processing times and machine ordering that's 
+hard to measure.
+Due to this artefact, feature selection is of paramount importance, and then it 
+becomes the case of not having too many features, as they are likely to hinder 
+generalisation due to over-fitting in training the preference model, as was 
+seen in \cref{sec:trdat:param:tracks:passive}. 
+However, the features need to be explanatory enough to maintain predictive 
+ability. 
+For this reason \cref{eq:CDR:feat} was limited to up to three active features 
+in \cref{sec:pref:featselect}, as the full feature set was clearly suboptimal 
+w.r.t. its CMA-ES benchmark from \cref{ch:esmodels}. 
+By using features based on the SDRs, along with some additional local features 
+describing the current schedule, it was possible to `discover' the SDRs when 
+given only one active feature. 
+Although there is not much to be gained by these models, they at least serve as 
+a sanity check for the learning models are on the right track. 
+Furthermore, by adding on additional features, a boost in performance was 
+gained, resulting in a \cdr\ that outperformed all of the SDR baseline. 
+Although, the best preference model of 3 active features is still not better 
+than the CMA-ES model for \jrnd{10}{10} using \NrFeatLocal\ features. 
+However, we're starting to close in on the gap, as previously 
+$\Delta\rho\approx6\%$ (using $\Psi_p^{\minCmax}$ from 
+\cref{sec:trdat:param:tracks:passive}) and now $\Delta\rho\approx2\%$ (using 
+CDR \#3.524 from \cref{tbl:CDR:pareto}) in favour of evolutionary search (cf. 
+\cref{tbl:cma:boxplot:set}).
+
 
 
 We saw in \cref{sec:trdat:param:tracks:passive} that preference models using 
@@ -31,3 +88,5 @@ By applying \emph{locally optimal learning to search} \citep{ChangKADL15} it is
 possible to use imitation learning even when the reference policy is poor. 
 Although it's noted that the quality (w.r.t near-optimality) of reference 
 policy is in accordance to its performance, as is to be expected. 
+
+\todoWrite{Write overall conclusions of dissertation!}
