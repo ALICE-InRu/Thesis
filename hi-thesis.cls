@@ -240,16 +240,37 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
         \maketitle
         \copyrightpage
         \dedicationpage{#1}
+        
+        \HeaderQuote{Either the well was very deep, or she fell very slowly, 
+        for she had plenty of time as she went down to look about her and to 
+        wonder what was going to happen next.}{Narrator}
         \abstractpage % both in English and Icelandic
+        
+        \HeaderQuote{I think I should understand that better, if I had it 
+        written down: but I can't quite follow it as you say it.}{Alice}
         \tableofcontents
+        
+        \HeaderQuote{What is the use of a book, without pictures or 
+        conversations?}{Alice}
         \listoffigures
         \addcontentsline{toc}{chapter}{\listfigurename}
+        
+        \HeaderQuote{Always speak the truth, think before you speak, and write 
+        it down afterwards.}{The Queen}
         \listoftables
         \addcontentsline{toc}{chapter}{\listtablename}
+        
+        \HeaderQuote{Well, I never heard it before, but it sounds uncommon 
+        nonsense.}{The Mock Turtle}
         \listofpublications
+        
+        \HeaderQuote{That's nothing to what I could say if I chose. }{The 
+        Duchess}
         \include{scripts/nomencl}
         \printnomenclature  
         \addcontentsline{toc}{chapter}{Nomenclature}
+
+        \HeaderQuote{We're all mad here.}{The Cat}
         \acknowledgments
     }
 }
