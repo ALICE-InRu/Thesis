@@ -158,8 +158,9 @@ feature equivalence.
 
 \begin{figure}[t]\centering
     \includegraphics[width=\columnwidth]{{CMAES.generation.log.fitness}.pdf}
-    \caption{Log fitness for optimising w.r.t. \cref{eq:cma:objfun}, per 
-        generation of the CMA-ES optimisation.}\label{fig:cma:fit}
+    \caption[Log fitness for CMA-ES optimisation]{Log fitness for optimising 
+        w.r.t. \cref{eq:cma:objfun}, per generation of the CMA-ES 
+        optimisation.}\label{fig:cma:fit}
 \end{figure}
 
 \begin{figure} 
@@ -169,7 +170,8 @@ feature equivalence.
     \subcaptionbox{stepwise evolultion of final weights for \jrnd{6}{5} time 
         dependent models \label{fig:cma:wei:K}}{
         \includegraphics[width=\textwidth]{{CMAES.weights.timedependent}.pdf}}
-    \caption{Evolution of weights for features (given in \cref{tbl:features}).
+    \caption[Evolution of weights for features]{Evolution of weights for
+        features (given in \cref{tbl:features}).
         Note, weights are normalised such that $\norm{\vec{w}}=1$.}
     \label{fig:cma:wei}
 \end{figure}
@@ -222,9 +224,10 @@ where \cref{eq:cma:rho} was significantly different than \cref{eq:cma:makespan}
     \subcaptionbox{Models applied to ORLIB test set 
         \label{fig:cma:boxplot:orlib}}{
         \includegraphics[width=\textwidth]{{boxplot.CMAES.ORLIB}.pdf}}
-	\caption{Box-plot for \namerho, when implementing the final weights 
-	obtained from CMA-ES optimisation, using objective functions from 
-	\cref{eq:cma:objfun}.}\label{fig:cma:boxplot}
+	\caption[Box-plot for \namerho, after CMA-ES optimisation]{Box-plot for
+        \namerho, when implementing the final weights obtained from CMA-ES 
+        optimisation, using objective functions from 
+        \cref{eq:cma:objfun}.}\label{fig:cma:boxplot}
 \end{figure}
 
 {\setlength{\tabcolsep}{3pt} \input{tables/stats.boxplot.CMAES.tex}}

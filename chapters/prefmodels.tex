@@ -423,7 +423,8 @@ we want to keep the models simple enough for improved model interpretability.
 
 For each feature combination, a linear preference model is created, where 
 $\Psi_p$ is limited to the predetermined feature combination. 
-This was done for all \Problem[10\times10]{\train} in \cref{tbl:data}, 
+This was done for all \Problem[10\times10]{\train} in \cref{tbl:data} (save for 
+job and machine variation), 
 each consisting of $N_{\train}=300$ problem instances.
 Moreover, in order to report the validation accuracy, 20\% 
 (i.e. $N_{\text{val}}=60$) of the training set was set aside for 
@@ -440,15 +441,18 @@ probability of choosing an optimal decision given the resulting linear
 weights.\footnote{Due to the superabundant number of models then calculating 
     the \emph{preferable} $\xi_{\pi}$ from \cref{eq:tracc:track} is not viable.}
 However, in this context, the mean throughout the dispatching process is
-reported, i.e., $\frac{1}{K}\sum_{k=k'}^K \xi^{\star}_{\pi}(k')$. 
+reported, i.e., 
+\begin{equation}\label{eq:meanstepwiseopt}
+\overline{\xi^{\star}_{\pi}} = \frac{1}{K}\sum_{k=1}^K \xi^{\star}_{\pi}(k)
+\end{equation}
 \Cref{fig:stepwise_vs_classification} shows the difference between
 the two measures of reporting validation accuracy. 
 
-Validation accuracy based on $\xi^{\star}_{\pi}$ only takes into consideration 
-the likelihood of choosing the optimal move at each time step. However, the 
-classification accuracy is also trying to correctly distinguish all subsequent 
-rankings in addition of choosing the optimal move, as expected that measure is 
-considerably lower. 
+Validation accuracy based on \cref{eq:meanstepwiseopt} only takes into 
+consideration the likelihood of choosing the optimal move at each time step. 
+However, the classification accuracy is also trying to correctly distinguish 
+all subsequent rankings in addition of choosing the optimal move, as expected 
+that measure is considerably lower. 
 
 \begin{figure}[p]
   \centering
@@ -463,13 +467,15 @@ When training the learning model one wants to keep the validation accuracy
 high, as that would imply a higher likelihood of making optimal decisions, 
 which would in turn translate into a low final makespan. To test the validity 
 of this assumptions, each of the 697 models is run on the preference set, and 
-its mean $\rho$ is reported against its corresponding validation accuracy in 
-\cref{fig:CDR:scatter}. The models are colour-coded w.r.t. the number of active 
-features, and a line is drawn through its Pareto front. Moreover, those 
-solutions are labelled with their corresponding model ID. Moreover, the Pareto 
-front over all 697 models, irrespective of active feature count, is denoted 
-with triangles. Moreover, their values are reported in \cref{tbl:CDR:pareto}, 
-where the best objective is given in boldface. 
+its mean $\rho$ is reported against its corresponding validation accuracy 
+\cref{eq:meanstepwiseopt} in \cref{fig:CDR:scatter}. 
+The models are colour-coded w.r.t. the number of active features, and a line is 
+drawn through its Pareto front. 
+Those solutions are labelled with their corresponding model ID. 
+Moreover, the Pareto front over all 697 models, irrespective of active feature 
+count, is denoted with triangles. 
+Their values are reported in \cref{tbl:CDR:pareto}, where the best objective is 
+given in boldface. 
 
 \begin{table}[p]
   \caption{Mean validation accuracy and mean expected deviation from 
