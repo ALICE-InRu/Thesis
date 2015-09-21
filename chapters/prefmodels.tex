@@ -305,15 +305,6 @@ preference set then becomes too varied for a satisfactory result.
 \input{tables/size.prefdat.tex}
 \input{tables/PREF.track.ordering.tex}
 
-\begin{figure}[t]
-  \includegraphics[width=\textwidth]{{prefdat.p.size.6x5}.pdf}
-  \vspace*{-30pt}
-  \caption[Size of preference set, $\abs{\Psi_p}$]{Size of 
-    \Problem[6\times5]{\train} preference set, $l=\abs{\Psi_p}$, for 
-    different trajectory strategies}
-  \label{fig:size:Psi.p:K}
-\end{figure}
-
 Learning preference pairs from a good scheduling policies, such as 
 $\Phi^{\minCmax},~\Phi^{\minRho}$ and \PhiSet{MWR}, gave considerably more 
 favourable results than tracking optimal paths, save for \fjc{6}{5} where the 
@@ -389,5 +380,96 @@ data was not fruitful. However, inspired by the original work by
 correctly labelling with analytic means) gives meaningful preference pairs 
 which the learning algorithm could learn. 
 
-\section{Stepwise sampling strategies}
+\begin{figure}[p]
+    \includegraphics[width=\textwidth]{{prefdat.p.size.6x5}.pdf}
+    \vspace*{-30pt}
+    \caption[Size of preference set, $\abs{\Psi_p}$]{Size of 
+        \Problem[6\times5]{\train} preference set, $l=\abs{\Psi_p}$, for 
+        different trajectory strategies}
+    \label{fig:size:Psi.p:K}
+\end{figure}
 
+\section{Stepwise sampling bias}
+
+\begin{figure}[p]
+    \includegraphics[width=\textwidth]{{bias.CDR.10x10}.pdf}
+    \vspace*{-30pt}
+    \caption{Log probability for stepwise sampling for \PsiSet[OPT]{p} based on 
+    \Problem[10\times10]{\train}}
+    \label{fig:bias}
+\end{figure}
+
+Experiments in \cref{sec:trdat:param:tracks:passive} clearly showed that 
+following the expert policy is not without its faults. 
+There are many obstacles to consider to improve the model. 
+For instance, it was chosen to sample $l_{\max}$ in \cref{eq:lmax} with equal 
+probability. 
+But inspecting the effects of making suboptimal choices varies as 
+a function of time (cf. \cref{ch:analysingsol}), perhaps its stepwise bias 
+should rather be done proportional to the mean cumulative loss to a particular 
+time step?
+Following strategies for stepwise bias will now be proportional to
+\begin{enumerate}[after={{}}, leftmargin=*,
+    label={\textbf{Bias.\arabic*}}, ref={{Bias.\arabic*}}]
+    \item \label{bias:equal} equal probability (equal). This was the sampling 
+    strategy for \PsiSet{p} in \cref{InRu14,InRu15a} and will serve as a 
+    baseline.  
+    \item \label{bias:opt} inverse optimality for random dispatches, i.e., 
+    $1-\xi_{\RND}^{\star}$ (opt).
+    Motivation being to to give samples from dispatches that are less 
+    likely to be optimal than simply at random (cf. \cref{fig:diff:opt:rnd}). 
+    \item \label{bias:bcs} best case scenario for mean $\rho$, i.e., 
+    $\zeta^{\star}_{\min}$ (bcs).
+    \item \label{bias:wcs} worst case scenario for mean $\rho$, i.e., 
+    $\zeta^{\star}_{\max}$ (wcs).
+    \item \label{bias:featset} inversely proportional to $\abs{\Phi^{\OPT}}$ 
+    (featsize), defined as
+    $$\max_{k'}\{\abs{\Phi^{\OPT}(k')}\}-\abs{\Phi^{\OPT}(k)}+\min_{k}\{\abs{\Phi^{\OPT}(k')}\}$$
+    \item \label{bias:prefset} inversely proportional to $\abs{\Psi^{\OPT}_p}$ 
+    (prefsize), defined as  
+    $$\max_{k'}\{\abs{\Psi^{\OPT}_p(k')}\}-\abs{\Psi^{\OPT}_p(k)}+\min_{k'}\{\abs{\Psi^{\OPT}_p(k')}\}$$
+    \item \label{bias:dbl1st} twice as much weight on the first half of the 
+    dispatches (dbl1st).
+    \item \label{bias:dbl2nd} twice as much weight on the second half of the 
+    dispatches (dbl2nd).
+\end{enumerate}
+Moreover, all strategies are also adjusted to the preference set size, i.e., 
+$\frac{1}{\abs{\Psi^{\OPT}_p}}$.
+Note, \ref{bias:bcs} and \ref{bias:wcs} are more focused on 
+sampling w.r.t. the final measure, where the mean $\rho$ is given \emph{one} 
+suboptimal move, otherwise it's assumed expert policy is followed (cf. 
+\cref{fig:diff:case:OPT}). 
+Whereas, \ref{bias:featset} and \ref{bias:prefset} are trying to give more 
+equal emphasis on stepwise features, as they substantially decrease over time 
+(cf. \cref{fig:size:Phi:K,fig:size:Psi.p:K}). 
+Lastly, \ref{bias:dbl1st} and \ref{bias:dbl2nd} are very simplified 
+versions of the aforementioned strategies.
+\Cref{fig:bias} jointly illustrates the stepwise bias strategies for 
+\Problem[10\times10]{\train}.
+
+It's possible to circumvent the choice of stepwise sampling strategy by 
+creating a preference model for each time step $k$, for a grand total of $K$ 
+models. 
+By doing so it's possible to capture local changes in the schedule, as we've 
+already seen the evolution of features varies. Moreover, in 
+\cref{fig:cma:boxplot} then a stepwise \emph{new} model was generally better 
+than a \emph{single} global one.
+However, in that case it's not possible to test those models against 
+other dimensions, e.g., test benchmarks suite from OR-Library (cf. 
+\cref{tbl:data:orlib}). 
+
+\Cref{fig:bias:boxplot} depicts box-plots for \namerho, using the various 
+sampling strategies for \Problem[10\times10]{}. 
+There we can see that for \jrnd{10}{10} the best model is a stepwise one, as 
+expected 
+
+
+\begin{figure}[t]
+    \includegraphics[width=\textwidth]{{bias.boxplotRho.CDR.10x10}.pdf}
+    \caption[Box-plots for \namerho, using various stepwise bias sampling 
+    strategies]{Box-plots for \namerho, where \PsiSet[OPT]{p} is sampled with 
+    various stepwise bias strategies. 
+    Moreover, time dependent models shown on  far left as reference.}
+    \label{fig:bias:boxplot}
+\end{figure}
+\input{tables/stats.bias.10x10}
