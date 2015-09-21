@@ -32,7 +32,7 @@ be avoided by inspecting how $\rho$ is evolving as a function of time (cf.
 intersect and subsequently diverge in performance. 
 Moreover, the improved classification accuracy is proportional to its 
 difference in performance spread (i.e. 
-$\abs{\zeta^{\MWR}_{\any} - \zeta^{\SPT}}_{\any}$) in that region.
+$\abs{\zeta^{\MWR}_{\any} - \zeta^{\SPT}_{\any}}$) in that region.
 
 Creating new \dr s is by no means trivial. For \jsp\ there is 
 the hidden interaction between processing times and machine ordering that's 
@@ -57,9 +57,9 @@ Although, the best preference model of 3 active features is still not better
 than the CMA-ES model for \jrnd{10}{10} using \NrFeatLocal\ features. 
 However, we're starting to close in on the gap, as previously 
 $\Delta\rho\approx6\%$ (using $\Psi_p^{\minCmax}$ from 
-\cref{sec:trdat:param:tracks:passive}) and now $\Delta\rho\approx2\%$ (using 
-CDR \#3.524 from \cref{tbl:CDR:pareto}) in favour of evolutionary search (cf. 
-\cref{tbl:cma:boxplot:set}).
+\cref{sec:trdat:param:tracks:passive}) and now $\Delta\rho\approx2\%$ (cf. 
+CDR \#3.524 in \cref{tbl:best.exhaust:stats}) in favour of evolutionary 
+search (cf. \cref{tbl:cma:boxplot:set}).
 
 
 
@@ -77,15 +77,15 @@ filtered before going through the optimisation phase of correctly labelling
 them.
 
 The analysis-phase of \Alice\ is heavily dependent on having an expert 
-policy one wants to mimic, i.e., knowing the \emph{optimal} solutions for the 
+policy it's trying to mimic, i.e., knowing the \emph{optimal} solutions for the 
 sake of imitation learning. 
 
 Understandably, knowing the true optimum is an unreasonable claim in many 
 situations, especially for high dimensional problem instances. 
 Luckily, there seems to be the possibility to circumvent querying the expert 
 altogether, and still have reasonable performance. 
-By applying \emph{locally optimal learning to search} \citep{ChangKADL15} it is 
-possible to use imitation learning even when the reference policy is poor. 
+By applying \emph{locally optimal learning to search} by \citet{ChangKADL15} it 
+is possible to use imitation learning even when the reference policy is poor. 
 Although it's noted that the quality (w.r.t near-optimality) of reference 
 policy is in accordance to its performance, as is to be expected. 
 
