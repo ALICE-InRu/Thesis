@@ -6,7 +6,9 @@ larger and smaller, and being ordered about by mice and rabbits.}{Alice}
 \FirstSentence{F}{rom \cref{ch:esmodels} there exists linear} weights $\vec{w}$ 
 for \cref{eq:CDR:feat} found with evolutionary optimisation that achieve a 
 lower \namerho, than any of the preference models from \cref{ch:prefmodels}
-have been able to learn. 
+has been able to outperform.\footnote{Although $\Psi^{\minCmax}_{p}$ can be 
+  statistically insignificant to its original trajectory iff stepwise 
+  sampling is adjusted w.r.t. its preference set (cf. \cref{sec:pref:bias}).} 
 This goes to show that the $d=\NrFeatLocal$ features are `enough' -- 
 meaning there is not a need for defining new ones just yet. 
 However, the optimal weights for \cref{eq:cma:objfun} were quite erratic (cf. 
@@ -22,17 +24,18 @@ from \cref{tbl:features}, namely
 \end{enumerate*}
 by choosing the lowest value for SPT and LWR, and highest value for LPT and 
 MWR, i.e., the extremal values for those attributes. 
-These SDRs achieve a remarkably low $\rho$, then maybe not that many additional 
-features are needed to achieve a competitive result.
+These SDRs achieve a remarkably low $\rho$, suggesting maybe not that many 
+additional features are needed to achieve a competitive result.
 
-For this study we will consider all combinations of 
-feature attributes using either one, two, three or all $d=\NrFeatLocal$ of 
-them, for a grand total of:
+For this study we will consider all combinations of feature attributes using 
+either one, two, three or all $d=\NrFeatLocal$ of them, for a grand total of:
 \begin{equation}\label{eq:697}
 {d \choose 1}+{d \choose 2}+{d \choose 3}+{d \choose d} = 697
 \end{equation}
 The reason for such a limiting number of active features, are due to the fact 
 we want to keep the models simple enough for improved model interpretability.
+Furthermore, we will continue to use our baseline preference set from 
+\cref{InRu11a,InRu14,InRu15a,InRu15b}, namely \PsiSet[OPT]{p}.
 
 For each feature combination, a linear preference model is created, where 
 $\Psi_p$ is limited to the predetermined feature combination. 

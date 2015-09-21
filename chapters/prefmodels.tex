@@ -232,7 +232,7 @@ implementing a particular trajectory strategy, yet ranking scheme seems to be
 irrelevant. Moreover, the behaviour is analogous across all other 
 \Problem[6\times5]{\train} in \cref{tbl:data}.
 
-First let's restrict  the models to \Problem{6\times5}{\train}. 
+First let's restrict  the models to \Problem[6\times5]{\train}. 
 There is no statistical difference between $\Psi_f$ and $\Psi_p$ 
 ranking-schemes across all disciplines,
 which is expected since $\Psi_f$ is designed to contain the same preference 
@@ -375,13 +375,6 @@ should boost the training accuracy for a linear classification learning model.
 However, these strategies is not outperforming the original DR used in guiding 
 the training data collection. 
 
-Experimental results showed for \ref{PREF:param:tracks}, that unlike 
-\citep{Siggi10,Malik08,Russell09}, learning only on optimal training 
-data was not fruitful. However, inspired by the original work by 
-\cite{Siggi05}, having DR guide the generation of training data (except 
-correctly labelling with analytic means) gives meaningful preference pairs 
-which the learning algorithm could learn. 
-
 \begin{figure}[p]
     \includegraphics[width=\textwidth]{{prefdat.p.size.6x5}.pdf}
     \vspace*{-30pt}
@@ -391,7 +384,7 @@ which the learning algorithm could learn.
     \label{fig:size:Psi.p:K}
 \end{figure}
 
-\section{Stepwise sampling bias}
+\section{Stepwise sampling bias}\label{sec:pref:bias}
 
 \begin{figure}[p]
     \includegraphics[width=\textwidth]{{bias.CDR.10x10}.pdf}
@@ -543,3 +536,44 @@ for training and test set, respectively.
 Note, optimisation w.r.t. \cref{eq:cma:makespan} achieved 10.57\% 
 and 11.33\% mean $\rho$ for training and test set, respectively, which is 
 statistically insignificant from the adjusted preference model.
+
+\clearpage
+\section{Conclusions}
+Since the preference set is ideally aggregated and possibly re-sampled 
+to adjust for lacking $\abs{\Psi(k)}$ count, then $\Psi$ needs to be sampled to 
+size $l_{\max}$ such that it contains maximum information, yet with minimal 
+amount of preference pairs. 
+By use of partial subsequent Pareto ranking to address \ref{PREF:param:ranks}, 
+denoted \PsiSet{p}, from \cref{sec:trdat:param:ranks}, it's possible to reduce 
+$\abs{\Psi}$ significantly, without loss in performance. 
+
+Experimental results in \cref{sec:trdat:param:tracks:passive} for 
+\ref{PREF:param:tracks} illustrated that unlike 
+\citet{Siggi10,Malik08,Russell09} learning only on optimal training data was 
+not fruitful. 
+However, \cref{sec:pref:bias} showed if stepwise sampling for 
+\ref{PREF:param:bias} is done appropriately then it's possible to boost 
+performance significantly, even outperforming a single model for each time step.
+First and foremost the stepwise bias in sampling needs to counter-act the 
+disproportionate amount of features towards the end. 
+Moreover, additional emphasis to the latter stages of the dispatches is 
+beneficial as that's when \JSP\ is more susceptible to failure. 
+Furthermore, since the problem spaces showed difference boost in performance 
+depending on the various complexities of its best sampling strategy, its 
+simpler version is recommended, namely configuration denoted \ref{bias:dbl2nd}.
+
+Inspired by the original work by \cite{Siggi05}, having fixed DRs guide the 
+generation of training data (except correctly labelling with analytic means) 
+gives meaningful preference pairs which the learning algorithm could learn. 
+The best strategy was by using the weights from CMA-ES optimisation, obtained 
+by optimising \cref{eq:cma:objfun} directly. 
+Its preference model was able to be statistically insignificant to its guiding 
+policy (cf. \cref{sec:pref:bias}). 
+However, we have yet been able to outperform direct optimisation. 
+
+Generally aggregating trajectories, from optimal and suboptimal policies, 
+boosts performance. However, they need to be chosen carefully, since
+with increased aggregation it can become counter-productive as the features are 
+too dissimilar. 
+A more sophisticated approach in combing the two strategies is needed. 
+
