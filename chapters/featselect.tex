@@ -196,6 +196,7 @@ considerably worse off due to overfitting of classifying the preference set.
   \includegraphics[width=\textwidth]{figures/{j.rnd}/{pareto.10x10.phi}.pdf}\\
   \includegraphics[width=\textwidth]{figures/{j.rndn}/{pareto.10x10.phi}.pdf}\\
   \includegraphics[width=\textwidth]{figures/{f.rnd}/{pareto.10x10.phi}.pdf}
+  \vspace*{-24pt}
   \caption{Normalised weights for CDR models from \cref{tbl:CDR:pareto}, 
     models are grouped w.r.t. its dimensionality, $d$. Note, a triangle 
     indicates a solution on the Pareto front.
@@ -229,9 +230,10 @@ should take into consideration the impact a suboptimal move yields on a
 step-by-step basis, e.g., \cref{eq:tracc:opt} should be weighted w.r.t. a curve 
 such as \cref{eq:bwc:opt}.
 
-\begin{figure}[t]
+\begin{figure}[p]
   \centering
   \includegraphics[width=\linewidth]{figures/ALL/{stepwise.10x10.FeatSelect}.pdf}
+  \vspace*{-30pt}
   \caption{Probability of choosing optimal move for models corresponding to 
     highest mean validation accuracy and lowest mean deviation from 
     optimality, $\rho$, compared to the baseline of probability of 
@@ -239,40 +241,49 @@ such as \cref{eq:bwc:opt}.
   \label{fig:CDR:opt}
 \end{figure}
 
-\section{Comparison to CMA-ES}
+\input{tables/stats.exhaust.10x10}
+
+\section{Comparison to other approaches}
 Main statistics for the best models from \cref{eq:697} are reported in 
 \cref{tbl:best.exhaust:stats}. 
-
-\todoFind{Update w.r.t. CMA-ES}
-Going back to the original SDRs discussed in \cref{sec:opt:sdr} and 
-compare the best CDR models, a box-plot for $\rho$ is depicted in 
-\cref{fig:boxplot:CDR}. Firstly, there is a statistical difference between all 
-models, and  clearly the CDR model corresponding to minimum mean $\rho$ value, 
-is the clear winner, and outperforms the  SDRs substantially. However, the best 
-model w.r.t. maximum validation accuracy, then the CDR model shows a lacklustre 
-performance. In some cases it's better off, e.g., compared to LWR, yet for 
-\jsp\ it doesn't surpass the performance of MWR. This implies, the learning 
-model is over-fitting the training data. Results hold for the test set. 
-
-\input{tables/stats.exhaust.10x10}
+Going back to the original SDRs discussed in \cref{sec:SDR} along with the 
+CMA-ES obtained weights for \cref{eq:cma:makespan} and compare then against the 
+best CDR models, a box-plot for $\rho$ is depicted in \cref{fig:boxplot:CDR}. 
+Firstly, there is a statistical difference between all models, and the CDR 
+model corresponding to minimum mean $\rho$ value, is the clear winner for 
+\jrndn{10}{10} and \frnd{10}{10}. On the other hand, for \jrnd{10}{10} it loses 
+by $\Delta\rho\approx-2.6\%$ to $\minCmax$ optimisation.
+In all cases the there is substantial performance boost w.r.t. SDRs
+\begin{enumerate*}
+    \item 8.2\% from \jrnd{10}{10}'s MWR
+    \item 5.9\% from \jrndn{10}{10}'s MWR 
+    \item 6.5\% from \frnd{10}{10}'s LWR)
+\end{enumerate*}  
+However, the best model w.r.t. maximum validation accuracy, then the CDR model 
+shows a lacklustre performance. In some cases it's better off, e.g., compared 
+to \frnd{10}{10}'s LWR ($\Delta\rho\approx1\%$), yet for \jsp\ it doesn't 
+surpass the performance of MWR. 
+This implies, the learning model is over-fitting the training data. 
+Results hold for the test set. 
 
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{figures/{boxplotRho.FeatSelect.10x10}.pdf}
-  \caption{Box-plot for deviation from optimality, $\rho$, (\%) for the best 
-    CDR models (cf. \cref{tbl:CDR:pareto}) and compared against the best SDRs 
-    from \cref{sec:opt:sdr}, both for training and test sets.} 
+  \caption{Box-plot for \namerho, for the best CDR preference models (cf. 
+  \cref{tbl:CDR:pareto}) and compared against their best reference model.} 
   \label{fig:boxplot:CDR}
 \end{figure}
 
+\clearpage
 \section{Conclusions}
 
-When training the learning model, it's not sufficient to only optimize w.r.t. 
+When training the learning model, it's not sufficient to only optimise w.r.t. 
 highest mean validation accuracy defined in \cref{eq:meanstepwiseopt}. 
 As \cref{sec:CDR:pareto:tradeoff} showed, there is a trade-off between making 
 the over-all best decisions versus making the right decision on crucial time 
-points in the scheduling process, as \cref{fig:diff:case:OPT} 
-clearly illustrated. It is for this reason, traditional feature selection such 
-as \emph{add1} and \emph{drop1} were unsuccessful in preliminary experiments, 
+points in the scheduling process, as \cref{fig:diff:case:OPT} clearly 
+illustrated. 
+It is for this reason, traditional feature selection such as \emph{add1} and 
+\emph{drop1} were unsuccessful in preliminary experiments, 
 and thus resorting to exhaustively searching all feature combinations.
 This also opens of the question of how should validation accuracy be measured? 
 Since the model is based on learning preferences, both based on optimal versus 
@@ -289,3 +300,9 @@ especially taken care off. \Cref{fig:diff:case:OPT} showed how making
 suboptimal decisions were more of a factor during the later stages, whereas for 
 flow-shop the case was exact opposite. 
 
+Note, from \cref{sec:pref:bias} it's possible to sample w.r.t. stepwise bias 
+such that it gives preference pairs that are more relevant to its 
+end-performance. In other words, weighing the measure from 
+\cref{eq:meanstepwiseopt} via the sampling strategy. 
+Presumably, if such adjusted bias were applied to this study, then greater 
+performance boost could be achieved.
