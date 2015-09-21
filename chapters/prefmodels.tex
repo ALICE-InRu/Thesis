@@ -304,6 +304,7 @@ preference set then becomes too varied for a satisfactory result.
 
 \input{tables/size.prefdat.tex}
 \input{tables/PREF.track.ordering.tex}
+\input{tables/stats.tracks.10x10.tex}
 
 Learning preference pairs from a good scheduling policies, such as 
 $\Phi^{\minCmax},~\Phi^{\minRho}$ and \PhiSet{MWR}, gave considerably more 
@@ -417,9 +418,8 @@ Following strategies for stepwise bias will now be proportional to
     baseline.  
     \item \textbf{(opt)} \label{bias:opt} inverse optimality for random 
     dispatches, i.e., $1-\xi_{\RND}^{\star}$.
-    \item \textbf{bcs} \label{bias:bcs} best case scenario for mean $\rho$, 
-    i.e., 
-    $\zeta^{\star}_{\min}$.
+    \item \textbf{(bcs)} \label{bias:bcs} best case scenario for mean $\rho$, 
+    i.e., $\zeta^{\star}_{\min}$.
     \item \textbf{(wcs)} \label{bias:wcs} worst case scenario for mean $\rho$, 
     i.e., $\zeta^{\star}_{\max}$.
     \item \textbf{(featsize)} \label{bias:featsize} inversely proportional to 
@@ -481,12 +481,12 @@ Main statistics for \Problem[10\times10]{\train} are reported in
 In addition to the stepwise bias strategies (both adjusted and not) a stepwise 
 model (one for each step $k$) is given for reference.
 
-\pagebreak
 First off, counter-intuitively the stepwise model is not the best 
 configuration. 
 By applying one of these aforementioned sampling strategies it's possible to 
-achiever better results than applying a local model for each time step. 
-In fact, for \jrndn{10}{10} a stepwise model was the worst approach. 
+achieve better results than applying a local model for each time step. 
+In fact, for \jrndn{10}{10} a stepwise model was the worst approach (with up to 
+12\% increased error). 
 
 Adjusting \PsiSet[\OPT]{p} to its stepwise size generally improved the sampling 
 strategy (up to mean $\Delta\rho\approx7\%$), where \ref{bias:opt} and 
@@ -520,11 +520,11 @@ Moreover, when time dependent model are good then further exaggeration of the
 adjustment to the preference set (such as \ref{bias:featsize} and 
 \ref{bias:prefsize}) is best. 
 However, a severely simplified version can be just as good. 
-With these configurations it was possible to improve mean \namerho
+With these configurations it was possible to improve mean \namerho, by
 \begin{enumerate*}
-    \item \jrnd{10}{10} by 14\% using adjusted \ref{bias:prefsize}
-    \item \jrndn{10}{10} by 1\% using adjusted \ref{bias:opt} (not     
-    significant improvement)
-    \item \frnd{10}{10} by 8\% using adjusted \ref{bias:prefsize}
+    \item 14\% using adjusted \ref{bias:prefsize} for \jrnd{10}{10}
+    \item 1\% using adjusted \ref{bias:dbl1st} (not significant improvement) 
+    for \jrndn{10}{10} 
+    \item 8\% using adjusted \ref{bias:prefsize} for \frnd{10}{10}
 \end{enumerate*}
 
