@@ -1,5 +1,39 @@
 \chapter{Imitation Learning}\label{ch:imitation}
 
+\FirstSentence{D}{espite the abundance of information gathered} by following 
+expert policy, the knowledge obtained is not enough by itself. Since the 
+learning model isn't perfect, it is bound to make a mistake eventually. 
+When it does, the model is in uncharted  territory as there is not certainty 
+the samples already collected are able to explain the current situation. For 
+this we propose investigating features from suboptimal trajectories as well, 
+since the future observations depend on previous predictions. 
+A straight forward approach would be to inspect the trajectories of promising 
+SDRs or CDRs. 
+In fact, it would be worth while to try out imitation learning by 
+\cite{RossB10,RossGB11}, such that the learned policy following an optimal 
+trajectory is used to collect training data, and the learned model is updated. 
+This can be done over several iterations, with the benefit being, that the 
+states that are likely to occur in practice are investigated, and as such used 
+to dissuade the model from making poor choices. Alas, this comes at great 
+computational cost due to the substantial amounts of states that need to be 
+optimised for their correct labelling. Making it only practical for \jsp\ of 
+a considerable lower dimension. 
+
+Although this study has been structured around the \jsp\ scheduling problem, 
+it is easily extended to other types of deterministic optimisation problems 
+that involve sequential decision making. 
+The framework presented here collects snap-shots of the state space by 
+following an optimal trajectory, and verifying the resulting optimal makespan 
+from each possible state. 
+From which the stepwise optimality of individual features can be inspected, 
+which could for instance justify omittance in feature selection. 
+\todo[color=pink]{Not done, but possible} 
+Moreover, by looking at the best and worst case scenario of suboptimal 
+dispatches, it is possible to pinpoint vulnerable times in the scheduling 
+process. 
+
+
+
 \begin{quote}
     %\todo{Lure the reader in a with a good first sentence}
     So a prudent man must always follow in the footsteps of great men and 
@@ -108,50 +142,6 @@ When $\abs{\mathcal{O}^{(k)}}>1$, there can be several trajectories worth
 exploring. However, only one is chosen at random. This is deemed sufficient as 
 the number of problem instances, $N_{\train}$, is relatively large.
 
-Experiments in \cite{InRu15b} clearly showed that following the expert policy 
-is not without its faults. There are many obstacles to consider to improve the 
-model. For instance, their experiments $\Psi$ to size $l$ with equal 
-probability. But inspecting the effects of making suboptimal choices varies as 
-a function of times steps, perhaps its stepwise bias should rather be done 
-proportional to the mean cumulative loss to a particular time step?
-
-\todoWrite{
-The sampling strategy for $\Psi$ in \cite{InRu11a} was \ref{bias:equal} 
-and serves as a baseline. \ref{bias:opt} motivation is to give 
-samples from dispatches that are less than likely to be optimal than simply at 
-random (cf. \cref{fig:opt:SDR}). On the other hand, \ref{bias:bcs} and 
-\ref{bias:wcs} are more focused on sampling w.r.t. the final measure, where the 
-mean $\rho$ is given \emph{one} suboptimal move, otherwise it's assumed expert 
-policy is followed (cf. \cref{fig:case}). 
-Lastly, \ref{bias:dbl1st} and \ref{bias:dbl2nd} are very simplified versions of 
-the aforementioned strategies, depending on the problem space at hand. 
-\Cref{fig:bias} depicts the stepwise bias strategies for the problem spaces in 
-\cref{tbl:sim}.
-}
-Following strategies for stepwise bias will be proportional to
-\begin{enumerate}[after={{}}, leftmargin=*,
-    label={\textbf{Bias.\arabic*}}, ref={{Bias.\arabic*}}]
-    \item \label{bias:equal} equal probability (equal) 
-    \item \label{bias:opt} inverse optimality for random dispatches (opt) 
-    \item \label{bias:bcs} best case scenario for mean $\rho$ (bcs)
-    \item \label{bias:wcs} worst case scenario for mean $\rho$ (wcs)
-    \item \label{bias:dbl1st} twice as much weight on the first half of the 
-    dispatches (dbl1st) 
-    \item \label{bias:dbl2nd} twice as much weight on the second half of the 
-    dispatches (dbl2nd)
-\end{enumerate}
-The reader is referred to \cite{InRu15b} for a detailed explanation of how to 
-obtain the reference values for \ref{bias:opt} to \ref{bias:wcs}.
-The sampling strategy for $\Psi$ in \cite{InRu11a,InRu15b} was \ref{bias:equal} 
-and serves as a baseline. \ref{bias:opt} motivation is to give 
-samples from dispatches that are less than likely to be optimal than simply at 
-random. On the other hand, \ref{bias:bcs} and \ref{bias:wcs} are more focused 
-on sampling w.r.t. the final measure, where the mean $\rho$ is given \emph{one} 
-suboptimal move, otherwise it's assumed expert policy is followed. 
-Lastly, \ref{bias:dbl1st} and \ref{bias:dbl2nd} are very simplified versions of 
-the aforementioned strategies, depending on the problem space at hand. 
-\Cref{fig:bias} depicts the stepwise bias strategies for the problem spaces in 
-\cref{tbl:sim}.
 
 \subsection{Follow the Perturbed Leader}\label{sec:perturbedLeader}
 By allowing a predictor to randomise it's possible to achieve improved 
@@ -324,6 +314,20 @@ N^{\DA{i}}_{\text{train, EXT}}=N_{\train}\cdot (i+1)
 \end{equation}
 problem instances explored for the aggregated extended training set used for 
 the learning model at iteration $i$.
+
+
+\begin{figure}[t]
+    %Problem Extended    lmax Default Training.Rho NTrain Test.Rho NTest
+    %j.rnd.10x10 TRUE   50000   FALSE     15.46896   2400 15.48095  5000
+    %j.rnd.10x10 TRUE  700000   FALSE     15.58600   2400 15.57798  5000
+    %j.rnd.10x10 TRUE 1100000   FALSE     15.63480   2400 15.60422  5000
+    %j.rnd.10x10 TRUE 1500000   FALSE     15.69659   2400 15.71586  5000
+    %j.rnd.10x10 TRUE  500000    TRUE     15.70008   2400 15.72195  5000
+    %j.rnd.10x10 TRUE 1350000   FALSE     15.70235   2400 15.72388  5000
+    \includegraphics[width=\textwidth]{{j.rnd}/{boxplotRho.varyLMAX.10x10}.pdf}
+\caption{Box-plot for \namerho, where preference set is sampled to various 
+sized $\abs{\Psi_p^{\DA{7}}}=l_{\max}$}
+\end{figure}
 
 \input{tables/Ntrain}
 
