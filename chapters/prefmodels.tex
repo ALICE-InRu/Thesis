@@ -434,7 +434,7 @@ Following strategies for stepwise bias will now be proportional to
     dispatches (dbl2nd).
 \end{enumerate}
 Moreover, all strategies are also adjusted to the preference set size, i.e., 
-$\frac{1}{\abs{\Psi^{\OPT}_p}}$.
+$\nicefrac{1}{\abs{\Psi^{\OPT}_p}}$.
 Note, \ref{bias:bcs} and \ref{bias:wcs} are more focused on 
 sampling w.r.t. the final measure, where the mean $\rho$ is given \emph{one} 
 suboptimal move, otherwise it's assumed expert policy is followed (cf. 
@@ -445,7 +445,7 @@ equal emphasis on stepwise features, as they substantially decrease over time
 Lastly, \ref{bias:dbl1st} and \ref{bias:dbl2nd} are very simplified 
 versions of the aforementioned strategies.
 \Cref{fig:bias} jointly illustrates the stepwise bias strategies for 
-\Problem[10\times10]{\train}.
+\Problem[10\times10]{\train}. 
 
 It's possible to circumvent the choice of stepwise sampling strategy by 
 creating a preference model for each time step $k$, for a grand total of $K$ 
@@ -460,6 +460,11 @@ other dimensions, e.g., test benchmarks suite from OR-Library (cf.
 
 \Cref{fig:bias:boxplot} depicts box-plots for \namerho, using the various 
 sampling strategies for \Problem[10\times10]{}. 
+Main statistics for \Problem[10\times10]{\train} are reported in 
+\cref{tbl:bias:boxplot}. In addition to the stepwise bias strategies (both 
+adjusted and not) a stepwise model (one for 
+each step $k$) is given for reference.
+
 There we can see that for \jrnd{10}{10} the best model is a stepwise one, as 
 expected 
 
