@@ -143,7 +143,7 @@ ref={{PREF.\arabic*}}]
     \label{PREF:param:ranks}
     \item What sort of stepwise sampling strategy is needed for a good
     \emph{single} time independent model?
-    \label{PREF:param:sampling}
+    \label{PREF:param:bias}
 \end{enumerate}
 The collection of the training set $\Phi$ in \ref{PREF:param:tracks} (which is 
 described in \cref{ch:gentrdat}) is of paramount of importance, as the 
@@ -152,7 +152,7 @@ $\Phi$.
 Since the labelling of $\Phi$ is quite computationally intensive, its 
 collection should be done parsimoniously in order to not waste valuable time 
 and resources. 
-On the other hand, \ref{PREF:param:ranks} and \ref{PREF:param:sampling} are 
+On the other hand, \ref{PREF:param:ranks} and \ref{PREF:param:bias} are 
 easy to inspect, once $\Phi$ has been chosen.
 The following \lcnamecref{sec:trdat:param:ranks}s will try to address these 
 research questions. 
@@ -279,7 +279,8 @@ however, results for \Problem[6\times5]{\train} and
 \jrnd{10}{10} are currently available.\footnote{Additional problem spaces can 
     be found in \shiny: Preference Models $>$ Trajectories \& ranks.}
 Models from \cref{fig:boxplot:prefset} are limited to the ones corresponding to 
-$\Psi_p$. 
+$\Psi_p$. Moreover, main statistics for \Problem[10\times10]{} are given in 
+\cref{tbl:tracks:boxplot}.
 \Cref{fig:size:Psi.p:K} jointly illustrates the size of the preference set 
 used, i.e., $\abs{\Psi_p}$ from \cref{fig:size:Psi:K}.
 \Cref{tbl:size:Psi:K} reports the total amount of preferences for all $K$ 
@@ -291,12 +292,12 @@ $\abs{\Psi_p}$.
 Models that are statistically better are denoted by `$\succ$' otherwise 
 considered equivalent. 
 
-For most problem spaces \PsiSet{LPT}{p} was the worst trajectory to pursue. 
+For most problem spaces \PsiSet[LPT]{p} was the worst trajectory to pursue. 
 Looking back at \cref{fig:size:Phi:K}, then even though \PhiSet{LPT} was not 
 the trajectory with the least features, the amount of equivalent features 
 w.r.t. $C_{\max}$ are far too many to make a meaningful preference set out of 
 it. It's only for \jrndn{6}{5} that there is another trajectory with fewer 
-preferences, namely \PsiSet{LWR}{p} (cf. \cref{fig:size:Psi:K}), and in that 
+preferences, namely \PsiSet[LWR]{p} (cf. \cref{fig:size:Psi:K}), and in that 
 case LWR is the worst model.
 Model that come on top, are those that have a varied $\Psi$. However, 
 aggregating features from all trajectories is not a good idea, as the 
@@ -374,7 +375,7 @@ should boost the training accuracy for a linear classification learning model.
 However, these strategies is not outperforming the original DR used in guiding 
 the training data collection. 
 
-As the experimental results showed for \ref{PREF:param:tracks}, that unlike 
+Experimental results showed for \ref{PREF:param:tracks}, that unlike 
 \citep{Siggi10,Malik08,Russell09}, learning only on optimal training 
 data was not fruitful. However, inspired by the original work by 
 \cite{Siggi05}, having DR guide the generation of training data (except 
@@ -409,13 +410,11 @@ But inspecting the effects of making suboptimal choices varies as
 a function of time (cf. \cref{ch:analysingsol}), perhaps its stepwise bias 
 should rather be done proportional to the mean cumulative loss to a particular 
 time step?
-Following strategies for stepwise bias will now be proportional to
+Following strategies for stepwise bias for \ref{PREF:param:bias} will now 
+be proportional to
 \begin{enumerate}[after={{}}, leftmargin=*,
     label={\textbf{Bias.\arabic*}}, ref={{Bias.\arabic*}}]
-    \item \textbf{(equal)} \label{bias:equal} equal probability. This was the 
-    sampling 
-    strategy for \PsiSet{p} in \cref{InRu14,InRu15a} and will serve as a 
-    baseline.  
+    \item \textbf{(equal)} \label{bias:equal} equal probability. 
     \item \textbf{(opt)} \label{bias:opt} inverse optimality for random 
     dispatches, i.e., $1-\xi_{\RND}^{\star}$.
     \item \textbf{(bcs)} \label{bias:bcs} best case scenario for mean $\rho$, 
@@ -435,6 +434,8 @@ Following strategies for stepwise bias will now be proportional to
 \end{enumerate}
 Moreover, all strategies are also adjusted to the preference set size, i.e., 
 $\nicefrac{1}{\abs{\Psi^{\OPT}_p}}$.
+The sampling strategy for \PsiSet{p} in \cref{InRu14,InRu15a} was 
+\ref{bias:equal} and serves as a baseline.  
 Motivation for \ref{bias:opt} is that way samples from dispatches that are less 
 likely to be optimal than simply at random (cf. \cref{fig:diff:opt:rnd}) are 
 emphasised. 
@@ -528,3 +529,17 @@ With these configurations it was possible to improve mean \namerho, by
     \item 8\% using adjusted \ref{bias:prefsize} for \frnd{10}{10}
 \end{enumerate*}
 
+%Problem Rank Track Bias Adjusted   Set Min. 1st Qu. Median  Mean 3rd Qu.  Max.
+% j.rnd 10x10 p ES.Cmax equal  F train 4.20  11.580  15.56 16.07   19.64 38.24
+% j.rnd 10x10 p ES.Cmax equal  F test  3.23  11.490  15.07 16.17   19.67 47.52
+% j.rnd 10x10 p ES.Cmax dbl2nd T train 0.66   7.938  11.18 11.39   14.48 32.04
+% j.rnd 10x10 p ES.Cmax dbl2nd T test  2.57   8.823  11.30 11.73   14.56 27.23
+
+Using the simplified version of the best configuration for \PsiSet[OPT]{p}, 
+i.e., adjusted \ref{bias:dbl2nd}, for the best \jrnd{10}{10} trajectory from  
+\cref{sec:trdat:param:tracks:passive}, namely $\Psi^{\minCmax}_p$, then it's 
+possible to get a 4.5\% mean boost in performance, i.e., 11.39\% and 11.73\% 
+for training and test set, respectively. 
+Note, optimisation w.r.t. \cref{eq:cma:makespan} achieved 10.57\% 
+and 11.33\% mean $\rho$ for training and test set, respectively, which is 
+statistically insignificant from the adjusted preference model.
