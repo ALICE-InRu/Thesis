@@ -3,15 +3,17 @@ larger and smaller, and being ordered about by mice and rabbits.}{Alice}
 
 \chapter{Feature Selection}\label{ch:featselect}
 
-We know from \cref{ch:esmodels} there exists linear weights $\vec{w}$ for 
-\cref{eq:CDR:feat} found with evolutionary optimisation that achieve a lower 
-\namerho, than any of the aforementioned preference models have been able to 
-learn. This goes to show that the $d=\NrFeatLocal$ features are `enough' -- 
+\FirstSentence{F}{rom \cref{ch:esmodels} there exists linear} weights $\vec{w}$ 
+for \cref{eq:CDR:feat} found with evolutionary optimisation that achieve a 
+lower \namerho, than any of the preference models from \cref{ch:prefmodels}
+have been able to learn. 
+This goes to show that the $d=\NrFeatLocal$ features are `enough' -- 
 meaning there is not a need for defining new ones just yet. 
 However, the optimal weights for \cref{eq:cma:objfun} were quite erratic (cf. 
 \cref{fig:cma:wei}). 
 Perhaps the features from $\Phi^{\CMAES}$ are 
 contradictory, and therefore not suitable for preference learning. 
+
 Furthermore, the SDRs we've inspected so-far are based on two job-attributes 
 from \cref{tbl:features}, namely
 \begin{enumerate*}[after={{,}}]
@@ -20,13 +22,13 @@ from \cref{tbl:features}, namely
 \end{enumerate*}
 by choosing the lowest value for SPT and LWR, and highest value for LPT and 
 MWR, i.e., the extremal values for those attributes. 
-These SDRs achieve a remarkably low $\rho$, so perhaps not that many additional 
+These SDRs achieve a remarkably low $\rho$, then maybe not that many additional 
 features are needed to achieve a competitive result.
 
 For this study we will consider all combinations of 
 feature attributes using either one, two, three or all $d=\NrFeatLocal$ of 
-them, for a total of
-\begin{equation}
+them, for a grand total of:
+\begin{equation}\label{eq:697}
 {d \choose 1}+{d \choose 2}+{d \choose 3}+{d \choose d} = 697
 \end{equation}
 The reason for such a limiting number of active features, are due to the fact 
@@ -41,7 +43,7 @@ Moreover, in order to report the validation accuracy, 20\%
 (i.e. $N_{\text{val}}=60$) of the training set was set aside for 
 reporting the accuracy.
 
-\subsection{Validation accuracy}\label{sec:CDR:acc}
+\section{Validation accuracy}\label{sec:CDR:acc}
 As the preference set $\Psi_p$ has both preference pairs belonging to optimal
 ranking, and subsequent rankings, it is not of primary importance to classify
 \emph{all} rankings correctly, just the optimal ones. Therefore, instead of
@@ -49,7 +51,7 @@ reporting the validation accuracy based on the classification problem of the
 correctly labelling the entire problem set $\Psi_p$, it's opted that the 
 validation accuracy is obtained using \cref{eq:tracc:opt}, namely the 
 probability of choosing an optimal decision given the resulting linear 
-weights.\footnote{Due to the superabundant number of models then calculating 
+weights.\footnote{Due to superabundant number of models then calculating 
     the \emph{preferable} $\xi_{\pi}$ from \cref{eq:tracc:track} is not viable.}
 However, in this context, the mean throughout the dispatching process is
 reported, i.e., 
@@ -67,13 +69,14 @@ that measure is considerably lower.
 
 \begin{figure}[p]
   \centering
-  \includegraphics[width=\linewidth]{figures/{training.accuracy}.pdf}
+  \includegraphics[width=\linewidth]{figures/ALL/{training.accuracy}.pdf}
+  \vspace*{-24pt}
   \caption{Various methods of reporting validation accuracy for preference 
     learning}
   \label{fig:stepwise_vs_classification}
 \end{figure}
 
-\subsection{Pareto front}\label{sec:CDR:pareto}
+\section{Pareto front}\label{sec:CDR:pareto}
 When training the learning model one wants to keep the validation accuracy 
 high, as that would imply a higher likelihood of making optimal decisions, 
 which would in turn translate into a low final makespan. To test the validity 
@@ -88,13 +91,26 @@ count, is denoted with triangles.
 Their values are reported in \cref{tbl:CDR:pareto}, where the best objective is 
 given in boldface. 
 
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=\linewidth]{figures/ALL/{pareto.rho.vs.acc}.pdf}
+    \vspace*{-24pt}
+    \caption{Scatter plot for validation accuracy  (\%) against its 
+        corresponding mean expected $\rho$ (\%) for all 697 linear models from 
+        \cref{eq:697}.
+        Pareto fronts are for each active feature count, and labelled with 
+        their model ID. Moreover, actual Pareto front over all models is marked 
+        with triangles.} \label{fig:CDR:scatter}
+\end{figure}
+
 \begin{table}[p]
-  \caption{Mean validation accuracy and mean expected deviation from 
-    optimality, $\rho$, for all CDR models on the Pareto front from 
-    \cref{fig:CDR:scatter}.}\label{tbl:CDR:pareto}
-  \input{tables/PREF-equal}
+    \caption{Mean validation accuracy and mean expected deviation from 
+        optimality, $\rho$, for all CDR models on the Pareto front from 
+        \cref{fig:CDR:scatter}.}\label{tbl:CDR:pareto}
+    \input{tables/PREF-equal}
 \end{table}
 
+\section{Inspecting weight contribution to end-result}
 \Cref{fig:CDR:weights} depicts $\vec{w}$ for all of the learned CDR models 
 reported in \cref{tbl:CDR:pareto}. 
 The weights have been normalised for clarity purposes, such that it is scaled 
@@ -113,7 +129,7 @@ contribution as \phiendTime\ for the other models.
 Which, as standalone models are 1.6 and 1.3, respectively, and yield 
 equivalent mean $\rho$ and accuracy.
 As these features often coincide in \jsp\, it is justifiable to use only 
-either one, as the it contains the same information as its 
+either one, as they contains the same information as its 
 counterpart.\footnote{Note, \phiendTime$~\leq~$\phimacFree, where
   \phiendTime$~=~$\phimacFree\ when $J_j$ is the latest job on $M_a$, 
   otherwise $J_j$ is placed in a previously created slot on $M_a$.}
@@ -124,8 +140,9 @@ schedules are rarely able to dispatch in earlier slots, i.e.,
 In addition, (2.111, 3.300) and (16.1, 3.355) are statistically insignificant 
 w.r.t. validation accuracy for \jrnd{10}{10}. However, they have considerable 
 performance difference w.r.t. $\rho$ ($\Delta\rho \approx 18\%$). 
-So even looking at stepwise optimality, $\xi_{\pi}^{\star}$ by itself is very 
-fickle, because slight variations can be quite dramatic to the end result. 
+So even looking at mean stepwise optimality from \cref{eq:meanstepwiseopt} by 
+itself is very fickle, because slight variations can be quite dramatic to the 
+end result. 
 
 The solutions on the Pareto front for \jrndn{10}{10} are quite a few models
 with no (or minimal) statistical difference w.r.t. $\rho$, and 
@@ -157,7 +174,7 @@ contributions as the best model, 3.539. Then introducing a third feature,
 \phimacWrm, is the key to the success of the CDR, with a boost of $\rho$ 
 performance by 1.33\%. 
 
-Note, for both \jrnd{10}{10} and \jrndn{10}{10}, model 1.13 is on the Pareto 
+For both \jrnd{10}{10} and \jrndn{10}{10}, model 1.13 is on the Pareto 
 front. The model corresponds to feature \phijobWrm, and in both cases has a 
 weight strictly greater than zero (cf. \cref{fig:CDR:weights}). Revisiting 
 \cref{eq:CDR:SDR}, we observe that this implies the learning 
@@ -171,18 +188,6 @@ desirable outcome with higher number  of active features. However, there is a
 cut-off point for such improvement, as using all features is generally 
 considerably worse off due to overfitting of classifying the preference set.
 
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\linewidth]{figures/{pareto.rho.vs.acc}.pdf}
-  \caption{Scatter plot for validation accuracy  (\%) against its 
-    corresponding mean expected $\rho$ (\%) for all 697 linear models, 
-    based on either one, two, three or all $d$ combinations of features.
-    Pareto fronts for each active feature count based on maximum validation 
-    accuracy and minimum mean expected $\rho$ (\%), and labelled with their 
-    model ID. Moreover, actual Pareto front over all models is marked with 
-    triangles.} \label{fig:CDR:scatter}
-\end{figure}
-
 \begin{figure}[p]
   \centering
   \includegraphics[width=\textwidth]{figures/{j.rnd}/{pareto.10x10.phi}.pdf}\\
@@ -190,14 +195,18 @@ considerably worse off due to overfitting of classifying the preference set.
   \includegraphics[width=\textwidth]{figures/{f.rnd}/{pareto.10x10.phi}.pdf}
   \caption{Normalised weights for CDR models from \cref{tbl:CDR:pareto}, 
     models are grouped w.r.t. its dimensionality, $d$. Note, a triangle 
-    indicates a solution on the Pareto front.}\label{fig:CDR:weights}
+    indicates a solution on the Pareto front.
+    Furthermore, bottom annotation indicates their objectives
+    $\{\overline{\rho},\overline{\xi_{\text{CDR}}^{\star}}\}$.}
+  \label{fig:CDR:weights}
 \end{figure}
 
-Now, let's inspect the models corresponding to the minimum mean $\rho$ and 
+\section{Evolution of validation accuracy}\label{sec:CDR:pareto:tradeoff}
+Let's inspect the models corresponding to the minimum mean $\rho$ and 
 highest mean validation accuracy, highlighted in \cref{tbl:CDR:pareto} and 
-inspect the stepwise optimality for those models in \cref{fig:CDR:opt}, again 
-using probability of randomly guessing an optimal move (i.e. 
-$\xi^{\star}_{\RND}$ from \cref{fig:diff:opt:rnd}) as a benchmark.
+inspect the evolution of $\xi_{\pi}^\star(k)$ for those models in 
+\cref{fig:CDR:opt}, again using probability of randomly guessing an optimal 
+move (i.e. $\xi^{\star}_{\RND}$ from \cref{fig:diff:opt:rnd}) as a benchmark.
 As one can see for both \jrnd{10}{10} and \jrndn{10}{10}, despite having a 
 higher mean validation accuracy overall, the probabilities vary significantly. 
 A lower mean $\rho$ is obtained when the validation accuracy is gradually 
@@ -207,27 +216,32 @@ scheduling.\footnote{It's almost illegible to notice this shift directly
   oscillating up to only 3\% at any given step. In fact \jrndn{10}{10} has 
   the most clear difference w.r.t. classification accuracy of indicating when 
   a minimum $\rho$ model excels at choosing the preferred move.} 
-Revisiting \cref{fig:case}, this trend indicates that it's likelier for the 
-resulting makespan to be considerably worse off if suboptimal moves are made at 
-later stages, than at earlier stages. Therefore, it's imperative to make the 
-`best' decision at the `right' moment, not just look at the overall mean 
-performance. 
+Revisiting \cref{fig:diff:case:OPT:10x10}, this trend indicates that it's 
+likelier for the resulting makespan to be considerably worse off if suboptimal 
+moves are made at later stages, than at earlier stages. 
+Therefore, it's imperative to make the `best' decision at the `right' moment, 
+not just look at the overall mean performance. 
 Hence, the measure of validation accuracy as discussed in \cref{sec:CDR:acc} 
 should take into consideration the impact a suboptimal move yields on a 
-step-by-step basis, e.g., \cref{eq:tracc:opt} is weighted w.r.t. a curve such 
-as \cref{eq:bwc:opt}.
+step-by-step basis, e.g., \cref{eq:tracc:opt} should be weighted w.r.t. a curve 
+such as \cref{eq:bwc:opt}.
 
-\begin{figure}
+\begin{figure}[t]
   \centering
-  \includegraphics[width=0.8\linewidth]{figures/{stepwise.10x10.FeatSelect}.pdf}
+  \includegraphics[width=\linewidth]{figures/ALL/{stepwise.10x10.FeatSelect}.pdf}
   \caption{Probability of choosing optimal move for models corresponding to 
-    highest mean validation accuracy (grey) and lowest mean deviation from 
-    optimality, $\rho$, (black) compared to the baseline of probability of 
-    choosing an optimal move at random (dashed).}
+    highest mean validation accuracy and lowest mean deviation from 
+    optimality, $\rho$, compared to the baseline of probability of 
+    choosing an optimal move at random (dashed)}
   \label{fig:CDR:opt}
 \end{figure}
 
-Let's revert back to the original SDRs discussed in \cref{sec:opt:sdr} and 
+\section{Comparison to CMA-ES}
+Main statistics for the best models from \cref{eq:697} are reported in 
+\cref{tbl:best.exhaust:stats}. 
+
+\todoFind{Update w.r.t. CMA-ES}
+Going back to the original SDRs discussed in \cref{sec:opt:sdr} and 
 compare the best CDR models, a box-plot for $\rho$ is depicted in 
 \cref{fig:boxplot:CDR}. Firstly, there is a statistical difference between all 
 models, and  clearly the CDR model corresponding to minimum mean $\rho$ value, 
@@ -237,70 +251,38 @@ performance. In some cases it's better off, e.g., compared to LWR, yet for
 \jsp\ it doesn't surpass the performance of MWR. This implies, the learning 
 model is over-fitting the training data. Results hold for the test set. 
 
-\begin{figure}
-  \includegraphics[width=1\linewidth]{figures/{boxplotRho.FeatSelect.10x10}.pdf}
+\input{tables/stats.exhaust.10x10}
+
+\begin{figure}[t]
+  \includegraphics[width=\linewidth]{figures/{boxplotRho.FeatSelect.10x10}.pdf}
   \caption{Box-plot for deviation from optimality, $\rho$, (\%) for the best 
     CDR models (cf. \cref{tbl:CDR:pareto}) and compared against the best SDRs 
     from \cref{sec:opt:sdr}, both for training and test sets.} 
   \label{fig:boxplot:CDR}
 \end{figure}
 
-\subsection{Conclusions}
+\section{Conclusions}
 
 When training the learning model, it's not sufficient to only optimize w.r.t. 
-highest mean validation accuracy. As \cref{sec:CDR:pareto} showed, there is a 
-trade-off between making the over-all best decisions versus making the right 
-decision on crucial time points in the scheduling process, as \cref{fig:case} 
+highest mean validation accuracy defined in \cref{eq:meanstepwiseopt}. 
+As \cref{sec:CDR:pareto:tradeoff} showed, there is a trade-off between making 
+the over-all best decisions versus making the right decision on crucial time 
+points in the scheduling process, as \cref{fig:diff:case:OPT} 
 clearly illustrated. It is for this reason, traditional feature selection such 
-as add1 and drop1 were unsuccessful in preliminary experiments, and thus 
-resorting to having to exhaustively search all feature combinations.
+as \emph{add1} and \emph{drop1} were unsuccessful in preliminary experiments, 
+and thus resorting to exhaustively searching all feature combinations.
 This also opens of the question of how should validation accuracy be measured? 
 Since the model is based on learning preferences, both based on optimal versus 
 suboptimal, and then varying degrees of suboptimality. As we are only looking 
-at the ranks in a black and white fashion, such that the makespans need to be 
+at the ranks in a `black and white' fashion, such that the makespans need to be 
 strictly greater to belong to a higher rank, then it can be argued that some 
 ranks should be grouped together if their makespans are sufficiently close. 
 This would simplify the training set, making it (presumably) less of 
-contradictions and more appropriate for linear learning. Or simply the 
-validation accuracy could be weighted w.r.t. the  difference in 
-makespan.
+contradictions and more appropriate for preference learning. Or simply the 
+validation accuracy in \cref{eq:meanstepwiseopt} could be weighted w.r.t. the  
+difference in makespan.
 During the dispatching process, there are some pivotal times which need to be 
-especially taken care off. \Cref{fig:case} showed how making suboptimal 
-decisions were more of a factor during the later stages, whereas for flow-shop 
-the case was exact opposite. \todo[inline]{Could discuss new sampling 
-  strategies, e.g., proportional to best/worst case, optimality, etc. -- have 
-  done some experiments, but not clear what strategy is best, so only equal 
-  probability reported}
-
-Despite the abundance of information gathered by following an optimal 
-trajectory, the knowledge obtained is not enough by itself. Since the learning 
-model isn't perfect, it is bound to make a mistake eventually. When it does, 
-the model is in uncharted  territory as there is not certainty the samples 
-already collected are able to explain the current situation. For this we 
-propose investigating features from suboptimal trajectories as well, since the 
-future observations depend on previous predictions. 
-A straight forward approach would be to inspect 
-the trajectories of promising SDRs or CDRs. 
-In fact, it would be worth while to try out imitation learning by 
-\cite{RossB10,RossGB11}, such that the learned policy following an optimal 
-trajectory is used to collect training data, and the learned model is updated. 
-This can be done over several iterations, with the benefit being, that the 
-states that are likely to occur in practice are investigated, and as such used 
-to dissuade the model from making poor choices. Alas, this comes at great 
-computational cost due to the substantial amounts of states that need to be 
-optimised for their correct labelling. Making it only practical for \jsp\ of 
-a considerable lower dimension. 
-
-Although this study has been structured around the \jsp\ scheduling problem, 
-it is easily extended to other types of deterministic optimisation problems 
-that involve sequential decision making. 
-The framework presented here collects snap-shots of the state space by 
-following an optimal trajectory, and verifying the resulting optimal makespan 
-from each possible state. 
-From which the stepwise optimality of individual features can be inspected, 
-which could for instance justify omittance in feature selection. 
-\todo[color=pink]{Not done, but possible} 
-Moreover, by looking at the best and worst case scenario of suboptimal 
-dispatches, it is possible to pinpoint vulnerable times in the scheduling 
-process. 
+especially taken care off. \Cref{fig:diff:case:OPT} showed how making 
+suboptimal decisions were more of a factor during the later stages, whereas for 
+flow-shop the case was exact opposite. 
 
