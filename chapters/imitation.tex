@@ -32,8 +32,6 @@ Moreover, by looking at the best and worst case scenario of suboptimal
 dispatches, it is possible to pinpoint vulnerable times in the scheduling 
 process. 
 
-
-
 \begin{quote}
     %\todo{Lure the reader in a with a good first sentence}
     So a prudent man must always follow in the footsteps of great men and 
@@ -111,7 +109,7 @@ $\vchi$ of jobs, where at each time step $k \in \{1,...,K\}$, before the
 $k$-th job of the sequence is revealed, the predictor guesses its value 
 $\chi_k$ on the basis of the previous $k-1$ observations. 
 
-\subsection{Prediction with Expert Advice}\label{sec:expertPolicy}
+\section{Prediction with Expert Advice}\label{sec:expertPolicy}
 Let's assume we know the expert policy $\pi^\star$, which we can query what 
 is the optimal choice of $\chi_k={j^*}$ at any given time step $k$. 
 Now we can use \cref{eq:jstar} to back-propagate the relationship between 
@@ -143,10 +141,10 @@ exploring. However, only one is chosen at random. This is deemed sufficient as
 the number of problem instances, $N_{\train}$, is relatively large.
 
 
-\subsection{Follow the Perturbed Leader}\label{sec:perturbedLeader}
+\section{Follow the Perturbed Leader}\label{sec:perturbedLeader}
 By allowing a predictor to randomise it's possible to achieve improved 
-performance \cite{CesaBianchi06,Hannan57}, which is the inspiration for our new 
-strategy, where we follow the Perturbed Leader (PL). 
+performance \citep{CesaBianchi06,Hannan57}, which is the inspiration for our 
+new strategy, where we follow the \emph{Perturbed Leader} ($\OPT\epsilon$). 
 Its pseudo code is given in \cref{pseudo:perturbedLeader} and describes how the 
 expert policy (i.e. optimal trajectory) from \cref{sec:expertPolicy} is subtly
 ``perturbed'' with $\epsilon=10\%$ likelihood, by choosing a job corresponding 
@@ -155,7 +153,15 @@ probability.
 
 \input{pseudocode/perturbedLeader}
 
-\subsection{Summary}
+\begin{figure}
+\includegraphics[width=\textwidth]{ALL/{boxplot.passive.6x5}.pdf}
+\includegraphics[width=\textwidth]{ALL/{boxplot.passive.10x10}.pdf}
+\caption{Box-plots for \namerho, following either expert policy or perturbed 
+leader for \Problem[6\times5]{\train} and \jrnd{10}{10}}
+\end{figure}
+
+
+\subsection*{Summary}
 
 Results showed that the expert policy is a promising starting point. 
 However, since \jsp\ is a sequential prediction problem, all future 
@@ -183,29 +189,6 @@ This required some trial-and-error as the experiments showed that features
 obtained by SDR trajectories were not equally useful for learning.
 
 
-\todo[inline]{DAgger can be interpreted as Follow-the-leader algorithm in that 
-    at iteration $i$ we pick the best policy $\hat{\pi}_i$ in hindsight, i.e., 
-    under all trajectories seen so far over the iterations}
-
-``\cite{RossGB11} approach is similar to regularised follow the leader 
-algorithm from sec.'' 
-In these models the adversary and nature are the same, and the nature chooses a 
-new cost function for each action of the learner at the each iteration of the 
-game. The goal is to minimise the regret that the learner would suffer, 
-compared to the time that if it knew all of the costs imposed by nature in 
-hindsight and had chosen a fixed strategy as the response
-Ross et  al use a regret minimisation setting for learning to drive a computer 
-simulated car, where the output is a sequence of actions in a limited horizon. 
-in their problem the true cost of taking action $a$ in state $s$, $C(s,a)$ is 
-not 
-known, but they use some expert's knowledge about the loss $l(s,\pi)$ incurred 
-by the policy $a=\pi(s)$ -- policy is the function $\pi:\mathcal{S}\to 
-\mathcal{D}(\mathcal{A})$ that maps an state to an action or a distribution 
-over action, and is almost equivalent hypothesis function $h:\mathcal{X}\to 
-\mathcal{Y}$
-
-
-
 To automate this process, inspiration from \emph{active} imitation learning 
 presented in \cite{RossGB11} is sought, called \emph{Dataset Aggregation} 
 (DAgger) method, which addresses a no-regret algorithm in an on-line learning 
@@ -231,8 +214,7 @@ DAgger has been proven successful on a variety of benchmarks, such as
     handwriting recognition -- in all cases greatly improving traditional 
     supervised imitation learning approaches \cite{RossGB11}
     \item real-world applications, e.g. autonomous navigation for large 
-    unmanned 
-    aerial vehicles \cite{Ross13}
+    unmanned aerial vehicles \cite{Ross13}
 \end{enumerate*}
 To illustrate the effectiveness of DAgger, the Super Mario Bros. experiment 
 gives a very simple and informative understanding of the benefits of the 
@@ -286,9 +268,34 @@ and its update procedure is detailed in \cref{pseudo:DAgger}.
 \input{pseudocode/imitationLearning}
 \input{pseudocode/DAgger}
 
+\section*{DAgger Parameters}
+Due to time constraints, only $T=7$ iterations will be inspected.
+In addition, there will be three mixed strategies for $\{\beta_i\}_{i=0}^T$ in 
+\cref{eq:il} considered
+\begin{enumerate}[after={{}}, leftmargin=*,
+  label={\textbf{DA.\arabic*}}, ref={{DA.\arabic*}}]
+  \item \emph{fixed} supervision with $\beta_i=0.5$ save for $\beta_0=1$, 
+  \label{expr:ILFIXSUP}
+  \item \emph{decreasing supervision} with $\beta_i=0.5^i$, \label{expr:ILSUP}
+  \item \emph{unsupervised} with $\beta_i=I(i=0)$, where $I$ is the indicator 
+  function.\footnote{$\beta_0=1$ and $\beta_i=0,\forall i>0$.} 
+  \label{expr:ILUNSUP}
+\end{enumerate}
+Note, \ref{expr:ILSUP} starts as \ref{expr:ILFIXSUP} and decays exponentially 
+towards \ref{expr:ILUNSUP}.
+Moreover, \ref{expr:ILUNSUP} is a simple parameter-free version of the DAgger 
+algorithm and often performs best in practice \cite{RossGB11}.
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{{j.rnd}/{boxplot.active.6x5}.pdf}
+  \includegraphics[width=\textwidth]{{j.rnd}/{boxplot.active.10x10}.pdf}
+  \caption{Box-plots for \namerho, using active imitation learning for 
+  \jrnd{6}{5} and \jrnd{10}{10}}
+\end{figure}
+
 \section{Experiments}\label{sec:expr}
 
-\subsection*{Performance boost}
+\section*{Performance boost}
 
 In order to boost training accuracy, two strategies were explored 
 \begin{enumerate}[after={{}}, leftmargin=*,
@@ -296,12 +303,15 @@ In order to boost training accuracy, two strategies were explored
     \item \label{expr:boost:varylmax} increasing number of preferences used 
     in training (i.e. varying \mbox{$l_{\max} \leq \abs{\Psi}$}),
     \item \label{expr:boost:newdata} introducing more problem instances 
-    (denoted 
-    EXT in experimental setting).
+    (denoted EXT in experimental setting).
 \end{enumerate}
-Note, that in preliminary experiments for \ref{expr:boost:varylmax} showed no 
-statistical significance in boost of performance, hence $l_{\max}$ is the same 
-as set in \cref{eq:lmax}.
+
+To address \ref{expr:boost:varylmax}, then $\Psi^{\DA{7}}_{p}$ for 
+\jrnd{10}{10} was trained with varying size $l_{\max}$, from 50,000 to its full 
+size 3,626,260 with 50,000 step-size. The default value for $l_{\max}$ given in 
+\cref{eq:lmax} is denoted in boldface. There was no statistical significance in 
+boost of performance, hence $l_{\max}$ is kept unchanged.
+
 However, \ref{expr:boost:newdata} strategy showed a considerable change in 
 performance. Summary of $N_{\train}$ is given in \cref{tbl:Ntrain}. 
 Note, for the conventional \PhiSet{OPT} trajectory the extended training 
@@ -325,37 +335,13 @@ the learning model at iteration $i$.
     %j.rnd.10x10 TRUE  500000    TRUE     15.70008   2400 15.72195  5000
     %j.rnd.10x10 TRUE 1350000   FALSE     15.70235   2400 15.72388  5000
     \includegraphics[width=\textwidth]{{j.rnd}/{boxplotRho.varyLMAX.10x10}.pdf}
+    \vspace*{-24pt}
 \caption{Box-plot for \namerho, where preference set is sampled to various 
-sized $\abs{\Psi_p^{\DA{7}}}=l_{\max}$}
+sized $\abs{\Psi_p^{\DA{7}}}=l_{\max}$ using \jrnd{10}{10}}
+\label{fig:boxplot:varylmax}
 \end{figure}
 
 \input{tables/Ntrain}
-
-\subsection*{DAgger Parameters}
-Due to time constraints, only $T=7$ iterations will be inspected.
-In addition, there will be three mixed strategies for $\{\beta_i\}_{i=0}^T$ in 
-\cref{eq:il} considered
-\begin{enumerate}[after={{}}, leftmargin=*,
-    label={\textbf{DA.\arabic*}}, ref={{DA.\arabic*}}]
-    \item \emph{fixed} supervision with $\beta_i=0.5$ save for $\beta_0=1$, 
-    \label{expr:ILFIXSUP}
-    \item \emph{decreasing supervision} with $\beta_i=0.5^i$, \label{expr:ILSUP}
-    \item \emph{unsupervised} with $\beta_i=I(i=0)$, where $I$ is the indicator 
-    function.\footnote{$\beta_0=1$ and $\beta_i=0,\forall i>0$.} 
-    \label{expr:ILUNSUP}
-\end{enumerate}
-Note, \ref{expr:ILSUP} starts as \ref{expr:ILFIXSUP} and decays exponentially 
-towards \ref{expr:ILUNSUP}.
-Moreover, \ref{expr:ILUNSUP} is a simple parameter-free version of the DAgger 
-algorithm and often performs best in practice \cite{RossGB11}.
-
-\begin{figure}
-    \subcaptionbox{$6\times5$}{\includegraphics[width=\textwidth]{figures/{j.rnd}/{DAGGER.6x5}.pdf}}\\
-    \subcaptionbox{$10\times10$}{\includegraphics[width=\textwidth]{figures/{j.rnd}/{DAGGER.10x10}.pdf}}
-    \caption{Box plot for deviation from optimality, $\rho$, (\%) using either 
-        imitation learning or following perturbed leader 
-        strategies.}\label{fig:il} 
-\end{figure}
 
 \section{Conclusions}\label{sec:con}
 \todo[inline]{"What general lessons might be learnt from this study?"}
