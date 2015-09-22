@@ -1,0 +1,121 @@
+{\footnotesize
+\begin{longtable}{llcrr@{.}l@{}r}
+\caption{Comparison results of OR-Library} 
+\label{tbl:comp:orlib} \\
+\toprule
+Set & Name & $n \times m$ & BKS & \multicolumn{2}{c}{CMA-ES} & 
+\multicolumn{1}{c}{$\rho$} \\ 
+\endfirsthead
+\multicolumn{6}{c}%
+{\tablename\ \thetable\ -- \emph{Continued from previous page}} \\
+\toprule
+Set & Name & $n \times m$ & BKS & \multicolumn{2}{c}{CMA-ES} & 
+\multicolumn{1}{c}{$\rho$} \\ 
+\midrule
+\endhead
+\bottomrule\multicolumn{6}{r}{\emph{Continued on next page}} \\
+\endfoot
+\bottomrule
+\endlastfoot
+\midrule \Problem{abz}
+& abz5 & 10$\times$10 & 1234 & \jrndn{6}{5} & $\minRho$ & 6.56 \\ 
+& abz6 & 10$\times$10 & 943 & \jrnd{6}{5} & $\minRho$ & 11.03 \\ 
+& abz7 & 20$\times$15 & 656 & \jrndJ{6}{5} & $\minCmax$ & 11.13 \\ 
+& abz8 & 20$\times$15 & 665 & \jrnd{6}{5} & $\minCmax$ & 18.80 \\ 
+& abz9 & 20$\times$15 & 678 & \jrnd{6}{5} & $\minRho$ & 14.45 \\ 
+\midrule \Problem{ft}
+& ft06 & 6$\times$6 &  55 & \jrnd{6}{5} & $\minRho$ & 7.27 \\ 
+& ft10 & 10$\times$10 & 930 & \jrndM{6}{5} & $\minRho$ & 23.12 \\ 
+& ft20 & 20$\times$5 & 1165 & \frnd{6}{5} & $\minRho$ & 9.53 \\ 
+\midrule \Problem{la}
+& la01 & 10$\times$5 & 666 & \jrndM{6}{5} & $\minRho$ & 1.80 \\ 
+& la02 & 10$\times$5 & 655 & \jrnd{6}{5} & $\minCmax$ & 0.61 \\ 
+& la03 & 10$\times$5 & 597 & \frnd{6}{5} & $\minRho$ & 19.43 \\ 
+& la04 & 10$\times$5 & 590 & \jrnd{6}{5} & $\minRho$ & 3.56 \\ 
+& la06 & 15$\times$5 & 926 & \jrnd{6}{5} & $\minRho$ & 10.15 \\ 
+& la07 & 15$\times$5 & 890 & \jrndn{6}{5} & $\minRho$ & 1.57 \\ 
+& la08 & 15$\times$5 & 863 & \fmxc{6}{5} & $\minRho$ & 12.98 \\ 
+& la10 & 15$\times$5 & 958 & \jrnd{6}{5} & $\minRho$ & 0.10 \\ 
+& la11 & 20$\times$5 & 1222 & \frnd{6}{5} & $\minRho$ & 1.55 \\ 
+& la12 & 20$\times$5 & 1039 & \jrndJ{6}{5} & $\minRho$ & 0.00 \\ 
+& la13 & 20$\times$5 & 1150 & \jrnd{6}{5} & $\minRho$ & 7.13 \\ 
+& la15 & 20$\times$5 & 1207 & \jrnd{10}{10} & $\minCmax$ & 0.41 \\ 
+& la16 & 10$\times$10 & 945 & \jrndn{6}{5} & $\minCmax$ & 5.71 \\ 
+& la18 & 10$\times$10 & 848 & \jrndn{6}{5} & $\minCmax$ & 8.84 \\ 
+& la19 & 10$\times$10 & 842 & \jrnd{6}{5} & $\minCmax$ & 10.93 \\ 
+& la21 & 15$\times$10 & 1046 & \frnd{6}{5} & $\minRho$ & 27.92 \\ 
+& la22 & 15$\times$10 & 927 & \jrndJ{6}{5} & $\minCmax$ & 12.84 \\ 
+& la23 & 15$\times$10 & 1032 & \jrnd{6}{5} & $\minRho$ & 9.01 \\ 
+& la24 & 15$\times$10 & 935 & \jrndJ{6}{5} & $\minRho$ & 12.30 \\ 
+& la25 & 15$\times$10 & 977 & \jrndn{6}{5} & $\minCmax$ & 12.49 \\ 
+& la26 & 20$\times$10 & 1218 & \jrnd{6}{5} & $\minRho$ & 16.01 \\ 
+& la27 & 20$\times$10 & 1235 & \frnd{6}{5} & $\minRho$ & 12.47 \\ 
+& la28 & 20$\times$10 & 1216 & \jrnd{10}{10} & $\minRho$ & 4.28 \\ 
+& la29 & 20$\times$10 & 1152 & \jrnd{6}{5} & $\minRho$ & 18.92 \\ 
+& la30 & 20$\times$10 & 1355 & \jrnd{10}{10} & $\minCmax$ & 2.14 \\ 
+& la31 & 30$\times$10 & 1784 & \jrnd{6}{5} & $\minRho$ & 0.84 \\ 
+& la32 & 30$\times$10 & 1850 & \jrndM{6}{5} & $\minCmax$ & 17.95 \\ 
+& la33 & 30$\times$10 & 1719 & \jrndn{6}{5} & $\minCmax$ & 7.74 \\ 
+& la34 & 30$\times$10 & 1721 & \jrnd{6}{5} & $\minCmax$ & 5.35 \\ 
+& la35 & 30$\times$10 & 1888 & \fmxc{6}{5} & $\minRho$ & 4.03 \\ 
+& la36 & 15$\times$15 & 1268 & \jrndJ{6}{5} & $\minCmax$ & 5.68 \\ 
+& la37 & 15$\times$15 & 1397 & \jrndJ{6}{5} & $\minCmax$ & 6.30 \\ 
+& la38 & 15$\times$15 & 1196 & \jrndM{6}{5} & $\minRho$ & 9.20 \\ 
+& la39 & 15$\times$15 & 1233 & \jrnd{10}{10} & $\minCmax$ & 8.27 \\ 
+& la40 & 15$\times$15 & 1222 & \jrndn{6}{5} & $\minRho$ & 11.78 \\ 
+\midrule \Problem{orb}
+& orb01 & 10$\times$10 & 1059 & \frnd{6}{5} & $\minRho$ & 8.88 \\ 
+& orb02 & 10$\times$10 & 888 & \jrndM{6}{5} & $\minCmax$ & 4.84 \\ 
+& orb03 & 10$\times$10 & 1005 & \jrnd{10}{10} & $\minRho$ & 12.24 \\ 
+& orb04 & 10$\times$10 & 1005 & \frnd{6}{5} & $\minCmax$ & 5.87 \\ 
+& orb05 & 10$\times$10 & 887 & \fmxc{6}{5} & $\minRho$ & 14.99 \\ 
+& orb06 & 10$\times$10 & 1010 & \jrndn{6}{5} & $\minRho$ & 17.43 \\ 
+& orb07 & 10$\times$10 & 397 & \jrnd{6}{5} & $\minRho$ & 14.36 \\ 
+& orb08 & 10$\times$10 & 899 & \frnd{6}{5} & $\minCmax$ & 12.01 \\ 
+& orb09 & 10$\times$10 & 934 & \jrndn{6}{5} & $\minRho$ & 10.39 \\ 
+& orb10 & 10$\times$10 & 944 & \jrndn{6}{5} & $\minRho$ & 16.74 \\ 
+\midrule \Problem{swv}
+& swv01 & 20$\times$10 & 1407 & \fmxc{6}{5} & $\minRho$ & 21.25 \\ 
+& swv02 & 20$\times$10 & 1475 & \frnd{6}{5} & $\minRho$ & 17.08 \\ 
+& swv03 & 20$\times$10 & 1398 & \jrnd{6}{5} & $\minRho$ & 21.96 \\ 
+& swv04 & 20$\times$10 & 1470 & \jrndM{6}{5} & $\minCmax$ & 26.46 \\ 
+& swv05 & 20$\times$10 & 1424 & \jrndJ{6}{5} & $\minCmax$ & 20.01 \\ 
+& swv06 & 20$\times$15 & 1675 & \frnd{6}{5} & $\minRho$ & 26.03 \\ 
+& swv07 & 20$\times$15 & 1594 & \jrnd{10}{10} & $\minCmax$ & 23.34 \\ 
+& swv08 & 20$\times$15 & 1755 & \frnd{6}{5} & $\minRho$ & 25.41 \\ 
+& swv09 & 20$\times$15 & 1656 & \jrndM{6}{5} & $\minRho$ & 28.08 \\ 
+& swv10 & 20$\times$15 & 1743 & \fmxc{6}{5} & $\minRho$ & 30.69 \\ 
+& swv11 & 50$\times$10 & 2983 & \fmxc{6}{5} & $\minRho$ & 19.75 \\ 
+& swv12 & 50$\times$10 & 2979 & \fmxc{6}{5} & $\minRho$ & 22.46 \\ 
+& swv13 & 50$\times$10 & 3104 & \fmxc{6}{5} & $\minRho$ & 17.65 \\ 
+& swv14 & 50$\times$10 & 2968 & \fmxc{6}{5} & $\minRho$ & 17.82 \\ 
+& swv15 & 50$\times$10 & 2886 & \fmxc{6}{5} & $\minRho$ & 20.41 \\ 
+& swv18 & 50$\times$10 & 2852 & \jrnd{6}{5} & $\minRho$ & 3.51 \\ 
+& swv19 & 50$\times$10 & 2843 & \jrndJ{6}{5} & $\minRho$ & 5.49 \\ 
+\midrule \Problem{yn}
+& yn1 & 20$\times$20 & 884 & \jrnd{10}{10} & $\minRho$ & 10.52 \\ 
+& yn2 & 20$\times$20 & 904 & \jrndn{6}{5} & $\minRho$ & 13.16 \\ 
+& yn3 & 20$\times$20 & 892 & \jrndn{6}{5} & $\minRho$ & 16.26 \\ 
+& yn4 & 20$\times$20 & 968 & \jrndn{6}{5} & $\minRho$ & 22.83 \\ 
+\midrule \Problem{car}
+& car1 & 11$\times$5 & 7038 & \fmxc{6}{5} & $\minRho$ & 5.80 \\ 
+& car2 & 13$\times$4 & 7166 & \frndn{6}{5} & $\minCmax$ & 4.95 \\ 
+& car3 & 12$\times$5 & 7312 & \jrndn{6}{5} & $\minRho$ & 4.23 \\ 
+& car4 & 14$\times$4 & 8003 & \fmxc{6}{5} & $\minRho$ & 5.25 \\ 
+& car6 & 8$\times$9 & 8505 & \frnd{6}{5} & $\minCmax$ & 8.01 \\ 
+& car7 & 7$\times$7 & 6590 & \jrndn{6}{5} & $\minCmax$ & 2.49 \\ 
+& car8 & 8$\times$8 & 8366 & \frnd{6}{5} & $\minRho$ & 8.39 \\ 
+\midrule \Problem{hel}
+& hel2 & 20$\times$10 & 136 & \fmxc{6}{5} & $\minRho$ & 9.56 \\ 
+\midrule \Problem{reC}
+& reC07 & 20$\times$10 & 1566 & \fmxc{6}{5} & $\minRho$ & 6.83 \\ 
+& reC09 & 20$\times$10 & 1537 & \fmxc{6}{5} & $\minRho$ & 11.39 \\ 
+& reC11 & 20$\times$10 & 1431 & \jrnd{6}{5} & $\minCmax$ & 10.90 \\ 
+& reC13 & 20$\times$15 & 1930 & \jrndn{6}{5} & $\minRho$ & 13.21 \\ 
+& reC15 & 20$\times$15 & 1950 & \jrnd{10}{10} & $\minRho$ & 9.23 \\ 
+& reC17 & 20$\times$15 & 1902 & \jrnd{6}{5} & $\minCmax$ & 18.03 \\ 
+& reC25 & 30$\times$15 & 2513 & \fmxc{6}{5} & $\minRho$ & 18.30 \\ 
+& reC29 & 30$\times$15 & 2287 & \frnd{6}{5} & $\minRho$ & 16.53 \\ 
+& reC31 & 50$\times$10 & 3045 & \fmxc{6}{5} & $\minRho$ & 16.49 \\ 
+& reC33 & 50$\times$10 & 3114 & \jrnd{6}{5} & $\minRho$ & 12.65 \\ 
+\end{longtable}}
