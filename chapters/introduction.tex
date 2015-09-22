@@ -21,7 +21,7 @@ kind of problem instances are being introduced to the system. What defines a
 problem instance, e.g., what are its key features? And how can they help with 
 designing better heuristics? Once the problem instances are fully understood, 
 an appropriate learning algorithm can be implemented in order to create 
-heuristics that are  self-adapting to its those instances.
+heuristics that are  self-adapting to those instances.
 
 Given the ad-hoc nature of the heuristic design process, there is clearly room 
 for improvement. A number of attempts have been made to automate heuristic 
@@ -164,7 +164,7 @@ been widely studied in deterministic scheduling theory and its class of
 problems has been tested on a plethora of different solution methodologies from 
 various research fields \citep{Meeran12}, all from simple and straight forward 
 \dr s to highly sophisticated frameworks.
-\Cref{jsp:methods} summarise the main techniques applied to solve \JSP. The 
+\Cref{jsp:methods} summarises the main techniques applied to solve \JSP. The 
 figure is based on Fig. 1 from \citet{Jain99}, however, updated to reflect the 
 previous work relevant to this dissertation.
 \input{figures/methods-flowchart.tex}
@@ -208,8 +208,8 @@ A summary of over $100$ classical \dr s for scheduling can be found in
 used in research.  
 There is no dominant rule, but the most effective have been \sdr s based on job 
 processing attributes \citep{Haupt89}. \citet{Tay08} showed that combining \dr 
-s, with the aid of genetic programming, is promising. However, there is large 
-number of rules to choose from, thus their combinations require expert 
+s, with the aid of Genetic Programming (GP), is promising. However, there is 
+large number of rules to choose from, thus their combinations require expert 
 knowledge or extensive trial-and-error process.
 
 DRs are a very useful approach to dealing with scheduling 
@@ -217,8 +217,8 @@ environments because they are quick to implement (by computers and shop floor
 operators) and can cope with dynamic changes. 
 Furthermore, DRs are relatively easy to interpret which can be of paramount 
 importance for some end-users.
-For instance, \citet{Keane15} used Genetic Programming (GP) to creates features 
-for Case Based Reasoning, which were hard do understand and cumbersome in 
+For instance, \citet{Keane15} used GP to creates features 
+for Case Based Reasoning (CBR), which were hard do understand and cumbersome in 
 implementation due to their complexity. In order to mediate the process, the 
 \emph{Espresso Algorithm}  from logic circuit design was used for feature 
 selection,  as `espresso' summarises the evolved features obtained by GP, 
@@ -243,7 +243,7 @@ learning algorithm is applied as before. Preferring simple to complex models,
 the resulting \dr s gave significantly better schedules than using popular 
 heuristics in that field, and a lower worst-case factor from optimality. A 
 similar approach is taken for timetable scheduling in \cite{Burke06}, using 
-case based reasoning, where training data is guided by the two best heuristics 
+CBR, where training data is guided by the two best heuristics 
 in the field. 
 \citeauthor{Burke06} point out that in order for their framework to be 
 successful, problem features need to be sufficiently explanatory and training 
@@ -281,7 +281,7 @@ is divided into two main phases
 \end{enumerate*} 
 
 \subsection*{Analysis}
-By dwelling on optimal solutions and try to understand 
+By dwelling on optimal solutions and trying to understand 
 their fundamental building blocks, and applying what you learn on \emph{simple} 
 models, before investing valuable time and resources in implementing the 
 current state-of-the-art algorithms. 
@@ -323,7 +323,7 @@ focusing on applying \Alice\ to \dr s for \jsp\ scheduling.
 
 The framework mainly involves inspecting the stepwise optimality, $\xi_\pi$, 
 for a heuristic policy $\pi$ and it's relation to its end-result (here the 
-makespan), as it defines its \emph{footprint} in instance space.
+makespan), $\zeta_{\pi}$, as it defines its \emph{footprint} in instance space.
 % (detailed in \cref{ch:defdifficulty,ch:analysingsol}). 
 This is done for a set of benchmark algorithms $\pi\in\mathcal{A}$, during the 
 \emph{analysis} phase, which are then used to guide the training 
