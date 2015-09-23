@@ -3,113 +3,96 @@
 \FirstSentence{D}{espite the abundance of information gathered} by following 
 expert policy, the knowledge obtained is not enough by itself. Since the 
 learning model isn't perfect, it is bound to make a mistake eventually. 
-When it does, the model is in uncharted  territory as there is not certainty 
-the samples already collected are able to explain the current situation. For 
-this we propose investigating features from suboptimal trajectories as well, 
-since the future observations depend on previous predictions. 
+When it does, the model is in uncharted  territory as there is no certainty that
+the samples already collected are able to explain the current situation. 
+For this we propose investigating features from suboptimal trajectories as 
+well, since the future observations depend on previous predictions. 
 A straight forward approach would be to inspect the trajectories of promising 
-SDRs or CDRs. 
-In fact, it would be worth while to try out imitation learning by 
+SDRs or CDRs, this was done in \cref{sec:trdat:param:tracks:passive} with good 
+results. 
+The reasoning behind it was that they would be beneficial for learning, 
+as they might help the model to escape from local minima once off the coveted 
+optimal path. 
+By simply adding training data obtained by following the trajectories of 
+well-known SDRs, their aggregated training set yielded better models with lower 
+\namerho.
+However, this was done in a fairly ad-hoc manner, which we'd like to automate 
+even further.  
+Therefore, it would be worth while to try out active imitation learning by 
 \cite{RossB10,RossGB11}, such that the learned policy following an optimal 
 trajectory is used to collect training data, and the learned model is updated. 
 This can be done over several iterations, with the benefit being, that the 
-states that are likely to occur in practice are investigated, and as such used 
-to dissuade the model from making poor choices. Alas, this comes at great 
-computational cost due to the substantial amounts of states that need to be 
-optimised for their correct labelling. Making it only practical for \jsp\ of 
-a considerable lower dimension. 
+states which are likely to occur in practice are investigated, and as such used 
+to dissuade the model from making poor choices. 
+Alas, this comes at great computational cost due to the substantial amounts of 
+states that need to be optimised for their correct labelling. 
+Making it only practical for \jsp\ of relatively low dimension, or only a few 
+iterations. 
 
-Although this study has been structured around the \jsp\ scheduling problem, 
-it is easily extended to other types of deterministic optimisation problems 
-that involve sequential decision making. 
-The framework presented here collects snap-shots of the state space by 
-following an optimal trajectory, and verifying the resulting optimal makespan 
-from each possible state. 
-From which the stepwise optimality of individual features can be inspected, 
-which could for instance justify omittance in feature selection. 
-\todo[color=pink]{Not done, but possible} 
-Moreover, by looking at the best and worst case scenario of suboptimal 
-dispatches, it is possible to pinpoint vulnerable times in the scheduling 
-process. 
+The preference model presented in \cref{ch:prefmodels,ch:featselect} are 
+comprised of collecting snap-shots of the state space by following an expert 
+policy, and verifying the resulting optimal makespan from each possible state. 
+This can be looked at as \emph{imitation learning} (IL), since we're trying to 
+imitate the expert policy via preference learning. 
 
 \begin{quote}
-    %\todo{Lure the reader in a with a good first sentence}
     So a prudent man must always follow in the footsteps of great men and 
     imitate those who have been outstanding. If his own prowess fails to 
     compare with theirs, at least it has an air of greatness about it. 
     
     \raggedleft Niccolò \cite{Maachiavelli}
 \end{quote}
-\todo{Eftirleifar galsa. Mun umorda seinna.}
 Just as this quote applied to \emph{new principalities acquired with one's own 
-    arms and prowess} centuries ago, it equally applies when setting up novel 
+arms and prowess} centuries ago, it equally applies when setting up novel 
 supervised learning algorithms. 
-When it comes to designing algorithms there needs to be emphasis on where to 
-innovate and imitate when visiting state-spaces. 
-%\todo{What is the problem?} 
-This study will show, that when using these guidelines when accumulating 
-training data for supervised  learning, it's possible to automate its 
-generation in such a way that the resulting model will be an accurate 
-representative of the instances it will later come across. 
+Namely, when it comes to designing algorithms there needs to be emphasis on 
+where to innovate and imitate when visiting state-spaces. 
 
-For this purpose, the \JSP\ is used as a case study 
-to illustrate a methodology for generating meaningful training set 
-autonomously, which can be successfully learned using preference-based 
-imitation learning (IL).
-
-The approach was to use supervised learning to determine which feature states 
-are preferable to others. 
-
-The training data from \cref{InRu11a} was created from optimal solutions of 
-randomly generated problem instances, i.e., traditional \emph{passive} 
-imitation learning (IL). 
+Up until now, the training data from \cref{ch:prefmodels,ch:featselect} has 
+been crated from optimal \emph{or} suboptimal solutions of randomly generated 
+problem instances, i.e., traditional \emph{passive} imitation learning. 
 As \JSP\ is a sequential decision making process, errors are bound to emerge.  
 Due to compound effect of making suboptimal dispatches, the model leads the 
 schedule astray from learned state-spaces, resulting in the new input being 
 foreign to the learned model. 
 
-Alternatively, training data could be generated using suboptimal solution 
-trajectories as well, as was done in \cref{InRu15a}, where the training data 
-also incorporated following the trajectories obtained by applying successful 
-SDRs from the literature. 
-The reasoning behind it was that  they would be beneficial for learning, 
-as they might help the model to escape from local minima once off the coveted 
-optimal path. 
-By simply adding training data obtained by following the trajectories of 
-well-known SDRs, their aggregated training set yielded better models with lower 
-\namerho.
-
-
-%\todo{What are   your contributions?}
 Inspired by the work of \cite{RossB10,RossGB11}, the methodology of generating 
 training data will now be such that it will iteratively improve upon the model, 
 such that the state-spaces learned will be representative of the state-spaces 
 the eventual model would likely encounter, known as DAgger for imitation 
 learning.
-%\todo{Why is it interesting?} 
 Thereby, eliminating the ad-hoc nature of choosing trajectories to learn, by 
 rather letting the model lead its own way in a self-perpetuating manner until 
 it converges.
 
-%\todo{What is the outline of what you will show?}  
-The outline of the paper is the following, \cref{sec:background} will define 
-formalism for \JSP, and \cref{sec:il,sec:expertPolicy,sec:perturbedLeader} 
-explain the trajectories for sampling meaningful schedule state-spaces used in 
-preference learning, 
-along with some general adjustments for performance boost in \cref{sec:ext}.
-Followed by experimental results in \cref{sec:expr} with comparison for several 
-randomly generated problem spaces. 
-The paper finally concludes in \cref{sec:con} with discussion and conclusions.
+\section*{Performance boost}
+In order to boost training accuracy, two strategies will be explored 
+\begin{enumerate}[after={{}}, leftmargin=*,
+    label={\textbf{Boost.\arabic*}}, ref={{Boost.\arabic*}}]
+    \item \label{expr:boost:varylmax} increasing number of preferences used 
+    in training (i.e. varying \mbox{$l_{\max} \leq \abs{\Psi}$}),
+    \item \label{expr:boost:newdata} introducing more problem instances 
+    (denoted EXT in experimental setting).
+\end{enumerate}
+
+Note, \ref{expr:boost:varylmax} will be addressed in \cref{sec:il:active}. 
+However, \ref{expr:boost:newdata} strategy will be explored in 
+\cref{sec:il:passive,sec:il:active}. 
+Summary of $N_{\train}$ is given in \cref{tbl:Ntrain}.
+
+\input{tables/Ntrain}
 
 \section{Passive Imitation Learning}\label{sec:il:passive}
-Using the terms from game-theory used in \cite{CesaBianchi06}, % chapter 2: 
+Using the terms from game-theory used in \citet{CesaBianchi06}, %ch 2: 
 then our problem is a basic version of the sequential prediction problem where 
 the predictor (or forecaster), $\pi$, observes each element of a sequence 
 $\vchi$ of jobs, where at each time step $k \in \{1,...,K\}$, before the 
 $k$-th job of the sequence is revealed, the predictor guesses its value 
 $\chi_k$ on the basis of the previous $k-1$ observations. 
 
-\section{Prediction with Expert Advice}\label{sec:expertPolicy}
+\subsection{Prediction with Expert Advice}\label{sec:expertPolicy}
+Before going further, let's formalise following an expert policy, 
+\PhiSet{OPT}, from \cref{sec:trdat:param:tracks:passive}.
 Let's assume we know the expert policy $\pi^\star$, which we can query what 
 is the optimal choice of $\chi_k={j^*}$ at any given time step $k$. 
 Now we can use \cref{eq:jstar} to back-propagate the relationship between 
@@ -119,7 +102,7 @@ corresponding following optimal tasks $J_{j^*}$ from $\pi^\star$ in
 \cref{pseudo:constructJSP}.
 This baseline trajectory sampling for adding features to the feature set 
 is a pure strategy where at each dispatch, an optimal task was originally 
-introduced in \cite{InRu11a} and explored further in \cite{InRu15b}. 
+introduced in \cref{InRu11a} and explored further in \cref{InRu15b}. 
 
 By querying the expert policy, $\pi_\star$, the ranking of the job-list, 
 $\mathcal{L}$, is determined such that,
@@ -127,41 +110,43 @@ $\mathcal{L}$, is determined such that,
 r_1 \succ r_2 \succ \cdots \succ r_{n'} \quad (n' \leq n)
 \end{equation}
 implies $r_1$  is preferable to $r_2$, and $r_2$ is preferable to $r_3$, etc. 
-In  our study, we know $r \propto C_{\max}^{\pi_\star}$, hence the optimal 
-job-list is the following, 
+In  our study, we know the rank is proportional to its optimum makespan, hence 
+the optimal job-list is the following, 
 \begin{equation}
-\mathcal{O}=\condset{r_i}{r_i \propto \min_{J_j \in \mathcal{L}} 
+\mathcal{O}^{(k)}=\condset{r_i}{r_i \propto \min_{J_j \in \mathcal{L}^{(k)}}
     C_{\max}^{\pi_\star(\vchi^j)}}
 \end{equation}
-found by solving the current partial schedule to optimality using a 
-commercial software package such as \cite{gurobi}. 
-
+found by solving the current partial schedule to optimality.
 When $\abs{\mathcal{O}^{(k)}}>1$, there can be several trajectories worth 
 exploring. However, only one is chosen at random. This is deemed sufficient as 
 the number of problem instances, $N_{\train}$, is relatively large.
 
-
-\section{Follow the Perturbed Leader}\label{sec:perturbedLeader}
+\subsection{Follow the Perturbed Leader}\label{sec:perturbedLeader}
 By allowing a predictor to randomise it's possible to achieve improved 
 performance \citep{CesaBianchi06,Hannan57}, which is the inspiration for our 
-new strategy, where we follow the \emph{Perturbed Leader} ($\OPT\epsilon$). 
+new strategy, where we follow the \emph{Perturbed Leader}, denoted 
+$\OPT\epsilon$. 
 Its pseudo code is given in \cref{pseudo:perturbedLeader} and describes how the 
 expert policy (i.e. optimal trajectory) from \cref{sec:expertPolicy} is subtly
-``perturbed'' with $\epsilon=10\%$ likelihood, by choosing a job corresponding 
+`perturbed' with $\epsilon=10\%$ likelihood, by choosing a job corresponding 
 to the second best $C_{\max}$ instead of a optimal one with some small 
 probability. 
 
 \input{pseudocode/perturbedLeader}
 
-\begin{figure}
-\includegraphics[width=\textwidth]{ALL/{boxplot.passive.6x5}.pdf}
-\includegraphics[width=\textwidth]{ALL/{boxplot.passive.10x10}.pdf}
-\caption{Box-plots for \namerho, following either expert policy or perturbed 
-leader for \Problem[6\times5]{\train} and \jrnd{10}{10}}
-\end{figure}
+\subsection{Experimental study}
 
+To address \ref{expr:boost:newdata} for the conventional \PhiSet{OPT} 
+trajectory the extended training set was simply obtained by iterating over more 
+examples, given in \cref{tbl:Ntrain}.
 
-\subsection*{Summary}
+\Cref{fig:boxplot:passive} depicts a box-plot for \namerho, using 
+\Problem[6\times5]{\train} and \jrnd{10}{10}. Main statistics are reported in 
+\cref{tbl:stats:passive}.
+Results show that following the perturbed leader significantly improved 
+following the expert policy for \jrndn{6}{5}, \jrndJ{6}{5}, \jrndM{6}{5}, 
+\frndn{6}{5} and \fmc{6}{5}. Other \Problem[6\times5]{\train} problem spaces 
+and \jrnd{10}{10} were insignificant performance boost.
 
 Results showed that the expert policy is a promising starting point. 
 However, since \jsp\ is a sequential prediction problem, all future 
@@ -178,6 +163,14 @@ dispatches) the classifier induces itself grows quadratically, $\bigOh{\epsilon
     K^2}$, for the entire schedule, rather than having linear loss, 
 $\bigOh{\epsilon K}$, if it were i.i.d.
 
+\begin{figure}
+    \includegraphics[width=\textwidth]{ALL/{boxplot.passive.6x5}.pdf}
+    \includegraphics[width=\textwidth]{ALL/{boxplot.passive.10x10}.pdf}
+    \caption{Box-plots for \namerho, following either expert policy or 
+    perturbed leader for \Problem[6\times5]{\train} and \jrnd{10}{10}}
+    \label{fig:boxplot:passive}
+\end{figure}
+\input{tables/stats.passive.tex}
 
 \section{Active Imitation Learning}\label{sec:il:active}
 
@@ -268,16 +261,17 @@ and its update procedure is detailed in \cref{pseudo:DAgger}.
 \input{pseudocode/imitationLearning}
 \input{pseudocode/DAgger}
 
-\section*{DAgger Parameters}
-Due to time constraints, only $T=7$ iterations will be inspected.
+\subsection{DAgger Parameters}
+Due to time constraints, only $T=7$ iterations will be inspected for 
+\jrnd{6}{5} and \jrnd{10}{10}.
 In addition, there will be three mixed strategies for $\{\beta_i\}_{i=0}^T$ in 
 \cref{eq:il} considered
 \begin{enumerate}[after={{}}, leftmargin=*,
   label={\textbf{DA.\arabic*}}, ref={{DA.\arabic*}}]
-  \item \emph{fixed} supervision with $\beta_i=0.5$ save for $\beta_0=1$, 
+  \item \textbf{fixed} supervision with $\beta_i=0.5$ save for $\beta_0=1$, 
   \label{expr:ILFIXSUP}
-  \item \emph{decreasing supervision} with $\beta_i=0.5^i$, \label{expr:ILSUP}
-  \item \emph{unsupervised} with $\beta_i=I(i=0)$, where $I$ is the indicator 
+  \item \textbf{decreasing supervision} with $\beta_i=0.5^i$, \label{expr:ILSUP}
+  \item \textbf{unsupervised} with $\beta_i=I(i=0)$, where $I$ is the indicator 
   function.\footnote{$\beta_0=1$ and $\beta_i=0,\forall i>0$.} 
   \label{expr:ILUNSUP}
 \end{enumerate}
@@ -286,45 +280,13 @@ towards \ref{expr:ILUNSUP}.
 Moreover, \ref{expr:ILUNSUP} is a simple parameter-free version of the DAgger 
 algorithm and often performs best in practice \cite{RossGB11}.
 
-\begin{figure}
-  \includegraphics[width=\textwidth]{{j.rnd}/{boxplot.active.6x5}.pdf}
-  \includegraphics[width=\textwidth]{{j.rnd}/{boxplot.active.10x10}.pdf}
-  \caption{Box-plots for \namerho, using active imitation learning for 
-  \jrnd{6}{5} and \jrnd{10}{10}}
-\end{figure}
-
-\section{Experiments}\label{sec:expr}
-
-\section*{Performance boost}
-
-In order to boost training accuracy, two strategies were explored 
-\begin{enumerate}[after={{}}, leftmargin=*,
-    label={\textbf{Boost.\arabic*}}, ref={{Boost.\arabic*}}]
-    \item \label{expr:boost:varylmax} increasing number of preferences used 
-    in training (i.e. varying \mbox{$l_{\max} \leq \abs{\Psi}$}),
-    \item \label{expr:boost:newdata} introducing more problem instances 
-    (denoted EXT in experimental setting).
-\end{enumerate}
+\subsection{Experiments}
 
 To address \ref{expr:boost:varylmax}, then $\Psi^{\DA{7}}_{p}$ for 
 \jrnd{10}{10} was trained with varying size $l_{\max}$, from 50,000 to its full 
 size 3,626,260 with 50,000 step-size. The default value for $l_{\max}$ given in 
 \cref{eq:lmax} is denoted in boldface. There was no statistical significance in 
 boost of performance, hence $l_{\max}$ is kept unchanged.
-
-However, \ref{expr:boost:newdata} strategy showed a considerable change in 
-performance. Summary of $N_{\train}$ is given in \cref{tbl:Ntrain}. 
-Note, for the conventional \PhiSet{OPT} trajectory the extended training 
-set was simply obtained by iterating over more examples. 
-However, for the DAgger trajectories the extended set consisted of each 
-iteration encountering $N_{\train}$ \emph{new} problem 
-instances. For a grand total of 
-\begin{equation}
-N^{\DA{i}}_{\text{train, EXT}}=N_{\train}\cdot (i+1) 
-\end{equation}
-problem instances explored for the aggregated extended training set used for 
-the learning model at iteration $i$.
-
 
 \begin{figure}[t]
     %Problem Extended    lmax Default Training.Rho NTrain Test.Rho NTest
@@ -341,11 +303,31 @@ sized $\abs{\Psi_p^{\DA{7}}}=l_{\max}$ using \jrnd{10}{10}}
 \label{fig:boxplot:varylmax}
 \end{figure}
 
-\input{tables/Ntrain}
+Regarding \ref{expr:boost:newdata} for DAgger trajectories the extended set 
+consisted of each iteration encountering $N_{\train}$ \emph{new} problem 
+instances. For a grand total of 
+\begin{equation}
+N^{\DA{i}}_{\text{train, EXT}}=N_{\train}\cdot (i+1) 
+\end{equation}
+problem instances explored for the aggregated extended training set used for 
+the learning model at iteration $i$.
 
-\section{Conclusions}\label{sec:con}
-\todo[inline]{"What general lessons might be learnt from this study?"}
+\begin{figure}
+    \includegraphics[width=\textwidth]{{j.rnd}/{boxplot.active.6x5}.pdf}
+    \includegraphics[width=\textwidth]{{j.rnd}/{boxplot.active.10x10}.pdf}
+    \caption{Box-plots for \namerho, using active imitation learning for 
+        \jrnd{6}{5} and \jrnd{10}{10}}
+\end{figure}
+
+
+\section{Conclusions}
+This study showed, that when accumulating training data for supervised  
+learning, it's possible to automate its generation in such a way that the 
+resulting model will be an accurate representative of the instances it will 
+later come across. 
+
 DAgger for \jsp\ is not sensitive to choice of $\beta_i$ in \cref{eq:il}.
+
 \todo[inline]{Place work in wider context}
 
 \todo[inline,color=red]{``Training such a predictor, however, is non-trivial as 
@@ -395,4 +377,3 @@ DAgger framework) when the reference policy is poor (i.e. $\pi_\star$ in
 \cref{eq:il} is suboptimal), 
 although it's noted that the quality (w.r.t near-optimality) of reference 
 policy is in accordance to its performance, as is to be expected. 
-
