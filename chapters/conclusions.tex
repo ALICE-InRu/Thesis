@@ -90,3 +90,27 @@ Although it's noted that the quality (w.r.t near-optimality) of reference
 policy is in accordance to its performance, as is to be expected. 
 
 \todoWrite{Write overall conclusions of dissertation!}
+
+
+CMA-ES has the `unfair' advantage of optimising the end-result directly, 
+whereas preference models are more focusing on predictability (via 
+classification accuracy). Therefore, when training data is contradictory it's 
+non-trivial to achieve exceptional performance. 
+
+The dissertation has shown various strategies to improve preference based 
+imitation learning, namely
+\begin{enumerate}
+    \item stepwise sampling bias
+    \item exhaustive feature selection
+    \item active update procedure using DAgger to where sample states the 
+    learned model is likely to encounter is integrated to the preference set
+    \item fortified roll-out features
+\end{enumerate}
+Moreover, several problem distributions and dimensionality were considered with 
+sometimes contradictory results. Fortunately, the performance seemed to hold 
+when going to higher dimension (i.e. from \Problem[6\times5]{} to 
+\Problem[10\times10]{}). Thereby justifying only considering the 
+`easy'\footnote{Easy in terms of computational effort.} \JSP\ before investing 
+in $10\times10$ (or higher) experiments. 
+However, problem distributions is a key component, and the learned model should 
+try to represent its intended (test) dataset as close as possible.
