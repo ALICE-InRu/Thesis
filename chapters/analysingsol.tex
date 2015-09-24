@@ -438,7 +438,7 @@ remaining dispatches from that point are optimised with some exact methods.
 
 \begin{figure}\centering
   \captionsetup{list=no}
-  \subcaptionbox{\jrnd{6}{5}\label{diff:evol:jrnd:6x5}}{
+  \subcaptionbox{\jrnd{6}{5}\label{fig:diff:evol:jrnd:6x5}}{
     \includegraphics[width=\linewidth]{figures/{j.rnd}/{stepwise.6x5.evolution}.pdf}}
   \caption{Mean stepwise evolution of $\tilde{\vphi}$, which is scaled 
   according to \cref{eq:scale}}
@@ -447,11 +447,11 @@ remaining dispatches from that point are optimised with some exact methods.
 \begin{figure}\centering
   \captionsetup{list=no}
   \ContinuedFloat
-  \subcaptionbox{\jrnd{10}{10}\label{diff:evol:jrnd:10x10}}{
+  \subcaptionbox{\jrnd{10}{10}\label{fig:diff:evol:jrnd:10x10}}{
     \includegraphics[width=\linewidth]{figures/{j.rnd}/{stepwise.10x10.evolution}.pdf}}
   \caption{}
   \MyCaption{Mean stepwise evolution of 
-  $\tilde{\vphi}$}{diff:evol:jrnd:6x5}{diff:evol:jrnd:10x10}
+  $\tilde{\vphi}$}{fig:diff:evol:jrnd:6x5}{fig:diff:evol:jrnd:10x10}
 \end{figure}
 
 \section{Emergence of problem difficulty}\label{sec:diff:stepwise}
@@ -496,7 +496,9 @@ $\sum_{k=1}^K\alpha_k=\alpha$ significance level.
     \caption{Number of problem instances after segregating \jrnd{6}{5} w.r.t. 
     difficulty and trajectory.}
     \label{tbl:jrnd:feat:cnt}
-    \subcaptionbox{Used in \cref{fig:jrnd:feat:KStest}}{
+    \subcaptionbox{Used in \cref{fig:jrnd:feat:KStest}
+        \label{tbl:jrnd:feat:cnt:KS}
+        }{
         \begin{tabular}{lrrr}
             \toprule
             Track & $\#$Easy & $\#$Hard & $\#$Significant \\ 
@@ -510,7 +512,8 @@ $\sum_{k=1}^K\alpha_k=\alpha$ significance level.
              \bottomrule
         \end{tabular}
     }\quad\quad
-    \subcaptionbox{Used in \cref{fig:jrnd:feat:corr}}{
+    \subcaptionbox{Used in \cref{fig:jrnd:feat:corr}
+        \label{tbl:jrnd:feat:cnt:corr}}{
         \begin{tabular}{lrr}
             \toprule
             & \multicolumn{2}{c}{$\#$Significant} \\
@@ -539,23 +542,37 @@ $\sum_{k=1}^K\alpha_k=\alpha$ significance level.
     \includegraphics[width=\linewidth]{{j.rnd/phi.corr.ALL.6x5}.pdf}
     \caption{Stepwise significance of a correlation coefficient for \jrnd{6}{5} 
         features $\vphi$, segregated w.r.t. easy and hard problems, with 
-        resulting 
-        \namerho.}
+        resulting \namerho.}
     \label{fig:jrnd:feat:corr}
 \end{figure}
 
 \Cref{fig:jrnd:feat:KStest} indicates the timesteps when easy and hard feature 
-distributions differ. In the initial stages, the features are more or less the 
-same. However, there is a clear time of divergence towards the end of the 
-scheduling process, around $k=25$ (little sooner for LPT and later for LWR).
-\todoExtend{\cref{fig:jrnd:feat:KStest}}
+distributions differ. Number of problem instances of segregated sets are given 
+in \cref{tbl:jrnd:feat:cnt:KS}. 
+In the initial stages, the features are more or less the same. 
+However, there is a clear time of divergence towards the end of the scheduling 
+process, around $k=25$ (little sooner for LPT and later for LWR).
+Unfortunately, this information come a little to late too be of much use, as 
+\cref{fig:diff:case:SDR:6x5} shows $\zeta_{\mu}^{\SDR}$ is quite high for 
+$SDR=\{\SPT,\LPT\}$, and for LWR nothing can be done as there is option of 
+dispatching any other job than the single one remaining (cf. e.g. 
+\cref{fig:diff:evol:jrnd:6x5}).
+However, we could check if the features from $k=25$ and onwards if they have 
+diverged from our set of classified `easy' features and if so choose jobs that 
+do not correspond to our SDR, since \cref{fig:diff:case:SDR:6x5} indicates that 
+on average $\{\zeta_{\min}^{\SDR},\zeta_{\max}^{\SDR}\}$ are performing better 
+than if we'd continue with our intended trajectory.
 
 Furthermore, \cref{fig:jrnd:feat:corr} shows when easy or hard features 
 are significantly correlated to the \namerho.
 There we can see an apparent difference in correlation between individual 
 features with the resulting schedule depending in what stage it is in the 
 scheduling process, implying that their influence varies over the dispatching 
-sequencing. 
+sequencing. Note, for \cref{fig:jrnd:feat:corr} SDR grouping, then statistical 
+tests are run with and without Bonferroni adjustment as there are a limited 
+number of problem instances. Whereas for ALL trajectory only Bonferroni 
+adjustment is used. 
+
 \todoExtend{\cref{fig:jrnd:feat:corr}}
 There are some common features for both difficulties considered which define 
 \jsp\ on a whole. However, the significant features are quite different across 
