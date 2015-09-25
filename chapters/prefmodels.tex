@@ -481,6 +481,11 @@ By applying one of these aforementioned sampling strategies it's possible to
 achieve better results than applying a local model for each time step. 
 In fact, for \jrndn{10}{10} a stepwise model was the worst approach (with up to 
 12\% increased error). 
+This could possibly be explained by the fact that there are quite a few 
+non-conflicting operations. As a result there is this vague change in `time' 
+for consecutive steps. Therefore, using a complete data set which aggregates  
+all time steps (or arguably over a few steps) is more beneficial for learning, 
+it is dealt with on a more sustainable grounds.
 
 Adjusting \PsiSet[\OPT]{p} to its stepwise size generally improved the sampling 
 strategy (up to mean $\Delta\rho\approx7\%$), where \ref{bias:opt} and 
@@ -488,11 +493,18 @@ strategy (up to mean $\Delta\rho\approx7\%$), where \ref{bias:opt} and
 Whereas, \jrndn{10}{10} \ref{bias:wcs} was significantly worsened 
 by mean $\Delta\rho\approx3\%$ if adjusted. Other \jrndn{10}{10} strategies 
 were equivalent w.r.t. adjustment.
+Reverting back to \cref{fig:jrnd:feat:KStest}, then we saw that near the end of 
+the dispatching process then for all SDRs there was a clear segregation of 
+features w.r.t. its difficulty. This implies great predictability of 
+features in that time region. However, since those data points are scarce they 
+get overrun by the superabundant preference pairs from the preceding 
+dispatches, unless they are appropriately superimposed to be relevant for 
+classification.
 
 For all problem spaces, there was no significant difference between stepwise 
 models to either \ref{bias:featsize} or \ref{bias:prefsize}. 
 In the case of \jrnd{10}{10} and \frnd{10}{10} when a stepwise model is 
-promising, then superimposing the adjustment of the preference set gives the 
+promising, then superimposing the adjustment of preference set gives the 
 best overall outcome. 
 Whereas, in the case of \jrndn{10}{10} then a single stepwise model is not as 
 adequate as its single counterparts, then over emphasising w.r.t. the set works 

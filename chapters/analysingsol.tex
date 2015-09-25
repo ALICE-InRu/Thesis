@@ -454,6 +454,7 @@ remaining dispatches from that point are optimised with some exact methods.
   $\tilde{\vphi}$}{fig:diff:evol:jrnd:6x5}{fig:diff:evol:jrnd:10x10}
 \end{figure}
 
+\clearpage
 \section{Emergence of problem difficulty}\label{sec:diff:stepwise}
 
 % Katie orðar: A correlation analysis between the feature space and the 
@@ -464,12 +465,19 @@ remaining dispatches from that point are optimised with some exact methods.
 %relationship with algorithmic performance.
 
 The main focus now is on knowing \emph{when} during the scheduling process easy 
-and hard problems (using the difficulty definition from \cref{eq:easy.vs.hard}) 
-diverge and explore in further detail \emph{why} they diverged. The number of 
-segregated problem instances for \PhiSet{ALL} and 
-$\Phi^{\SDR}$ (conditioned on the followed trajectory) for \jrnd{6}{5} are 
-given in \cref{tbl:jrnd:feat:cnt}.\footnote{Additional problem spaces can be
-     found in \shiny: Footprints $>$ Stepwise.} 
+and hard problems diverge, this will be done using \PhiSet{ALL} and 
+$\Phi^{\SDR}$ (conditioned on the followed trajectory) for 
+\jrnd{6}{5}.\footnote{Additional problem spaces can be
+    found in \shiny: Footprints $>$ Stepwise.}
+Individual $\Phi^{\SDR}$ are segregated w.r.t. its own quartiles defined 
+in \cref{eq:easy.vs.hard}, whereas \PhiSet{ALL} is using the joint quartiles 
+given in \cref{tbl:easyhard:quartile:6x5}. 
+Note, if a joint quartile is used for $\Phi^{\SDR}$, then the segregation 
+becomes highly unbalanced, e.g., for MWR the bulk is considered `easy' and 
+there is only a single `hard' problem instance, as a result there 
+can be no comparison between the two. 
+The number of segregated problem instances for given in 
+\cref{tbl:jrnd:feat:cnt}.
 
 Rather than visualising high-dimensional data projected onto two dimensional 
 space (as was the focus in \cite{SmithMilesLion5} with SOM), 
@@ -483,13 +491,18 @@ problems, a (linear) correlation is computed between features to the resulting
 \namerho\ and use a $t$-test for testing the population correlation 
 coefficient. 
 
-Note, when inspecting any statistical difference between data distribution of 
+When inspecting any statistical difference between data distribution of 
 the features on a step-by-step basis, the features at step $k+1$ are of course 
 dependant on all previous $k$ steps. This results in repetitive statistical 
-testing, therefore a Bonferroni adjustment is used to counteract the multiple 
-comparisons, i.e., each stepwise comparison has the significant level 
-$\alpha_k=\frac{\alpha}{K}$, and thus maintaining the 
-$\sum_{k=1}^K\alpha_k=\alpha$ significance level.
+testing, therefore a Bonferroni correction is used to counteract the multiple 
+comparisons, i.e., each stepwise comparison has the significant level
+\begin{equation}
+\alpha_k=\frac{\alpha}{K}
+\end{equation} 
+thus maintaining the $\sum_{k=1}^K\alpha_k=\alpha$ significance level. 
+However, with our limited sample size both $\alpha$ and $\alpha_k$ significance 
+levels are reported, where entries with Bonferroni correction are especially 
+highlighted.
 
 {\setlength{\tabcolsep}{3pt} 
 \begin{table}\centering
@@ -550,38 +563,64 @@ $\sum_{k=1}^K\alpha_k=\alpha$ significance level.
 distributions differ. Number of problem instances of segregated sets are given 
 in \cref{tbl:jrnd:feat:cnt:KS}. 
 In the initial stages, the features are more or less the same. 
-However, there is a clear time of divergence towards the end of the scheduling 
-process, around $k=25$ (little sooner for LPT and later for LWR).
-Unfortunately, this information come a little to late too be of much use, as 
-\cref{fig:diff:case:SDR:6x5} shows $\zeta_{\mu}^{\SDR}$ is quite high for 
-$SDR=\{\SPT,\LPT\}$, and for LWR nothing can be done as there is option of 
+However, there is a clear time of divergence (many of which rejected with 
+Bonferroni correction) towards the end of the scheduling process
+\begin{enumerate*}
+    \item around the half way mark for MWR
+    \item $k=20$ for LPT
+    \item around $k=25$ for SPT and LWR
+\end{enumerate*}
+Knowing this time of divergence, we could inspect the features from that time 
+step onwards and check if they belong to our set of pre-classified `easy' 
+features. If not then it could be appropriate to choose jobs that do not 
+correspond that particular SDR, that is to say if \cref{fig:diff:case:SDR:6x5} 
+indicates that on average $\{\zeta_{\min}^{\SDR}(k),\zeta_{\max}^{\SDR}(k)\}$ 
+are performing better than if we'd continue with our intended trajectory (i.e. 
+$\zeta_{\mu}^{\SDR}(k)$). This applies especially for SPT and LPT.
+
+Unfortunately, this information comes a little to late too be of much use for 
+all SDR save for MWR, as $\zeta_{\mu}^{\SDR}(k)$ is quite high for 
+$SDR=\{\SPT,\LPT\}$, and for LWR nothing can be done as there is no option of 
 dispatching any other job than the single one remaining (cf. e.g. 
 \cref{fig:diff:evol:jrnd:6x5}).
-However, we could check if the features from $k=25$ and onwards if they have 
-diverged from our set of classified `easy' features and if so choose jobs that 
-do not correspond to our SDR, since \cref{fig:diff:case:SDR:6x5} indicates that 
-on average $\{\zeta_{\min}^{\SDR},\zeta_{\max}^{\SDR}\}$ are performing better 
-than if we'd continue with our intended trajectory.
 
 Furthermore, \cref{fig:jrnd:feat:corr} shows when easy or hard features 
 are significantly correlated to the \namerho.
 There we can see an apparent difference in correlation between individual 
 features with the resulting schedule depending in what stage it is in the 
 scheduling process, implying that their influence varies over the dispatching 
-sequencing. Note, for \cref{fig:jrnd:feat:corr} SDR grouping, then statistical 
-tests are run with and without Bonferroni adjustment as there are a limited 
-number of problem instances. Whereas for ALL trajectory only Bonferroni 
-adjustment is used. 
+sequencing. 
 
-\todoExtend{\cref{fig:jrnd:feat:corr}}
 There are some common features for both difficulties considered which define 
 \jsp\ on a whole. However, the significant features are quite different across 
 the two difficulties, implying there is a clear difference in their data 
-structure. The amount of significant features were considerably more for easy 
+structure. 
+The amount of significant features were considerably more for easy 
 problems, indicating their key elements had been found. However, the features 
 distinguishing hard problems were scarce. Most likely due to their more complex 
 data structure their key features are of a more composite nature. As a result, 
-new `global' features were introduced. 
+new `global' roll-out features were introduced in \cref{tbl:features}. 
+
+What is surprising is that when looking at \cref{fig:jrnd:feat:corr} then the 
+active feature for the used SDR (i.e. \phiproc\ for SPT \& LPT and \phijobWrm\ 
+for LWR  \& MWR) then they are hardly ever significantly correlated to final 
+$\rho$.
+However, their usage effects other features that are a key indicator throughout 
+the dispatching process. Therefore we would need to take into account the joint 
+interaction of features, and not look at them on their own as we do now. 
+
+Take for instance \phijobWrm, which we know is a good indicator (i.e. MWR) and 
+use \phiendTime\ as well, then it's possible to obtain a model (cf. 
+\cref{ch:featselect}) that boosts MWR in performance by $\Delta\rho=10\%$.
+
+Note, even though some feature are hardly ever correlated w.r.t. $\rho$, then 
+that does not necessarily imply that they're a bad attribute.
+Take for instance \phijobOps, which is a discrete simplification of 
+\phijobWrm, whose purpose was to complete advanced jobs (i.e LWR) or 
+balance progress for all jobs (i.e. MWR). 
+In the case of \jrnd{10}{10} then +\phijobOps yields mean $\rho=22\%$, whereas 
+it's more sophisticated counterpart, +\phijobWrm\ has a slightly higher mean 
+$\rho=23$ (cf. \cref{tbl:CDR:pareto}).
 
 It is possible for a \JSP\ schedule to have more than one sequential 
 dispatching representation. It is especially w.r.t. the initial dispatches. 
@@ -589,10 +628,11 @@ Revisiting \cref{fig:example:midway}, if we were to dispatch $J_2$ f
 first and then $J_4$, then that would be the same equivalent
 temporal schedule if we did it the other way around. 
 This is because they don't create a conflict for one another 
-(as is the case for jobs $J_2$ and $J_3$). This drawback of non-uniqueness of 
-sequential dispatching representation explains why there is hardly any 
-significant difference between the difficulties for the initial steps of the 
-scheduling process (cf. \cref{fig:jrnd:feat:KStest}).
+(as is the case for jobs $J_2$ and $J_3$). 
+This drawback of non-uniqueness of sequential dispatching representation 
+explains why there is hardly any significant difference between the 
+difficulties for the initial steps of the scheduling process (cf. 
+\cref{fig:jrnd:feat:KStest}).
 As we can see from \cref{tbl:jrnd:feat:cnt}, the number of problem instances 
 used for statistical testing is quite limited when applying on a single 
 algorithm. 
@@ -608,8 +648,7 @@ subsequent step, i.e., test at time $k$ is based on:
 for all individual local features $\phi_i\in\{1,\ldots,\NrFeatLocal\}$ from 
 \cref{tbl:features}.
 
-
-\section{Summary and conclusions}
+\section{Conclusions}
 
 \todoWrite{From \cref{sec:diff:opt:ext} we noticed that high stepwise 
 optimality generally implies low \namerho. Moreover, there is clearly an 
