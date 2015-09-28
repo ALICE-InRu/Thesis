@@ -450,40 +450,10 @@ be implemented from that point forward.
 Moreover, random completion of the $k$-solution are implemented, 
 here \phiRNDRelated\ corresponds to statistics from 100 random roll-outs, which 
 can be used to identify which features $\vphi$ are promising on a long-term 
-basis. 
-\emph{Roll-out algorithms} \citep{Bertsekas97}, also known as \emph{Pilot 
-    Method} \citep{Duin99}, for combinatorial optimisation aim to improve 
-performance by sequential application of a pilot heuristic, which completes the 
-remaining $K-k$ steps. Roll-outs for \JSP\ have been conducted by 
-\citet{Ru12}. Continuing with that work, \citet{Geirsson2012} compares several 
-pilot heuristics, e.g., \emph{Randomly Chosen Dispatch Rules} which is similar 
-to \phiSDRRelated\ (but here one roll-out per fixed SDR). 
-The motivation being, that a SDR-based roll-out are of higher quality than 
-random ones, requiring less computational budget. 
-However, \citeauthor{Geirsson2012} notes that performance w.r.t. traditional 
-random roll-outs is statistically insignificant, and not worth the overhead of 
-implementing various SDRs beforehand. 
-
-\citeauthor{Geirsson2012} reworks the roll-out algorithm as an 
-$\abs{\mathcal{L}}$-armed bandit,\footnote{In probability theory, the
-    multi-armed bandit problem \citep{badit:book} describes a gambler at a row 
-    of slot machines, who has to decide which machines to play, i.e., pull its 
-    lever, in  order to maximise his rewards, that are specific to each 
-    machine. The gambler also has to decide how many times to play each machine 
-    and in which order to play them. The gambler's actions are referred to as 
-    \emph{pilot-heuristic}.} 
-i.e., each job of the job-list are the levers. Since the best job, $j^*$, to 
-dispatch at step $k$, is not known beforehand, therefore all available jobs are 
-evaluated, using roll-outs. 
-As a result, using the features \phiRNDRelated, the weights $\vec{w}$ yield the 
-deterministic pilot heuristic. Although in \citeauthor{Geirsson2012}'s work, 
-other statistics are used for guidance, e.g., quartile and octile. 
-
-It's noted, that the roll-outs considered in this dissertation, are with a very 
-frugal budget, only 100 roll-outs per lever is considered -- all evenly 
-distributed between levers. But using the multi-armed bandit paradigm, it's 
-possible to allocate roll-outs originating from the job-list with bias towards 
-more promising levers.
+basis. For the majority of the dissertation only \phiLocalRelated\ features 
+will be considered, since the calculation of global features 
+\phiGlobalRelated\  is somewhat computationally intensive. 
+They will be specifically addressed in \cref{ch:rollout}.
 
 \begin{table} \centering 
     \caption[Feature space $\mathcal{F}$ for \JSP]{Feature space $\mathcal{F}$ 

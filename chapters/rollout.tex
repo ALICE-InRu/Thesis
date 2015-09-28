@@ -1,0 +1,162 @@
+\HeaderQuote{Now, here, you see, it takes all the running you can do, to 
+    keep in the same place. If you want to get somewhere else, you must run at 
+    least twice as fast as that!}{The Queen} 
+
+\chapter{Pilot Model}\label{ch:rollout}
+
+\FirstSentence{R}{oll-out algorithms, also known as Pilot Method} 
+\citep{Bertsekas97,Duin99}, for combinatorial optimisation aim to improve 
+performance by sequential application of a pilot heuristic, which completes the 
+remaining $K-k$ steps. Roll-outs for \JSP\ have been conducted by \citet{Ru12}. 
+Continuing with that work, \citet{Geirsson2012} compares several pilot 
+heuristics, e.g., \emph{Randomly Chosen Dispatch Rules} which is similar 
+to \phiSDRRelated\ (but here one roll-out per fixed SDR). 
+The motivation being, that a SDR-based roll-out are of higher quality than 
+random ones, requiring less computational budget. 
+However, \citeauthor{Geirsson2012} notes that performance w.r.t. traditional 
+random roll-outs is statistically insignificant, and not worth the overhead of 
+implementing various SDRs beforehand. 
+
+\citeauthor{Geirsson2012} reworks the roll-out algorithm as an 
+$\abs{\mathcal{L}}$-armed bandit,\footnote{In probability theory, the
+    multi-armed bandit problem \citep{badit:book} describes a gambler at a row 
+    of slot machines, who has to decide which machines to play, i.e., pull its 
+    lever, in  order to maximise his rewards, that are specific to each 
+    machine. The gambler also has to decide how many times to play each machine 
+    and in which order to play them. The gambler's actions are referred to as 
+    \emph{pilot-heuristic}.} 
+i.e., each job of the job-list are the levers. Since the best job, $j^*$, to 
+dispatch at step $k$, is not known beforehand, therefore all available jobs are 
+evaluated, using roll-outs. 
+As a result, using the features \phiRNDRelated, the weights $\vec{w}$ yield the 
+deterministic pilot heuristic. Although in \citeauthor{Geirsson2012}'s work, 
+other statistics are used for guidance, e.g., quartile and octile. 
+
+It's noted, that the roll-outs considered in \cref{tbl:features}, are with a 
+very frugal budget, only 100 roll-outs per lever is considered -- all evenly 
+distributed between levers. 
+However, using the multi-armed bandit paradigm, it's possible to allocate 
+roll-outs originating from the job-list with bias towards more promising levers.
+
+\section{Single feature roll-outs}
+
+A model based on each of the extremal (i.e. minimum or maximum value) values 
+for \phiGlobalRelated\ was created. The three best models for each problem 
+space is reported, namely minimum values for \phiSPT, \phiRNDmean\ and 
+\phiRNDmin. 
+Box-plot for \namerho, is depicted in \cref{fig:rollout1:boxplot}, and its 
+main statistics are given in \cref{tbl:rollout1:boxplot}.
+Note, in the case of \phiRNDRelated\ then the final makespan resulting in the 
+pursued trajectory might not necessarily be the best final makespan found 
+during the dispatching process, this is reported as its `fortified' result. 
+In all cases, the fortified makespan was significantly better than the final 
+makespan of the pursued trajectory, save for \frnd{6}{5} using minimum 
+\phiRNDmin, which was statistically insignificant.
+
+Revisiting \cref{fig:SDR:boxplot}, then SPT is never the best SDR for any of 
+the problem spaces (cf. \cref{fig:SDR:boxplot}).
+However, if we choose the minimum SPT from every possible operation onwards 
+gives the best result of \phiSDRRelated. This twist in SPT application boots 
+performance by 
+\begin{enumerate*}
+    \item $\Delta\rho\approx 39\%$ for \jrnd{6}{5}
+    \item $\Delta\rho\approx 26\%$ for \frnd{6}{5}
+    \item $\Delta\rho\approx 43\%$ for \jrnd{10}{10}
+\end{enumerate*}
+
+Regarding random roll-outs, then the greedy \phiRNDmin\ came on top for 
+\Problem[6\times5]{}, whereas for \jrnd{10}{10} then a better fortified mean 
+result was achieved by following \phiRNDmean.
+
+\begin{figure}[p]\centering 
+    \includegraphics[width=\textwidth]{ALL/{boxplot.single.rollout.ALL}.pdf}
+    \caption[Box-plot for single roll-out featuers]{Box-plot for \namerho, for 
+    top three single extremal values for \phiGlobalRelated\ rollout using 
+    \Problem{\train}. SPT shown for reference on the far right.}
+    \label{fig:rollout1:boxplot}
+\end{figure}
+
+\input{tables/stats.rollout.single.tex}
+
+\section{Multi feature roll-outs}
+When using random roll-outs there are many strategies to choose which job is 
+the most promising for future roll-outs. 
+For this reason, let's consider the preference models from \cref{ch:prefmodels} 
+with additional features \phiGlobalRelated\ as the weights can now be 
+considered as its deterministic pilot heuristic. 
+
+If we only use \phiSDRRelated\ it requires 4 deterministic $K-k$ step roll-outs 
+at each time step. Whereas, introducing \phiRNDRelated\ costs an additional 
+100 random roll-outs for each time step.
+Therefore we'll consider both using only the first \NrFeatSDR\ features as it's 
+relatively low computational budget, and also the computationally intensive 
+full model of \NrFeatGlobal\ features.
+
+The experimental set-up will consider the stepwise sampling biases from 
+\cref{sec:pref:bias}
+\begin{enumerate*}
+    \item \ref{bias:equal} (i.e. equal probability) 
+    \item adjusted \ref{bias:dbl2nd} (i.e. double emphasis on second half)
+\end{enumerate*}
+Furthermore from training data will be using either the expert policy or 
+following the weights obtained from minimising w.r.t. $\minCmax$ defined in 
+\cref{eq:cma:makespan}. Both trajectories were detailed in 
+\cref{sec:trdat:param:tracks:passive}.
+Box-plot for \namerho, is depicted in \cref{fig:rollout:boxplot}, and its main 
+statistics are given in \cref{tbl:rollout:boxplot} 
+
+\begin{figure}[t]\centering 
+    \includegraphics[width=\textwidth]{ALL/{boxplot.multi.rollout.ALL}.pdf}
+    \caption[Box-plot for multi roll-out featuers]{Box-plot for \namerho, using 
+        roll-out features. Corresponding models only using \phiLocalRelated\ 
+        features shown for reference on the far left.}
+        \label{fig:rollout:boxplot}
+\end{figure}
+
+\input{tables/stats.rollout.multi.tex}
+
+First off, there was no statistical difference between stepwise sampling 
+strategy. Exceptions for \jrnd{6}{5} and \jrnd{10}{10} being 20.1.OPT and 
+24.1.OPT, favouring adjusted \ref{bias:dbl2nd}, same as \cref{sec:pref:bias} 
+previously showed for 16.1 models.
+However, w.r.t. its fortified result there was no significant difference any 
+more.
+
+Furthermore, the choice of trajectory starts to become irrelevant when using 
+roll-out features. Most configuration had no significant difference. However, 
+$minCmax$ was preferred over expert policy for
+\begin{enumerate*}
+    \item \jrnd{6}{5} w.r.t. \ref{bias:equal} using \NrFeatSDR\ features
+    \item \jrnd{10}{10} for all configurations.
+\end{enumerate*}
+This agrees with the results from \cref{ch:prefmodels} for 16.1 models.
+
+As expected, when more computational budget for $\vphi$ is allocated, the 
+quality of the preference model increases, namely (median based on all 
+configurations)
+\begin{enumerate*}
+    \item for \jrnd{6}{5} improved $\Delta\rho\approx4.3\%$ from 16.1 to 20.1, 
+    and $\Delta\rho\approx5.9\%$ from 20.1 to 24.1 
+    \item for \frnd{6}{5} improved $\Delta\rho\approx3.3\%$ from 16.1 to 20.1, 
+    and $\Delta\rho\approx3.8\%$ from 20.1 to 24.1 
+    \item for \jrnd{10}{10} improved $\Delta\rho\approx5.7\%$ from 16.1 to 
+    20.1, and $\Delta\rho\approx5.6\%$ from 20.1 to 24.1 
+\end{enumerate*}
+
+The best configuration, namely following $\minCmax$ with adjusted stepwise bias 
+\ref{bias:dbl2nd}, is depicted with the CMA-ES obtained weights in 
+\cref{fig:rollout:Cmax:boxplot}. The local 16.1.ES.Cmax model was statistically 
+insignificant from the baseline CMA-ES obtained weights. From the figure we can 
+see how the models significantly improves with increased $K-k$ roll-outs.
+
+\begin{figure}[t]\centering 
+    \includegraphics[width=\textwidth]{ALL/{boxplot.multi.rollout.6x5}.pdf}
+    \includegraphics[width=\textwidth]{{j.rnd}/{boxplot.multi.rollout.10x10}.pdf}
+    \caption[Box-plot for multi roll-out featuers based on $\minCmax$]{
+        Box-plot for \namerho, using roll-out features for $\minCmax$ 
+        trajectory. Directly optimised CMA-ES model shown for reference on 
+        the far right.}
+    \label{fig:rollout:Cmax:boxplot}
+\end{figure}
+
+\todoFind{Check if multi rollouts are significant from single-rollout}
