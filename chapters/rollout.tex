@@ -48,7 +48,8 @@ Box-plot for \namerho, is depicted in \cref{fig:rollout1:boxplot}, and its
 main statistics are given in \cref{tbl:rollout1:boxplot}.
 Note, in the case of \phiRNDRelated\ then the final makespan resulting in the 
 pursued trajectory might not necessarily be the best final makespan found 
-during the dispatching process, this is reported as its `fortified' result. 
+during the dispatching process, this is reported as its `fortified' result, 
+denoted $\rho_{\text{fort.}}$. 
 In all cases, the fortified makespan was significantly better than the final 
 makespan of the pursued trajectory, save for \frnd{6}{5} using minimum 
 \phiRNDmin, which was statistically insignificant.
@@ -159,4 +160,39 @@ see how the models significantly improves with increased $K-k$ roll-outs.
     \label{fig:rollout:Cmax:boxplot}
 \end{figure}
 
-\todoFind{Check if multi rollouts are significant from single-rollout}
+By using preference models to create a deterministic pilot heuristic it's 
+possible to improve the mean \namerho. Especially if we consider using 
+\phiSDRRelated\ compared to the best single based roll-out, namely minimum 
+\phiSPT, then the improvement (all were significant) for adjusted 
+\ref{bias:dbl2nd} following $\minCmax$ was 
+\begin{enumerate*}
+    \item 5.2\% compared to 5.9\% for \jrnd{6}{5}
+    \item 6.4\% compared to 7.7\% for \frnd{6}{5} 
+    \item 10.1\% compared to 11.8\% for \jrnd{10}{10} 
+\end{enumerate*}
+When \phiRNDRelated\ were added, then the results for mean 
+$\{\rho,\rho_{\text{fort.}}\}$ were as follows
+\begin{enumerate*}
+    \item $\{1.3\%,0.8\%\}$ compared to $\{1.1\%,0.8\%\}$ using 
+    \phiRNDmin\ for \jrnd{6}{5} 
+    \item $\{1.4\%,1.0\%\}$ compared to $\{1.5\%,1.2\%\}$ using 
+    \phiRNDmin\ for \frnd{6}{5} 
+    \item $\{6.4\%,4.7\%\}$ compared to $\{9.7\%,6.0\}\%$ using 
+    \phiRNDmean\ for \jrnd{10}{10} 
+\end{enumerate*}
+Regarding \Problem[6\times5]{} there was no significant difference to minimum
+\phiRNDmin. 
+Whereas, for \jrnd{10}{10} the preference model paid off, with an improvement 
+of $\Delta\rho\approx3.3\%$ and $\Delta\rho_{\text{fort.}}\approx1.3\%$.
+This is also the case where the greedy approach of following minimum 
+\phiRNDmin\ was unsuccessful. Note, both dimensions had the same computational 
+budget of 100 random roll-outs for each dispatch. 
+In the case for \Problem[6\times5]{} then 100 roll-outs is quite enough. Notice 
+in \cref{fig:rollout:boxplot} that the minimum is very often found (the 3rd 
+quartile is often 0), and mean $\rho_{\text{fort.}}\leq1.5\%$.
+However, as the possibilities for operations grows exponentially with increased 
+dimensionality, then for \jrnd{10}{10} we notice that we need to be more 
+mindful how we allocate our $K-k$ roll-outs to achieve a good performance.
+
+\section{Conclusions}
+\todoWrite{Write conclusions for pilot method}
