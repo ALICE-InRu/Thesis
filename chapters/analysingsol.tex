@@ -618,9 +618,9 @@ that does not necessarily imply that they're a bad attribute.
 Take for instance \phijobOps, which is a discrete simplification of 
 \phijobWrm, whose purpose was to complete advanced jobs (i.e LWR) or 
 balance progress for all jobs (i.e. MWR). 
-In the case of \jrnd{10}{10} then +\phijobOps yields mean $\rho=22\%$, whereas 
-it's more sophisticated counterpart, +\phijobWrm\ has a slightly higher mean 
-$\rho=23$ (cf. \cref{tbl:CDR:pareto}).
+In the case of \jrnd{6}{5} then -\phijobOps yields mean $\rho=18\%$, whereas 
+it's more sophisticated counterpart, +\phijobWrm\ has a slightly lower mean 
+$\rho=16$ (cf. \cref{fig:diff:extr:jrnd:6x5}).
 
 It is possible for a \JSP\ schedule to have more than one sequential 
 dispatching representation. It is especially w.r.t. the initial dispatches. 
@@ -656,6 +656,20 @@ important factor \emph{when} suboptimal moves are made, as
 \cref{sec:diff:opt:sub} showed. Therefore it's not 
     }
 
+The main objective of this \lcnamecref{ch:analysingsol} was to illustrate the 
+interaction of a specific algorithm on a given problem structure and its 
+properties. 
+This can be considered as finding the footprint from \sdr s introduced in 
+\cref{sec:SDR} on those problem spaces. 
+Presumably, we could use that information to infer the complexity of our 
+synthesised problem spaces summarised in \cref{tbl:data}.
+
+\Cref{sec:diff:stepwise} showed that the emergence of a problem instances 
+difficulty w.r.t. its algorithm was not noticeable until the very end of the 
+dispatching process. Preferably we'd like to know this information sooner, in 
+order to steer the algorithm towards a more promising state space where the 
+features are `known' to have better performance. 
+
 Since feature selection is of paramount importance in order for algorithms to 
 become successful, one needs to give great thought to how features are 
 selected. What kind of features yield \emph{bad} schedules? And can they be 
@@ -670,24 +684,12 @@ Scrutiny in understanding the nature of problem instances therefore becomes of
 paramount importance in feature engineering for learning, as it yields feedback 
 into what features are important to devote more attention to, i.e., features 
 that result in a failing algorithm. 
-For instance, in \cref{tbl:jrnd:feat:same} the slack features have the same 
-distribution in the initial stages of the scheduling process. However, there is 
-a clear point of divergence which needs to be investigate why the sudden 
-change? \todoFind{Check with best/worst case scenario}
+
+\todoWrite{Conclusions for stepwise optimality and best/worst case scenario}
+
 In general, this sort of analysis can undoubtedly be used in better 
 algorithm design which is more equipped to deal with varying problem instances 
 and tailor to individual problem instance's needs, i.e., a footprint-oriented 
 algorithm.
 
-Although this methodology was only implemented on a set of simple 
-single-priority \dr s, the methodology is easily adaptable for more 
-complex algorithms, such as the learned preference models in 
-\cref{ch:prefmodels}. The main objective of this work is to 
-illustrate the interaction of a specific algorithm on a given problem structure 
-and its properties. 
 
-\todoWrite{
-  In this \lcnamecref{ch:defdifficulty} we will find the footprint 
-  from \sdr s introduced in \cref{sec:SDR} on those problem spaces. Presumably, 
-  we could use that information to infer the complexity of our synthesised 
-  problem spaces summarised in \cref{tbl:data}.}
