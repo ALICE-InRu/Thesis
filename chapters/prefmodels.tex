@@ -346,7 +346,7 @@ diverse yield a worse outcome than \PhiSet{\OPT} would achieve on its own.
 %     j.rnd     10x10 Track Track Track  SAME Track    SDR     SDR
 
 \pagebreak
-Comparing \PsiSet{\pi} to its corresponding policy $\pi$ used to guide its 
+Comparing \PsiSet[\pi]{p} to its corresponding policy $\pi$ used to guide its 
 collection, then usually the preference model outperformed the $\pi$ it 
 was trying to mimic. The exceptions being 
 \begin{enumerate*}
@@ -357,7 +357,7 @@ was trying to mimic. The exceptions being
   \item $\minCmax$ and $\minRho$ for all problem spaces, save for \jrndn{6}{5} 
   which was statistically insignificant
 \end{enumerate*}
-Revisiting \cref{fig:diff:case:SDR}, then when \PsiSet[\pi]{} 
+Revisiting \cref{fig:diff:case:SDR}, then when \PsiSet[\pi]{p} 
 succeeds its original policy $\pi$, it implies the learning model was able to 
 steer the learned policy towards $\zeta_{\min}^{\pi}$. 
 In fact, its improvement is proportional to its spread\footnote{Consult \shiny:
