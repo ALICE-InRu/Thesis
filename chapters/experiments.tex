@@ -12,6 +12,12 @@ as was done in \cref{ch:rollout}, then is sensible to keep track of the best
 solution found (even though they hadn't been followed), this was referred to as 
 its \emph{fortified} solution.}
 
+From \cref{ch:rollout} only preference models using \phiSDRRelated\ will be 
+considered, as \phiRNDRelated\ are too computational expensive for OR-Library 
+as some of the problem dimensions, $K$, is too great for 100 random roll-outs 
+for each possible encountered operation. However, using only four fixed 
+roll-outs is reasonable.
+
 \input{tables/stats.orlib}
 \missingfigure{ORLIB JSP}
 \missingfigure{ORLIB FSP}

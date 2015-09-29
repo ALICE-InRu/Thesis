@@ -1,121 +1,223 @@
-{\footnotesize
-\begin{longtable}{llcrr@{.}l@{}r}
-\caption{Comparison results of OR-Library} 
+\pagebreak
+{\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{l@{}rlr|l@{ }r|l@{ }l@{ }l@{ }r|l@{ }l@{ }l@{ }r}
+\caption{Comparison results of OR-Library based on \jrnd{10}{10} training data} 
+\vspace{-9pt}
 \label{tbl:comp:orlib} \\
 \toprule
-Set & Name & $n \times m$ & BKS & \multicolumn{2}{c}{CMA-ES} & 
-\multicolumn{1}{c}{$\rho$} \\ 
+Set & ID & $n \times m$ & BKS & 
+ObjFun & $\rho$ & 
+Track & Bias & CDR & $\rho$ & 
+Track & Bias & CDR & $\rho_{\text{fort.}}$ \\ 
 \endfirsthead
-\multicolumn{6}{c}%
+\multicolumn{14}{c}%
 {\tablename\ \thetable\ -- \emph{Continued from previous page}} \\
 \toprule
-Set & Name & $n \times m$ & BKS & \multicolumn{2}{c}{CMA-ES} & 
-\multicolumn{1}{c}{$\rho$} \\ 
+Set & ID & $n \times m$ & BKS & 
+ObjFun & $\rho$ & 
+Track & Bias & CDR & $\rho$ & 
+Track & Bias & CDR & $\rho_{\text{fort.}}$ \\ 
 \midrule
 \endhead
-\bottomrule\multicolumn{6}{r}{\emph{Continued on next page}} \\
+\bottomrule\multicolumn{14}{r}{\emph{Continued on next page}} \\
 \endfoot
 \bottomrule
 \endlastfoot
 \midrule \Problem{abz}
-& abz5 & 10$\times$10 & 1234 & \jrndn{6}{5} & $\minRho$ & 6.56 \\ 
-& abz6 & 10$\times$10 & 943 & \jrnd{6}{5} & $\minRho$ & 11.03 \\ 
-& abz7 & 20$\times$15 & 656 & \jrndJ{6}{5} & $\minCmax$ & 11.13 \\ 
-& abz8 & 20$\times$15 & 665 & \jrnd{6}{5} & $\minCmax$ & 18.80 \\ 
-& abz9 & 20$\times$15 & 678 & \jrnd{6}{5} & $\minRho$ & 14.45 \\ 
+  &5 & $10\times10$ & 1234 & $\minRho$ & 11.91 & OPT & equal & 3.524 & 
+  11.91 & $\minCmax$ & adjdbl2nd & 20.1 & 8.67 \\ 
+  &6 & $10\times10$ & 943 & $\minRho$ & 12.51 & OPT & equal & 3.524 & 
+  13.89 & $\minCmax$ & adjdbl2nd & 20.1 & 10.82 \\ 
+  &7 & $20\times5$ & 656 & $\minRho$ & 11.59 & $\minCmax$ & adjdbl2nd & 
+  16.1 & 13.26 & $\minCmax$ & adjdbl2nd & 20.1 & 16.46 \\ 
+  &8 & $20\times5$ & 665 & $\minCmax$ & 20.30 & DA2UNSUP & adjdbl2nd & 
+  16.1 & 19.55 & $\minCmax$ & adjdbl2nd & 20.1 & 13.68 \\ 
+  &9 & $20\times5$ & 678 & $\minRho$ & 22.12 & OPT & equal & 3.524 & 
+  16.67 & $\minCmax$ & adjdbl2nd & 20.1 & 11.95 \\ 
 \midrule \Problem{ft}
-& ft06 & 6$\times$6 &  55 & \jrnd{6}{5} & $\minRho$ & 7.27 \\ 
-& ft10 & 10$\times$10 & 930 & \jrndM{6}{5} & $\minRho$ & 23.12 \\ 
-& ft20 & 20$\times$5 & 1165 & \frnd{6}{5} & $\minRho$ & 9.53 \\ 
+  &6 & $6\times6$ &  55 & $\minRho$ & 7.27 & DA2UNSUP & adjdbl2nd & 16.1 
+  & 5.45 & $\minCmax$ & adjdbl2nd & 20.1 & 5.45 \\ 
+  &10 & $10\times10$ & 930 & $\minRho$ & 28.92 & DA2UNSUP & adjdbl2nd & 
+  16.1 & 26.13 & $\minCmax$ & adjdbl2nd & 20.1 & 26.02 \\ 
+  &20 & $20\times5$ & 1165 & $\minRho$ & 18.37 & $\minCmax$ & equal & 
+  16.1 & 13.91 & 
+  $\minCmax$ & adjdbl2nd & 20.1 & 9.10 \\ 
 \midrule \Problem{la}
-& la01 & 10$\times$5 & 666 & \jrndM{6}{5} & $\minRho$ & 1.80 \\ 
-& la02 & 10$\times$5 & 655 & \jrnd{6}{5} & $\minCmax$ & 0.61 \\ 
-& la03 & 10$\times$5 & 597 & \frnd{6}{5} & $\minRho$ & 19.43 \\ 
-& la04 & 10$\times$5 & 590 & \jrnd{6}{5} & $\minRho$ & 3.56 \\ 
-& la06 & 15$\times$5 & 926 & \jrnd{6}{5} & $\minRho$ & 10.15 \\ 
-& la07 & 15$\times$5 & 890 & \jrndn{6}{5} & $\minRho$ & 1.57 \\ 
-& la08 & 15$\times$5 & 863 & \fmxc{6}{5} & $\minRho$ & 12.98 \\ 
-& la10 & 15$\times$5 & 958 & \jrnd{6}{5} & $\minRho$ & 0.10 \\ 
-& la11 & 20$\times$5 & 1222 & \frnd{6}{5} & $\minRho$ & 1.55 \\ 
-& la12 & 20$\times$5 & 1039 & \jrndJ{6}{5} & $\minRho$ & 0.00 \\ 
-& la13 & 20$\times$5 & 1150 & \jrnd{6}{5} & $\minRho$ & 7.13 \\ 
-& la15 & 20$\times$5 & 1207 & \jrnd{10}{10} & $\minCmax$ & 0.41 \\ 
-& la16 & 10$\times$10 & 945 & \jrndn{6}{5} & $\minCmax$ & 5.71 \\ 
-& la18 & 10$\times$10 & 848 & \jrndn{6}{5} & $\minCmax$ & 8.84 \\ 
-& la19 & 10$\times$10 & 842 & \jrnd{6}{5} & $\minCmax$ & 10.93 \\ 
-& la21 & 15$\times$10 & 1046 & \frnd{6}{5} & $\minRho$ & 27.92 \\ 
-& la22 & 15$\times$10 & 927 & \jrndJ{6}{5} & $\minCmax$ & 12.84 \\ 
-& la23 & 15$\times$10 & 1032 & \jrnd{6}{5} & $\minRho$ & 9.01 \\ 
-& la24 & 15$\times$10 & 935 & \jrndJ{6}{5} & $\minRho$ & 12.30 \\ 
-& la25 & 15$\times$10 & 977 & \jrndn{6}{5} & $\minCmax$ & 12.49 \\ 
-& la26 & 20$\times$10 & 1218 & \jrnd{6}{5} & $\minRho$ & 16.01 \\ 
-& la27 & 20$\times$10 & 1235 & \frnd{6}{5} & $\minRho$ & 12.47 \\ 
-& la28 & 20$\times$10 & 1216 & \jrnd{10}{10} & $\minRho$ & 4.28 \\ 
-& la29 & 20$\times$10 & 1152 & \jrnd{6}{5} & $\minRho$ & 18.92 \\ 
-& la30 & 20$\times$10 & 1355 & \jrnd{10}{10} & $\minCmax$ & 2.14 \\ 
-& la31 & 30$\times$10 & 1784 & \jrnd{6}{5} & $\minRho$ & 0.84 \\ 
-& la32 & 30$\times$10 & 1850 & \jrndM{6}{5} & $\minCmax$ & 17.95 \\ 
-& la33 & 30$\times$10 & 1719 & \jrndn{6}{5} & $\minCmax$ & 7.74 \\ 
-& la34 & 30$\times$10 & 1721 & \jrnd{6}{5} & $\minCmax$ & 5.35 \\ 
-& la35 & 30$\times$10 & 1888 & \fmxc{6}{5} & $\minRho$ & 4.03 \\ 
-& la36 & 15$\times$15 & 1268 & \jrndJ{6}{5} & $\minCmax$ & 5.68 \\ 
-& la37 & 15$\times$15 & 1397 & \jrndJ{6}{5} & $\minCmax$ & 6.30 \\ 
-& la38 & 15$\times$15 & 1196 & \jrndM{6}{5} & $\minRho$ & 9.20 \\ 
-& la39 & 15$\times$15 & 1233 & \jrnd{10}{10} & $\minCmax$ & 8.27 \\ 
-& la40 & 15$\times$15 & 1222 & \jrndn{6}{5} & $\minRho$ & 11.78 \\ 
+  &1 & $10\times5$ & 666 & $\minRho$ & 2.55 & DA2UNSUP & adjdbl2nd & 
+  16.1 & 7.21 & $\minCmax$ & adjdbl2nd & 20.1 & 2.25 \\ 
+  &2 & $10\times5$ & 655 & $\minCmax$ & 2.60 & $\minCmax$ & equal & 16.1 
+  & 2.90 & $\minCmax$ & adjdbl2nd & 20.1 & 3.05 \\ 
+  &3 & $10\times5$ & 597 & $\minRho$ & 23.95 & DA2UNSUP & adjdbl2nd & 
+  16.1 & 20.60 & $\minCmax$ & adjdbl2nd & 20.1 & 15.91 \\ 
+  &4 & $10\times5$ & 590 & $\minRho$ & 3.56 & OPT & equal & 3.524 & 3.56 
+  & $\minCmax$ & adjdbl2nd & 20.1 & 3.56 \\ 
+  &6 & $15\times5$ & 926 & $\minRho$ & 10.37 & DA2UNSUP & adjdbl2nd & 
+  16.1 & 10.15 & $\minCmax$ & adjdbl2nd & 20.1 & 10.15 \\ 
+  &7 & $15\times5$ & 890 & $\minCmax$ & 1.57 & $\minCmax$ & adjdbl2nd & 
+  16.1 & 1.57 & $\minCmax$ & adjdbl2nd & 20.1 & 1.57 \\ 
+  &8 & $15\times5$ & 863 & $\minRho$ & 25.03 & $\minCmax$ & equal & 16.1 
+  & 14.25 & $\minCmax$ & adjdbl2nd & 20.1 & 9.04 \\ 
+  &10 & $15\times5$ & 958 & $\minRho$ & 0.10 & $\minCmax$ & adjdbl2nd & 
+  16.1 & 2.51 & $\minCmax$ & adjdbl2nd & 20.1 & 0.10 \\ 
+  &11 & $20\times5$ & 1222 & $\minRho$ & 9.33 & $\minCmax$ & adjdbl2nd & 
+  16.1 & 4.75 & $\minCmax$ & adjdbl2nd & 20.1 & 1.88 \\ 
+  &12 & $20\times5$ & 1039 & $\minRho$ & 0.00 & DA2UNSUP & adjdbl2nd & 
+  16.1 & 0.00 & $\minCmax$ & adjdbl2nd & 20.1 & 0.00 \\ 
+  &13 & $20\times5$ & 1150 & $\minRho$ & 7.13 & DA2UNSUP & adjdbl2nd & 
+  16.1 & 7.57 & $\minCmax$ & adjdbl2nd & 20.1 & 7.57 \\ 
+  &15 & $20\times5$ & 1207 & $\minCmax$ & 0.41 & OPT & equal & 3.524 & 
+  2.90 & $\minCmax$ & adjdbl2nd & 20.1 & 0.75 \\ 
+  &16 & $10\times10$ & 945 & $\minRho$ & 7.09 & OPT & equal & 3.524 & 
+  5.71 & $\minCmax$ & adjdbl2nd & 20.1 & 4.76 \\ 
+  &17 & $10\times10$ & 784 & $\minRho$ & 8.80 & DA2UNSUP & adjdbl2nd & 
+  16.1 & 9.06 & $\minCmax$ & adjdbl2nd & 20.1 & 1.91 \\ 
+  &18 & $10\times10$ & 848 & $\minRho$ & 10.02 & OPT & equal & 3.524 & 
+  7.67 & $\minCmax$ & adjdbl2nd & 20.1 & 14.50 \\ 
+  &19 & $10\times10$ & 842 & $\minRho$ & 13.54 & $\minCmax$ & equal & 
+  16.1 & 12.59 & $\minCmax$ & adjdbl2nd & 20.1 & 10.45 \\ 
+  &21 & $50\times10$ & 1046 & $\minRho$ & 28.01 & DA2UNSUP & adjdbl2nd & 
+  16.1 & 29.35 & $\minCmax$ & adjdbl2nd & 20.1 & 23.52 \\ 
+  &22 & $50\times10$ & 927 & $\minRho$ & 15.97 & OPT & equal & 3.524 & 
+  17.15 & $\minCmax$ & adjdbl2nd & 20.1 & 17.48 \\ 
+  &23 & $50\times10$ & 1032 & $\minCmax$ & 10.08 & $\minCmax$ & adjdbl2nd 
+  & 16.1 & 18.80 & $\minCmax$ & adjdbl2nd & 20.1 & 12.98 \\ 
+  &24 & $50\times10$ & 935 & $\minRho$ & 14.55 & $\minCmax$ & adjdbl2nd & 
+  16.1 & 16.26 & $\minCmax$ & adjdbl2nd & 20.1 & 16.15 \\ 
+  &25 & $50\times10$ & 977 & $\minCmax$ & 15.66 & $\minCmax$ & adjdbl2nd 
+  & 16.1 & 19.14 & $\minCmax$ & adjdbl2nd & 20.1 & 14.94 \\ 
+  &26 & $20\times10$ & 1218 & $\minRho$ & 16.42 & OPT & equal & 3.524 & 
+  16.50 & $\minCmax$ & adjdbl2nd & 20.1 & 14.86 \\ 
+  &27 & $20\times10$ & 1235 & $\minRho$ & 22.43 & $\minCmax$ & adjdbl2nd 
+  & 16.1 & 21.46 & $\minCmax$ & adjdbl2nd & 20.1 & 19.68 \\ 
+  &28 & $20\times10$ & 1216 & $\minRho$ & 4.28 & OPT & equal & 3.524 & 
+  7.07 & $\minCmax$ & adjdbl2nd & 20.1 & 8.72 \\ 
+  &29 & $20\times10$ & 1152 & $\minRho$ & 21.61 & OPT & equal & 3.524 & 
+  23.44 & $\minCmax$ & adjdbl2nd & 20.1 & 22.57 \\ 
+  &30 & $20\times10$ & 1355 & $\minCmax$ & 2.14 & OPT & equal & 3.524 & 
+  8.56 & $\minCmax$ & adjdbl2nd & 20.1 & 2.07 \\ 
+  &31 & $30\times10$ & 1784 & $\minRho$ & 2.63 & OPT & equal & 3.524 & 
+  3.03 & $\minCmax$ & adjdbl2nd & 20.1 & 0.28 \\ 
+  &32 & $30\times10$ & 1850 & $\minCmax$ & 18.32 & $\minCmax$ & adjdbl2nd 
+  & 16.1 & 14.92 & $\minCmax$ & adjdbl2nd & 20.1 & 18.32 \\ 
+  &33 & $30\times10$ & 1719 & $\minCmax$ & 7.74 & OPT & equal & 3.524 & 
+  8.14 & $\minCmax$ & adjdbl2nd & 20.1 & 7.74 \\ 
+  &34 & $30\times10$ & 1721 & $\minRho$ & 5.81 & DA2UNSUP & adjdbl2nd & 
+  16.1 & 10.28 & $\minCmax$ & adjdbl2nd & 20.1 & 7.44 \\ 
+  &35 & $30\times10$ & 1888 & $\minRho$ & 9.27 & OPT & equal & 3.524 & 
+  8.79 & $\minCmax$ & adjdbl2nd & 20.1 & 4.18 \\ 
+  &36 & $15\times15$ & 1268 & $\minRho$ & 7.89 & DA2UNSUP & adjdbl2nd & 
+  16.1 & 7.33 & $\minCmax$ & adjdbl2nd & 20.1 & 3.86 \\ 
+  &37 & $15\times15$ & 1397 & $\minCmax$ & 7.59 & DA2UNSUP & adjdbl2nd & 
+  16.1 & 7.30 & $\minCmax$ & adjdbl2nd & 20.1 & 9.23 \\ 
+  &38 & $15\times15$ & 1196 & $\minRho$ & 15.72 & DA2UNSUP & adjdbl2nd & 
+  16.1 & 15.89 & $\minCmax$ & adjdbl2nd & 20.1 & 15.38 \\ 
+  &39 & $15\times15$ & 1233 & $\minCmax$ & 8.27 & $\minCmax$ & adjdbl2nd 
+  & 16.1 & 8.84 & $\minCmax$ & adjdbl2nd & 20.1 & 9.08 \\ 
+  &40 & $15\times15$ & 1222 & $\minRho$ & 17.10 & DA2UNSUP & adjdbl2nd & 
+  16.1 & 16.94 & $\minCmax$ & adjdbl2nd & 20.1 & 10.80 \\ 
 \midrule \Problem{orb}
-& orb01 & 10$\times$10 & 1059 & \frnd{6}{5} & $\minRho$ & 8.88 \\ 
-& orb02 & 10$\times$10 & 888 & \jrndM{6}{5} & $\minCmax$ & 4.84 \\ 
-& orb03 & 10$\times$10 & 1005 & \jrnd{10}{10} & $\minRho$ & 12.24 \\ 
-& orb04 & 10$\times$10 & 1005 & \frnd{6}{5} & $\minCmax$ & 5.87 \\ 
-& orb05 & 10$\times$10 & 887 & \fmxc{6}{5} & $\minRho$ & 14.99 \\ 
-& orb06 & 10$\times$10 & 1010 & \jrndn{6}{5} & $\minRho$ & 17.43 \\ 
-& orb07 & 10$\times$10 & 397 & \jrnd{6}{5} & $\minRho$ & 14.36 \\ 
-& orb08 & 10$\times$10 & 899 & \frnd{6}{5} & $\minCmax$ & 12.01 \\ 
-& orb09 & 10$\times$10 & 934 & \jrndn{6}{5} & $\minRho$ & 10.39 \\ 
-& orb10 & 10$\times$10 & 944 & \jrndn{6}{5} & $\minRho$ & 16.74 \\ 
+  &1 & $10\times10$ & 1059 & $\minRho$ & 20.30 & $\minCmax$ & 
+  adjdbl2nd & 16.1 & 13.03 & $\minCmax$ & adjdbl2nd & 20.1 & 18.51 \\ 
+  &2 & $10\times10$ & 888 & $\minRho$ & 19.03 & $\minCmax$ & adjdbl2nd 
+  & 16.1 & 14.30 & $\minCmax$ & adjdbl2nd & 20.1 & 6.19 \\ 
+  &3 & $10\times10$ & 1005 & $\minRho$ & 12.24 & $\minCmax$ & 
+  adjdbl2nd & 16.1 & 12.24 & $\minCmax$ & adjdbl2nd & 20.1 & 21.39 \\ 
+  &4 & $10\times10$ & 1005 & $\minRho$ & 20.00 & OPT & equal & 3.524 & 
+  19.30 & $\minCmax$ & adjdbl2nd & 20.1 & 16.02 \\ 
+  &5 & $10\times10$ & 887 & $\minRho$ & 24.13 & $\minCmax$ & equal & 
+  16.1 & 18.38 & $\minCmax$ & adjdbl2nd & 20.1 & 24.13 \\ 
+  &6 & $10\times10$ & 1010 & $\minRho$ & 25.15 & OPT & equal & 3.524 & 
+  25.15 & $\minCmax$ & adjdbl2nd & 20.1 & 24.75 \\ 
+  &7 & $10\times10$ & 397 & $\minCmax$ & 17.13 & $\minCmax$ & equal & 
+  16.1 & 14.86 & $\minCmax$ & adjdbl2nd & 20.1 & 10.33 \\ 
+  &8 & $10\times10$ & 899 & $\minRho$ & 21.91 & $\minCmax$ & equal & 
+  16.1 & 21.91 & $\minCmax$ & adjdbl2nd & 20.1 & 24.81 \\ 
+  &9 & $10\times10$ & 934 & $\minRho$ & 18.84 & OPT & equal & 3.524 & 
+  14.03 & $\minCmax$ & adjdbl2nd & 20.1 & 11.03 \\ 
+  &10 & $10\times10$ & 944 & $\minRho$ & 20.76 & $\minCmax$ & adjdbl2nd 
+  & 16.1 & 20.44 & $\minCmax$ & adjdbl2nd & 20.1 & 19.60 \\ 
 \midrule \Problem{swv}
-& swv01 & 20$\times$10 & 1407 & \fmxc{6}{5} & $\minRho$ & 21.25 \\ 
-& swv02 & 20$\times$10 & 1475 & \frnd{6}{5} & $\minRho$ & 17.08 \\ 
-& swv03 & 20$\times$10 & 1398 & \jrnd{6}{5} & $\minRho$ & 21.96 \\ 
-& swv04 & 20$\times$10 & 1470 & \jrndM{6}{5} & $\minCmax$ & 26.46 \\ 
-& swv05 & 20$\times$10 & 1424 & \jrndJ{6}{5} & $\minCmax$ & 20.01 \\ 
-& swv06 & 20$\times$15 & 1675 & \frnd{6}{5} & $\minRho$ & 26.03 \\ 
-& swv07 & 20$\times$15 & 1594 & \jrnd{10}{10} & $\minCmax$ & 23.34 \\ 
-& swv08 & 20$\times$15 & 1755 & \frnd{6}{5} & $\minRho$ & 25.41 \\ 
-& swv09 & 20$\times$15 & 1656 & \jrndM{6}{5} & $\minRho$ & 28.08 \\ 
-& swv10 & 20$\times$15 & 1743 & \fmxc{6}{5} & $\minRho$ & 30.69 \\ 
-& swv11 & 50$\times$10 & 2983 & \fmxc{6}{5} & $\minRho$ & 19.75 \\ 
-& swv12 & 50$\times$10 & 2979 & \fmxc{6}{5} & $\minRho$ & 22.46 \\ 
-& swv13 & 50$\times$10 & 3104 & \fmxc{6}{5} & $\minRho$ & 17.65 \\ 
-& swv14 & 50$\times$10 & 2968 & \fmxc{6}{5} & $\minRho$ & 17.82 \\ 
-& swv15 & 50$\times$10 & 2886 & \fmxc{6}{5} & $\minRho$ & 20.41 \\ 
-& swv18 & 50$\times$10 & 2852 & \jrnd{6}{5} & $\minRho$ & 3.51 \\ 
-& swv19 & 50$\times$10 & 2843 & \jrndJ{6}{5} & $\minRho$ & 5.49 \\ 
+  &1 & $20\times10$ & 1407 & $\minCmax$ & 28.29 & $\minCmax$ & 
+  adjdbl2nd & 16.1 & 30.56 & $\minCmax$ & adjdbl2nd & 20.1 & 27.29 \\ 
+  &2 & $20\times10$ & 1475 & $\minCmax$ & 27.59 & $\minCmax$ & 
+  adjdbl2nd & 16.1 & 24.00 & $\minCmax$ & adjdbl2nd & 20.1 & 17.42 \\ 
+  &3 & $20\times10$ & 1398 & $\minRho$ & 25.04 & $\minCmax$ & 
+  adjdbl2nd & 16.1 & 25.75 & $\minCmax$ & adjdbl2nd & 20.1 & 18.96 \\ 
+  &4 & $20\times10$ & 1470 & $\minRho$ & 29.52 & $\minCmax$ & 
+  adjdbl2nd & 16.1 & 30.41 & $\minCmax$ & adjdbl2nd & 20.1 & 23.67 \\ 
+  &5 & $20\times10$ & 1424 & $\minRho$ & 23.17 & OPT & equal & 3.524 & 
+  24.79 & $\minCmax$ & adjdbl2nd & 20.1 & 21.70 \\ 
+  &6 & $20\times5$ & 1675 & $\minCmax$ & 31.34 & $\minCmax$ & 
+  adjdbl2nd & 16.1 & 25.31 & $\minCmax$ & adjdbl2nd & 20.1 & 25.97 \\ 
+  &7 & $20\times5$ & 1594 & $\minCmax$ & 23.34 & $\minCmax$ & 
+  adjdbl2nd & 16.1 & 29.92 & $\minCmax$ & adjdbl2nd & 20.1 & 23.34 \\ 
+  &8 & $20\times5$ & 1755 & $\minRho$ & 29.63 & $\minCmax$ & adjdbl2nd 
+  & 16.1 & 23.82 & $\minCmax$ & adjdbl2nd & 20.1 & 25.53 \\ 
+  &9 & $20\times5$ & 1656 & $\minCmax$ & 28.08 & $\minCmax$ & equal & 
+  16.1 & 26.75 & $\minCmax$ & adjdbl2nd & 20.1 & 28.02 \\ 
+  &10 & $20\times5$ & 1743 & $\minRho$ & 40.10 & OPT & equal & 3.524 & 
+  42.74 & $\minCmax$ & adjdbl2nd & 20.1 & 31.73 \\ 
+  &11 & $50\times10$ & 2983 & $\minRho$ & 50.55 & $\minCmax$ & equal & 
+  16.1 & 34.70 & $\minCmax$ & adjdbl2nd & 20.1 & 32.45 \\ 
+  &12 & $50\times10$ & 2979 & $\minCmax$ & 39.48 & $\minCmax$ & 
+  adjdbl2nd & 16.1 & 27.32 & $\minCmax$ & adjdbl2nd & 20.1 & 28.33 \\ 
+  &13 & $50\times10$ & 3104 & $\minCmax$ & 34.41 & $\minCmax$ & equal & 
+  16.1 & 30.09 & $\minCmax$ & adjdbl2nd & 20.1 & 27.29 \\ 
+  &14 & $50\times10$ & 2968 & $\minRho$ & 32.78 & $\minCmax$ & 
+  adjdbl2nd & 16.1 & 22.78 & $\minCmax$ & adjdbl2nd & 20.1 & 20.75 \\ 
+  &15 & $50\times10$ & 2886 & $\minCmax$ & 42.13 & $\minCmax$ & 
+  adjdbl2nd & 16.1 & 33.75 & $\minCmax$ & adjdbl2nd & 20.1 & 28.86 \\ 
+  &18 & $50\times10$ & 2852 & $\minRho$ & 3.82 & DA2UNSUP & adjdbl2nd & 
+  16.1 & 3.51 & $\minCmax$ & adjdbl2nd & 20.1 & 3.65 \\ 
+  &19 & $50\times10$ & 2843 & $\minRho$ & 5.70 & DA2UNSUP & adjdbl2nd & 
+  16.1 & 7.91 & $\minCmax$ & adjdbl2nd & 20.1 & 5.56 \\ 
 \midrule \Problem{yn}
-& yn1 & 20$\times$20 & 884 & \jrnd{10}{10} & $\minRho$ & 10.52 \\ 
-& yn2 & 20$\times$20 & 904 & \jrndn{6}{5} & $\minRho$ & 13.16 \\ 
-& yn3 & 20$\times$20 & 892 & \jrndn{6}{5} & $\minRho$ & 16.26 \\ 
-& yn4 & 20$\times$20 & 968 & \jrndn{6}{5} & $\minRho$ & 22.83 \\ 
+  &1 & $20\times20$ & 884 & $\minRho$ & 10.52 & OPT & equal & 3.524 & 
+  14.59 & $\minCmax$ & adjdbl2nd & 20.1 & 15.84 \\ 
+  &2 & $20\times20$ & 904 & $\minCmax$ & 16.26 & $\minCmax$ & adjdbl2nd & 
+  16.1 & 12.94 & $\minCmax$ & adjdbl2nd & 20.1 & 18.14 \\ 
+  &3 & $20\times20$ & 892 & $\minRho$ & 18.95 & OPT & equal & 3.524 & 
+  20.29 & $\minCmax$ & adjdbl2nd & 20.1 & 22.98 \\ 
+  &4 & $20\times20$ & 968 & $\minRho$ & 30.17 & $\minCmax$ & equal & 16.1 
+  & 29.34 & $\minCmax$ & adjdbl2nd & 20.1 & 23.14 \\ 
 \midrule \Problem{car}
-& car1 & 11$\times$5 & 7038 & \fmxc{6}{5} & $\minRho$ & 5.80 \\ 
-& car2 & 13$\times$4 & 7166 & \frndn{6}{5} & $\minCmax$ & 4.95 \\ 
-& car3 & 12$\times$5 & 7312 & \jrndn{6}{5} & $\minRho$ & 4.23 \\ 
-& car4 & 14$\times$4 & 8003 & \fmxc{6}{5} & $\minRho$ & 5.25 \\ 
-& car6 & 8$\times$9 & 8505 & \frnd{6}{5} & $\minCmax$ & 8.01 \\ 
-& car7 & 7$\times$7 & 6590 & \jrndn{6}{5} & $\minCmax$ & 2.49 \\ 
-& car8 & 8$\times$8 & 8366 & \frnd{6}{5} & $\minRho$ & 8.39 \\ 
+  &1 & $11\times5$ & 7038 & $\minRho$ & 11.71 & $\minCmax$ & equal & 
+  16.1 & 10.19 & $\minCmax$ & adjdbl2nd & 20.1 & 11.51 \\ 
+  &2 & $13\times4$ & 7166 & $\minRho$ & 18.84 & $\minCmax$ & equal & 
+  16.1 & 14.16 & $\minCmax$ & adjdbl2nd & 20.1 & 4.10 \\ 
+  &3 & $12\times5$ & 7312 & $\minRho$ & 15.78 & OPT & equal & 3.524 & 
+  6.40 & $\minCmax$ & adjdbl2nd & 20.1 & 7.89 \\ 
+  &4 & $14\times4$ & 8003 & $\minRho$ & 7.67 & $\minCmax$ & adjdbl2nd & 
+  16.1 & 12.61 & $\minCmax$ & adjdbl2nd & 20.1 & 6.10 \\ 
+  &6 & $8\times9$ & 8505 & $\minRho$ & 15.29 & $\minCmax$ & equal & 
+  16.1 & 6.65 & $\minCmax$ & adjdbl2nd & 20.1 & 6.51 \\ 
+  &7 & $7\times7$ & 6590 & $\minRho$ & 11.79 & OPT & equal & 3.524 & 
+  9.77 & $\minCmax$ & adjdbl2nd & 20.1 & 2.58 \\ 
+  &8 & $8\times8$ & 8366 & $\minRho$ & 8.39 & $\minCmax$ & adjdbl2nd & 
+  16.1 & 11.00 & $\minCmax$ & adjdbl2nd & 20.1 & 7.42 \\ 
 \midrule \Problem{hel}
-& hel2 & 20$\times$10 & 136 & \fmxc{6}{5} & $\minRho$ & 9.56 \\ 
-\midrule \Problem{reC}
-& reC07 & 20$\times$10 & 1566 & \fmxc{6}{5} & $\minRho$ & 6.83 \\ 
-& reC09 & 20$\times$10 & 1537 & \fmxc{6}{5} & $\minRho$ & 11.39 \\ 
-& reC11 & 20$\times$10 & 1431 & \jrnd{6}{5} & $\minCmax$ & 10.90 \\ 
-& reC13 & 20$\times$15 & 1930 & \jrndn{6}{5} & $\minRho$ & 13.21 \\ 
-& reC15 & 20$\times$15 & 1950 & \jrnd{10}{10} & $\minRho$ & 9.23 \\ 
-& reC17 & 20$\times$15 & 1902 & \jrnd{6}{5} & $\minCmax$ & 18.03 \\ 
-& reC25 & 30$\times$15 & 2513 & \fmxc{6}{5} & $\minRho$ & 18.30 \\ 
-& reC29 & 30$\times$15 & 2287 & \frnd{6}{5} & $\minRho$ & 16.53 \\ 
-& reC31 & 50$\times$10 & 3045 & \fmxc{6}{5} & $\minRho$ & 16.49 \\ 
-& reC33 & 50$\times$10 & 3114 & \jrnd{6}{5} & $\minRho$ & 12.65 \\ 
+  &2 & $20\times10$ & 136 & $\minCmax$ & 15.44 & OPT & equal & 3.524 & 
+  12.50 & $\minCmax$ & adjdbl2nd & 20.1 & 6.62 \\ 
+\midrule \Problem{reC}  
+  &7 & $20\times10$ & 1566 & $\minRho$ & 14.56 & $\minCmax$ & 
+  adjdbl2nd & 16.1 & 14.75 & $\minCmax$ & adjdbl2nd & 20.1 & 12.45 \\ 
+  &9 & $20\times10$ & 1537 & $\minCmax$ & 12.88 & DA2UNSUP & adjdbl2nd 
+  & 16.1 & 12.88 & $\minCmax$ & adjdbl2nd & 20.1 & 12.30 \\ 
+  &11 & $20\times10$ & 1431 & $\minCmax$ & 12.44 & $\minCmax$ & 
+  adjdbl2nd & 16.1 & 14.40 & $\minCmax$ & adjdbl2nd & 20.1 & 12.30 \\ 
+  &13 & $20\times5$ & 1930 & $\minRho$ & 13.52 & $\minCmax$ & adjdbl2nd 
+  & 16.1 & 13.32 & $\minCmax$ & adjdbl2nd & 20.1 & 20.26 \\ 
+  &15 & $20\times5$ & 1950 & $\minRho$ & 9.23 & OPT & equal & 3.524 & 
+  10.15 & $\minCmax$ & adjdbl2nd & 20.1 & 13.49 \\ 
+  &17 & $20\times5$ & 1902 & $\minCmax$ & 19.72 & $\minCmax$ & 
+  adjdbl2nd & 16.1 & 20.24 & $\minCmax$ & adjdbl2nd & 20.1 & 20.98 \\ 
+  &25 & $30\times15$ & 2513 & $\minRho$ & 20.45 & $\minCmax$ & 
+  adjdbl2nd & 16.1 & 19.78 & $\minCmax$ & adjdbl2nd & 20.1 & 21.69 \\ 
+  &29 & $30\times15$ & 2287 & $\minRho$ & 16.92 & $\minCmax$ & equal & 
+  16.1 & 22.43 & $\minCmax$ & adjdbl2nd & 20.1 & 21.38 \\ 
+  &31 & $50\times10$ & 3045 & $\minRho$ & 19.77 & DA2UNSUP & adjdbl2nd 
+  & 16.1 & 20.76 & $\minCmax$ & adjdbl2nd & 20.1 & 19.61 \\ 
+  &33 & $50\times10$ & 3114 & $\minRho$ & 17.66 & $\minCmax$ & 
+  adjdbl2nd & 16.1 & 20.94 & $\minCmax$ & adjdbl2nd & 20.1 & 15.48 \\ 
 \end{longtable}}
