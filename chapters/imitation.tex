@@ -175,7 +175,7 @@ $\bigOh{\epsilon K}$, if it were i.i.d.
 \section{Active Imitation Learning}\label{sec:il:active}
 
 To amend performance from \PhiSet{OPT}-based models, suboptimal 
-state-spaces were explored in \cite{InRu15a} by inspecting the features from 
+state-spaces were explored in \cref{InRu15a} by inspecting the features from 
 successful SDRs, $\Phi^{\SDR}$, by passively observing a 
 full execution of following the task chosen by the corresponding SDR. 
 This required some trial-and-error as the experiments showed that features 
@@ -350,7 +350,7 @@ DAgger for \jsp\ is not sensitive to choice of $\beta_i$ in \cref{eq:il}.
     effort. Like our work, they also require a dynamics simulator to help 
     select queries }
 
-Maximum Mean Discrepancy (MMD) imitation learning by \cite{Kim13} is an 
+\emph{Maximum Mean Discrepancy} (MMD) imitation learning by \cite{Kim13} is an 
 iterative algorithm similar to DAgger. 
 However, the expert policy is only queried when needed in order to reduce 
 computational cost. 
@@ -366,9 +366,10 @@ Additionally, there are multiple policies, each specializing in a particular
 region of the state space where previous policies made mistakes.
 Although MMD has better empirical performance (based on robot applications), it 
 requires defining metrics, which in the case of \jsp\ is non-trivial (cf. 
-\cite{InRu12}), and fine-tuning thresholds etc., whereas DAgger can be 
-straightforwardly implemented, parameter-free and obtains competitive results, 
-although with some computational overhead due to excess expert queries. 
+\cref{InRu12,ch:defdifficulty}), and fine-tuning thresholds etc., whereas 
+DAgger can be straightforwardly implemented, parameter-free and obtains 
+competitive results, although with some computational overhead due to excess 
+expert queries. 
 
 In fact, it's possible to circumvent querying the expert altogether and still 
 have reasonable performance. By applying Locally Optimal Learning to Search 

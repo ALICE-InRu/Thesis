@@ -52,9 +52,9 @@ possible to infer what sort of feature behaviour distinguishes  between
 Instead of searching through a large set of algorithms  and determining which 
 algorithm is the most suitable for a given subset of the instance space, i.e., 
 creating an algorithm portfolio, as is generally the focus in the current 
-literature \citep{SmithMilesLion3,SmithMilesLion5,Corne10}, the focus of the 
+literature \citep{SmithMilesLion3,SmithMilesLion5,Corne10}, the 
 experimental study in the subsequent \lcnamecref{sec:diff:easyhard}s
-is rather on few simple algorithms, namely the SDRs described in 
+focuses rather on few simple algorithms, namely the SDRs described in 
 \cref{sec:SDR}, i.e., we will limit the algorithm space to, 
 \begin{equation}\label{eq:SDRset}
 \mathcal{A}:=\{\text{SPT,~LPT,~LWR,~MWR}\}
@@ -120,7 +120,7 @@ problem generator. Whereas, those features that were highly correlated with the
 end-result, i.e., the final makespan, which determined if an instance was 
 labelled easy or hard, then the significant features varied greatly between the 
 two difficulties, which imply the inherent difference in data structure. 
-Moreover, the study in gives support to that random problem instance generators 
+Moreover, the study gives support to that random problem instance generators 
 are \emph{too} general and might not suit real-world applications. 
 \citet{Whitley} argue that problem instance generator should be more 
 structured, since real-world manufacturing environment is not completely 
@@ -235,7 +235,7 @@ That is to say, why aren't all of the \jsp\ schedules easy when applying MWR?
 }
 
 \clearpage
-\section{Discussion and Conclusion}
+\section{Conclusion}
 
 These have up until now all been speculations about how SDRs differ. One thing 
 is for certain, the underlying problem space plays a great role on a SDR's 
@@ -262,9 +262,13 @@ instances, per problem space, therefore,
 \end{equation} 
 due to the fact \cref{eq:easy.vs.hard} are based on the first and third 
 quartiles of the entire training set.
-Now, as the SDRs vary greatly in performance, the contribution of a SDR to \cref{eq:easyhard:all} varies, resulting in an unbalanced sample size when restricted to a single SDR. 
-
-
+Now, as the SDRs vary greatly in performance, the contribution of a SDR to 
+\cref{eq:easyhard:all} varies, resulting in an unbalanced sample size when 
+restricted to a single SDR, which is done in \cref{sec:diff:stepwise}.
+It's for that reason we adjust $A:=\SDR$ for a single SDR inspection, i.e., 
+then the `easy' and `hard' problems are each approximately 
+$\frac{1}{4}N_{\train}$, and instances don't necessarily coincide across 
+different SDRs.
 
 Despite problem instances being created by the same problem generator, they 
 vary among one another enough. As a result, all instances are not created 
