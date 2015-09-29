@@ -66,7 +66,8 @@ performance by
 \end{enumerate*}
 
 Regarding random roll-outs, then the greedy \phiRNDmin\ came on top for 
-\Problem[6\times5]{}, whereas for \jrnd{10}{10} then a better fortified mean 
+\Problem[6\times5]{\train}, whereas for \jrnd{10}{10} then a better fortified 
+mean 
 result was achieved by following \phiRNDmean.
 
 \begin{figure}[p]\centering 
@@ -180,19 +181,51 @@ $\{\rho,\rho_{\text{fort.}}\}$ were as follows
     \item $\{6.4\%,4.7\%\}$ compared to $\{9.7\%,6.0\}\%$ using 
     \phiRNDmean\ for \jrnd{10}{10} 
 \end{enumerate*}
-Regarding \Problem[6\times5]{} there was no significant difference to minimum
+Regarding \Problem[6\times5]{\train} there was no significant difference to 
+minimum
 \phiRNDmin. 
 Whereas, for \jrnd{10}{10} the preference model paid off, with an improvement 
 of $\Delta\rho\approx3.3\%$ and $\Delta\rho_{\text{fort.}}\approx1.3\%$.
 This is also the case where the greedy approach of following minimum 
 \phiRNDmin\ was unsuccessful. Note, both dimensions had the same computational 
 budget of 100 random roll-outs for each dispatch. 
-In the case for \Problem[6\times5]{} then 100 roll-outs is quite enough. Notice 
-in \cref{fig:rollout:boxplot} that the minimum is very often found (the 3rd 
-quartile is often 0), and mean $\rho_{\text{fort.}}\leq1.5\%$.
+In the case for \Problem[6\times5]{\train} then 100 roll-outs is quite enough. 
+Notice in \cref{fig:rollout:boxplot} that the minimum is very often found (the 
+3rd quartile is often 0), and mean $\rho_{\text{fort.}}\leq1.5\%$.
 However, as the possibilities for operations grows exponentially with increased 
 dimensionality, then for \jrnd{10}{10} we notice that we need to be more 
 mindful how we allocate our $K-k$ roll-outs to achieve a good performance.
 
 \section{Conclusions}
-\todoWrite{Write conclusions for pilot method}
+
+Revisiting \cref{fig:diff:extr:features}, then $(K-k)$-step lookahead (i.e. 
+\phiGlobalRelated) gave consistently the best (single) indicators for finding 
+good solutions. 
+This makes sense, as they're designed to measure end-performance, which is 
+something that the initial 1-step attributes (i.e. \phiLocalRelated) are 
+struggling to measure.
+
+By incorporating roll-outs then \cref{eq:CDR:feat} can be considered as a 
+deterministic pilot heuristic, which we could learn via preference models from 
+\cref{ch:prefmodels}. However, currently they're not feasible for direct 
+optimisation as was done in \cref{ch:esmodels} as that would require too many 
+costly function evaluations.
+
+Although, for low dimension \jsp\ (i.e. \Problem[6\times5]{\train}) the learned 
+deterministic policy did not statistically improve performance, as it was 
+equally adequate to pursue minimum \phiRNDmin\ on its own.
+However, going to higher dimension, as was done for \jrnd{10}{10}, then finally 
+we're able to reap the fruit of one's labour.
+
+Unfortunately, \phiRNDRelated\ are not practical features for high dimensional 
+data due to excessive computational cost. 
+Nevertheless, bearing \cref{fig:diff:case:OPT:10x10} in mind then it 
+might be sufficient to do only a few steps lookahead at some key times in the 
+dispatching process. For instance, let the computational budget for 
+\frnd{10}{10} roll-outs be full $K$-solutions in the beginning phases, as 
+that's when the problem space is most susceptible to bad moves. Then gradually 
+decrease to only a few step lookahead, as \fsp\ is then relatively stable.
+Conversely for \jrnd{10}{10}, start with a few step lookahead, and then 
+expand the horizon as time goes by. Alternatively, when there aren't that many 
+dispatches left, it might be worth developing a hybrid approach where the 
+remaining dispatches from that point are optimised with some exact methods. 
