@@ -3,13 +3,13 @@
 \tikzset{
     block/.style = {draw, fill=gray!10, rectangle, text width=7em, 
         align=center,font=\bfseries\sffamily},
-    txt/.style = {font=\small\sffamily,text width=8em,align=center,midway},
+    txt/.style = {font=\small\sffamily,text width=9em,align=center,midway},
     ltxt/.style = {txt,left,align=right},
     rtxt/.style = {txt,right,align=left},
     rice/.style = {fill=gray!25},
 }
 % The block diagram code is probably more verbose than necessary
-\begin{tikzpicture}[auto, node distance=2.2cm,>=latex']
+\begin{tikzpicture}[auto, node distance=2.3cm,>=latex']
 % We start by placing right side blocks
 \node [block,rice] (P) {Problem space $\vec{z}\in\mathcal{P}$};
 \node [block, below of=P] (I) {Subspace of instances 
@@ -18,13 +18,13 @@
 $\vphi(\vec{x})\in\Phi\subset\mathcal{F}$};
 \node [block, below of=Phi] (Psi) {Preference set $\Psi \subset \Phi$};
 % then place left side blocks
-\node [block, right of=P, xshift=3cm] (F) 
+\node [block, right of=P, xshift=3.4cm] (F) 
 {Footprints in instance space};
-\node [block,rice, right of=I, xshift=3cm] (Y) 
+\node [block,rice, right of=I, xshift=3.4cm] (Y) 
 {Performance space $y\in\mathcal{Y}$};
-\node [block,rice, right of=Phi, xshift=3cm] (A) 
+\node [block,rice, right of=Phi, xshift=3.4cm] (A) 
 {Algorithm space $a\in\mathcal{A}$};
-\node [block, right of=Psi, xshift=3cm] (PREF) {Preference learning};
+\node [block, right of=Psi, xshift=3.4cm] (PREF) {Preference learning};
 
 \draw [arrow] (P) -- node[ltxt] {instance selection} (I);
 \draw [arrow] (I) -- node[ltxt] {feature selection $\vphi$} (Phi);

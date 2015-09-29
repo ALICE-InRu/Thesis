@@ -1,21 +1,21 @@
 \usetikzlibrary{shapes,positioning,shadows,trees}
 
 \tikzset{
-    txtComment/.style = {above, font=\tiny\sffamily, short, near end},
+    txtComment/.style = {above, font=\tiny\sffamily, near end},
     isLeft/.style = {align=right,left},
-    isRight/.style = {align=left,right},
+    isRight/.style = {align=left,right}
 }
 
 \forestset{
     normal/.style  = {for tree={child anchor=north, parent anchor=south}},
-    root/.style  = {txtLrg, fill=gray!50, medium},
-    onode/.style = {txtLrg, fill=gray!25, medium},
-    tnode/.style = {txtLrg, normal, fill=gray!10, short},
+    root/.style  = {txtLrg, fill=gray!50},
+    onode/.style = {txtLrg, fill=gray!25},
+    tnode/.style = {txtLrg, normal, fill=gray!10},
     emphasis/.style = {}, %tikz={\node [draw,red,thick,fit to tree]{};}},
     edge from parent/.style={arrow, edge from parent fork right}
 }
 
-\begin{figure}[p] \centering
+\begin{figure}[t] \centering
 \begin{forest}
 for tree={
     s sep=6pt, % distance between siblings
@@ -28,33 +28,34 @@ for tree={
         \forestoption{edge label};
     }
 }
-[Problem Space: \cref{ch:genprobleminstances}, root
-    [Optimum Data: Expert policy $\pi_\star$, tnode, medium, name=Rho,
-        edge label = {node[txtComment,isLeft,long]{ Query \cite{gurobi}}},
-        [Training Set: \cref{ch:gentrdat}, tnode, medium, name=TRDAT
+[Problem Space:\\\cref{ch:genprobleminstances}, root
+    [Optimum Data:\\Expert policy $\pi_\star$, tnode, name=Rho,
+        edge label = {node[txtComment,isLeft,text width=3cm]{
+            Query \cite{gurobi}}},
+        [Training Set:\\\cref{ch:gentrdat}, tnode, name=TRDAT
             [Retrace Set, onode,
             edge label = {node[txtComment,isLeft]{Update $\Phi$ in 
             \cref{eq:Phi}}},
-                [CDR accuracy $\xi_{\pi}$: \cref{eq:tracc:opt}, tnode, name=ACC]
-                [Preference Set $\Psi$: \cref{eq:Psi:jsp}, tnode, name=PREF]
+                [CDR accuracy\\$\xi_{\pi}$: \cref{eq:tracc:opt}, tnode, 
+                name=ACC]
+                [Preference Set\\$\Psi$: \cref{eq:Psi:jsp}, tnode, name=PREF]
             ]
         ]
-        [CMA-ES Data: \cref{ch:esmodels}, tnode, medium, name=CMAES,
-        edge label = {node[txtComment,isRight]{ Dependent for 
+        [CMA-ES Data:\\\cref{ch:esmodels}, tnode, name=CMAES,
+        edge label = {node[txtComment,isRight]{ Dependent for\\
                 \cref{eq:cma:rho} not \cref{eq:cma:makespan} }} 
         ]
     ]
-    [Performance Space, onode, name=Cmax
-        [CDR Data: \cref{sec:CDR}, tnode, name=CDR
+    [Performance\\Space, onode, name=Cmax
+        [CDR Data:\\\cref{sec:CDR}, tnode, name=CDR
             [, phantom, calign with current
-                [Linear policy $\pi$: \cref{eq:CDR:feat}, onode, short, 
-                name=LINEAR]
-                [Features: \cref{tbl:features}, onode, short, name=FEAT]
-                [Schedule: \cref{ch:scheduling}, onode, short, name=JSP]
+                [Linear policy\\$\pi$: \cref{eq:CDR:feat}, onode, name=LINEAR]
+                [Features:\\\cref{tbl:features}, onode, name=FEAT]
+                [Schedule:\\\cref{ch:scheduling}, onode, name=JSP]
             ]
         ]
-        [SDR Data: \cref{sec:SDR}, tnode, name=SDR
-            [BDR Data: \cref{sec:diff:opt:bdr}, tnode]
+        [SDR Data:\\\cref{sec:SDR}, tnode, name=SDR
+            [BDR Data:\\\cref{sec:diff:opt:bdr}, tnode]
         ]
     ]
 ]
@@ -64,7 +65,7 @@ for tree={
 \draw[arrow] (LINEAR) to[bend right=5]  (SDR);
 \draw[arrow] (LINEAR) to[bend right=15]  (CDR);
 \draw[arrow] (PREF) to[bend right=30]  (LINEAR);
-\draw[arrow] (CMAES) to[bend right=30] (LINEAR);
+\draw[arrow] (CMAES) to[bend left=15] (LINEAR);
 \draw[arrow] (LINEAR) to[bend right=25] (ACC);
 \draw[arrow] (LINEAR) to[bend right=5] node[txtComment,sloped,midway] 
 {\cref{ch:imitation}} (TRDAT);
