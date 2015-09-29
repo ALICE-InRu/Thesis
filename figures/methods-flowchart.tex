@@ -1,21 +1,22 @@
 %http://tex.stackexchange.com/questions/244742/work-breakdown-structure-wbs-horizontally
 
-\usetikzlibrary{shapes,positioning,shadows,trees}
+\usetikzlibrary{shapes,positioning,shadows,trees,fit,arrows,calc}
 
 \tikzset{
-        txtLrg/.style  = {draw, text width=2cm, align=center, %drop shadow, 
-            font=\bfseries\scriptsize\sffamily, rectangle, thin},
-        txtSml/.style  = {txtLrg, align=left, 
-            font=\tiny\sffamily},
+        %every node/.style={inner sep=1,outer sep=1},
+        txtLrg/.style={rectangle, draw, %text width=2cm, 
+          align=flush center, 
+          font=\bfseries\scriptsize\sffamily, thin},
+        txtSml/.style  = {txtLrg, align=left, font=\tiny\sffamily},
         txtComment/.style = {font=\tiny\sffamily, xshift=-0.4cm, near start,
             text width=4cm, rotate=90, align=left},
-        txtRef/.style= {font=\tiny\sffamily, midway, above, sloped},
-        hybrid/.style = {-,draw=black, dashed},
+        txtRef/.style= {}, %font=\tiny\sffamily, midway, above, sloped},
+        hybrid/.style = {}, %-,draw=black, dashed},
         based/.style = {arrow, dotted},
-        veryshort/.style = {text width=3em},
-        short/.style = {text width=4.25em},
-        medium/.style = {text width=7em},
-        long/.style = {text width=8em}
+        long/.style = {minimum width=7em},
+        medium/.style = {minimum width=6em},
+        small/.style = {minimum width=5em},
+        verysmall/.style = {minimum width=2.7em}
 }
 
 \forestset{
@@ -23,9 +24,9 @@
     rotated/.style = {for tree={child anchor=north, parent anchor=south},
         rotate=90},
     unrotate/.style = {normal, rotate=-90},
-    root/.style  = {txtLrg, rotated, fill=gray!50, medium},
-    onode/.style = {txtLrg, rotated, fill=gray!25, medium},
-    tnode/.style = {txtSml, normal, fill=gray!10, medium},
+    root/.style  = {txtLrg, rotated, fill=gray!50},
+    onode/.style = {txtLrg, rotated, fill=gray!25},
+    tnode/.style = {txtSml, normal, fill=gray!10},
     emphasis/.style = {}, %tikz={\node [draw,red,thick,fit to tree]{};}},
     edge from parent/.style={arrow, edge from parent fork right}
 }
@@ -44,82 +45,83 @@ for tree={
     [Approximation, root, edge label = {node[txtComment, left]{
             Approximations methods, or heuristics, are generally time 
             efficient, but do not necessarily attain the global optimum.}},
-        [General algorithms (iterative methods), onode, long
+        [General algorithms\\(iterative methods), onode, 
             [Artificial intelligence, onode
-                [Machine learning, onode,  
-                    [Roll-out / Pilot method, tnode]
-                    [Reinforcement learning, tnode]
-                    [Decision tree, tnode]
-                    [Imitation learning, onode, emphasis
-                        [Active, onode, veryshort
-                            [DAgger, tnode, short]
+                [Machine\\learning, onode,  
+                    [Roll-out / Pilot method, tnode, long]
+                    [Reinforcement learning, tnode, long]
+                    [Decision tree, tnode, long]
+                    [Imitation\\learning, onode, emphasis
+                        [Active, onode, 
+                            [DAgger, tnode, small]
                         ]
-                        [Passive, onode, veryshort
-                            [Follow the expert, tnode, short]
-                            [Perturbed leader, tnode, short]
-                            [Follow heuristics, tnode, short]
+                        [Passive, onode, 
+                            [Follow the expert, tnode, small]
+                            [Perturbed leader, tnode, small]
+                            [Follow heuristics, tnode, small]
                         ]
                     ]
                 ]
-                [Constraint satisfaction,tnode]
-%                [Expert systems,tnode]
-                [Ant colony optimisation,tnode, name=ACO]
-                [Artificial neural network,tnode, name=ANN]
+                [Constraint satisfaction,tnode, long]
+%                [Expert systems,tnode, medium]
+                [Ant colony optimisation,tnode, long, name=ACO]
+                [Artificial neural network,tnode, long, name=ANN]
             ]
             [Local search, onode
-                [Reinsertion algorithms, tnode]
-                [Threshold alg., onode, medium, unrotate
-                    [Simulated annealing, tnode, name=SA]
-                    [Threshold accepting, tnode
-%                        [Great Deluge alg. \& record-to-record travel, tnode]
+                [Reinsertion algorithms, tnode, long]
+                [Threshold alg., onode, long, unrotate
+                    [Simulated annealing, tnode, medium, name=SA]
+                    [Threshold accepting, tnode, medium
+%                        [Great Deluge alg. \& record-to-record travel, tnode, 
+%medium]
                     ]
-                    [Iterative development, tnode]
+                    [Iterative development, tnode, medium]
                 ]
 %                [Problem space methods, onode
-%                    [Problem and heuristic space, tnode]
-%                    [GRASP, tnode]
+%                    [Problem and heuristic space, tnode, medium]
+%                    [GRASP, tnode, medium]
 %                ]
-                [Large step optimisation, tnode]
-                [Tabu Search, tnode, name=TS]
-                [Evolutionary computation,tnode
-                    [Genetic local search, tnode]
+                [Large step optimisation, tnode, long]
+                [Tabu Search, tnode, long, name=TS]
+                [Evolutionary computation,tnode, long
+                    [Genetic local search, tnode, medium]
                 ]
-                [Genetic algorithms, tnode, name=GA
-                    [Genetic programming, tnode, name=GP]
+                [Genetic algorithms, tnode, long, name=GA
+                    [Genetic programming, tnode, medium, name=GP]
                 ]
-                [Variable depth search, tnode, name=VDS]
+                [Variable depth search, tnode, long, name=VDS]
             ]
         ]
-        [Tailored algorithms (constructive methods), onode, long
-            [Bottleneck based heuristics, onode, medium, unrotate
-                [Shifting bottleneck procedure, tnode, short, name=SBP
-                    [Beam search, tnode, short, name=BS]
+        [Tailored algorithms\\(constructive methods), onode
+            [Bottleneck based\\heuristics, onode, unrotate
+                [Shifting bottle-\\neck procedure, tnode, name=SBP
+                    [Beam search, tnode, name=BS]
                 ]
             ]
-            [Insertion algorithm, tnode, veryshort]
-            [Priority DR, onode, short, emphasis
-                [SDR, onode, short
-                    [SPT, tnode, veryshort]
-                    [LPT, tnode, veryshort]
-                    [LWR, tnode, veryshort]
-                    [MWR, tnode, veryshort]
+            [Insertion algorithm, tnode]
+            [Priority DR, onode, emphasis
+                [SDR, onode
+                    [SPT, tnode, verysmall]
+                    [LPT, tnode, verysmall]
+                    [LWR, tnode, verysmall]
+                    [MWR, tnode, verysmall]
                 ]
-                [CDR, tnode, name=CDR, veryshort]
+                [CDR, tnode, name=CDR, rotated]
             ] 
          ]
     ]
     [Optimisation, root, edge label = {node[txtComment, right]{
             Exact methods guarantee an optimal solution, although for NP-hard 
             problems they are intractable for high dimensionality.}},
-        [Efficient methods, tnode, short] 
+        [Efficient methods, tnode] 
         [Enumerative methods, onode, 
             [Branch \& Bound, tnode, name=BB]
             [Mathematical, onode
-                [Surrogate duality, tnode] 
-                [Lagrangian relaxation, tnode] 
-                [Decomposition methods, tnode] 
-                [Integer linear programming, tnode] 
-                [Mixed integer lin.prog., tnode] 
+                [Surrogate duality, tnode, long] 
+                [Lagrangian relaxation, tnode, long] 
+                [Decomposition methods, tnode, long] 
+                [Integer linear programming, tnode, long] 
+                [Mixed integer lin.prog., tnode, long] 
             ]
         ]
     ]
