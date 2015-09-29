@@ -6,15 +6,15 @@ larger and smaller, and being ordered about by mice and rabbits.}{Alice}
 \FirstSentence{F}{rom \cref{ch:esmodels} there exists linear} weights $\vec{w}$ 
 for \cref{eq:CDR:feat} found with evolutionary optimisation that achieve a 
 lower \namerho, than any of the preference models from \cref{ch:prefmodels}
-has been able to outperform.\footnote{Although $\Psi^{\minCmax}_{p}$ can be 
+has been able to outperform.\footnote{Although \PsiSet[\minCmax]{p} can be 
   statistically insignificant to its original trajectory iff stepwise 
   sampling is adjusted w.r.t. its preference set (cf. \cref{sec:pref:bias}).} 
 This goes to show that the $d=\NrFeatLocal$ features are `enough' -- 
 meaning there is not a need for defining new ones just yet. 
 However, the optimal weights for \cref{eq:cma:objfun} were quite erratic (cf. 
 \cref{fig:cma:wei}). 
-Perhaps the features from $\Phi^{\CMAES}$ are 
-contradictory, and therefore not suitable for preference learning. 
+Perhaps the features from \PhiSet{\CMAES} are contradictory, and therefore not 
+suitable for preference learning. 
 
 Furthermore, the SDRs we've inspected so-far are based on two job-attributes 
 from \cref{tbl:features}, namely
@@ -35,10 +35,10 @@ either one, two, three or all $d=\NrFeatLocal$ of them, for a grand total of:
 The reason for such a limiting number of active features, are due to the fact 
 we want to keep the models simple enough for improved model interpretability.
 Furthermore, we will continue to use our baseline preference set from 
-\cref{InRu11a,InRu14,InRu15a,InRu15b}, namely \PsiSet[OPT]{p}.
+\cref{InRu11a,InRu14,InRu15a,InRu15b}, namely \PsiSet[\OPT]{p}.
 
 For each feature combination, a linear preference model is created, where 
-$\Psi_p$ is limited to the predetermined feature combination. 
+\PsiSet{p} is limited to the predetermined feature combination. 
 This was done for all \Problem[10\times10]{\train} in \cref{tbl:data} (save for 
 job and machine variation), 
 each consisting of $N_{\train}=300$ problem instances.
@@ -47,11 +47,11 @@ Moreover, in order to report the validation accuracy, 20\%
 reporting the accuracy.
 
 \section{Validation accuracy}\label{sec:CDR:acc}
-As the preference set $\Psi_p$ has both preference pairs belonging to optimal
+As the preference set \PsiSet{p} has both preference pairs belonging to optimal
 ranking, and subsequent rankings, it is not of primary importance to classify
 \emph{all} rankings correctly, just the optimal ones. Therefore, instead of
 reporting the validation accuracy based on the classification problem of the
-correctly labelling the entire problem set $\Psi_p$, it's opted that the 
+correctly labelling the entire problem set \PsiSet{p}, it's opted that the 
 validation accuracy is obtained using \cref{eq:tracc:opt}, namely the 
 probability of choosing an optimal decision given the resulting linear 
 weights.\footnote{Due to superabundant number of models then calculating 

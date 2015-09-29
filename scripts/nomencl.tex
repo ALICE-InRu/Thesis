@@ -65,23 +65,24 @@ $K=n\cdot m$}
 \nomenclature[s01]{$\tau$}{Kendall's $\tau$ statistic, i.e., normalised difference in number of concordant and discordant pairs}
 
 % EXPERIMENTAL SETTING
-\nomenclature[x01]{$\Psi_b$}{preference set added w.r.t. basic ranking}
-\nomenclature[x02]{$\Psi_f$}{preference set added w.r.t. full subsequent 
+\nomenclature[x01]{\PsiSet{b}}{preference set added w.r.t. basic ranking}
+\nomenclature[x02]{\PsiSet{f}}{preference set added w.r.t. full subsequent 
 ranking}
-\nomenclature[x03]{$\Psi_p$}{preference set added w.r.t. partial subsequent 
+\nomenclature[x03]{\PsiSet{p}}{preference set added w.r.t. partial subsequent 
 ranking}
-\nomenclature[x04]{$\Psi_a$}{union of all aforementioned rankings, i.e., 
+\nomenclature[x04]{\PsiSet{a}}{union of all aforementioned rankings, i.e., 
 $\Psi_{a}=\Psi_b\cup \Psi_f\cup \Psi_p$}
-\nomenclature[x05]{$\Phi^{SPT}$}{training data guided by SPT trajectory}
-\nomenclature[x06]{$\Phi^{LPT}$}{training data guided by LPT trajectory}
-\nomenclature[x07]{$\Phi^{LWR}$}{training data guided by LWR trajectory}
-\nomenclature[x08]{$\Phi^{MWR}$}{training data guided by MWR trajectory}
-\nomenclature[x09]{$\Phi^{OPT}$}{training data guided by (random) optimum trajectory}
-\nomenclature[x10]{$\Phi^{RND}$}{training data guided by a random trajectory}
-\nomenclature[x11]{$\Phi^{CMA}$}{training data guided by trajectory using by CMA-ES obtained weights}
-\nomenclature[x12]{$\Phi^{ALL}$}{union of all aforementioned trajectories, 
-i.e.,  $\Phi^{ALL}=\Phi^{SPT}\cup \Phi^{LPT}\cup \Phi^{LWR}\cup \Phi^{MWR} \cup 
-\Phi^{OPT} \cup \Phi^{RND} \cup \Phi^{CMA}$}
+\nomenclature[x05]{\PhiSet{\SPT}}{training data guided by SPT trajectory}
+\nomenclature[x06]{\PhiSet{\LPT}}{training data guided by LPT trajectory}
+\nomenclature[x07]{\PhiSet{\LWR}}{training data guided by LWR trajectory}
+\nomenclature[x08]{\PhiSet{\MWR}}{training data guided by MWR trajectory}
+\nomenclature[x09]{\PhiSet{\OPT}}{training data guided by (random) optimum 
+trajectory}
+\nomenclature[x10]{\PhiSet{\RND}}{training data guided by a random trajectory}
+\nomenclature[x11]{\PhiSet{\CMAES}}{training data guided by trajectory using by 
+CMA-ES obtained weights, either \PhiSet{\minCmax} or \PhiSet{\minRho}}
+\nomenclature[x12]{\PhiSet{\ALL}}{union of all aforementioned trajectories, 
+i.e.,  $\PhiSet{\ALL}=\Phi^{\SDR}\cup \Phi^{\CMAES}$}
 \nomenclature[x13]{$p^{equal}$}{all preferences sampled equally }
 \nomenclature[x14]{$p^{opt}$}{preferences sampled proportional w.r.t. its stepwise optimality}
 \nomenclature[x15]{$p^{bcs}$}{preferences sampled reciprocally proportional w.r.t. its stepwise best case scenario of suboptimal dispatches }

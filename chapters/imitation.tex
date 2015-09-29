@@ -92,12 +92,12 @@ $\chi_k$ on the basis of the previous $k-1$ observations.
 
 \subsection{Prediction with Expert Advice}\label{sec:expertPolicy}
 Before going further, let's formalise following an expert policy, 
-\PhiSet{OPT}, from \cref{sec:trdat:param:tracks:passive}.
+\PhiSet{\OPT}, from \cref{sec:trdat:param:tracks:passive}.
 Let's assume we know the expert policy $\pi^\star$, which we can query what 
 is the optimal choice of $\chi_k={j^*}$ at any given time step $k$. 
 Now we can use \cref{eq:jstar} to back-propagate the relationship between 
 post-decision states and $\hat{\pi}$ with preference learning via our collected 
-feature set, denoted \PhiSet{OPT}, i.e., we collect the features set 
+feature set, denoted \PhiSet{\OPT}, i.e., we collect the features set 
 corresponding following optimal tasks $J_{j^*}$ from $\pi^\star$ in 
 \cref{pseudo:constructJSP}.
 This baseline trajectory sampling for adding features to the feature set 
@@ -136,7 +136,7 @@ probability.
 
 \subsection{Experimental study}
 
-To address \ref{expr:boost:newdata} for the conventional \PhiSet{OPT} 
+To address \ref{expr:boost:newdata} for the conventional \PhiSet{\OPT} 
 trajectory the extended training set was simply obtained by iterating over more 
 examples, given in \cref{tbl:Ntrain}.
 
@@ -174,9 +174,9 @@ $\bigOh{\epsilon K}$, if it were i.i.d.
 
 \section{Active Imitation Learning}\label{sec:il:active}
 
-To amend performance from \PhiSet{OPT}-based models, suboptimal 
+To amend performance from \PhiSet{\OPT}-based models, suboptimal 
 state-spaces were explored in \cref{InRu15a} by inspecting the features from 
-successful SDRs, $\Phi^{\SDR}$, by passively observing a 
+successful SDRs, \PhiSet{\SDR}, by passively observing a 
 full execution of following the task chosen by the corresponding SDR. 
 This required some trial-and-error as the experiments showed that features 
 obtained by SDR trajectories were not equally useful for learning.
@@ -249,7 +249,7 @@ its own state distribution limit.
 %    -- direct quote from \cite{CesaBianchi06}}
 
 \Cref{pseudo:imitationLearning} explains the pseudo code for how to collect 
-partial training set, $\Phi^{\IL{i}}$ for $i$-th iteration of imitation 
+partial training set, \PhiSet{\IL{i}} for $i$-th iteration of imitation 
 learning.
 Subsequently, the resulting preference model, $\hat{\pi}_i$, learns on the 
 aggregated datasets from all previous iterations, namely,  
@@ -282,7 +282,7 @@ algorithm and often performs best in practice \cite{RossGB11}.
 
 \subsection{Experiments}
 
-To address \ref{expr:boost:varylmax}, then $\Psi^{\DA{7}}_{p}$ for 
+To address \ref{expr:boost:varylmax}, then \PsiSet[\DA{7}]{p} for 
 \jrnd{10}{10} was trained with varying size $l_{\max}$, from 50,000 to its full 
 size 3,626,260 with 50,000 step-size. The default value for $l_{\max}$ given in 
 \cref{eq:lmax} is denoted in boldface. There was no statistical significance in 

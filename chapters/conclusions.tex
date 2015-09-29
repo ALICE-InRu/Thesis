@@ -56,7 +56,7 @@ gained, resulting in a \cdr\ that outperformed all of the SDR baseline.
 Although, the best preference model of 3 active features is still not better 
 than the CMA-ES model for \jrnd{10}{10} using \NrFeatLocal\ features. 
 However, we're starting to close in on the gap, as previously 
-$\Delta\rho\approx6\%$ (using $\Psi_p^{\minCmax}$ from 
+$\Delta\rho\approx6\%$ (using \PsiSet[\minCmax]{p} from 
 \cref{sec:trdat:param:tracks:passive}) and now $\Delta\rho\approx2\%$ (cf. 
 CDR \#3.524 in \cref{tbl:best.exhaust:stats}) in favour of evolutionary 
 search (cf. \cref{tbl:cma:boxplot:set}).
@@ -64,15 +64,15 @@ search (cf. \cref{tbl:cma:boxplot:set}).
 
 
 We saw in \cref{sec:trdat:param:tracks:passive} that preference models using 
-training data from following SDR policy, i.e., $\Phi^{\SDR}$, are good for 
+training data from following SDR policy, i.e., \PhiSet{\SDR}, are good for 
 improving its original heuristic. However, this did not transcend for 
-$\Psi^{\CMAES}$. 
-Perhaps, if $\Phi^{\CMAES}$ wasn't based on following 
-the CMA-ES trajectory, but rather using the actual features encountered during 
-its optimisation. Alas, CMA-ES used a computational budget of 50,000 function 
-evaluations, each consisting of the expectation of $N_{\train}$ problem 
-instances. So even though \cref{fig:cma:fit} becomes relatively stable after a 
-few generations, it would still yield a gigantic feature set that needs to be 
+\PhiSet{\CMAES}.
+Perhaps, if \PhiSet{\CMAES} wasn't based on following the CMA-ES trajectory, 
+but rather using the actual features encountered during its optimisation. 
+Alas, CMA-ES used a computational budget of 50,000 function evaluations, each 
+consisting of the expectation of $N_{\train}$ problem instances. 
+So even though \cref{fig:cma:fit} becomes relatively stable after a few 
+generations, it would still yield a gigantic feature set that needs to be 
 filtered before going through the optimisation phase of correctly labelling 
 them.
 

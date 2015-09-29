@@ -48,7 +48,7 @@ spaces, which is also done here for
 In order to create successful \dr, a good starting point is 
 to investigate the properties of optimal solutions and hopefully be able to 
 learn how to mimic such `good' behaviour. 
-For this, we follow an optimal solution (cf. $\Phi^\OPT$ in 
+For this, we follow an optimal solution (cf. \PhiSet{\OPT} in 
 \cref{sec:trdat:tracks}),
 and inspect the evolution of its features  (defined in \cref{tbl:features}) 
 throughout the dispatching process, which is detailed in \cref{ch:gentrdat}. 
@@ -465,14 +465,14 @@ remaining dispatches from that point are optimised with some exact methods.
 %relationship with algorithmic performance.
 
 The main focus now is on knowing \emph{when} during the scheduling process easy 
-and hard problems diverge, this will be done using \PhiSet{ALL} and 
-$\Phi^{\SDR}$ (conditioned on the followed trajectory) for 
+and hard problems diverge, this will be done using \PhiSet{\ALL} and 
+\PhiSet{\SDR} (conditioned on the followed trajectory) for 
 \jrnd{6}{5}.\footnote{Additional problem spaces can be
     found in \shiny: Footprints $>$ Stepwise.}
-Individual $\Phi^{\SDR}$ are segregated w.r.t. its own quartiles defined 
-in \cref{eq:easy.vs.hard}, whereas \PhiSet{ALL} is using the joint quartiles 
+Individual \PhiSet{\SDR} are segregated w.r.t. its own quartiles defined 
+in \cref{eq:easy.vs.hard}, whereas \PhiSet{\ALL} is using the joint quartiles 
 given in \cref{tbl:easyhard:quartile:6x5}. 
-Note, if a joint quartile is used for $\Phi^{\SDR}$, then the segregation 
+Note, if a joint quartile is used for \PhiSet{\SDR}, then the segregation 
 becomes highly unbalanced, e.g., for MWR the bulk is considered `easy' and 
 there is only a single `hard' problem instance, as a result there 
 can be no comparison between the two. 

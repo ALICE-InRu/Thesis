@@ -157,28 +157,28 @@ using from evolutionary search (cf. \cref{ch:esmodels}) will also be used.
 To clarify, the trajectory sampling strategies for collecting a feature set and 
 its corresponding labelling for \cref{eq:trdat:metadata} are the following:
 \begin{description}
-    \item[Optimum trajectory, \PhiSet{OPT} or $\Phi^{\pi_\star}$,] at each 
+    \item[Optimum trajectory, \PhiSet{\OPT} or \PhiSet{\pi_\star},] at each 
     dispatch some (random) optimal task is dispatched. This is also referred to 
     following the expert policy, $\pi_\star$.
-    \item[SPT trajectory, \PhiSet{SPT},] at each dispatch the task 
+    \item[SPT trajectory, \PhiSet{\SPT},] at each dispatch the task 
     corresponding to shortest processing time is dispatched, i.e., following 
     \sdr~SPT.
-    \item[LPT trajectory, \PhiSet{LPT},] at each dispatch the task 
+    \item[LPT trajectory, \PhiSet{\LPT},] at each dispatch the task 
     corresponding to largest processing time is dispatched, i.e., following 
     \sdr~LPT.
-    \item[LWR trajectory, \PhiSet{LWR},] at each dispatch the task 
+    \item[LWR trajectory, \PhiSet{\LWR},] at each dispatch the task 
     corresponding to least work remaining is dispatched, i.e., following 
     \sdr~LWR.
-    \item[MWR trajectory, \PhiSet{MWR},] at each dispatch the task 
+    \item[MWR trajectory, \PhiSet{\MWR},] at each dispatch the task 
     corresponding to most work remaining is dispatched, i.e., following 
     \sdr~MWR.
-    \item[Random trajectory, \PhiSet{RND},] at each dispatch some random task 
+    \item[Random trajectory, \PhiSet{\RND},] at each dispatch some random task 
     is dispatched.
-    \item[CMA-ES trajectories, $\Phi^{\minRho}$ and $\Phi^{\minCmax}$,] at each 
+    \item[CMA-ES trajectories, \PhiSet{\minRho} and \PhiSet{\minCmax},] at each 
     dispatch the task  corresponding to highest priority, computed with fixed 
     weights $\vec{w}$, which were obtained by optimising the mean for 
     \fullnamerho, with CMA-ES optimisation from \cref{ch:esmodels}. 
-    \item[All trajectories, \PhiSet{ALL},] denotes all aforementioned 
+    \item[All trajectories, \PhiSet{\ALL},] denotes all aforementioned 
     trajectories were explored, i.e., \vspace*{-18pt}
     \begin{equation} \nonumber
     \Phi^{\ALL}:=\condset{\Phi^{A}}{\forall A \in 
@@ -194,10 +194,9 @@ Hence it is appropriate to follow some random optimal path to begin with and
 then go after some (if not all possible) optimal paths until completion at step 
 $K$. 
 
-In the case of the $\Phi^{\SDR}$ and $\Phi^{\CMAES}$ 
-trajectories it is sufficient to explore each trajectory exactly once for each 
-problem instance. 
-Whereas, for \PhiSet{OPT} and \PhiSet{RND} there can be several 
+In the case of the \PhiSet{\SDR} and \PhiSet{\CMAES} trajectories it is 
+sufficient to explore each trajectory exactly once for each problem instance. 
+Whereas, for \PhiSet{\OPT} and \PhiSet{\RND} there can be several 
 trajectories worth exploring, however, only one is chosen (at random). It is 
 noted that since the number of problem instances, $N_{\train}$, is 
 relatively large, it is deemed sufficient to explore one trajectory for each 

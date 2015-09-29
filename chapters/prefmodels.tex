@@ -168,7 +168,7 @@ Now, if we were to create a global rule, then there would have to be one
 model for all dispatches iterations. The approach in \cref{InRu11a} was to take 
 the mean weight for all stepwise linear models, i.e., 
 $\bar{w}_i=\frac{1}{K}\sum_{k=1}^K w_i^{(k)}$ where $\vec{w}^{(k)}$ is 
-the linear weight resulting from learning preference set $\Psi^{(k)}$ at 
+the linear weight resulting from learning preference set $\Psi(k)$ at 
 dispatch $k$. 
 
 A more sophisticated way, would be to create a \emph{new} linear model, where 
@@ -193,19 +193,21 @@ First let's address \ref{PREF:param:ranks}.
 The various ranking strategies for adding preference pairs to $\Psi$ defined by 
 \cref{eq:Psi:jsp} were first reported in \cref{InRu15a}, and are the following,
 \begin{description}
-    \item[Basic ranking, $\Psi_b$,] i.e., all optimum rankings $r_1$ versus all 
+    \item[Basic ranking, \PsiSet{b},] i.e., all optimum rankings $r_1$ versus 
+    all 
     possible suboptimum rankings $r_i$, $i\in\{2,\ldots,n'\}$, preference pairs 
     are added -- same basic set-up introduced in \cref{InRu11a}. Note, 
     $\abs{\Psi_b}$ is defined in \cref{eq:sizePsi_b}.
-    \item[Full subsequent rankings, $\Psi_f$,] i.e., all possible combinations 
+    \item[Full subsequent rankings, \PsiSet{f},] i.e., all possible 
+    combinations 
     of $r_i$ and $r_{i+1}$ for $i\in\{1,\ldots,n'\}$, preference pairs are 
     added.
-    \item[Partial subsequent rankings, $\Psi_p$,] i.e., sufficient set of 
+    \item[Partial subsequent rankings, \PsiSet{p},] i.e., sufficient set of 
     combinations of $r_i$ and $r_{i+1}$ for $i\in\{1,\ldots,n'\}$, are added to 
     the training set -- e.g. in the cases that there are more than one 
     operation with the same ranking, only one of that rank is needed to 
     compared to the subsequent rank. Note that $\Psi_p\subset \Psi_f$.
-    \item[All rankings, $\Psi_a$,] denotes that all possible rankings were 
+    \item[All rankings, \PsiSet{a},] denotes that all possible rankings were 
     explored, i.e.,
     $r_i$ versus $r_j$ for $i,j\in\{1,\ldots,n'\}$ and $i\neq j$, preference 
     pairs are added.
@@ -233,23 +235,24 @@ irrelevant. Moreover, the behaviour is analogous across all other
 \Problem[6\times5]{\train} in \cref{tbl:data}.
 
 First let's restrict  the models to \Problem[6\times5]{\train}. 
-There is no statistical difference between $\Psi_f$ and $\Psi_p$ 
+There is no statistical difference between \PsiSet{f} and \PsiSet{p} 
 ranking-schemes across all disciplines,
-which is expected since $\Psi_f$ is designed to contain the same preference 
-information as $\Psi_f$ (cf. \cref{eq:Psi:size}). 
-However, neither of the Pareto ranking-schemes outperform the original $\Psi_b$ 
-set-up from \cref{InRu11a}. 
+which is expected since \PsiSet{f} is designed to contain the same preference 
+information as \PsiSet{f} (cf. \cref{eq:Psi:size}). 
+However, neither of the Pareto ranking-schemes outperform the original 
+\PsiSet{b} set-up from \cref{InRu11a}. 
 The results hold for the test set as well. 
-Any statistical difference between ranking schemes were for $\Psi_a$, where it 
+Any statistical difference between ranking schemes were for \PsiSet{a}, where 
+it 
 was considered slightly lacking than some of its counterparts. 
-Since a smaller preference set is preferred, its opted to use the $\Psi_{p}$ 
+Since a smaller preference set is preferred, its opted to use the \PsiSet{p} 
 ranking scheme henceforth as the default set-up for \ref{PREF:param:ranks}. 
 
 Moving on to higher dimension, results for \jrnd{10}{10} were similar to 
 \Problem[6\times5]{\train}. Only exception begin that ranking schemes 
-showed difference in performance when using \PhiSet{OPT}, where \PsiSet[OPT]{p} 
-come on top. Strengthening our previous choice of \PsiSet{p} as 
-standard ranking scheme.
+showed difference in performance when using \PhiSet{\OPT}, where 
+\PsiSet[\OPT]{p} come on top. Strengthening our previous choice of \PsiSet{p} 
+as standard ranking scheme.
 
 
 \begin{figure}[p]
@@ -279,7 +282,7 @@ however, results for \Problem[6\times5]{\train} and
 \jrnd{10}{10} are currently available.\footnote{Additional problem spaces can 
     be found in \shiny: Preference Models $>$ Trajectories \& ranks.}
 Models from \cref{fig:boxplot:prefset} are limited to the ones corresponding to 
-$\Psi_p$. Moreover, main statistics for \Problem[10\times10]{} are given in 
+\PsiSet{p}. Moreover, main statistics for \Problem[10\times10]{} are given in 
 \cref{tbl:tracks:boxplot}.
 \Cref{fig:size:Psi.p:K} jointly illustrates the size of the preference set 
 used, i.e., $\abs{\Psi_p}$ from \cref{fig:size:Psi:K}.
@@ -292,12 +295,12 @@ $\abs{\Psi_p}$.
 Models that are statistically better are denoted by `$\succ$' otherwise 
 considered equivalent. 
 
-For most problem spaces \PsiSet[LPT]{p} was the worst trajectory to pursue. 
-Looking back at \cref{fig:size:Phi:K}, then even though \PhiSet{LPT} was not 
+For most problem spaces \PsiSet[\LPT]{p} was the worst trajectory to pursue. 
+Looking back at \cref{fig:size:Phi:K}, then even though \PhiSet{\LPT} was not 
 the trajectory with the least features, the amount of equivalent features 
 w.r.t. $C_{\max}$ are far too many to make a meaningful preference set out of 
 it. It's only for \jrndn{6}{5} that there is another trajectory with fewer 
-preferences, namely \PsiSet[LWR]{p} (cf. \cref{fig:size:Psi:K}), and in that 
+preferences, namely \PsiSet[\LWR]{p} (cf. \cref{fig:size:Psi:K}), and in that 
 case LWR is the worst model.
 Model that come on top, are those that have a varied $\Psi$. However, 
 aggregating features from all trajectories is not a good idea, as the 
@@ -308,15 +311,15 @@ preference set then becomes too varied for a satisfactory result.
 \input{tables/stats.tracks.10x10.tex}
 
 Learning preference pairs from a good scheduling policies, such as 
-$\Phi^{\minCmax},~\Phi^{\minRho}$ and \PhiSet{MWR}, gave considerably more 
+\PhiSet{\minCmax}, \PhiSet{\minRho} and \PhiSet{\MWR}, gave considerably more 
 favourable results than tracking optimal paths, save for \fjc{6}{5} where the 
 ordering is reversed. Generally, suboptimal routes are preferred. 
 However, even though LWR is a better policy than MWR for \FSP, then 
-\PhiSet{LWR} is a worse candidate than e.g. \PhiSet{MWR}, but as discussed 
+\PhiSet{\LWR} is a worse candidate than e.g. \PhiSet{\MWR}, but as discussed 
 before, it's due to the lack of varied dispatches for the trajectory.
 
 It is particularly interesting there is statistical difference between 
-\PhiSet{OPT} and \PhiSet{RND}, where the latter had improved performance for 
+\PhiSet{\OPT} and \PhiSet{\RND}, where the latter had improved performance for 
 all \JSP\ problem spaces. In those cases, tracking optimal dispatches gives 
 worse performance as pursuing completely random dispatches. 
 This indicates that exploring only expert policy can result in a 
@@ -325,10 +328,10 @@ in the circumstances when newly encountered features have diverged from the
 learned feature set labelled to optimum solutions. 
 
 Generally, adding suboptimal trajectories with the expert policy, i.e., 
-\PhiSet{ALL}, gives the learning algorithm a greater variety of preference 
+\PhiSet{\ALL}, gives the learning algorithm a greater variety of preference 
 pairs for getting out of local minima. However, for some problem spaces, e.g., 
 \frnd{6}{5} and \fmc{6}{5} then additional suboptimal solutions that are too 
-diverse yield a worse outcome than \PhiSet{OPT} would achieve on its own.
+diverse yield a worse outcome than \PhiSet{\OPT} would achieve on its own.
 
 %   Problem Dimension   SPT   LPT   LWR   MWR   RND ES.rho ES.Cmax
 %     j.rnd       6x5 Track Track Track Track Track    SDR     SDR
@@ -343,8 +346,8 @@ diverse yield a worse outcome than \PhiSet{OPT} would achieve on its own.
 %     j.rnd     10x10 Track Track Track  SAME Track    SDR     SDR
 
 \pagebreak
-Comparing $\Psi^{\angles{\text{DR}}}$ to its corresponding DR used to 
-guide its collection, then usually the preference model outperformed the DR it 
+Comparing \PsiSet{\pi} to its corresponding policy $\pi$ used to guide its 
+collection, then usually the preference model outperformed the $\pi$ it 
 was trying to mimic. The exceptions being 
 \begin{enumerate*}
   \item MWR for \jrndJ{6}{5} and \jrndM{6}{5} (and \jrnd{10}{10} was 
@@ -354,20 +357,20 @@ was trying to mimic. The exceptions being
   \item $\minCmax$ and $\minRho$ for all problem spaces, save for \jrndn{6}{5} 
   which was statistically insignificant
 \end{enumerate*}
-Revisiting \cref{fig:diff:case:SDR}, then when $\Psi^{\pi}$ 
+Revisiting \cref{fig:diff:case:SDR}, then when \PsiSet[\pi]{} 
 succeeds its original policy $\pi$, it implies the learning model was able to 
 steer the learned policy towards $\zeta_{\min}^{\pi}$. 
 In fact, its improvement is proportional to its spread\footnote{Consult \shiny:
     Optimality $>$ Best and worst case scenario.}  
 from $\zeta_{\mu}^{\pi}$ to $\zeta_{\min}^{\pi}$ or $\zeta_{\max}^{\pi}$.
-Therefore, a good preference set based on $\Phi^\pi$ not only has to have a low 
-$\zeta_{\mu}^\pi$ to mimic, but also the policy $\pi$ needs to be sufficiently 
-different from $\zeta_{\min}^{\pi}$ and $\zeta_{\max}^{\pi}$ for adequate 
-learning. That is why $\Phi^{\CMAES}$ strategies 
+Therefore, a good preference set based on \PhiSet{\pi} not only has to have a 
+low $\zeta_{\mu}^\pi$ to mimic, but also the policy $\pi$ needs to be 
+sufficiently different from $\zeta_{\min}^{\pi}$ and $\zeta_{\max}^{\pi}$ for 
+adequate learning. That is why \PhiSet{\CMAES} strategies 
 were not good enough for preference learning, as their 
 $\zeta^\pi_{\any}$ spread was the lowest compared to the other fixed DRs.
 
-The rational for using the $\Phi^{\CMAES}$ strategies
+The rational for using the \PhiSet{\CMAES} strategies
 was mostly due to the fact a linear classifier is creating the training data 
 (using the weights found via CMA-ES optimisation in \cref{eq:cma:objfun}), 
 hence the training data created should be linearly separable, which in turn 
@@ -389,8 +392,8 @@ the training data collection.
 \begin{figure}[p]
     \includegraphics[width=\textwidth]{{bias.CDR.10x10}.pdf}
     \vspace*{-30pt}
-    \caption{Log probability for stepwise sampling for \PsiSet[OPT]{p} based on 
-    \Problem[10\times10]{\train}}
+    \caption{Log probability for stepwise sampling for \PsiSet[\OPT]{p} based 
+    on \Problem[10\times10]{\train}}
     \label{fig:bias}
 \end{figure}
 
@@ -462,7 +465,7 @@ other dimensions, e.g., test benchmarks suite from OR-Library (cf.
 \begin{figure}[t]
     \includegraphics[width=\textwidth]{{bias.boxplotRho.CDR.10x10}.pdf}
     \caption[Box-plots for \namerho, using various stepwise bias sampling 
-    strategies]{Box-plots for \namerho, where \PsiSet[OPT]{p} is sampled with 
+    strategies]{Box-plots for \namerho, where \PsiSet[\OPT]{p} is sampled with 
         various stepwise bias strategies. 
         Moreover, time dependent models shown on  far left as reference.}
     \label{fig:bias:boxplot}
@@ -540,9 +543,9 @@ With these configurations it was possible to improve mean \namerho, by
 % j.rnd 10x10 p ES.Cmax dbl2nd T train 0.66   7.938  11.18 11.39   14.48 32.04
 % j.rnd 10x10 p ES.Cmax dbl2nd T test  2.57   8.823  11.30 11.73   14.56 27.23
 
-Using the simplified version of the best configuration for \PsiSet[OPT]{p}, 
+Using the simplified version of the best configuration for \PsiSet[\OPT]{p}, 
 i.e., adjusted \ref{bias:dbl2nd}, for the best \jrnd{10}{10} trajectory from  
-\cref{sec:trdat:param:tracks:passive}, namely $\Psi^{\minCmax}_p$, then it's 
+\cref{sec:trdat:param:tracks:passive}, namely \PsiSet[\minCmax]{p}, then it's 
 possible to get a 4.5\% mean boost in performance, i.e., 11.39\% and 11.73\% 
 for training and test set, respectively. 
 Note, optimisation w.r.t. \cref{eq:cma:makespan} achieved 10.57\% 
