@@ -333,33 +333,15 @@ for the eventual the \emph{learned} policy, $\hat{\pi}$.
 Finally, $\hat{\pi}$, can be post-processed in the same manner as done in the 
 pre-processing phase, i.e., inspect $\xi_{\hat{\pi}}$ and $\zeta_{\hat{\pi}}$.
 
-\section{Outline}\todoWrite{Update outline once draft is ready...}
-An approach based on supervised learning, mostly on optimal schedules will be 
-investigated and its effectiveness illustrated by improving upon well known 
-dispatch rules for \jsp\ scheduling in \cref{ch:prefmodels}. The method of 
-generating training data is shown to be critical for the success of the method, 
-as shown in \cref{sec:pref:tracks}. Moreover the choice of problem 
-instances under consideration is worth considering, as discussed in 
-\cref{ch:genprobleminstances}, and will be used throughout in the subsequent 
-\lcnamecref{ch:defdifficulty}s. 
-
-The preliminary experiments done in \cref{InRu12} investigated the 
-characteristics of difficult \jsp\ schedules for a single heuristic, continuing 
-with that research, \cref{ch:defdifficulty} compares a set of widely used 
-\dr s on different problem spaces in the hopes of extrapolating 
-where an algorithm excels in order to aid its failing aspects, which will be 
-beneficial information for the creation of learning models in 
-\cref{ch:prefmodels}, as they are dependant  on features based on those same 
-\dr s under investigation.
-
+\section{Outline}
+The dissertation is oriented around \jsp\ scheduling , which is explained in detail in \cref{ch:scheduling}.
 Due to scarcity of real-world data, we let random problem generators 
-suffice, that are described in \cref{ch:gentrdat}. Moreover, the traditional 
+suffice, that are described in \cref{ch:genprobleminstances}. Moreover, the traditional 
 OR-Library benchmark instances are similarly created, although for a greater 
 variety of problem sizes. 
-\citet{SmithMiles2015} warn that general practice in the OR-community is 
-over-tuning of algorithms to a relatively small set of aging\footnote{
-    The OR-Library problem instances are mostly from the 1980s and 
-    1990s, or earlier (cf. \cref{tbl:data:orlib}).}
+\citet{SmithMiles2015} warn that general practice in the OR-community is over-tuning of algorithms to a relatively small set of aging\footnote{
+	The OR-Library problem instances are mostly from the 1980s and 
+	1990s, or earlier (cf. \cref{tbl:data:orlib}).}
 instances. 
 Obviously, the choice of data set has a direct influence of the proposed 
 algorithm. As they are developed with them specifically in mind. 
@@ -367,8 +349,26 @@ This is why robustness towards different problem spaces, than initially trained
 on, is of so much value, as it indicates how applicable our model is for 
 real-world deployment 
 
-\todoWrite{our ability to learn about the strengths and weaknesses of 
-algorithms from empirical evidence}
+The preliminary experiments done in \cref{InRu12} investigated the 
+characteristics of difficult \jsp\ schedules for a single heuristic, continuing 
+with that research, \cref{ch:defdifficulty} compares a set of widely used 
+\sdr s on different problem spaces in the hopes of extrapolating 
+where an algorithm excels in order to aid its failing aspects, which will be 
+beneficial information for the creation of learning models in 
+\cref{ch:prefmodels}, as they are dependant  on features based on those same 
+\dr s under investigation.
+
+An approach based on supervised learning, mostly on optimal schedules will be 
+investigated and its effectiveness illustrated by improving upon well known 
+\dr s for \jsp\ scheduling in \cref{ch:prefmodels,ch:featselect,ch:imitation,ch:rollout}. 
+The method of generating training data is and its stepwise sampling bias is critical for the success of the method, as shown in \cref{sec:trdat:param:tracks:passive,sec:pref:bias}.
+Moreover, models should be created in an iterative fashion such that the learned state spaces correspond to ones that the learned policy will eventually encounter, this is done in \cref{ch:imitation}.
+\Cref{ch:featselect,ch:rollout}, on the other hand explore how the baseline preference model of \NrFeatLocal\ features progresses if you drop or add additional features, respectively. 
+
+In addition to \sdr s, more sophisticated models obtained from direct optimisation, namely evolutionary search from \cref{ch:esmodels}, are used to compare the proposed preference models. 
+A comparison study using the OR-Library benchmark suite is done in \cref{ch:experiments}.
+
+The thesis concludes and proposes future work in \cref{ch:conclusions}.
 
 \section{Supplementary material}
 The Prologue will mostly focus on traditional \jsp\ problem instances. 
