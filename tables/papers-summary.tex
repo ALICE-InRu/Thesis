@@ -10,7 +10,7 @@
             total of $K$ models) or fixed throughout the dispatching 
             process.} \\ \midrule
         \ref{InRu11a} & \JSP & PREF & 
-        ~~$\Phi^{\OPT}, \Psi_b$ & $K$ \\
+        ~~$\Phi^{\OPT}, \Psi_{b,\text{equal}}$ & $K$ \\
         \ref{InRu11b} & $\R$-functions & CMA-ES & 
         ~~surrogate sampling strategies & 1\\
         \ref{InRu12} & \JSP& SDR & 
@@ -20,13 +20,13 @@
         \ref{InRu15a} & \JSP & PREF & 
         $\!\begin{array}{l}
             \condset{\Phi^\pi}{\pi\in\{\OPT,\MWR,\RND,\minRho,\ALL\}}\\
-            \condset{\Psi_r}{r\in\{a,b,f,p\}}
+            \condset{\Psi_{r,\text{equal}}}{r\in\{a,b,f,p\}}
         \end{array}$
         & $K$\\
         \ref{InRu15b} & \JSP, \FSP & PREF & 
         $\!\begin{array}{l}
             \condset{\Phi^\pi}{\pi\in\{\OPT,\OPT\epsilon,\DA{i}\}}\\
-            \Psi_p
+            \condset{\Psi_{p,b}}{b\in\{\text{equal},\text{adjdbl2nd}\}}
         \end{array}$
         & 1 \\
         \bottomrule
