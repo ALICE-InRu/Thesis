@@ -19,8 +19,8 @@ suitable for preference learning.
 Furthermore, the SDRs we've inspected so-far are based on two job-attributes 
 from \cref{tbl:features}, namely
 \begin{enumerate*}[after={{,}}]
-  \item \phiproc\ for SPT and LPT 
-  \item \phijobWrm\ for LWR and MWR 
+  \item $\phiproc$ for SPT and LPT 
+  \item $\phijobWrm$ for LWR and MWR 
 \end{enumerate*}
 by choosing the lowest value for SPT and LWR, and highest value for LPT and 
 MWR, i.e., the extremal values for those attributes. 
@@ -126,19 +126,19 @@ Kolmogorov-Smirnov test with $\alpha=0.05$.
 For \jrnd{10}{10}  there is no statistical difference between models (2.69, 
 3.355, 3.358, 3.524), w.r.t. $\rho$ and the latter three w.r.t. 
 accuracy. These models are therefore equivalently `best' for the problem space.
-As \cref{fig:CDR:weights} shows, \phiendTime, \phijobWrm\ and \phimacWrm\ are 
-similar in value, and in the case of 3.358, then \phimacFree\ has similar 
-contribution as \phiendTime\ for the other models. 
+As \cref{fig:CDR:weights} shows, $\phiendTime$, $\phijobWrm$ and $\phimacWrm$ 
+are similar in value, and in the case of 3.358, then $\phimacFree$ has similar 
+contribution as $\phiendTime$ for the other models. 
 Which, as standalone models are 1.6 and 1.3, respectively, and yield 
 equivalent mean $\rho$ and accuracy.
 As these features often coincide in \jsp\, it is justifiable to use only 
 either one, as they contains the same information as its 
-counterpart.\footnote{Note, \phiendTime$~\leq~$\phimacFree, where
-  \phiendTime$~=~$\phimacFree\ when $J_j$ is the latest job on $M_a$, 
+counterpart.\footnote{Note, $\phiendTime\leq\phimacFree$, where
+  $\phiendTime=\phimacFree$ when $J_j$ is the latest job on $M_a$, 
   otherwise $J_j$ is placed in a previously created slot on $M_a$.}
 Most likely, the equivalence of these features is indicating that the 
 schedules are rarely able to dispatch in earlier slots, i.e., 
-\phiendTime$~\approx~$\phimacFree. 
+$\phiendTime\approx\phimacFree$. 
 
 In addition, (2.111, 3.300) and (16.1, 3.355) are statistically insignificant 
 w.r.t. validation accuracy for \jrnd{10}{10}. However, they have considerable 
@@ -166,19 +166,19 @@ Despite having similar contributions, yet statistically significantly
 different, as all the active features as (3.213, 3.216), then the (slight) 
 interference from of other features, hinders the full model from achieving a 
 low $\rho$. 
-Only considering \phijobOps\ and \phimacOps\ with either \phiendTime\ and 
-\phimacFree, boosts performance by 5.28\% and 5.72\%, respectively. 
+Only considering $\phijobOps$ and $\phimacOps$ with either $\phiendTime$ and 
+$\phimacFree$, boosts performance by 5.28\% and 5.72\%, respectively. 
 Thereby stressing the importance of feature selection, to steer clear of 
-over-fitting. Note, unlike \jrnd{10}{10}, now \phiendTime\ differs from 
-\phimacFree, indicating that there are some slots created, which could be 
+over-fitting. Note, unlike \jrnd{10}{10}, now $\phiendTime$ differs from 
+$\phimacFree$, indicating that there are some slots created, which could be 
 better utilised.
 Moreover, looking at model 2.111 for \frnd{10}{10}, which has similar 
 contributions as the best model, 3.539. Then introducing a third feature, 
-\phimacWrm, is the key to the success of the CDR, with a boost of $\rho$ 
+$\phimacWrm$, is the key to the success of the CDR, with a boost of $\rho$ 
 performance by 1.33\%. 
 
 For both \jrnd{10}{10} and \jrndn{10}{10}, model 1.13 is on the Pareto 
-front. The model corresponds to feature \phijobWrm, and in both cases has a 
+front. The model corresponds to feature $\phijobWrm$, and in both cases has a 
 weight strictly greater than zero (cf. \cref{fig:CDR:weights}). Revisiting 
 \cref{eq:CDR:SDR}, we observe that this implies the learning 
 model was able to discover MWR as one of the Pareto solutions, and as is 
@@ -287,7 +287,7 @@ It is for this reason, traditional feature selection such as \emph{add1} and
 and thus resorting to exhaustively searching all feature combinations.
 This also opens of the question of how should validation accuracy be measured? 
 Since the model is based on learning preferences, both based on optimal versus 
-suboptimal, and then varying degrees of suboptimality. As we are only looking 
+suboptimal, and then varying degrees of sub-optimality. As we are only looking 
 at the ranks in a `black and white' fashion, such that the makespans need to be 
 strictly greater to belong to a higher rank, then it can be argued that some 
 ranks should be grouped together if their makespans are sufficiently close. 

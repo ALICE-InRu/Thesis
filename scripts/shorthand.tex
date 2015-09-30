@@ -81,44 +81,44 @@ application}}
 \newcommand{\Fmxc}{\FSP~mixed-correlated}
 
 % job-related
-\newcommand{\phiproc}{$\phi_1$}
-\newcommand{\phistartTime}{$\phi_2$}
-\newcommand{\phiendTime}{$\phi_3$}
-\newcommand{\phiarrivalTime}{$\phi_4$}
-\newcommand{\phiwait}{$\phi_5$}
-\newcommand{\phijobTotProcTime}{$\phi_6$}
-\newcommand{\phijobWrm}{$\phi_7$}
-\newcommand{\phijobOps}{$\phi_8$}
-\newcommand{\phiJobRelated}{\phiproc\!-\phijobOps}
+\newcommand{\phiproc}{\phi_1}
+\newcommand{\phistartTime}{\phi_2}
+\newcommand{\phiendTime}{\phi_3}
+\newcommand{\phiarrivalTime}{\phi_4}
+\newcommand{\phiwait}{\phi_5}
+\newcommand{\phijobTotProcTime}{\phi_6}
+\newcommand{\phijobWrm}{\phi_7}
+\newcommand{\phijobOps}{\phi_8}
+\newcommand{\phiJobRelated}{$\{\phi_i\}_{i=1}^{8}$}
 % mac-related
-\newcommand{\phimacFree}{$\phi_{9}$}
-\newcommand{\phimacTotProcTime}{$\phi_{10}$}
-\newcommand{\phimacWrm}{$\phi_{11}$}
-\newcommand{\phimacOps}{$\phi_{12}$}
-\newcommand{\phireducedSlack}{$\phi_{13}$} 
-\newcommand{\phimacSlack}{$\phi_{14}$}
-\newcommand{\phiallSlack}{$\phi_{15}$}
-\newcommand{\phiSlackRelated}{\phireducedSlack\!-\phiallSlack}
-\newcommand{\phimakespan}{$\phi_{16}$}
-\newcommand{\phiMacRelated}{\phimacFree\!-\phimakespan}
+\newcommand{\phimacFree}{\phi_{9}}
+\newcommand{\phimacTotProcTime}{\phi_{10}}
+\newcommand{\phimacWrm}{\phi_{11}}
+\newcommand{\phimacOps}{\phi_{12}}
+\newcommand{\phireducedSlack}{\phi_{13}} 
+\newcommand{\phimacSlack}{\phi_{14}}
+\newcommand{\phiallSlack}{\phi_{15}}
+\newcommand{\phiSlackRelated}{$\{\phi_i\}_{i=13}^{15}$}
+\newcommand{\phimakespan}{\phi_{16}}
+\newcommand{\phiMacRelated}{$\{\phi_i\}_{i=9}^{16}$}
 % global
-\newcommand{\phiSPT}{$\phi_{17}$}
-\newcommand{\phiLPT}{$\phi_{18}$}
-\newcommand{\phiLWR}{$\phi_{19}$}
-\newcommand{\phiMWR}{$\phi_{20}$}
-\newcommand{\phiSDRRelated}{\phiSPT\!-\phiMWR}
+\newcommand{\phiSPT}{\phi_{17}}
+\newcommand{\phiLPT}{\phi_{18}}
+\newcommand{\phiLWR}{\phi_{19}}
+\newcommand{\phiMWR}{\phi_{20}}
 \newcommand{\phiRND}{\phi_{\RND}}
-\newcommand{\phiRNDmean}{$\phi_{21}$}
-\newcommand{\phiRNDstd}{$\phi_{22}$}
-\newcommand{\phiRNDmin}{$\phi_{23}$}
-\newcommand{\phiRNDmax}{$\phi_{24}$}
-\newcommand{\phiRNDRelated}{\phiRNDmean\!-\phiRNDmax}
-\newcommand{\phiGlobalRelated}{\phiSPT\!-\phiRNDmax}
-\newcommand{\phiLocalRelated}{\phiproc\!-\phimakespan}
-% feature count
+\newcommand{\phiRNDmean}{\phi_{21}}
+\newcommand{\phiRNDstd}{\phi_{22}}
+\newcommand{\phiRNDmin}{\phi_{23}}
+\newcommand{\phiRNDmax}{\phi_{24}}
+% summary
 \newcommand{\NrFeatLocal}{16}
 \newcommand{\NrFeatSDR}{20}
 \newcommand{\NrFeatGlobal}{24}
+\newcommand{\phiSDRRelated}{$\{\phi_i\}_{i=17}^{\NrFeatSDR}$}
+\newcommand{\phiRNDRelated}{$\{\phi_i\}_{i=21}^{\NrFeatGlobal}$}
+\newcommand{\phiGlobalRelated}{$\{\phi_i\}_{i=17}^{\NrFeatGlobal}$}
+\newcommand{\phiLocalRelated}{$\{\phi_i\}_{i=1}^{\NrFeatLocal}$}
 
 \hyphenpenalty=800
 \hbadness=2500

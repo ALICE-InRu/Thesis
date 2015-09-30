@@ -1,73 +1,55 @@
  {\footnotesize
  \centering
  \renewcommand{\arraystretch}{1.5}
-  \begin{tabular}{clll}
+ \begin{tabular}{clll}
 	\toprule
-  $\vphi$ & Feature description   & Mathematical formulation & Shorthand  \\ 
-  %\hline  \multicolumn{4}{c}{\textbf{Local features}}  \\
-  \midrule
-  \multicolumn{4}{c}{\textbf{job related}}\\
-  \phiproc         & job processing time                       & $p_{ja}$   & 
-  proc         \\
-  \phistartTime    & job start-time                            & $x_s(j,a)$ & 
-  startTime    \\
-  \phiendTime      & job end-time                              & $x_e(j,a)$ &
-  endTime      \\
-  \phiarrivalTime  & job arrival time                          & $x_e(j,a-1)$&
-  arrival      \\ 
-  \phiwait         & time job had to wait                      & 
-  $x_s(j,a)-x_e(j,a-1)$ & 
-  wait         \\   
-  \phijobTotProcTime    & total processing time for job             & 
-  $\sum_{a\in \mathcal{M}}p_{ja}$ & 
-  jobTotProcTime \\
-  \phijobWrm       & total work remaining for job              & 
-  $\sum_{a'\in\mathcal{M}\setminus \mathcal{M}_{j}}p_{ja'}$ & 
-  jobWrm       \\
-  \phijobOps       & number of assigned operations for job     & 
-  $|\mathcal{M}_j|$ & 
-  jobOps       \\ 
-  \midrule
-  \multicolumn{4}{c}{\textbf{machine related}}\\
-  \phimacFree      & when machine is next free                 & 
-  $\max_{j'\in \mathcal{J}_a} \{x_e(j',a)\}$ &
-  macFree      \\
-  \phimacTotProcTime    & total processing time for machine    & 
-  $\sum_{j\in \mathcal{J}}p_{ja}$ & 
-  macTotProcTime \\
-  \phimacWrm       & total work remaining for machine          & 
-  $\sum_{j'\in\mathcal{J}\setminus \mathcal{J}_{a}}p_{j'a}$ &  
-  macWrm       \\
-  \phimacOps       & number of assigned operations for machine & 
-  $|\mathcal{J}_a|$ & 
-  macOps       \\
-  \phireducedSlack & change in idle time by assignment         & 
-  $\Delta s(a,j)$ &
-  reducedSlack \\
-  \phimacSlack        & total idle time for machine               & 
-  $\sum_{j'\in \mathcal{J}_a}s(a,j')$ &
-  macSlack        \\
-  \phiallSlack   & total idle time for all machines          & $\sum_{a'\in 
-    \mathcal{M}}\sum_{j'\in \mathcal{J}_{a'}}s(a',j')$                    & 
-  allSlack   \\
-  \phimakespan     & current makespan                          &
-  $\max_{(j',a')\in \mathcal{J} \times \mathcal{M}_{j'}}\{x_f(j',a')\}$ & 
-  makespan     \\
-  \midrule
-  \multicolumn{4}{c}{\textbf{final makespan related}}\\
-  \phiSPT & final makespan using SPT & $ C_{\max}^{\SPT}$ & SPT \\
-  \phiLPT & final makespan using LPT & $ C_{\max}^{\LPT}$ & LPT \\
-  \phiLWR & final makespan using LWR & $ C_{\max}^{\LWR}$ & LWR \\
-  \phiMWR & final makespan using MWR & $ C_{\max}^{\MWR}$ & MWR \\
-  $\phiRND$ & final makespans using 100 random rollouts & $ 
-  \{C_{\max}^{\RND}\}_{i=1}^{100}$ & \\  
-  \phiRNDmean & mean for $\phiRND$ & $\Exp{\phiRND}$ & RNDmean \\  
-  \phiRNDstd & standard deviation for $\phiRND$ & 
-  $\sqrt{\Exp{\phiRND^2}-\Exp{\phiRND}^2}$ &
-  RNDstd \\
-  \phiRNDmin & minimum value for $\phiRND$ & $\min\{\phiRND\}$ & RNDmin \\  
-  \phiRNDmax & maximum value for $\phiRND$ & $\max\{\phiRND\}$ & RNDmax \\  
-  \bottomrule
-  \end{tabular}
+ $\vphi$ & Feature description & Mathematical formulation & Shorthand \\ 
+ %\hline \multicolumn{4}{c}{\textbf{Local features}} \\
+ \midrule
+ \multicolumn{4}{c}{\textbf{job related}}\\
+ $\phiproc$ & job processing time & $p_{ja}$ & proc \\
+ $\phistartTime$ & job start-time & $x_s(j,a)$ & startTime \\
+ $\phiendTime$ & job end-time & $x_e(j,a)$ & endTime \\
+ $\phiarrivalTime$ & job arrival time & $x_e(j,a-1)$& arrival \\ 
+ $\phiwait$ & time job had to wait & $x_s(j,a)-x_e(j,a-1)$ & wait \\ 
+ $\phijobTotProcTime$ & total processing time for job & $\sum_{a\in 
+ \mathcal{M}}p_{ja}$ & jobTotProcTime \\
+ $\phijobWrm$ & total work remaining for job & $\sum_{a'\in\mathcal{M}\setminus 
+ \mathcal{M}_{j}}p_{ja'}$ & jobWrm \\
+ $\phijobOps$ & number of assigned operations for job & $|\mathcal{M}_j|$ & 
+ jobOps \\ 
+\midrule
+ \multicolumn{4}{c}{\textbf{machine related}}\\
+ $\phimacFree$ & when machine is next free & $\max_{j'\in \mathcal{J}_a} 
+ \{x_e(j',a)\}$ & macFree \\
+ $\phimacTotProcTime$ & total processing time for machine & $\sum_{j\in 
+ \mathcal{J}}p_{ja}$ & macTotProcTime \\
+ $\phimacWrm$ & total work remaining for machine & 
+ $\sum_{j'\in\mathcal{J}\setminus \mathcal{J}_{a}}p_{j'a}$ & macWrm \\
+ $\phimacOps$ & number of assigned operations for machine & $|\mathcal{J}_a|$ & 
+ macOps \\
+ $\phireducedSlack$ & change in idle time by assignment & $\Delta s(a,j)$ &
+ reducedSlack \\
+ $\phimacSlack$ & total idle time for machine & $\sum_{j'\in 
+ \mathcal{J}_a}s(a,j')$ & macSlack \\
+ $\phiallSlack$ & total idle time for all machines & $\sum_{a'\in  
+ \mathcal{M}}\sum_{j'\in \mathcal{J}_{a'}}s(a',j')$ & allSlack \\
+ $\phimakespan$ & current makespan & $\max_{(j',a')\in \mathcal{J} \times 
+ \mathcal{M}_{j'}}\{x_f(j',a')\}$ & makespan \\
+ \midrule
+ \multicolumn{4}{c}{\textbf{final makespan related}}\\
+ $\phiSPT$ & final makespan using SPT & $ C_{\max}^{\SPT}$ & SPT \\
+ $\phiLPT$ & final makespan using LPT & $ C_{\max}^{\LPT}$ & LPT \\
+ $\phiLWR$ & final makespan using LWR & $ C_{\max}^{\LWR}$ & LWR \\
+ $\phiMWR$ & final makespan using MWR & $ C_{\max}^{\MWR}$ & MWR \\
+ $\phiRND$ & final makespans using 100 random rollouts & $ 
+ \{C_{\max}^{\RND}\}_{i=1}^{100}$ & \\ 
+ $\phiRNDmean$ & mean for $\phiRND$ & $\Exp{\phiRND}$ & RNDmean \\ 
+ $\phiRNDstd$ & standard deviation for $\phiRND$ & 
+ $\sqrt{\Exp{\phiRND^2}-\Exp{\phiRND}^2}$ & RNDstd \\
+ $\phiRNDmin$ & minimum value for $\phiRND$ & $\min\{\phiRND\}$ & RNDmin \\ 
+ $\phiRNDmax$ & maximum value for $\phiRND$ & $\max\{\phiRND\}$ & RNDmax \\ 
+ \bottomrule
+ \end{tabular}
 }
  %Feature description for job $J_j$ on machine $M_a$ given current temporal schedule, where the set of jobs already dispatched are $J\subset\mathcal{J}$ on corresponding set of machines $\mathcal{M}_j\subset\mathcal{M}$
