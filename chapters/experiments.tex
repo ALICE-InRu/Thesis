@@ -18,9 +18,13 @@ as some of the problem dimensions, $K$, is too great for 100 random roll-outs
 for each possible encountered operation. However, using only four fixed 
 roll-outs is reasonable.
 
+\begin{figure}[t]
+\includegraphics[width=\textwidth]{{boxplot.ORLIB}.pdf}
+\caption{Box-plot for deviation from best known solution, $\rho$, trained on
+\jrnd{10}{10}}\label{fig:comp:orlib}
+\end{figure}
 \input{tables/stats.orlib}
-\missingfigure{ORLIB JSP}
-\missingfigure{ORLIB FSP}
+\pagebreak
 
 The weights for \cref{eq:CDR:feat} in \cref{InRu11a} were found using 
 supervised learning, where the training data was created from optimal solutions 
