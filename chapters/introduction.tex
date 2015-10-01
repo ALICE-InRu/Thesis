@@ -279,7 +279,7 @@ designed the course of the body of work presented in this dissertation, which
 is divided into two main phases
 \begin{enumerate*}
     \item analysis
-    \item preference learning based on the analysis
+    \item machine learning based on the analysis
 \end{enumerate*} 
 
 \subsection*{Analysis}
@@ -302,17 +302,19 @@ lead to better algorithm design, or at least improved understanding of
 \emph{why} the models are performing in the way that they do.
 
 \subsection*{Learning}
-Furthermore, the learned model should be created in an iterative fashion, such 
-that it the learned state-spaces are representative of the ones the eventual 
-model would likely encounter. This can be achieved using \emph{active} 
-imitation learning, similar to the work of \cite{RossB10,RossGB11}, in 
-particular their DAgger framework. 
+The machine learning approach considered in this dissertation is a supervised one. In particular, preference learning, which is a data driven approach which determines what feature states are preferable to others.
+Defining the training data as $\{\vec{x}_i(k),y_i(k)\}_{k=1}^K\in\mathcal{D}$ then 
+\begin{enumerate*}
+    \item samples $\vec{x}_i$ should represent the induced data distribution $\mathcal{D}$. 
+    %that it the learned state-spaces are representative of the ones the eventual model would likely encounter. 
+    This can be achieved by updating the learned model in an active imitation learning fashion, similar to the work of \cite{RossB10,RossGB11}, in particular their DAgger framework
+    \item $y_i$ is labelled using a solver
+    \item data needs to be balanced, as the set is unbalanced w.r.t. dispatching step $k$
+\end{enumerate*}
+
 
 \subsection*{\Alice}
-It's the believe of the author, that the methodology of going about this, which 
-is roughly described in \cref{pseudo:alice}, can be applied to any kind of 
-optimisation problem which involves sequential decision making. 
-As such, then it's suitable to name the framework:
+It's the believe of the author, that the methodology of going about this can be applied to any kind of optimisation problem which involves sequential decision making. As such, then it's suitable to name the framework:
 \emph{\fullnameAlice}, or \Alice\footnote{
     The hopefully catchy and very deliberate `backronym,' pays homage to 
     the wonderful literary character, Alice in Wonderland--a personal 
@@ -321,17 +323,31 @@ for short.
 For demonstration purposes, this dissertation will solely be 
 focusing on applying \Alice\ to \dr s for \jsp\ scheduling.
 
-\input{pseudocode/ALICE}
-
-The framework mainly involves inspecting the stepwise optimality, $\xi_\pi$, 
-for a heuristic policy $\pi$ and it's relation to its end-result (here the 
-makespan), $\zeta_{\pi}$, as it defines its \emph{footprint} in instance space.
-% (detailed in \cref{ch:defdifficulty,ch:analysingsol}). 
+The \Alice\ framework mainly involves inspecting the stepwise optimality, $\xi_\pi$, for a heuristic policy $\pi$ and it's relation to its end-result (here the makespan), $\zeta_{\pi}$, as it defines its \emph{footprint} in instance space (detailed in \cref{ch:defdifficulty,ch:analysingsol}). 
 This is done for a set of benchmark algorithms $\pi\in\mathcal{A}$, during the 
 \emph{analysis} phase, which are then used to guide the training 
-for the eventual the \emph{learned} policy, $\hat{\pi}$. 
+for subsequent \emph{learned} policy, $\hat{\pi}$. 
 Finally, $\hat{\pi}$, can be post-processed in the same manner as done in the 
 pre-processing phase, i.e., inspect $\xi_{\hat{\pi}}$ and $\zeta_{\hat{\pi}}$.
+
+\section{Supplementary material}
+The Prologue will mostly focus on traditional \jsp\ problem instances. 
+However, in \cref{ch:genprobleminstances} there is a greater variety of problem 
+spaces introduced, and when seen fit some of them will be investigated as well 
+in the subsequent \lcnamecref{ch:defdifficulty}s. 
+Since most experiments have been run on all proposed problem spaces, they can be 
+inspected in the supplementary \shiny\ written in R. 
+In addition, all source code and data is freely distributed from:
+\begin{quote}
+    \url{https://github.com/ALICE-InRu/}
+\end{quote}
+under the permissive creative commons share-alike 
+licence.\footnote{Attribution-ShareAlike 4.0 International 
+    (\href{http://creativecommons.org/licenses/by-sa/4.0/}{CC BY-SA 4.0})}
+\Cref{code:classdiagram} displays the code's class diagram in relation to the 
+thesis.
+
+\input{figures/code-flowchart.tex}
 
 \section{Outline}
 The dissertation is oriented around \jsp\ scheduling , which is explained in detail in \cref{ch:scheduling}.
@@ -350,13 +366,9 @@ on, is of so much value, as it indicates how applicable our model is for
 real-world deployment 
 
 The preliminary experiments done in \cref{InRu12} investigated the 
-characteristics of difficult \jsp\ schedules for a single heuristic, continuing 
-with that research, \cref{ch:defdifficulty} compares a set of widely used 
-\sdr s on different problem spaces in the hopes of extrapolating 
-where an algorithm excels in order to aid its failing aspects, which will be 
-beneficial information for the creation of learning models in 
-\cref{ch:prefmodels}, as they are dependant  on features based on those same 
-\dr s under investigation.
+characteristics of difficult \jsp\ schedules for a single heuristic. Continuing 
+with that research, \cref{ch:defdifficulty} redefines the measure and compares a set of widely used \sdr s on different problem spaces.
+The analysis is done in more depth in \cref{ch:analysingsol} in the hopes of extrapolating where and when an algorithm excels in order to aid its failing aspects, which will be beneficial information for the creation of learning models in \cref{ch:prefmodels}, as they are dependant  on features based on those same \dr s under investigation.
 
 An approach based on supervised learning, mostly on optimal schedules will be 
 investigated and its effectiveness illustrated by improving upon well known 
@@ -368,23 +380,5 @@ Moreover, models should be created in an iterative fashion such that the learned
 In addition to \sdr s, more sophisticated models obtained from direct optimisation, namely evolutionary search from \cref{ch:esmodels}, are used to compare the proposed preference models. 
 A comparison study using the OR-Library benchmark suite is done in \cref{ch:experiments}.
 
-The thesis concludes and proposes future work in \cref{ch:conclusions}.
+Finally, the thesis concludes and proposes future work in \cref{ch:conclusions}.
 
-\section{Supplementary material}
-The Prologue will mostly focus on traditional \jsp\ problem instances. 
-However, in \cref{ch:genprobleminstances} there is a greater variety of problem 
-spaces introduced, and when seen fit some of them will be investigated as well 
-in the subsequent \lcnamecref{ch:defdifficulty}s. 
-Since most experiments have been run on all problem spaces, they can be 
-inspected in the supplementary \shiny\ written in R. 
-In addition, all source code and data is freely distributed from:
-\begin{quote}
-    \url{https://github.com/ALICE-InRu/}
-\end{quote}
-under the permissive creative commons share-alike 
-licence.\footnote{Attribution-ShareAlike 4.0 International 
-    (\href{http://creativecommons.org/licenses/by-sa/4.0/}{CC BY-SA 4.0})}
-\Cref{code:classdiagram} displays the code's class diagram in relation to the 
-thesis.
-
-\input{figures/code-flowchart.tex}

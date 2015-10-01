@@ -3,20 +3,18 @@ time.}{The Gryphon}
 
 
 \chapter{OR-Library Comparison}\label{ch:experiments} 
-\todoWrite{Compare CMA-ES to PREF models}
 
-\FirstSentence{T}{here's something to be said} for having a good opening line. 
-
-\todoWrite{When applying global (or roll-out) features from \cref{tbl:features} 
-as was done in \cref{ch:rollout}, then is sensible to keep track of the best 
-solution found (even though they hadn't been followed), this was referred to as 
-its \emph{fortified} solution.}
+\FirstSentence{U}{ntil only evolutionary search models} from \cref{ch:esmodels} have been checked for robustness. This was done to show the impact of choice of objective function \cref{eq:cma:objfun}. 
+However, there was no reference made to other models, except for demonstrating how far off the result was from the best known solutions (BKS).
+Now we will also consider the best configurations for preference models in \cref{ch:prefmodels,ch:featselect,ch:imitation,ch:rollout}.
+Although, all models will be using the same training data \jrnd{10}{10}.
 
 From \cref{ch:rollout} only preference models using \phiSDRRelated\ will be 
 considered, as \phiRNDRelated\ are too computational expensive for OR-Library 
 as some of the problem dimensions, $K$, is too great for 100 random roll-outs 
 for each possible encountered operation. However, using only four fixed 
 roll-outs is reasonable.
+Moreover, applying $(K-k)$-step lookahead, then it is sensible to keep track of the best solution found (even though they had not been specifically followed further). This was referred to as its \emph{fortified} solution, where $\rho_{\text{fort.}}\leq\rho$. To keep notation short, only $\rho_{\text{fort.}}$ is reported for models that incorporate \phiSDRRelated\ features. 
 
 \begin{figure}[t]
 \includegraphics[width=\textwidth]{{boxplot.ORLIB}.pdf}
@@ -54,18 +52,4 @@ roll-outs is reasonable.
   \end{minipage}
 \end{table}
 
-The weights for \cref{eq:CDR:feat} in \cref{InRu11a} were found using 
-supervised learning, where the training data was created from optimal solutions 
-of randomly generated problem instances. As an alternative, this study showed  
-that minimising the mean makespan directly using a brute force search via 
-CMA-ES actually results in a better CDRs. The nature of CMA-ES is to explore 
-suboptimal routes until it converges to an optimal one. Implying that the 
-previous approach of only looking into one optimal route may not produce a 
-sufficiently rich training set. That is, \PhiSet{\pi} should incorporate a 
-more complete knowledge on \emph{all} possible preferences, i.e., make also the 
-distinction between suboptimal and sub-suboptimal features, etc.  This would 
-require a Pareto ranking of preferences which can be used to make the 
-distinction to which feature sets are equivalent, better or worse -- and to 
-what degree, i.e., by giving a weight to the preference. This would result in a 
-very large training set, which of course could be re-sampled in order to make 
-it computationally feasible to learn.
+\todoWrite{Summarise results}

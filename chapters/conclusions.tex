@@ -119,3 +119,27 @@ try to represent its intended (test) dataset as close as possible.
 \todoWrite{our ability to learn about the strengths and weaknesses of 
     algorithms from empirical evidence}
 
+The framework for \Alice\ is roughly described in \cref{pseudo:alice}
+
+\input{pseudocode/ALICE}
+
+
+\todoWrite{Future work}
+The weights for \cref{eq:CDR:feat} in \cref{InRu11a} were found using 
+supervised learning, where the training data was created from optimal solutions 
+of randomly generated problem instances. As an alternative, this study showed  
+that minimising the mean makespan directly using a brute force search via 
+CMA-ES actually results in a better CDRs. The nature of CMA-ES is to explore 
+suboptimal routes until it converges to an optimal one. Implying that the 
+previous approach of only looking into one optimal route may not produce a 
+sufficiently rich training set. That is, \PhiSet{\pi} should incorporate a 
+more complete knowledge on \emph{all} possible preferences, i.e., make also the 
+distinction between suboptimal and sub-suboptimal features, etc.  This would 
+require a Pareto ranking of preferences which can be used to make the 
+distinction to which feature sets are equivalent, better or worse -- and to 
+what degree, i.e., by giving a weight to the preference. This would result in a 
+very large training set, which of course could be re-sampled in order to make 
+it computationally feasible to learn.
+
+\todoWrite{Instead of doing fixed roll-outs based on SDRs, as \phiSDRRelated, then it could be worth investigating a single roll-out of learned policy, $\hat{\pi}$. Generally, the learned policy surpasses SPT (i.e. $-\phiproc$) w.r.t. stepwise optimality, i.e., $\xi^{\star}_{\hat{\pi}}\geq\xi^{\star}_{-\phiproc}$. Moreover, we saw how pursuing $-\phiSPT$, which is basically repeatedly applying $-\phiproc$ for a $(K-k)$-lookahead, significantly increased performance in \cref{fig:rollout1:boxplot}.
+        }

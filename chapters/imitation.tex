@@ -21,7 +21,7 @@ even further.
 Therefore, it would be worth while to try out active imitation learning by 
 \cite{RossB10,RossGB11}, such that the learned policy following an optimal 
 trajectory is used to collect training data, and the learned model is updated. 
-This can be done over several iterations, with the benefit being, that the 
+This can be done over several iterations, the benefit being that the 
 states which are likely to occur in practice are investigated, and as such used 
 to dissuade the model from making poor choices. 
 Alas, this comes at great computational cost due to the substantial amounts of 
@@ -30,10 +30,10 @@ Making it only practical for \jsp\ of relatively low dimension, or only a few
 iterations. 
 
 The preference model presented in \cref{ch:prefmodels,ch:featselect} are 
-comprised of collecting snap-shots of the state space by following an expert 
+comprised of collecting snap-shots of the state space by following a fixed
 policy, and verifying the resulting optimal makespan from each possible state. 
 This can be looked at as \emph{imitation learning} (IL), since we're trying to 
-imitate the expert policy via preference learning. 
+imitate the fixed policy via preference learning. 
 
 \begin{quote}
     So a prudent man must always follow in the footsteps of great men and 
@@ -49,7 +49,7 @@ Namely, when it comes to designing algorithms there needs to be emphasis on
 where to innovate and imitate when visiting state-spaces. 
 
 Up until now, the training data from \cref{ch:prefmodels,ch:featselect} has 
-been crated from optimal \emph{or} suboptimal solutions of randomly generated 
+been created from optimal \emph{or} suboptimal solutions of randomly generated 
 problem instances, i.e., traditional \emph{passive} imitation learning. 
 As \JSP\ is a sequential decision making process, errors are bound to emerge.  
 Due to compound effect of making suboptimal dispatches, the model leads the 
@@ -66,18 +66,17 @@ rather letting the model lead its own way in a self-perpetuating manner until
 it converges.
 
 \section*{Performance boost}
-In order to boost training accuracy, two strategies will be explored 
+In order to boost training accuracy even further, two strategies will be explored 
 \begin{enumerate}[after={{}}, leftmargin=*,
     label={\textbf{Boost.\arabic*}}, ref={{Boost.\arabic*}}]
-    \item \label{expr:boost:varylmax} increasing number of preferences used 
+    \item \label{Boost:lmax} increasing number of preferences used 
     in training (i.e. varying \mbox{$l_{\max} \leq \abs{\Psi}$}),
-    \item \label{expr:boost:newdata} introducing more problem instances 
+    \item \label{Boost:EXT} introducing more problem instances 
     (denoted EXT in experimental setting).
 \end{enumerate}
 
-Note, \ref{expr:boost:varylmax} will be addressed in \cref{sec:il:active}. 
-However, \ref{expr:boost:newdata} strategy will be explored in 
-\cref{sec:il:passive,sec:il:active}. 
+Note, \ref{Boost:lmax} will be addressed in \cref{sec:il:active}. 
+However, \ref{Boost:EXT} strategy will be explored in \cref{sec:il:passive,sec:il:active}. 
 Summary of $N_{\train}$ is given in \cref{tbl:Ntrain}.
 
 \input{tables/Ntrain}
@@ -101,8 +100,8 @@ feature set, denoted \PhiSet{\OPT}, i.e., we collect the features set
 corresponding following optimal tasks $J_{j^*}$ from $\pi^\star$ in 
 \cref{pseudo:constructJSP}.
 This baseline trajectory sampling for adding features to the feature set 
-is a pure strategy where at each dispatch, an optimal task was originally 
-introduced in \cref{InRu11a} and explored further in \cref{InRu15b}. 
+is a pure strategy where at each dispatch, an optimal task was chosen.
+This was originally introduced in \cref{InRu11a} and explored further in \cref{InRu15b}. 
 
 By querying the expert policy, $\pi_\star$, the ranking of the job-list, 
 $\mathcal{L}$, is determined such that,
@@ -136,7 +135,7 @@ probability.
 
 \subsection{Experimental study}
 
-To address \ref{expr:boost:newdata} for the conventional \PhiSet{\OPT} 
+To address \ref{Boost:EXT} for the conventional \PhiSet{\OPT} 
 trajectory the extended training set was simply obtained by iterating over more 
 examples, given in \cref{tbl:Ntrain}.
 
@@ -146,7 +145,7 @@ examples, given in \cref{tbl:Ntrain}.
 Results show that following the perturbed leader significantly improved 
 following the expert policy for \jrndn{6}{5}, \jrndJ{6}{5}, \jrndM{6}{5}, 
 \frndn{6}{5} and \fmc{6}{5}. Other \Problem[6\times5]{\train} problem spaces 
-and \jrnd{10}{10} were insignificant performance boost.
+and \jrnd{10}{10} had insignificant performance boost.
 
 Results showed that the expert policy is a promising starting point. 
 However, since \jsp\ is a sequential prediction problem, all future 
@@ -157,7 +156,7 @@ diverged too far.
 This is due to the learner's predictions affects future input observations 
 during its execution, which violates the crucial i.i.d. assumptions of the  
 learning approach, and ignoring this interaction leads to poor performance.
-In fact, \cite{RossB10} proves, that assuming the preference model has a 
+In fact, \cite{RossB10} proves, that assuming the model has a 
 training error of $\epsilon$, then the total compound error (for all $K$ 
 dispatches) the classifier induces itself grows quadratically, $\bigOh{\epsilon 
     K^2}$, for the entire schedule, rather than having linear loss, 
@@ -262,27 +261,26 @@ and its update procedure is detailed in \cref{pseudo:DAgger}.
 \input{pseudocode/DAgger}
 
 \subsection{DAgger Parameters}
-Due to time constraints, only $T=7$ iterations will be inspected for 
-\jrnd{6}{5} and \jrnd{10}{10}.
+Due to time constraints, then maximum number of iterations is $T=7$ are inspected for \jrnd{6}{5} and \jrnd{10}{10} using \ref{bias:equal}.
 In addition, there will be three mixed strategies for $\{\beta_i\}_{i=0}^T$ in 
 \cref{eq:il} considered
 \begin{enumerate}[after={{}}, leftmargin=*,
   label={\textbf{DA.\arabic*}}, ref={{DA.\arabic*}}]
   \item \textbf{fixed} supervision with $\beta_i=0.5$ save for $\beta_0=1$, 
-  \label{expr:ILFIXSUP}
-  \item \textbf{decreasing supervision} with $\beta_i=0.5^i$, \label{expr:ILSUP}
+  \label{DA:FIXSUP}
+  \item \textbf{decreasing supervision} with $\beta_i=0.5^i$, \label{DA:SUP}
   \item \textbf{unsupervised} with $\beta_i=I(i=0)$, where $I$ is the indicator 
   function.\footnote{$\beta_0=1$ and $\beta_i=0,\forall i>0$.} 
-  \label{expr:ILUNSUP}
+  \label{DA:UNSUP}
 \end{enumerate}
-Note, \ref{expr:ILSUP} starts as \ref{expr:ILFIXSUP} and decays exponentially 
-towards \ref{expr:ILUNSUP}.
-Moreover, \ref{expr:ILUNSUP} is a simple parameter-free version of the DAgger 
+Note, \ref{DA:SUP} starts as \ref{DA:FIXSUP} and decays exponentially 
+towards \ref{DA:UNSUP}.
+Moreover, \ref{DA:UNSUP} is a simple parameter-free version of the DAgger 
 algorithm and often performs best in practice \cite{RossGB11}.
 
 \subsection{Experiments}
 
-To address \ref{expr:boost:varylmax}, then \PsiSet[\DA{7}]{p} for 
+To address \ref{Boost:lmax}, then \PsiSet[\DA{7}]{p} for 
 \jrnd{10}{10} was trained with varying size $l_{\max}$, from 50,000 to its full 
 size 3,626,260 with 50,000 step-size. The default value for $l_{\max}$ given in 
 \cref{eq:lmax} is denoted in boldface. There was no statistical significance in 
@@ -303,7 +301,7 @@ sized $\abs{\Psi_p^{\DA{7}}}=l_{\max}$ using \jrnd{10}{10}}
 \label{fig:boxplot:varylmax}
 \end{figure}
 
-Regarding \ref{expr:boost:newdata} for DAgger trajectories the extended set 
+Regarding \ref{Boost:EXT} for DAgger trajectories the extended set 
 consisted of each iteration encountering $N_{\train}$ \emph{new} problem 
 instances. For a grand total of 
 \begin{equation}
@@ -316,9 +314,12 @@ the learning model at iteration $i$.
     \includegraphics[width=\textwidth]{{j.rnd}/{boxplot.active.6x5}.pdf}
     \includegraphics[width=\textwidth]{{j.rnd}/{boxplot.active.10x10}.pdf}
     \caption{Box-plots for \namerho, using active imitation learning for 
-        \jrnd{6}{5} and \jrnd{10}{10}}
+        \jrnd{6}{5} and \jrnd{10}{10} using equal re-sampling (i.e. \ref{bias:equal})}
 \end{figure}
 
+\todoWrite{Put here DAGger experiments from \cref{InRu15b}. Also add figure with adjusted bias}
+
+The best DAgger configuration was \ref{DA:UNSUP} using \ref{Boost:EXT}
 
 \section{Conclusions}
 This study showed, that when accumulating training data for supervised  

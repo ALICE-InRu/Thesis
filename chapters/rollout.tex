@@ -40,6 +40,8 @@ evenly distributed between levers.
 However, using the multi-armed bandit paradigm, it's possible to allocate 
 roll-outs originating from the job-list with bias towards more promising levers.
 
+Note, in the case of random roll-outs (namely \phiRNDRelated) then the final makespan resulting in the pursued trajectory might not necessarily be the best final makespan found during the dispatching process, this is reported as its `fortified' result, denoted $\rho_{\text{fort.}}$. 
+
 \section{Single feature roll-outs}
 
 A model based on each of the extremal (i.e. minimum or maximum value) values 
@@ -48,10 +50,6 @@ space is reported, namely minimum values for $\phiSPT$, $\phiRNDmean$ and
 $\phiRNDmin$. 
 Box-plot for \namerho, is depicted in \cref{fig:rollout1:boxplot}, and its 
 main statistics are given in \cref{tbl:rollout1:boxplot}.
-Note, in the case of \phiRNDRelated\ then the final makespan resulting in the 
-pursued trajectory might not necessarily be the best final makespan found 
-during the dispatching process, this is reported as its `fortified' result, 
-denoted $\rho_{\text{fort.}}$. 
 In all cases, the fortified makespan was significantly better than the final 
 makespan of the pursued trajectory, save for \frnd{6}{5} using minimum 
 $\phiRNDmin$, which was statistically insignificant.
@@ -164,7 +162,7 @@ The best configuration, namely following $\minCmax$ with adjusted stepwise bias
 \ref{bias:dbl2nd}, is depicted with the CMA-ES obtained weights in 
 \cref{fig:rollout:Cmax:boxplot}. The local 16.1.ES.Cmax model was statistically 
 insignificant from the baseline CMA-ES obtained weights. From the figure we can 
-see how the models significantly improves with increased $(K-k)$ roll-outs.
+see how the models significantly improves with increased number of roll-outs.
 
 \begin{figure}[t]\centering 
     \includegraphics[width=\textwidth]{ALL/{boxplot.multi.rollout.6x5}.pdf}
