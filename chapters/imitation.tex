@@ -3,7 +3,7 @@
 \FirstSentence{D}{espite the abundance of information gathered} by following 
 expert policy, the knowledge obtained is not enough by itself. Since the 
 learning model isn't perfect, it is bound to make a mistake eventually. 
-When it does, the model is in uncharted  territory as there is no certainty that
+When it does, the model is in uncharted territory as there is no certainty that
 the samples already collected are able to explain the current situation. 
 For this we propose investigating features from suboptimal trajectories as 
 well, since the future observations depend on previous predictions. 
@@ -133,7 +133,7 @@ probability.
 
 \input{pseudocode/perturbedLeader}
 
-\subsection{Experimental study}
+\subsection{Experimental study}\label{sec:pil:expr}
 
 To address \ref{Boost:EXT} for the conventional \PhiSet{\OPT} 
 trajectory the extended training set was simply obtained by iterating over more 
@@ -221,6 +221,7 @@ scenarios.
 With iterative methods, Mario would encounter these problematic situations and 
 eventually learn how to get himself unstuck. 
 
+\pagebreak
 The policy of imitation learning at iteration $i>0$ is a mixed strategy given 
 as follows, 
 \begin{equation}\label{eq:il}
@@ -261,7 +262,8 @@ and its update procedure is detailed in \cref{pseudo:DAgger}.
 \input{pseudocode/DAgger}
 
 \subsection{DAgger Parameters}
-Due to time constraints, then maximum number of iterations is $T=7$ are inspected for \jrnd{6}{5} and \jrnd{10}{10} using \ref{bias:equal}.
+Due to time constraints, then maximum number of iterations is $T=7$ are 
+inspected for \jrnd{6}{5} and \jrnd{10}{10} using \ref{bias:equal}.
 In addition, there will be three mixed strategies for $\{\beta_i\}_{i=0}^T$ in 
 \cref{eq:il} considered
 \begin{enumerate}[after={{}}, leftmargin=*,
@@ -278,11 +280,12 @@ towards \ref{DA:UNSUP}.
 Moreover, \ref{DA:UNSUP} is a simple parameter-free version of the DAgger 
 algorithm and often performs best in practice \cite{RossGB11}.
 
-\subsection{Experiments}
+\pagebreak
+\subsection{Experiments}\label{sec:ail:expr}
 
 To address \ref{Boost:lmax}, then \PsiSet[\DA{7}]{p} for 
 \jrnd{10}{10} was trained with varying size $l_{\max}$, from 50,000 to its full 
-size 3,626,260 with 50,000 step-size. The default value for $l_{\max}$ given in 
+size 3,626,260 with 50,000 interval. The default value for $l_{\max}$ given in 
 \cref{eq:lmax} is denoted in boldface. There was no statistical significance in 
 boost of performance, hence $l_{\max}$ is kept unchanged.
 
@@ -309,25 +312,127 @@ N^{\DA{i}}_{\text{train, EXT}}=N_{\train}\cdot (i+1)
 \end{equation}
 problem instances explored for the aggregated extended training set used for 
 the learning model at iteration $i$.
+This way, we use the extended training data sparingly, as labelling for each 
+problem instances is computationally intensive. As a result, the computational 
+budget for DAgger is same regardless whether there are new problem instances 
+used or not, i.e., $\abs{\Phi^{\DA{i}}}\approx\abs{\Phi^{\DA{i}}_{\text{EXT}}}$.
+
+A box-plot of \namerho, is given in \cref{fig:active:boxplot:equal}. 
+As we can see DAgger is not fruitful when the same problem instances 
+are continually used, this applies to all problem spaces. 
+This is due to the fact that there is not enough variance between 
+\PhiSet{\IL{i}}, hence the aggregated feature set \PhiSet{\DA{i}} is only slightly perturbed with each iterations. 
+Which from \cref{sec:pil:expr} we saw wasn't a very successful modification for the expert policy. Although, it's noted that by introducing sub-optimal state spaces 
+the preference model is not as drastically bad as the extended optimal policy, 
+even though $\abs{\Phi^{\DA{i}}}\ll\abs{\Phi^{\OPT}_{\text{EXT}}}$ if \Problem[6\times5]{}.
+However, when using new problem instances at each iterations, the feature set 
+becomes varied enough that situations arise that can be learned to achieve a 
+better represented classification problem which yields a lower mean \namerho.
 
 \begin{figure}
     \includegraphics[width=\textwidth]{{j.rnd}/{boxplot.active.6x5}.pdf}
     \includegraphics[width=\textwidth]{{j.rnd}/{boxplot.active.10x10}.pdf}
     \caption{Box-plots for \namerho, using active imitation learning for 
         \jrnd{6}{5} and \jrnd{10}{10} using equal re-sampling (i.e. \ref{bias:equal})}
+    \label{fig:active:boxplot:equal}
 \end{figure}
 
-\todoWrite{Put here DAGger experiments from \cref{InRu15b}. Also add figure with adjusted bias}
+\todoWrite{DAgger for equal stepwise sampling}
 
-The best DAgger configuration was \ref{DA:UNSUP} using \ref{Boost:EXT}
+The best $\{\beta_i\}_{i=1}^T$ configuration for \Problem[6\times5]{\train} and \jrnd{10}{10} was \ref{DA:UNSUP} using an extended data set (i.e. \ref{Boost:EXT}). Therefore, for \jrnd{10}{10} that configuration will also be tried for adjusted \ref{bias:dbl2nd}, however, iterations were stopped as soon as performance downgrades.
+Box-plot for \namerho, for both stepwise biases are depicted in \cref{fig:active:boxplot:10x10:bias} and main statistics are reported in \cref{tbl:IL:stats}.
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{figures/{j.rnd}/{boxplot.active.bias.10x10}.pdf}
+	\caption{Box plot for \jrnd{10}{10} \namerho, using DAgger for \JSP}
+	\label{fig:active:boxplot:10x10:bias} 
+\end{figure}
+
+\section{Summary of Imitation Learning Experiments}
+
+A summary of \jrnd{10}{10} best passive and active imitation learning models
+w.r.t. \namerho, from 
+\cref{sec:pil:expr,sec:ail:expr}, respectively, are illustrated in 
+\cref{fig:all:boxplot}, and main statistics are given in 
+\cref{tbl:IL:stats}. To summarise, the following trajectories are used
+\begin{enumerate*}
+	\item expert policy, trained on \PhiSet{\OPT}
+	\item perturbed leader, trained on \PhiSet{\OPT\epsilon}
+	\item imitation learning, trained on $\Phi^{\DA{i}}_{\text{EXT}}$ for 
+	iterations $i=\{1,..,3\}$ using extended training set
+\end{enumerate*}
+As a reference, the \sdr\ MWR is shown on the far right of \cref{fig:all:boxplot}.
+	
+At first we see that the perturbed leader ever so-slightly improves the mean 
+for $\rho$, rather than using the baseline expert policy. 
+However, active imitation learning is by far the best improvement. With each 
+iteration of DAgger, the models improve upon the previous one with each 
+iteration
+\begin{enumerate*}  
+	\item for \ref{bias:equal} with \ref{Boost:EXT} then $i=1$ starts 
+	with increasing  $\Delta\rho\approx+1.39\%$. However, after that first 
+	iteration there is a performance boost of $\Delta\rho\approx-15.11\%$ after 
+	$i=2$ and $\Delta\rho\approx-0.19\%$ for the final iteration $i=3$
+	\item on the other hand when using adjusted \ref{bias:dbl2nd}, only one iteration 
+	is needed, as  $\Delta\rho\approx-11.68$ for $i=1$, and after that it 
+	stagnates with $\Delta\rho\approx+0.55\%$ for $i=2$ 
+	(therefore $i=3$ was not run)
+\end{enumerate*}
+\todoFind{Update to CMA-ES instead of MWR}
+In both cases, DAgger outperforms MWR
+\begin{enumerate*}
+	\item after $i=3$ iterations by $\Delta\rho\approx-5.31\%$ for 
+	\ref{bias:equal} with \ref{Boost:EXT}
+	\item after $i=1$ iteration by $\Delta\rho\approx-9.31\%$ for 
+	adjusted \ref{bias:dbl2nd}
+\end{enumerate*}
+Note, for \ref{bias:equal} without \ref{Boost:EXT}, then DAgger is 
+unsuccessful, and the aggregated data set downgrades the performance of the 
+previous iterations, making it best to learn solely on the initial expert 
+policy for that model configuration.
+						
+\begin{figure}[t]
+	\includegraphics[width=\textwidth]{figures/{j.rnd}/{boxplot.summary.10x10}.pdf}
+	\caption{Box plot for \jrnd{10}{10} \namerho, using either expert policy, 
+	DAgger or following perturbed leader strategies. 
+	MWR shown on far right for reference.}\label{fig:all:boxplot} 
+\end{figure}
+					
+\input{tables/stats.IL.10x10.tex}
 
 \section{Conclusions}
 This study showed, that when accumulating training data for supervised  
-learning, it's possible to automate its generation in such a way that the 
-resulting model will be an accurate representative of the instances it will 
-later come across. 
+learning using DAgger, it's possible to automate its generation in such a way 
+that the resulting model will be an accurate representative of the instances 
+it will later come across. 
 
-DAgger for \jsp\ is not sensitive to choice of $\beta_i$ in \cref{eq:il}.
+The experimental study in \cref{sec:ail:expr} showed that DAgger for \jsp\ is 
+sensitive to choice of $\beta_i$ in \cref{eq:il}. The best configuration was 
+an unsupervised approach (i.e. \ref{DA:UNSUP}), which concurs to the findings of 
+\cite{RossGB11}.
+
+Regarding using an extended data set (i.e. \ref{Boost:EXT}), then it's not successful for the expert policy, as $\rho$ increased approximately 10\%. This could most likely be 
+counter-acted by increasing $l_{\max}$ to reflect the additional examples.
+What is interesting though, is that \ref{Boost:EXT} is well suited for 
+active imitation learning, using the same $l_{\max}$ as before. 
+Note, the amount of problems used for $N^{\text{OPT}}_{\text{train, EXT}}$ is 
+equivalent to $i=10$ or $i=2\tfrac{1}{3}$ iterations of extended DAgger 
+for \Problem[6\times5]{\train} and \jrnd{10}{10}, respectively.
+The \emph{new} varied data gives the aggregated feature set more information 
+of what is important to learn in subsequent iterations, as those new states are 
+more likely to be encountered `in practice' rather than `in theory.' Not only 
+does the active imitation learning converge faster, it also consistently 
+improves with each iterations.
+
+The number of iterations needed depend on the quality of the model configurations. When using the baseline \ref{bias:equal} the imitation model was iterated for $T=7$ iterations. Slowly improving with each iteration.
+However, when the preferred adjusted \ref{bias:dbl2nd} stepwise bias then after 
+only two iterations a better performance was achieved. Alas, after the third 
+iteration the model had already stagnated with slightly, yet insignificant, worse
+mean \namerho.
+
+
+
+
 
 \todo[inline]{Place work in wider context}
 
@@ -343,13 +448,6 @@ DAgger for \jsp\ is not sensitive to choice of $\beta_i$ in \cref{eq:il}.
 \todo[inline,color=green]{George Bernard Shaw once said: ``Imitation is not 
     just the sincerest form of flattery -- it's the sincerest form of 
     learning.''}
-
-\todo[inline]{Future Work: \cite{Judah12} Unfortunately [DAgger] query the 
-    expert quite aggressively making them impractical for human experts. In 
-    contrast, [Reduction-based Active Imitation Learning (RAIL)] focuses on 
-    active querying for the purpose of minimizing the expert's labelling 
-    effort. Like our work, they also require a dynamics simulator to help 
-    select queries }
 
 \emph{Maximum Mean Discrepancy} (MMD) imitation learning by \cite{Kim13} is an 
 iterative algorithm similar to DAgger. 
@@ -372,9 +470,14 @@ DAgger can be straightforwardly implemented, parameter-free and obtains
 competitive results, although with some computational overhead due to excess 
 expert queries. 
 
+Main drawback of DAgger is that it quite aggressively quires the expert, making 
+it impractical for some problems, especially if it involves human experts. 
+To confront that, \cite{Judah12} introduce Reduction-based Active Imitation 
+Learning (RAIL), which involves a dynamic approach similar to DAgger, but more 
+emphasis is used to minimise the expert's labelling effort.
 In fact, it's possible to circumvent querying the expert altogether and still 
 have reasonable performance. By applying Locally Optimal Learning to Search 
-(LOLS) \cite{ChangKADL15} it is possible to use imitation learning (similar to 
+(LOLS) by \cite{ChangKADL15}, it is possible to use imitation learning (similar to 
 DAgger framework) when the reference policy is poor (i.e. $\pi_\star$ in 
 \cref{eq:il} is suboptimal), 
 although it's noted that the quality (w.r.t near-optimality) of reference 
