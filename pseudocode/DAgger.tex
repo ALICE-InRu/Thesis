@@ -1,13 +1,11 @@
-\begin{algorithm}[t]
+\begin{algorithm}[p]
     \caption{DAgger: Dataset Aggregation for \JSP}
     \label{pseudo:DAgger}
     \begin{algorithmic}[1]
         \Require $T\geq1$
-        \Procedure{DAgger}{$\pi_\star,\Phi^\OPT,T$}
-        \State $\Phi^{\IL{0}} \gets \Phi^{\OPT}$ \Comment{initialize 
-        dataset}
+        \Procedure{DAgger}{$\pi_\star,\Phi^{\IL{0}},T$}
         \State $\hat{\pi}_0 \gets$ \Call{Train}{$\Phi^{\IL{0}}$}
-        \Comment{initial model, equivalent to \cref{sec:expertPolicy}}
+        \Comment{initial model, \cref{sec:expertPolicy} iff $\Phi^{\IL{0}}=\Phi^{\OPT}$}
         \For{i}{1}{T} \Comment{at each imitation learning iteration}
         \State Let $\pi_i = \beta_i\pi_\star + (1-\beta_i)\hat{\pi}_{i-1}$
         \Comment{\cref{eq:il}}
@@ -20,7 +18,7 @@
         \Phi^{\IL{i}}$ 
         \Comment{aggregate datasets, cf. \cref{eq:DAgger}}
         \State $\hat{\pi}_{i+1} \gets$ \Call{Train}{$\Phi^{\DA{i}}$}
-        \Comment{preference model from \cref{eq:jssp:linweights}}
+        \Comment{preference model from \cref{ch:prefmodels}}
         \EndFor
         \State \Return best $\hat{\pi}_i$ on validation \Comment{best 
         preference model}
