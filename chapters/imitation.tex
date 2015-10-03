@@ -345,26 +345,8 @@ Note, for \fsp\ problem spaces then DAgger was not fruitful, as either the itera
 \end{figure}
 
 The best $\{\beta_i\}_{i=1}^T$ configuration for \Problem[6\times5]{\train} and \jrnd{10}{10} was \ref{DA:UNSUP} using an extended data set (i.e. \ref{Boost:EXT}). Therefore, for \jrnd{10}{10} that configuration will also be tried for adjusted \ref{bias:dbl2nd}, however, iterations were stopped as soon as performance downgrades.
-
-\section{Summary of Imitation Learning Experiments}
-
-A summary of \jrnd{10}{10} best passive and active imitation learning models
-w.r.t. \namerho, from 
-\cref{sec:pil:expr,sec:ail:expr}, respectively, are illustrated in 
-\cref{fig:all:boxplot}, and main statistics are given in 
-\cref{tbl:IL:stats}. To summarise, the following trajectories are used
-\begin{enumerate*}
-	\item expert policy, trained on \PhiSet{\OPT}
-	\item perturbed leader, trained on \PhiSet{\OPT\epsilon}
-	\item imitation learning, trained on $\Phi^{\DA{i}}_{\text{EXT}}$ ($i\leq7$ for \ref{bias:equal} and $i\leq2$ for adjusted \ref{bias:dbl2nd})
-\end{enumerate*}\linebreak
-As a reference, $\minCmax$ model from optimising w.r.t. \cref{eq:cma:makespan} and MWR are shown on the far right of \cref{fig:all:boxplot}.
-	
-At first we see that the perturbed leader ever so-slightly improves the mean 
-for $\rho$, rather than using the baseline expert policy. 
-However, active imitation learning is by far the best improvement. With each 
-iteration of DAgger, the models improve upon the previous one with each 
-iteration
+Box-plot for \namerho, is depicted in \cref{fig:all:boxplot}, and main statistics are given in \cref{tbl:IL:stats}. Both adjusted \ref{bias:dbl2nd} and the corresponding \ref{bias:equal} from \cref{fig:boxplot:active} are shown together. 
+We notice that with each iteration DAgger improves
 \begin{enumerate*}  
 	\item for \ref{bias:equal} with \ref{Boost:EXT} then $i=1$ starts 
 	with increasing  $\Delta\rho\approx+1.39\%$. However, after that first 
@@ -376,6 +358,34 @@ iteration
 	(therefore $i=3$ was not run)
 \end{enumerate*}
 
+\section{Summary of Imitation Learning Experiments}
+\begin{figure}[t]
+	\includegraphics[width=\textwidth]{figures/{j.rnd}/{boxplot.summary.10x10}.pdf}
+	\vspace*{-18pt}
+	\caption{Box plot for \jrnd{10}{10} \namerho, using either expert policy, 
+		DAgger or following perturbed leader strategies. }\label{fig:all:boxplot} 
+\end{figure}
+
+\input{tables/stats.IL.10x10.tex}
+
+A summary of \jrnd{10}{10} best passive and active imitation learning models
+w.r.t. \namerho, from 
+\cref{sec:pil:expr,sec:ail:expr}, respectively, are illustrated in 
+\cref{fig:all:boxplot}, and main statistics are given in 
+\cref{tbl:IL:stats}. To summarise, the following trajectories are used
+\begin{enumerate*}
+	\item expert policy, trained on \PhiSet{\OPT}
+	\item perturbed leader, trained on \PhiSet{\OPT\epsilon}
+	\item imitation learning, trained on $\Phi^{\DA{i}}_{\text{EXT}}$ ($i\leq7$ for \ref{bias:equal} and $i\leq2$ for adjusted \ref{bias:dbl2nd})
+\end{enumerate*}\linebreak
+As a reference, $\minCmax$ model from optimising \cref{eq:cma:makespan} and MWR are shown on the far right of \cref{fig:all:boxplot}.
+	
+At first we see that the perturbed leader ever so-slightly improves the mean 
+for $\rho$, rather than using the baseline expert policy. 
+However, active imitation learning is by far the best improvement. With each 
+iteration of DAgger, the models improve upon the previous one with each 
+iteration.
+
 In both cases, DAgger outperforms MWR
 \begin{enumerate*}
 	\item after $i=7$ iterations by $\Delta\rho\approx-6.12\%$ for 
@@ -383,27 +393,20 @@ In both cases, DAgger outperforms MWR
 	\item after $i=1$ iteration by $\Delta\rho\approx-9.31\%$ for 
 	adjusted \ref{bias:dbl2nd}
 \end{enumerate*}
-Note, for \ref{bias:equal} without \ref{Boost:EXT}, then DAgger is 
+Note, for \ref{bias:equal} without \ref{Boost:EXT}, then DAgger was 
 unsuccessful, and the aggregated data set downgrades the performance of the 
 previous iterations, making it best to learn solely on the initial expert 
 policy for that model configuration.
 
 When compared to $\minCmax$, then neither extended imitation learning approaches outperformed the direct optimisation. After $T=7$ iterations for \ref{bias:equal} there was still $\Delta\rho\approx5.13\%$ difference, and for $i=2$ for adjusted \ref{bias:dbl2nd} that difference was almost halved, or $\Delta\rho\approx2.8\%$ compared to optimising \cref{eq:cma:makespan}. 
 						
-\begin{figure}[t]
-	\includegraphics[width=\textwidth]{figures/{j.rnd}/{boxplot.summary.10x10}.pdf}
-	\caption{Box plot for \jrnd{10}{10} \namerho, using either expert policy, 
-	DAgger or following perturbed leader strategies. 
-	MWR shown on far right for reference.}\label{fig:all:boxplot} 
-\end{figure}
-					
-\input{tables/stats.IL.10x10.tex}
 
 \section{Conclusions}
 This study showed, that when accumulating training data for supervised  
 learning using DAgger, it's possible to automate its generation in such a way 
 that the resulting model will be an accurate representative of the instances 
 it will later come across. 
+\pagebreak
 
 The experimental study in \cref{sec:ail:expr} showed that DAgger for \jsp\ is 
 sensitive to choice of $\beta_i$ in \cref{eq:il}. The best configuration was 
