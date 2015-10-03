@@ -439,9 +439,9 @@ policy for that model configuration.
 
 When compared to $\minCmax$, then neither extended imitation learning 
 approaches outperformed the direct optimisation. After $T=7$ iterations for 
-\ref{bias:equal} there was still $\Delta\rho\approx5.13\%$ difference, and for 
+\ref{bias:equal} there was still $\Delta\rho\approx+5.13\%$ difference, and for 
 $i=2$ for adjusted \ref{bias:dbl2nd} that difference was almost halved, or 
-$\Delta\rho\approx2.8\%$ compared to optimising \cref{eq:cma:makespan}. 
+$\Delta\rho\approx+2.8\%$ compared to optimising \cref{eq:cma:makespan}. 
 						
 \section{Conclusions}
 This study showed, that when accumulating training data for supervised  
@@ -462,7 +462,7 @@ counter-acted by increasing $l_{\max}$ to reflect the additional examples.
 What is interesting though, is that \ref{Boost:EXT} is well suited for 
 active imitation learning, using the same $l_{\max}$ as before. 
 Note, the amount of problems used for $N^{\text{OPT}}_{\text{train, EXT}}$ is 
-equivalent to $i=10$ or $i=2\tfrac{1}{3}$ iterations of extended DAgger 
+equivalent to $i=9$ or $i=2\tfrac{1}{3}$ iterations of extended DAgger 
 for \Problem[6\times5]{\train} and \jrnd{10}{10}, respectively.
 The \emph{new} varied data gives the aggregated feature set more information 
 of what is important to learn in subsequent iterations, as those new states are 
