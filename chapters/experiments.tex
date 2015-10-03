@@ -85,6 +85,7 @@ is reported. This can also be seen in the box-plot given in
 %   PREF  24.1  89 2.25    86.52 89.89 100.00 100.00
 % CMA-ES  16.1 178 1.12     7.30 14.04  32.02  61.24
 
+\section{Conclusions}
 Of the thirteen linear models considered, then the one using random roll-outs 
 (i.e. 24.1) was the consistently best one, which is to be expected as it has 
 the most computational effort in inspecting possible solutions for each problem 
@@ -98,6 +99,19 @@ model is best configuration (with very few exceptions).
 Of its two configurations then following minimum $\minCmax$ proved better than 
 the one based on following expert policy. 
 This concurs with the findings for the preference models using only just 
-\phiLocalRelated\ features.
+\phiLocalRelated\ features. 
 
-\todoWrite{Summarise results}
+Furthermore, the model using only three local features has a remarkably low 
+$\rho$ compared to the other more sophisticated \phiLocalRelated\ preference 
+models. This is probably due to the fact that during training the model has  
+the \jrnd{10}{10} problem space specifically in mind. So when we test the 
+trained models on completely different problem spaces then incorporating so 
+many features may not necessarily be representing for those new instances. 
+However, for a three-feature model, its robustness capabilities are somewhat 
+more as it's focusing its efforts on representing the `essence' of \jsp\ 
+instead of paying particular attention to the problem space's individuality. 
+
+From the robustness experiments using the OR-Library benchmark suite, we see 
+that the results from the training data to the corresponding test data hold 
+when tested on completely different problem spaces, both with respect to data 
+distribution and dimensionality.
