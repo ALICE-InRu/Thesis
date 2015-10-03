@@ -10,11 +10,17 @@ Now we will also consider the best configurations for preference models in \cref
 Although, all models will be using the same training data \jrnd{10}{10}.
 
 From \cref{ch:rollout} only preference models using \phiSDRRelated\ will be 
-considered, as \phiRNDRelated\ are too computational expensive for OR-Library 
+considered, and only one configuration for \phiRNDRelated\ as it is quite 
+computationally expensive for OR-Library 
 as some of the problem dimensions, $K$, is too great for 100 random roll-outs 
 for each possible encountered operation. However, using only four fixed 
 roll-outs is reasonable.
-Moreover, applying $(K-k)$-step lookahead, then it is sensible to keep track of the best solution found (even though they had not been specifically followed further). This was referred to as its \emph{fortified} solution, where $\rho_{\text{fort.}}\leq\rho$. To keep notation short, only $\rho_{\text{fort.}}$ is reported for models that incorporate \phiSDRRelated\ features. 
+Moreover, applying $(K-k)$-step lookahead, then it is sensible to keep track of 
+the best solution found (even though they had not been specifically followed 
+further). This was referred to as its \emph{fortified} solution, where 
+$\rho_{\text{fort.}}\leq\rho$. To keep notation short, only 
+$\rho_{\text{fort.}}$ is reported for models that incorporate any 
+\phiGlobalRelated\ features. 
 
 \begin{figure}[t]
 \includegraphics[width=\textwidth]{{boxplot.ORLIB}.pdf}
