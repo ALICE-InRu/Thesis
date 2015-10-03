@@ -66,7 +66,8 @@ rather letting the model lead its own way in a self-perpetuating manner until
 it converges.
 
 \section*{Performance boost}
-In order to boost training accuracy even further, two strategies will be explored 
+In order to boost training accuracy even further, two strategies will be 
+explored 
 \begin{enumerate}[after={{}}, leftmargin=*,
     label={\textbf{Boost.\arabic*}}, ref={{Boost.\arabic*}}]
     \item \label{Boost:lmax} increasing number of preferences used 
@@ -76,7 +77,8 @@ In order to boost training accuracy even further, two strategies will be explore
 \end{enumerate}
 
 Note, \ref{Boost:lmax} will be addressed in \cref{sec:il:active}. 
-However, \ref{Boost:EXT} strategy will be explored in \cref{sec:il:passive,sec:il:active}. 
+However, \ref{Boost:EXT} strategy will be explored in 
+\cref{sec:il:passive,sec:il:active}. 
 Summary of $N_{\train}$ is given in \cref{tbl:Ntrain}.
 
 \input{tables/Ntrain}
@@ -101,7 +103,8 @@ corresponding following optimal tasks $J_{j^*}$ from $\pi^\star$ in
 \cref{pseudo:constructJSP}.
 This baseline trajectory sampling for adding features to the feature set 
 is a pure strategy where at each dispatch, an optimal task was chosen.
-This was originally introduced in \cref{InRu11a} and explored further in \cref{InRu15b}. 
+This was originally introduced in \cref{InRu11a} and explored further in 
+\cref{InRu15b}. 
 
 By querying the expert policy, $\pi_\star$, the ranking of the job-list, 
 $\mathcal{L}$, is determined such that,
@@ -179,7 +182,6 @@ successful SDRs, \PhiSet{\SDR}, by passively observing a
 full execution of following the task chosen by the corresponding SDR. 
 This required some trial-and-error as the experiments showed that features 
 obtained by SDR trajectories were not equally useful for learning.
-
 
 To automate this process, inspiration from \emph{active} imitation learning 
 presented in \cite{RossGB11} is sought, called \emph{Dataset Aggregation} 
@@ -314,47 +316,81 @@ problem instances explored for the aggregated extended training set used for
 the learning model at iteration $i$.
 This way, we use the extended training data sparingly, as labelling for each 
 problem instances is computationally intensive. As a result, the computational 
-budget for DAgger is the same regardless whether there are new problem instances 
-used or not, i.e., $\abs{\Phi^{\DA{i}}}\approx\abs{\Phi^{\DA{i}}_{\text{EXT}}}$.
+budget for DAgger is the same regardless whether there are new problem 
+instances used or not, i.e., 
+$\abs{\Phi^{\DA{i}}}\approx\abs{\Phi^{\DA{i}}_{\text{EXT}}}$.
 
 A box-plot of \namerho, is given in \cref{fig:active:boxplot:equal}. 
-Notice that if DAgger continually uses the same problem instances, then not much is gained after the first iteration, as performance stagnates quickly thereafter.
+Notice that if DAgger continually uses the same problem instances, then not 
+much is gained after the first iteration, as performance stagnates quickly 
+thereafter.
 This is due to the fact that there is not enough variance between 
-\PhiSet{\IL{i}}, hence the aggregated feature set \PhiSet{\DA{i}} is only slightly perturbed with each iterations. 
-Which from \cref{sec:pil:expr} we saw wasn't a very successful modification for the expert policy. Although, it's noted that by introducing sub-optimal state spaces 
-the preference model is not as drastically bad as the extended optimal policy, 
-even though $\abs{\Phi^{\DA{i}}}\gg\abs{\Phi^{\OPT}_{\text{EXT}}}$ for \jrnd{10}{10} after $i>2$. This goes to show that `too much' data is no longer a bad influence. 
-But rather, when using new problem instances at each iterations, the feature set becomes varied enough that situations arise that can be learned to achieve a better represented classification problem which yields a lower mean \namerho.
+\PhiSet{\IL{i}}, hence the aggregated feature set \PhiSet{\DA{i}} is only 
+slightly perturbed with each iterations. 
+Which from \cref{sec:pil:expr} we saw wasn't a very successful modification for 
+the expert policy. Although, it's noted that by introducing sub-optimal state 
+spaces the preference model is not as drastically bad as the extended optimal 
+policy, even though $\abs{\Phi^{\DA{i}}}\gg\abs{\Phi^{\OPT}_{\text{EXT}}}$ for 
+\jrnd{10}{10} after $i>2$. This goes to show that `too much' data is no longer 
+a bad influence. 
+But rather, when using new problem instances at each iterations, the feature 
+set becomes varied enough that situations arise that can be learned to achieve 
+a better represented classification problem which yields a lower mean \namerho.
 
-Regarding different strategies for $\beta_i$ values in \cref{eq:il}, then all strategies improved the first iteration (i.e. DA1 improves OPT). After that then the choice of $\beta_i$ starts to matter. 
-For \ref{DA:FIXSUP} there was no further improvement over all $T=7$ iterations using \jrnd{6}{5} (therefore not considered for \jrnd{10}{10}).
-For \ref{DA:SUP} then significant improvement was achieved at $i=5$ using \jrnd{6}{5}.
+Regarding different strategies for $\beta_i$ values in \cref{eq:il}, then all 
+strategies improved the first iteration (i.e. DA1 improves OPT). After that 
+then the choice of $\beta_i$ starts to matter. 
+For \ref{DA:FIXSUP} there was no further improvement over all $T=7$ iterations 
+using \jrnd{6}{5} (therefore not considered for \jrnd{10}{10}).
+For \ref{DA:SUP} then significant improvement was achieved at $i=5$ using 
+\jrnd{6}{5}.
 However, for \jrnd{10}{10} then no significant improvement was after $i>1$. 
-On the other hand, \ref{DA:UNSUP} had some unexpected performance for \jrnd{6}{5} as it  deteriorated for $i\in\{2,3\}$, but at $i=4$ it got back on track before stagnating.
-Of all the suggested $\beta_i$ strategies then \ref{DA:UNSUP} managed to get the best overall performance, and therefore \ref{Boost:EXT} was also applied to that approach. 
+On the other hand, \ref{DA:UNSUP} had some unexpected performance for 
+\jrnd{6}{5} as it  deteriorated for $i\in\{2,3\}$, but at $i=4$ it got back on 
+track before stagnating.
+Of all the suggested $\beta_i$ strategies then \ref{DA:UNSUP} managed to get 
+the best overall performance, and therefore \ref{Boost:EXT} was also applied to 
+that approach. 
 
-For other \Problem[6\times5]{\train} problem spaces\footnote{Consult \shiny: Preference models $>$ Imitation Learning} then there was not much difference in \ref{DA:SUP} and \ref{DA:UNSUP}, although the latter was slightly better for \frnd{6}{5}.
-Note, for \fsp\ problem spaces then DAgger was not fruitful, as either the iterations were statistically insignificant from the model obtained from the expert policy, or performance slightly downgraded with each iteration. Although, it's noted that those experiments were done with reusing the same $N_{\train}$ problem spaces over and over again (i.e. not applying \ref{Boost:EXT}).
+For other \Problem[6\times5]{\train} problem spaces\footnote{Consult \shiny: 
+Preference models $>$ Imitation Learning} then there was not much difference in 
+\ref{DA:SUP} and \ref{DA:UNSUP}, although the latter was slightly better for 
+\frnd{6}{5}.
+Note, for \fsp\ problem spaces then DAgger was not fruitful, as either the 
+iterations were statistically insignificant from the model obtained from the 
+expert policy, or performance slightly downgraded with each iteration. 
+Although, it's noted that those experiments were done with reusing the same 
+$N_{\train}$ problem spaces over and over again (i.e. not applying 
+\ref{Boost:EXT}).
 
 \begin{figure}[p]
     \includegraphics[width=\textwidth]{{j.rnd}/{boxplot.active.6x5}.pdf}
     \includegraphics[width=\textwidth]{{j.rnd}/{boxplot.active.10x10}.pdf}
     \caption{Box-plots for \namerho, using active imitation learning for 
-        \jrnd{6}{5} and \jrnd{10}{10} using equal re-sampling (i.e. \ref{bias:equal})}
+        \jrnd{6}{5} and \jrnd{10}{10} using equal re-sampling (i.e. 
+        \ref{bias:equal})}
     \label{fig:active:boxplot:equal}
 \end{figure}
 
-The best $\{\beta_i\}_{i=1}^T$ configuration for \Problem[6\times5]{\train} and \jrnd{10}{10} was \ref{DA:UNSUP} using an extended data set (i.e. \ref{Boost:EXT}). Therefore, for \jrnd{10}{10} that configuration will also be tried for adjusted \ref{bias:dbl2nd}, however, iterations were stopped as soon as performance downgrades.
-Box-plot for \namerho, is depicted in \cref{fig:all:boxplot}, and main statistics are given in \cref{tbl:IL:stats}. Both adjusted \ref{bias:dbl2nd} and the corresponding \ref{bias:equal} from \cref{fig:boxplot:active} are shown together. 
+The best $\{\beta_i\}_{i=1}^T$ configuration for \Problem[6\times5]{\train} and 
+\jrnd{10}{10} was \ref{DA:UNSUP} using an extended data set (i.e. 
+\ref{Boost:EXT}). Therefore, for \jrnd{10}{10} that configuration will also be 
+tried for adjusted \ref{bias:dbl2nd}, however, iterations were stopped as soon 
+as performance downgrades.
+Box-plot for \namerho, is depicted in \cref{fig:all:boxplot}, and main 
+statistics are given in \cref{tbl:IL:stats}. Both adjusted \ref{bias:dbl2nd} 
+and the corresponding \ref{bias:equal} from \cref{fig:boxplot:active} are shown 
+together. 
 We notice that with each iteration DAgger improves
 \begin{enumerate*}  
 	\item for \ref{bias:equal} with \ref{Boost:EXT} then $i=1$ starts 
 	with increasing  $\Delta\rho\approx+1.39\%$. However, after that first 
 	iteration there is a performance boost of $\Delta\rho\approx-15.11\%$ after 
-	$i=2$ and after that $\Delta\rho\approx-1.31\%$ until the final iteration $T=7$
-	\item on the other hand when using adjusted \ref{bias:dbl2nd}, only one iteration 
-	is needed, as  $\Delta\rho\approx-11.68$ for $i=1$, and after that it 
-	stagnates with $\Delta\rho\approx+0.55\%$ for $i=2$ 
+	$i=2$ and after that $\Delta\rho\approx-1.31\%$ until the final iteration 
+	$T=7$
+	\item on the other hand when using adjusted \ref{bias:dbl2nd}, only one 
+	iteration is needed, as  $\Delta\rho\approx-11.68$ for $i=1$, and after 
+	that it stagnates with $\Delta\rho\approx+0.55\%$ for $i=2$ 
 	(therefore $i=3$ was not run)
 \end{enumerate*}
 
@@ -363,7 +399,8 @@ We notice that with each iteration DAgger improves
 	\includegraphics[width=\textwidth]{figures/{j.rnd}/{boxplot.summary.10x10}.pdf}
 	\vspace*{-18pt}
 	\caption{Box plot for \jrnd{10}{10} \namerho, using either expert policy, 
-		DAgger or following perturbed leader strategies. }\label{fig:all:boxplot} 
+		DAgger or following perturbed leader strategies. 
+		}\label{fig:all:boxplot} 
 \end{figure}
 
 \input{tables/stats.IL.10x10.tex}
@@ -376,9 +413,11 @@ w.r.t. \namerho, from
 \begin{enumerate*}
 	\item expert policy, trained on \PhiSet{\OPT}
 	\item perturbed leader, trained on \PhiSet{\OPT\epsilon}
-	\item imitation learning, trained on $\Phi^{\DA{i}}_{\text{EXT}}$ ($i\leq7$ for \ref{bias:equal} and $i\leq2$ for adjusted \ref{bias:dbl2nd})
+	\item imitation learning, trained on $\Phi^{\DA{i}}_{\text{EXT}}$ ($i\leq7$ 
+	for \ref{bias:equal} and $i\leq2$ for adjusted \ref{bias:dbl2nd})
 \end{enumerate*}\linebreak
-As a reference, $\minCmax$ model from optimising \cref{eq:cma:makespan} and MWR are shown on the far right of \cref{fig:all:boxplot}.
+As a reference, $\minCmax$ model from optimising \cref{eq:cma:makespan} and MWR 
+are shown on the far right of \cref{fig:all:boxplot}.
 	
 At first we see that the perturbed leader ever so-slightly improves the mean 
 for $\rho$, rather than using the baseline expert policy. 
@@ -398,9 +437,12 @@ unsuccessful, and the aggregated data set downgrades the performance of the
 previous iterations, making it best to learn solely on the initial expert 
 policy for that model configuration.
 
-When compared to $\minCmax$, then neither extended imitation learning approaches outperformed the direct optimisation. After $T=7$ iterations for \ref{bias:equal} there was still $\Delta\rho\approx5.13\%$ difference, and for $i=2$ for adjusted \ref{bias:dbl2nd} that difference was almost halved, or $\Delta\rho\approx2.8\%$ compared to optimising \cref{eq:cma:makespan}. 
+When compared to $\minCmax$, then neither extended imitation learning 
+approaches outperformed the direct optimisation. After $T=7$ iterations for 
+\ref{bias:equal} there was still $\Delta\rho\approx5.13\%$ difference, and for 
+$i=2$ for adjusted \ref{bias:dbl2nd} that difference was almost halved, or 
+$\Delta\rho\approx2.8\%$ compared to optimising \cref{eq:cma:makespan}. 
 						
-
 \section{Conclusions}
 This study showed, that when accumulating training data for supervised  
 learning using DAgger, it's possible to automate its generation in such a way 
@@ -410,10 +452,12 @@ it will later come across.
 
 The experimental study in \cref{sec:ail:expr} showed that DAgger for \jsp\ is 
 sensitive to choice of $\beta_i$ in \cref{eq:il}. The best configuration was 
-an unsupervised approach (i.e. \ref{DA:UNSUP}), which concurs to the findings of 
-\cite{RossGB11}.
+an unsupervised approach (i.e. \ref{DA:UNSUP}), which concurs to the findings 
+of \cite{RossGB11}.
 
-Regarding using an extended data set (i.e. \ref{Boost:EXT}), then it's not successful for the expert policy, as $\rho$ increased approximately 10\%. This could most likely be 
+Regarding using an extended data set (i.e. \ref{Boost:EXT}), then it's not 
+successful for the expert policy, as $\rho$ increased approximately 10\%. This 
+could most likely be 
 counter-acted by increasing $l_{\max}$ to reflect the additional examples.
 What is interesting though, is that \ref{Boost:EXT} is well suited for 
 active imitation learning, using the same $l_{\max}$ as before. 
@@ -426,11 +470,13 @@ more likely to be encountered `in practice' rather than `in theory.' Not only
 does the active imitation learning converge faster, it also consistently 
 improves with each iterations.
 
-The number of iterations needed depend on the quality of the model configurations. When using the baseline \ref{bias:equal} the imitation model was iterated for $T=7$ iterations. Slowly improving with each iteration.
+The number of iterations needed depend on the quality of the model 
+configurations. When using the baseline \ref{bias:equal} the imitation model 
+was iterated for $T=7$ iterations. Slowly improving with each iteration.
 However, when the preferred adjusted \ref{bias:dbl2nd} stepwise bias then after 
 only two iterations a better performance was achieved. Alas, after the third 
-iteration the model had already stagnated with slightly, yet insignificant, worse
-mean \namerho.
+iteration the model had already stagnated with slightly, yet insignificant, 
+worse mean \namerho.
 
 
 
@@ -479,8 +525,8 @@ Learning (RAIL), which involves a dynamic approach similar to DAgger, but more
 emphasis is used to minimise the expert's labelling effort.
 In fact, it's possible to circumvent querying the expert altogether and still 
 have reasonable performance. By applying Locally Optimal Learning to Search 
-(LOLS) by \cite{ChangKADL15}, it is possible to use imitation learning (similar to 
-DAgger framework) when the reference policy is poor (i.e. $\pi_\star$ in 
+(LOLS) by \cite{ChangKADL15}, it is possible to use imitation learning (similar 
+to DAgger framework) when the reference policy is poor (i.e. $\pi_\star$ in 
 \cref{eq:il} is suboptimal), 
 although it's noted that the quality (w.r.t near-optimality) of reference 
 policy is in accordance to its performance, as is to be expected. 
