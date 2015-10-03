@@ -466,9 +466,9 @@ equivalent to $i=10$ or $i=2\tfrac{1}{3}$ iterations of extended DAgger
 for \Problem[6\times5]{\train} and \jrnd{10}{10}, respectively.
 The \emph{new} varied data gives the aggregated feature set more information 
 of what is important to learn in subsequent iterations, as those new states are 
-more likely to be encountered `in practice' rather than `in theory.' Not only 
-does the active imitation learning converge faster, it also consistently 
-improves with each iterations.
+more likely to be encountered `in practice' rather than `in theory.' 
+Not only does the active imitation learning converge faster, it also 
+consistently improves with each iterations if new instances are used.
 
 The number of iterations needed depend on the quality of the model 
 configurations. When using the baseline \ref{bias:equal} the imitation model 
@@ -477,25 +477,6 @@ However, when the preferred adjusted \ref{bias:dbl2nd} stepwise bias then after
 only two iterations a better performance was achieved. Alas, after the third 
 iteration the model had already stagnated with slightly, yet insignificant, 
 worse mean \namerho.
-
-
-
-
-
-\todo[inline]{Place work in wider context}
-
-\todo[inline,color=red]{``Training such a predictor, however, is non-trivial as 
-    the interdependencies in the sequence of predictions make global 
-    optimisation is to leverage information local to modules to aid learning 
-    ... To provide good guarentees and performance in practice in this 
-    non-i.i.d. (as predictions are interdependent), we also leverage key 
-    iterative training methods developped in prior work for imitation learning 
-    and structured prediction''}
-
-
-\todo[inline,color=green]{George Bernard Shaw once said: ``Imitation is not 
-    just the sincerest form of flattery -- it's the sincerest form of 
-    learning.''}
 
 \emph{Maximum Mean Discrepancy} (MMD) imitation learning by \cite{Kim13} is an 
 iterative algorithm similar to DAgger. 
@@ -509,7 +490,7 @@ from the mistakes of earlier policies. To address the naivety of the data
 aggregation, MMD suggests only aggregating a new data point 
 if it is sufficiently different to previously gathered states, \emph{and} if 
 the current policy has made a mistake. 
-Additionally, there are multiple policies, each specializing in a particular 
+Additionally, there are multiple policies, each specialising in a particular 
 region of the state space where previous policies made mistakes.
 Although MMD has better empirical performance (based on robot applications), it 
 requires defining metrics, which in the case of \jsp\ is non-trivial (cf. 
@@ -520,13 +501,13 @@ expert queries.
 
 Main drawback of DAgger is that it quite aggressively quires the expert, making 
 it impractical for some problems, especially if it involves human experts. 
-To confront that, \cite{Judah12} introduce Reduction-based Active Imitation 
-Learning (RAIL), which involves a dynamic approach similar to DAgger, but more 
-emphasis is used to minimise the expert's labelling effort.
+To confront that, \cite{Judah12} introduced \emph{Reduction-based Active 
+Imitation Learning} (RAIL), which involves a dynamic approach similar to 
+DAgger, but more emphasis is used to minimise the expert's labelling effort.
 In fact, it's possible to circumvent querying the expert altogether and still 
-have reasonable performance. By applying Locally Optimal Learning to Search 
-(LOLS) by \cite{ChangKADL15}, it is possible to use imitation learning (similar 
-to DAgger framework) when the reference policy is poor (i.e. $\pi_\star$ in 
-\cref{eq:il} is suboptimal), 
+have reasonable performance. If \emph{Locally Optimal Learning to 
+Search} (LOLS) by \cite{ChangKADL15} is applied, then it is possible to use 
+imitation learning (similar to DAgger framework) when the reference policy is 
+poor (i.e. $\pi_\star$ in \cref{eq:il} is suboptimal), 
 although it's noted that the quality (w.r.t near-optimality) of reference 
 policy is in accordance to its performance, as is to be expected. 
