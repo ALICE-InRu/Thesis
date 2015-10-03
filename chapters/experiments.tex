@@ -4,33 +4,100 @@ time.}{The Gryphon}
 
 \chapter{OR-Library Comparison}\label{ch:experiments} 
 
-\FirstSentence{U}{ntil only evolutionary search models} from \cref{ch:esmodels} have been checked for robustness. This was done to show the impact of choice of objective function \cref{eq:cma:objfun}. 
-However, there was no reference made to other models, except for demonstrating how far off the result was from the best known solutions (BKS).
-Now we will also consider the best configurations for preference models in \cref{ch:prefmodels,ch:featselect,ch:imitation,ch:rollout}.
+\FirstSentence{U}{ntil now only evolutionary search} models from 
+\cref{ch:esmodels} have been checked for robustness using the OR-Library 
+described in \cref{sec:data:orlib}. This was done to show the 
+impact of choosing objective function defined in \cref{eq:cma:objfun}. 
+However, there was no reference made to other models, except for demonstrating 
+how far off the result was from the best known solutions (BKS).
+Now we will also consider the best configurations for preference models in 
+\cref{ch:prefmodels,ch:featselect,ch:imitation,ch:rollout}.
 Although, all models will be using the same training data \jrnd{10}{10}.
 
-From \cref{ch:rollout} only preference models using \phiSDRRelated\ will be 
-considered, and only one configuration for \phiRNDRelated\ as it is quite 
-computationally expensive for OR-Library 
-as some of the problem dimensions, $K$, is too great for 100 random roll-outs 
-for each possible encountered operation. However, using only four fixed 
-roll-outs is reasonable.
-Moreover, applying $(K-k)$-step lookahead, then it is sensible to keep track of 
-the best solution found (even though they had not been specifically followed 
-further). This was referred to as its \emph{fortified} solution, where 
+There were a grand-total thirteen linear \cdr s applied to the OR-Library. 
+A total of two models from \cref{ch:esmodels} (i.e. optimised w.r.t. either 
+$\minCmax$ or $\minRho$) and eleven preference models from 
+\cref{ch:prefmodels,ch:featselect,ch:rollout,ch:imitation}.
+Their configurations are as follows
+\begin{enumerate*}
+    \item \label{pref:3phi} 3.524 from \cref{ch:featselect} with 
+    \ref{bias:equal} sampling
+    \item \label{pref:16aphi} 16.1 following expert policy and minimum 
+    $\minCmax$ weights from \cref{ch:prefmodels}, both using either 
+    \ref{bias:equal} or adjusted \ref{bias:dbl2nd}
+    \item 16.1 following the perturbed leader from \cref{sec:perturbedLeader}  
+    using either \ref{bias:equal} or adjusted \ref{bias:dbl2nd}
+    \item \label{pref:16bphi} 16.1 following second iteration of unsupervised 
+    DAgger with extended data from \cref{sec:il:active} with stepwise adjusted 
+    \ref{bias:dbl2nd}
+    \item \label{pref:20phi} 20.1 following expert policy and minimum 
+    $\minCmax$ weights from \cref{sec:multirollout}, both using adjusted 
+    \ref{bias:dbl2nd}
+    \item \label{pref:24phi} 24.1 following minimum $\minCmax$ weights from 
+    \cref{sec:multirollout}, using adjusted \ref{bias:dbl2nd}
+\end{enumerate*} 
+Note, \ref{pref:3phi} only uses three local features, \ref{pref:16aphi} to 
+\ref{pref:16bphi} use all \NrFeatLocal\ local features, \ref{pref:20phi} use 
+additional \phiSDRRelated\ roll-out features, and finally \ref{pref:24phi} 
+includes 100 random roll-outs as well.\linebreak
+Only a single configuration of \phiRNDRelated\ model was considered, as it is 
+quite computationally expensive for OR-Library as some of the problem 
+dimensions, $K$, is too great for 100 random roll-outs for each possible 
+encountered operation. However, using only four fixed roll-outs is reasonable.
+Moreover, when applying $(K-k)$-step lookahead, then it is sensible to keep 
+track of the best solution found (even though they had not been specifically 
+followed further). This was referred to as its \emph{fortified} solution, where 
 $\rho_{\text{fort.}}\leq\rho$. To keep notation short, only 
 $\rho_{\text{fort.}}$ is reported for models that incorporate any 
 \phiGlobalRelated\ features. 
+\Cref{tbl:comp:orlib} gives the deviation from best known solution. Note, not 
+all problem instances from \cref{tbl:data:orlib} are reported as not all best 
+known solutions were found. Instead 71 out of 82 and 18 out of 32 instances are 
+reported for \JSP\ and \FSP, respectively.
+Note, only best configuration of similar parameter settings was reported in 
+\cref{tbl:comp:orlib}. However, \cref{tbl:stat:orlib} gives the frequency 
+(as percentage) of how often each configuration managed achieved the best 
+known solution. 
+In the case of \FSP's \texttt{car1}, only the model using \phiRNDRelated\ 
+features found that makespan. 
+However, for \JSP's \texttt{la12} even the local-based feature models found the 
+same makespan as well.
+\Cref{tbl:stat:orlib} also summarises the division of model configuration that 
+found the lowest makespan (which for \texttt{la12} and \texttt{car1} coincides 
+with BKS). In addition the 1\%, 5\% and 10\% deviation from lowest found $\rho$ 
+is reported. This can also be seen in the box-plot given in 
+\cref{fig:comp:orlib}.
 
 \begin{figure}[t]
 \includegraphics[width=\textwidth]{{boxplot.ORLIB}.pdf}
 \caption{Box-plot for deviation from best known solution, $\rho$, trained on
 \jrnd{10}{10}}\label{fig:comp:orlib}
 \end{figure}
-\input{tables/stats.orlib}
-\pagebreak
 
+\clearpage
+\input{tables/stats.orlib}
 \input{tables/summary.orlib}
 
+%   Type   CDR   N  BKS best_pct   <=1    <=5   <=10
+%   PREF 3.524  89 0.00     2.25  3.37  16.85  50.56
+%   PREF  16.1 623 0.32     2.09  2.57   6.58  22.95
+%   PREF  20.1 178 0.56     8.43 17.98  41.01  79.78
+%   PREF  24.1  89 2.25    86.52 89.89 100.00 100.00
+% CMA-ES  16.1 178 1.12     7.30 14.04  32.02  61.24
+
+Of the thirteen linear models considered, then the one using random roll-outs 
+(i.e. 24.1) was the consistently best one, which is to be expected as it has 
+the most computational effort in inspecting possible solutions for each problem 
+instance.
+Although it did not always find the lowest makespan of the models considered 
+(it did for 86.52\% instances), it was within 5\% error.
+The second best configuration was using \phiSDRRelated\ features. This is also 
+to be expected as it uses four fixed roll-outs. 
+Notice in \cref{tbl:comp:orlib}, when 24.1 is not the best model then the 20.1 
+model is best configuration (with very few exceptions). 
+Of its two configurations then following minimum $\minCmax$ proved better than 
+the one based on following expert policy. 
+This concurs with the findings for the preference models using only just 
+\phiLocalRelated\ features.
 
 \todoWrite{Summarise results}
