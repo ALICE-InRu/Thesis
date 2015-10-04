@@ -34,6 +34,8 @@ Moreover, the improved classification accuracy is proportional to its
 difference in performance spread (i.e. 
 $\abs{\zeta^{\MWR}_{\any} - \zeta^{\SPT}_{\any}}$) in that region.
 
+\section*{Summary}
+
 \input{pseudocode/ALICE}
 
 The framework proposed in the dissertation, called \fullnameAlice, or \Alice, 
@@ -52,7 +54,8 @@ directly, whereas preference models are more focusing on predictability (via
 classification accuracy). Therefore, when training data is contradictory it's 
 non-trivial to achieve exceptional performance. 
 To address that drawback, the latter half of the dissertation introduced 
-various strategies to improve model configuration for learning, most notably 
+various strategies to improve model configuration for improved learning, most 
+notably 
 \begin{enumerate}
     \item \label{conc:bias} stepwise sampling bias for balancing time-dependent 
     data sets (cf. \cref{sec:pref:bias}),
@@ -104,8 +107,9 @@ describing the current schedule, it was possible to `discover' the SDRs when
 given only one active feature. 
 Although there is not much to be gained by these models, they at least serve as 
 a sanity check for the learning models are on the right track. 
+
 Furthermore, by adding additional features, a boost in performance was 
-gained, resulting in a \cdr\ that outperformed all of the SDR baseline. 
+gained, resulting in a \cdr\ that outperformed all of the SDR benchmarks. 
 Although, the best preference model of 3 active features was still not better 
 than the CMA-ES model for \jrnd{10}{10} using \NrFeatLocal\ features. 
 However, it's starting to close in on the gap, as previously 
@@ -113,6 +117,18 @@ $\Delta\rho\approx-6\%$ (using \PsiSet[\minCmax]{p} from
 \cref{sec:trdat:param:tracks:passive}) and now $\Delta\rho\approx-2\%$ (cf. 
 CDR \#3.524 in \cref{tbl:best.exhaust:stats}) in favour of evolutionary 
 search (cf. \cref{tbl:cma:boxplot:set}).
+
+\section*{Future work}
+
+The DAgger updating framework from \cref{sec:il:active} proposed starting with 
+the model based on the expert policy, \cref{pseudo:DAgger} only relies on 
+\emph{some} initial learned model. So in theory it should be possible to 
+improve the \PsiSet[\minCmax]{p} set-up even further, by applying DAgger 
+afterwards to that learned model. Or in general substituting the learned 
+\PsiSet[\OPT]{p} to some other \emph{good} initial model.
+Perhaps even starting with the perturbed leader which has very similar 
+motivation as following the expert policy, yet with substantially better 
+performance straight off the bat. 
 
 We saw in \cref{sec:trdat:param:tracks:passive} that preference models using 
 training data from following SDR policy (i.e. \PhiSet{\SDR}) are good for 
@@ -136,8 +152,8 @@ Generally the more roll-outs that are made, then lower fortified makespan is
 found. However, in some cases using just four fixed roll-outs were better (cf. 
 \cref{tbl:comp:orlib}). 
 In particular, we saw in \cref{sec:singlerollout} how pursuing $-\phiSPT$ 
-(which is basically repeatedly applying $-\phiproc$ for a $(K-k)$-lookahead)  
-significantly increased performance for $\rho$.
+(which is basically repeatedly applying w.r.t. $-\phiproc$ for a 
+$(K-k)$-lookahead) significantly increased performance for $\rho$.
 Now, instead of doing fixed roll-outs based on SDRs, as \phiSDRRelated, then it 
 could be worth investigating a single roll-out of learned policy, $\hat{\pi}$. 
 Usually, the learned policy surpasses SPT (i.e. $-\phiproc$) w.r.t. stepwise 
@@ -157,9 +173,12 @@ is possible to use imitation learning even when the reference policy is poor.
 Although it's noted that the quality (w.r.t. near-optimality) of reference 
 policy is in accordance to its performance, as is to be expected. 
 
+\vfill
 To conclude in the words of the Nobel-Prize-winning Irish playwright:
 \begin{quote}
     ``Imitation is not just the sincerest form of flattery \\ -- it's the 
     sincerest form of learning'' \\
     \raggedleft George Bernard Shaw
 \end{quote} 
+\vfill
+\vfill
