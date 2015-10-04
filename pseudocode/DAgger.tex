@@ -11,7 +11,7 @@
         \Comment{\cref{eq:il}}
         \State Sample a $K$-solution using $\pi_i$
         \Comment{cf. \cref{pseudo:imitationLearning}: 
-        \Call{ImitationLearning}{$i,\hat{\pi}_{i-1},\pi_\star$}}
+        \Call{IL}{$i,\hat{\pi}_{i-1},\pi_\star$}}
         \State $\Phi^{\IL{i}} = \{(s,\pi_\star(s))\}$ 
         \Comment{visited states by $\pi_i$ and actions given by expert}
         \State $\Phi^{\DA{i}} \gets \Phi^{\DA{i-1}} \cup 

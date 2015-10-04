@@ -16,7 +16,7 @@
         \Comment{imitation learning is \emph{passive} if $i=0$ and \emph{active} otherwise} 
         \Require Ranking $r_1 \succ r_2 \succ \cdots > r_{n'} ~ (n' \leq n)$ of 
                 the job-list, $\mathcal{L}$ \Comment{query $\pi_\star$}
-        \Procedure{ImitationLearning}{$i,\hat{\pi}_{i-1},\pi_\star$}
+        \Procedure{IL}{$i,\hat{\pi}_{i-1},\pi_\star$}
         \State $p \gets \mathcal{U}(0,1)\in [0,1]$
         \Comment{uniform probability}
         \If{$i>0$} 
