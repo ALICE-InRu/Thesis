@@ -19,20 +19,75 @@ problem space at hand.
 Once these simple rules are understood, then it's feasible to extrapolate the 
 knowledge gained and create new \cdr s that are likely to be successful. 
 An example of which was a blended \dr\ in \cref{sec:diff:opt:bdr}, where we 
-start with the SPT heuristic and switch over to MWR at a predetermined time 
+start with the SPT heuristic and switch over to MWR at predetermined time 
 points. Those pivotal time steps were chosen by inspecting where SPT succeeds 
 MWR (and vice versa). 
 By achieving a higher classification accuracy using the new BDR model, it 
 substantially improve its inherited rule SPT.
 Although, it doesn't transcend to a significantly lower \namerho, when compared 
 to its other inherited rule MWR. 
-Special care must be taken not to let SPT downgrade MWR performance. This can 
-be avoided by inspecting how $\rho$ is evolving as a function of time (cf. 
-\cref{fig:diff:case:SDR}) and only consider swapping trajectories before they 
-intersect and subsequently diverge in performance. 
+Special care must be taken not to let SPT downgrade MWR's performance. This can 
+be avoided by inspecting how $\rho$ is evolving as a function of time for its 
+intended policy (cf. \cref{fig:diff:case:SDR}) and only consider swapping 
+trajectories before they intersect and subsequently diverge in performance. 
 Moreover, the improved classification accuracy is proportional to its 
 difference in performance spread (i.e. 
 $\abs{\zeta^{\MWR}_{\any} - \zeta^{\SPT}_{\any}}$) in that region.
+
+\input{pseudocode/ALICE}
+
+The framework proposed in the dissertation, called \fullnameAlice, or \Alice, 
+is roughly described in \cref{pseudo:alice}. 
+The dissertation focused on \emph{analysing} \sdr s, starting with 
+\cref{ch:defdifficulty} by defining `difficulty' of problem instances. Then 
+\cref{ch:analysingsol} continued exploring the \dr s even further, on  
+step-by-step basis in order of trying to explain the performance 
+of a \dr\ by investigating the strength and weaknesses from empirical evidence. 
+
+The \emph{learning} phase of \Alice\ is focusing on linear preference based 
+imitation learning models. The models classify as a tailored algorithm, and 
+they're compared to a general algorithm called CMA-ES from \cref{ch:esmodels}. 
+It's noted that CMA-ES has the `unfair' advantage of optimising the end-result 
+directly, whereas preference models are more focusing on predictability (via 
+classification accuracy). Therefore, when training data is contradictory it's 
+non-trivial to achieve exceptional performance. 
+To address that drawback, the latter half of the dissertation introduced 
+various strategies to improve model configuration for learning, most notably 
+\begin{enumerate}
+    \item \label{conc:bias} stepwise sampling bias for balancing time-dependent 
+    data sets (cf. \cref{sec:pref:bias}),
+    \item exhaustive feature selection and bearing in mind the polysemy of 
+    reporting training accuracy for preference learning, i.e., should it be the 
+    traditional classification accuracy (that deals with classifying all ranks 
+    correctly) or just focusing on the stepwise optimality (classifying the 
+    optimal rank). Moreover, by incorporating \ref{conc:bias} it's possible to 
+    weigh the training accuracy w.r.t. time-step 
+    (cf. \cref{ch:featselect}),
+    \item allowing the predictor to randomise boosts performance as following 
+    the expert policy by itself is too difficult to learn on its own (cf. 
+    \cref{sec:perturbedLeader}),
+    \item following sub-optimal deterministic policies, yet labelling with an 
+    optimal solver, generally improves the guiding policy (cf. 
+    \cref{sec:trdat:param:tracks:passive}),
+    \item active update procedure using DAgger ensures sample states the 
+    learned model is likely to encounter is integrated to the preference set
+    (cf. \cref{sec:il:active}),
+    \item keeping track of fortified solutions using roll-out features (cf. 
+    \cref{ch:rollout})
+\end{enumerate}
+Moreover, several problem distributions and dimensionality from 
+\cref{ch:genprobleminstances} were considered with sometimes contradictory 
+results. Fortunately, the performance seemed to hold when going to higher 
+dimension (i.e. from \Problem[6\times5]{} to \Problem[10\times10]{}). 
+Thereby justifying only considering the `easy'\footnote{Easy in terms of 
+computational effort.} \JSP\ before investing valuable time for higher 
+dimensional experiments. 
+However, problem distributions is a key component, and the learned model should 
+try to represent its intended (test) dataset as close as possible.
+Furthermore, \cref{ch:orlibrobust} showed that results from \Problem{\train} to 
+corresponding \Problem{\test} holds for completely different test application, 
+e.g., OR-Library benchmark suite.
+
 
 Creating new \dr s is by no means trivial. For \jsp\ there is 
 the hidden interaction between processing times and machine ordering that's 
@@ -40,7 +95,7 @@ hard to measure.
 Due to this artefact, feature selection is of paramount importance, and then it 
 becomes the case of not having too many features, as they are likely to hinder 
 generalisation due to over-fitting in training the preference model, as was 
-seen in \cref{sec:trdat:param:tracks:passive}. 
+seen in \cref{sec:trdat:param:tracks:passive} for several proposed policies. 
 However, the features need to be explanatory enough to maintain predictive 
 ability. 
 For this reason \cref{eq:CDR:feat} was limited to up to three active features 
@@ -51,22 +106,25 @@ describing the current schedule, it was possible to `discover' the SDRs when
 given only one active feature. 
 Although there is not much to be gained by these models, they at least serve as 
 a sanity check for the learning models are on the right track. 
-Furthermore, by adding on additional features, a boost in performance was 
+Furthermore, by adding additional features, a boost in performance was 
 gained, resulting in a \cdr\ that outperformed all of the SDR baseline. 
-Although, the best preference model of 3 active features is still not better 
+Although, the best preference model of 3 active features was still not better 
 than the CMA-ES model for \jrnd{10}{10} using \NrFeatLocal\ features. 
-However, we're starting to close in on the gap, as previously 
+However, it's starting to close in on the gap, as previously 
 $\Delta\rho\approx-6\%$ (using \PsiSet[\minCmax]{p} from 
 \cref{sec:trdat:param:tracks:passive}) and now $\Delta\rho\approx-2\%$ (cf. 
 CDR \#3.524 in \cref{tbl:best.exhaust:stats}) in favour of evolutionary 
 search (cf. \cref{tbl:cma:boxplot:set}).
 
 We saw in \cref{sec:trdat:param:tracks:passive} that preference models using 
-training data from following SDR policy, i.e., \PhiSet{\SDR}, are good for 
+training data from following SDR policy (i.e. \PhiSet{\SDR}) are good for 
 improving its original heuristic. However, this did not transcend for 
-\PhiSet{\CMAES}.
-Perhaps, if \PhiSet{\CMAES} wasn't based on following the CMA-ES trajectory, 
-but rather using the actual features encountered during its optimisation. 
+\PhiSet{\CMAES}, which was statistically insignificant with the right stepwise 
+sampling bias.
+The nature of CMA-ES is to explore suboptimal routes until it converges to an 
+optimal one. So perhaps, if \PhiSet{\CMAES} wasn't based on following the 
+CMA-ES trajectory, but rather using the actual features encountered during its 
+optimisation. 
 Alas, CMA-ES used a computational budget of 50,000 function evaluations, each 
 consisting of the expectation of $N_{\train}$ problem instances. 
 So even though \cref{fig:cma:fit} becomes relatively stable after a few 
@@ -74,75 +132,35 @@ generations, it would still yield a gigantic feature set that needs to be
 filtered before going through the optimisation phase of correctly labelling 
 them.
 
+
+
+\todoWrite{Instead of doing fixed roll-outs based on SDRs, as \phiSDRRelated, 
+    then it could be worth investigating a single roll-out of learned policy, 
+    $\hat{\pi}$. Generally, the learned policy surpasses SPT (i.e. $-\phiproc$) 
+    w.r.t. stepwise optimality, i.e., 
+    $\xi^{\star}_{\hat{\pi}}\geq\xi^{\star}_{-\phiproc}$. Moreover, we saw how 
+    pursuing $-\phiSPT$, which is basically repeatedly applying $-\phiproc$ for 
+    a 
+    $(K-k)$-lookahead, significantly increased performance in 
+    \cref{fig:rollout1:boxplot}.
+}
+
 The analysis-phase of \Alice\ is heavily dependent on having an expert 
 policy it's trying to mimic, i.e., knowing the \emph{optimal} solutions for the 
 sake of imitation learning. 
-
 Understandably, knowing the true optimum is an unreasonable claim in many 
 situations, especially for high dimensional problem instances. 
 Luckily, there seems to be the possibility to circumvent querying the expert 
 altogether, and still have reasonable performance. 
-By applying \emph{locally optimal learning to search} by \citet{ChangKADL15} it 
+By applying \emph{Locally Optimal Learning to Search} by \citet{ChangKADL15} it 
 is possible to use imitation learning even when the reference policy is poor. 
-Although it's noted that the quality (w.r.t near-optimality) of reference 
+Although it's noted that the quality (w.r.t. near-optimality) of reference 
 policy is in accordance to its performance, as is to be expected. 
 
-\todoWrite{Write overall conclusions of dissertation!}
-
-
-CMA-ES has the `unfair' advantage of optimising the end-result directly, 
-whereas preference models are more focusing on predictability (via 
-classification accuracy). Therefore, when training data is contradictory it's 
-non-trivial to achieve exceptional performance. 
-
-The dissertation has shown various strategies to improve preference based 
-imitation learning, namely
-\begin{enumerate}
-    \item stepwise sampling bias
-    \item exhaustive feature selection
-    \item active update procedure using DAgger to where sample states the 
-    learned model is likely to encounter is integrated to the preference set
-    \item fortified roll-out features
-\end{enumerate}
-Moreover, several problem distributions and dimensionality were considered with 
-sometimes contradictory results. Fortunately, the performance seemed to hold 
-when going to higher dimension (i.e. from \Problem[6\times5]{} to 
-\Problem[10\times10]{}). Thereby justifying only considering the 
-`easy'\footnote{Easy in terms of computational effort.} \JSP\ before investing 
-in $10\times10$ (or higher) experiments. 
-However, problem distributions is a key component, and the learned model should 
-try to represent its intended (test) dataset as close as possible.
-
-
-\todoWrite{our ability to learn about the strengths and weaknesses of 
-    algorithms from empirical evidence}
-
-The framework for \Alice\ is roughly described in \cref{pseudo:alice}
-
-\input{pseudocode/ALICE}
-
-\todo[inline,color=green]{George Bernard Shaw once said: ``Imitation is not 
-    just the sincerest form of flattery -- it's the sincerest form of 
-    learning.''}
-
-
-
-\todoWrite{Future work}
-The weights for \cref{eq:CDR:feat} in \cref{InRu11a} were found using 
-supervised learning, where the training data was created from optimal solutions 
-of randomly generated problem instances. As an alternative, this study showed  
-that minimising the mean makespan directly using a brute force search via 
-CMA-ES actually results in a better CDRs. The nature of CMA-ES is to explore 
-suboptimal routes until it converges to an optimal one. Implying that the 
-previous approach of only looking into one optimal route may not produce a 
-sufficiently rich training set. That is, \PhiSet{\pi} should incorporate a 
-more complete knowledge on \emph{all} possible preferences, i.e., make also the 
-distinction between suboptimal and sub-suboptimal features, etc.  This would 
-require a Pareto ranking of preferences which can be used to make the 
-distinction to which feature sets are equivalent, better or worse -- and to 
-what degree, i.e., by giving a weight to the preference. This would result in a 
-very large training set, which of course could be re-sampled in order to make 
-it computationally feasible to learn.
-
-\todoWrite{Instead of doing fixed roll-outs based on SDRs, as \phiSDRRelated, then it could be worth investigating a single roll-out of learned policy, $\hat{\pi}$. Generally, the learned policy surpasses SPT (i.e. $-\phiproc$) w.r.t. stepwise optimality, i.e., $\xi^{\star}_{\hat{\pi}}\geq\xi^{\star}_{-\phiproc}$. Moreover, we saw how pursuing $-\phiSPT$, which is basically repeatedly applying $-\phiproc$ for a $(K-k)$-lookahead, significantly increased performance in \cref{fig:rollout1:boxplot}.
-        }
+\vfill
+To conclude in the words of the Nobel-Prize-winning Irish playwright:
+\begin{quote}
+    ``Imitation is not just the sincerest form of flattery \\ -- it's the 
+    sincerest form of learning'' \\
+    \raggedleft George Bernard Shaw
+\end{quote}        
