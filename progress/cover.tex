@@ -17,10 +17,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass{cover} 
+\input{../scripts/shorthand}
 %----------------------------------------------------------------------------------------
 
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage[icelandic]{babel}
 	
 \signature{Helga Ingimundardóttir}
@@ -75,12 +74,46 @@ Frá og með janúar 2014 þá hef ég síðan verið í fullu starfi utan Hásk
 Ég hef stundað námið því í hjáverkum í næstum þrjú ár, en tekið rispur í 
 sumarfríum og þegar tími hefur gefst hjá atvinnurekanda mínum.
 
-\mycaption{Ágrip}
-Doktorsverkefnið hefur vinnuheitið ALICE: Analysis \& Learning Iterative 
-Consecutive Executions.
+\mycaption{Ágrip (á ensku)}
+Over the years there have been many approaches to create \dr s for scheduling.
+Recent past efforts have focused on direct search methods (e.g. genetic 
+programming) or training on data (e.g. supervised learning).
+The dissertation will examine the latter and give a framework called 
+\fullnameAlice\ (\Alice) on how to do it effectively. 
+Defining training data as 
+\mbox{$\{\vphi(\vec{x}_i(k)),y_i(k)\}_{k=1}^K\in\mathcal{D}$} the dissertation 
+will show
+\begin{enumerate*}
+    \item samples $\vphi(\vec{x}_i)$ should represent the induced data 
+    distribution $\mathcal{D}$. This done by updating the learned model in an 
+    active imitation learning fashion
+    \item $y_i$ is labelled using an expert policy via a solver
+    \item data needs to be balanced, as the set is unbalanced w.r.t. 
+    dispatching step $k$
+    \item to improve upon localised stepwise features $\vphi$, it's possible to 
+    incorporate $(K-k)$ roll-outs where the learned model can be construed as a 
+    deterministic pilot heuristic
+\end{enumerate*}
+
+When querying an expert policy, there is an abundance of valuable information 
+that can be utilised for learning new models.
+For instance, it's possible to seek out when the scheduling process is most 
+susceptible to failure.
+Furthermore, generally stepwise optimality (or classification accuracy) 
+implies good end performance, here minimising the final makespan. 
+However, as the impact of suboptimal moves is not fully understood, then the 
+measure needs to be adjusted for its intended trajectory.
+
+Using these guidelines, it becomes easier to create custom \dr s for one's 
+particular application. For this several different distributions of \jsp\ 
+will be considered.
+Moreover, the machine learning approach is based on preference learning 
+which determines what feature states are preferable to others. 
+However, that could easily be substituted for other learning methods or applied 
+to other shop-constraints or family of scheduling problems that are based on 
+iteratively applying \dr s.
 
 \clearpage
-
 \mycaption{Námskeið}
 Alls hef ég lokið 34 ECTS einingum í tengslum við námið. 
 Þar að auki brautskráðist ég úr kennslufræði 
@@ -155,9 +188,9 @@ Eftirfarandi er birtingar mínar í tengslum við doktorsverkefnið:
     for Learning Linear Composite Dispatching Rules for Scheduling. In: 
     Learning and Intelligent OptimizatioN (LION9), January 12-16, 2015. 
     
-    \item[InRu15b] H. Ingimundardotir, T.P. Runarsson. Learning Linear 
-    Composite Dispatch Rules for Scheduling. Journal of Scheduling. 
-    Submitted 2015
+    \item[InRu15b] H. Ingimundardotir, T.P. Runarsson. Performance Analysis and 
+    Imitation Learning for Linear Composite Dispatch Rules for Scheduling. 
+    Journal of Scheduling. Submitted 2015
 \end{description}
 
 Utan formlegra ráðstefna erlendis, þá hef ég flutt erindi í tengslum verið 
