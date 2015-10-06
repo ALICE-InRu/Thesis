@@ -5,7 +5,10 @@
 %! makeindex thesis.nlo -s nomencl.ist -o thesis.nls
 
 \documentclass{hi-thesis} 
+
 \input{scripts/shorthand} % put your own shorthand declarations in this document
+\input{scripts/packages.tex} 
+
 \bibinput{papers/papers} % put only *your* publications here
 \begin{document}
 \printmode{final} % draft or final - case sensitive

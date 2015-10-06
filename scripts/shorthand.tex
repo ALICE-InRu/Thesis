@@ -1,4 +1,5 @@
 \newcommand{\Alice}{ALICE}
+\hyphenation{\Alice}
 \newcommand{\fullnameAlice}{Analysis \& Learning Iterative Consecutive 
 Executions}
 \newcommand{\shiny}{\href{http://tgax89.rhi.hi.is:3838/alice}{Shiny 
@@ -126,71 +127,10 @@ application}}
 \hyphenation{heur-ist-ics}
 \hyphenation{algo-rithm}
 
-\usepackage{longtable}
-\usepackage{tabularx}
-\usepackage{multirow}
-\usepackage{rotating}
-\newcommand{\rot}[1]{\begin{sideways}#1\end{sideways}}
-
 \usepackage[inline]{enumitem}
 \setlist[enumerate,1]{
     label=\textit{\roman*)},
     before=\unskip{: }, 
     itemjoin={{; }}, itemjoin*={{, and }},
     after={{. }}
-    }
-\setlist[description]{leftmargin=1cm,labelindent=1cm}
-\usepackage[retainorgcmds]{packages/IEEEtrantools}
-\usepackage{nicefrac}
-\usepackage{booktabs} % \toprule \midrule \bottomrule
-
-\usepackage{comment}
-\usepackage[splitrule,bottom,perpage,symbol*]{packages/footmisc}
-\setfnsymbol{wiley} % wiley: ∗, ∗∗, †, ‡, §, ¶, ||.
-\renewcommand{\mpfootnoterule}{}
-\let\splitfootnoterule\footnoterule
-\renewcommand{\thempfootnote}{\fnsymbol{mpfootnote}}
-
-
-\usepackage{aliascnt}
-\usepackage[capitalise,nameinlink]{cleveref} % must come last! 
-% provide singular and plural names of the categories "paper"
-\crefname{paper}{Paper}{Papers}
-\Crefname{paper}{Paper}{Papers}
-\crefname{ineq}{Ineq.}{Ineqs.}
-\Crefname{ineq}{Inequality}{Inequalities}
-\creflabelformat{ineq}{~\upshape(#2#1#3)}
-
-
-\usepackage{soul} % strikeout text \st{text}
-%\setstcolor{gray}
-
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-\makeatletter
-\def\BState{\State\hskip-\ALG@thistlm}
-\makeatother
-\algnewcommand\algorithmicto{~\textbf{to}~}
-\algnewcommand\algorithmicand{~\textbf{and}~}
-\algrenewtext{For}[3]%
-{\algorithmicfor\ $#1 \gets #2 \text{\algorithmicto} #3$~\algorithmicdo}
-
-\newcommand{\ntodo}[2][]{\todo[#1]{\thesection{}. #2}}
-\newcommand{\todoFind}[1]{\ntodo[color=red]{#1}}
-\newcommand{\todoExtend}[1]{\ntodo[color=blue]{#1}}
-\newcommand{\todoPapers}[1]{\ntodo[color=green]{#1}}
-\newcommand{\todoWrite}[1]{\ntodo[inline,color=yellow]{#1}}
-
-\usepackage{packages/forest} % for figures/orlib-methods
-\tikzstyle{arrow} = [->,>={latex}, draw=black]
-
-% ------------------------------------------------------- for alice.tex
-\usepackage{etoolbox}
-\newcommand\chquote[3][]{%
-    \ifstrempty{#1}{%
-        \emph{#3} 
-    }{%
-    #1: \emph{\st{#3}} 
-}%
-\hfill \textbf{#2}\\\\
 }
