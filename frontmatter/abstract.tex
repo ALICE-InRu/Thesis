@@ -1,5 +1,42 @@
 % the abstract
 
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque, id pulvinar odio lorem non turpis. Nullam sit amet enim. Suspendisse id velit vitae ligula volutpat condimentum. Aliquam erat volutpat. Sed quis velit. Nulla facilisi. Nulla libero. Vivamus pharetra posuere sapien. Nam consectetuer. Sed aliquam, nunc eget euismod ullamcorper, lectus nunc ullamcorper orci, fermentum bibendum enim nibh eget ipsum. Donec porttitor ligula eu dolor. Maecenas vitae nulla consequat libero cursus venenatis. Nam magna enim, accumsan eu, blandit sed, blandit a, eros.
+Over the years there have been many approaches to create \dr s for scheduling.
+Recent past efforts have focused on direct search methods (e.g. genetic 
+programming) or training on data (e.g. supervised learning).
+The dissertation will examine the latter and give a framework called 
+\fullnameAlice\ (\Alice) on how to do it effectively. 
+Defining training data as 
+\mbox{$\{\vphi(\vec{x}_i(k)),y_i(k)\}_{k=1}^K\in\mathcal{D}$} the dissertation 
+will show
+\begin{enumerate*}
+    \item samples $\vphi(\vec{x}_i)$ should represent the induced data 
+    distribution $\mathcal{D}$. This done by updating the learned model in an 
+    active imitation learning fashion
+    \item $y_i$ is labelled using an expert policy via a solver
+    \item data needs to be balanced, as the set is unbalanced w.r.t. 
+    dispatching step $k$
+    \item to improve upon localised stepwise features $\vphi$, it's possible to 
+    incorporate $(K-k)$ roll-outs where the learned model can be construed as a 
+    deterministic pilot heuristic
+\end{enumerate*}
 
-Quisque facilisis erat a dui. Nam malesuada ornare dolor. Cras gravida, diam sit amet rhoncus ornare, erat elit consectetuer erat, id egestas pede nibh eget odio. Proin tincidunt, velit vel porta elementum, magna diam molestie sapien, non aliquet massa pede eu diam. Aliquam iaculis. Fusce et ipsum et nulla tristique facilisis. Donec eget sem sit amet ligula viverra gravida. Etiam vehicula urna vel turpis. Suspendisse sagittis ante a urna. Morbi a est quis orci consequat rutrum. Nullam egestas feugiat felis. Integer adipiscing semper ligula. Nunc molestie, nisl sit amet cursus convallis, sapien lectus pretium metus, vitae pretium enim wisi id lectus. Donec vestibulum. Etiam vel nibh. Nulla facilisi. Mauris pharetra. Donec augue. Fusce ultrices, neque id dignissim ultrices, tellus mauris dictum elit, vel lacinia enim metus eu nunc.
+When querying an expert policy, there is an abundance of valuable information 
+that can be utilised for learning new models.
+For instance, it's possible to seek out when the scheduling process is most 
+susceptible to failure.
+Furthermore, generally stepwise optimality (or classification accuracy) 
+implies good end performance, here minimising the final makespan. 
+However, as the impact of suboptimal moves is not fully understood, then the 
+measure needs to be adjusted for its intended trajectory.
+
+Using these guidelines, it becomes easier to create custom \dr s for one's 
+particular application. For this several different distributions of \jsp\ 
+will be considered.
+Moreover, the machine learning approach is based on preference learning 
+which determines what feature states are preferable to others. 
+However, that could easily be substituted for other learning methods or applied 
+to other shop-constraints or family of scheduling problems that are based on 
+iteratively applying \dr s.
+
+%\keywords{Scheduling \and Composite \dr s \and Performance Analysis \and 
+% Machine Learning \and Imitation Learning \and DAgger \and Preference Learning}
