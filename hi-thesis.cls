@@ -521,6 +521,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     authorslist/.initial=\@author,
     affiliationlist/.initial={\@department, \@university, \@universitycountry},
     remark/.initial=NA,
+    status/.initial=published,
     natbib/.initial=NA,
     file/.initial=NA,
     doi/.initial=NA,
@@ -575,12 +576,15 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     %
     \vfill
     %
-    \noindent\small
-    Reprinted, with permission, from 
+    \small    
+    \ifthenelse{\equal{\papers@get{status}}{published}}{
+    \noindent Reprinted, with permission, from }{
+    \noindent \papers@get{status} to}        
     \emph{\usebibentry{\papers@get{natbib}}{booktitle}} 
     (\usebibentry{\papers@get{natbib}}{year}).
+    \ifthenelse{\equal{\papers@get{status}}{Submitted}}{}{
     Copyright \usebibentry{\papers@get{natbib}}{year} 
-    by \usebibentry{\papers@get{natbib}}{publisher}. 
+    by \usebibentry{\papers@get{natbib}}{publisher}.}%
     %
     \newpage
     \ifthenelse{\equal{\@printmode}{draft}}{
