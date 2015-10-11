@@ -196,6 +196,8 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
 % --------------------------------------------------------------some definitions
 \makeatletter
 \def\printmode#1{\gdef\@printmode{#1}}
+\def\monograph#1{\gdef\@monograph{#1}}
+
 \def\degreeyear#1{\gdef\@degreeyear{#1}}
 \def\degreemonth#1{\gdef\@degreemonth{#1}}
 \def\degree#1{\gdef\@degree{#1}}
@@ -523,7 +525,8 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     \cleardoublepage
     \setcounter{page}{1}
     \pagenumbering{arabic}
-    \part{Prologue}\label{Prologue}
+    \ifthenelse{\equal{\@monograph}{true}}{\part{Monograph}}{\part{Prologue}}
+    \label{Prologue}
     \normalsize
     \ifthenelse{\equal{\@printmode}{draft}}{
         \lfoot{Draft -- \today}
@@ -630,7 +633,10 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     %
     \small    
     \ifthenelse{\equal{\papers@get{status}}{published}}{
-    \noindent Reprinted, with permission, from }{
+    \ifthenelse{\equal{\@monograph}{true}}{ 
+    \noindent Published in}{
+    \noindent Reprinted, with permission, from}
+    }{
     \noindent \papers@get{status} to}        
     \emph{\usebibentry{\papers@get{natbib}}{booktitle}} 
     (\usebibentry{\papers@get{natbib}}{year}).
@@ -639,15 +645,16 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     by \usebibentry{\papers@get{natbib}}{publisher}.}%
     %
     \newpage
-    \ifthenelse{\equal{\@printmode}{draft}}{
+    \ifthenelse{\equal{\@printmode}{draft}}{ % do nothing
+    }{\ifthenelse{\equal{\@monograph}{true}}{  % do nothing    
     }{
-    \includepdf[pages={-}, % all pages
-    width=\textwidth, % full text-width
-    pagecommand={\thispagestyle{plain} % continue page numbering
-        \thumbindex{\value{chapter}}{\Roman{chapter}} % paper ID
-    } 
-    ]{\papers@get{file}}
-    }
+        \includepdf[pages={-}, % all pages
+        width=\textwidth, % full text-width
+        pagecommand={\thispagestyle{plain} % continue page numbering
+            \thumbindex{\value{chapter}}{\Roman{chapter}} % paper ID
+        } 
+        ]{\papers@get{file}}
+    }}
     \strictpagecheck
     \checkoddpage
     \ifoddpage

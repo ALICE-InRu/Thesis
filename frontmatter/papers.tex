@@ -17,9 +17,17 @@ The thesis is divided into two parts
     \item \emph{\nameref{Prologue}}
     \item \emph{\nameref{Papers}}
 \end{enumerate*}
-\nameref{Prologue} gives a coherent connection for the publications, and 
-elaborates on chosen aspects. Whereas, \nameref{Papers} contains copies of the 
-publications reprinted with permission from the publishers.
+\makeatletter 
+\ifthenelse{\equal{\@monograph}{true}}{
+    \nameref{Prologue} gives a coherent connection for the publications, and 
+    elaborates on chosen aspects.
+    Whereas, \nameref{Papers} cites the publications that are referenced.    
+}{
+    \nameref{Prologue} gives a coherent connection for the publications, and 
+    elaborates on chosen aspects, written as a monograph. 
+    Whereas, \nameref{Papers} contains copies of the publications, reprinted 
+    with permission from the publishers.}
+\makeatother
 
 \clearpage
 \subsection*{Mapping between \cref{Prologue} and \cref{Papers}}
@@ -40,9 +48,9 @@ There will be two algorithms considered
 The latter was implemented in \cref{InRu14}, which could be improved by 
 incorporating the methodology from \cref{InRu11b}.
 Preference models on  the other hand, are highly dependent on training data, 
-whose collection is addressed in \cref{ch:gentrdat} using passive imitation 
-learning, whereas \cref{InRu15a} included active imitation learning with 
-greatly improved results. 
+whose collection is addressed in \cref{ch:gentrdat,InRu15a} using passive 
+imitation learning, whereas \cref{ch:imitation,InRu15b} included active 
+imitation learning with greatly improved results. 
 Moreover, the training data contains an abundance of information that can be 
 used to determine algorithm's footprint in instance space, which was done for 
 optimal solutions in \cref{InRu15b}, and in addition to that SDR based 
