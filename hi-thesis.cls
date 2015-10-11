@@ -396,6 +396,8 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     \chapter*{Abstract}
     \input{frontmatter/abstract}
     \newpage
+    \HeaderQuote{Niður, niður, niður! Ætlaði þetta aldrei að taka enda? Hvað 
+    skyldi ég hafa hrapað marga kílómetra?}{Lísa}    
     \chapter*{Ágrip}
     \input{frontmatter/abstract_is}
     \cleardoublepage
