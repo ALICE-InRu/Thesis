@@ -102,7 +102,8 @@ only need $\{\Phi^{\pi_\star},\mathcal{Y}^{\pi_\star}\}$ from
   \\
   \subcaptionbox{$10\times10$\label{fig:diff:opt:rnd:10x10}}{
     \includegraphics[width=\linewidth]{figures/{stepwise.10x10.OPT}.pdf}}
-  \caption{Probability of choosing optimal move (at random)}
+  \caption[Probability of choosing optimal move]{Probability of choosing 
+  optimal move (at random)}
   \label{fig:diff:opt:rnd}
 \end{figure}
 
@@ -195,7 +196,7 @@ competitive for $6\times5$.
     \captionsetup{list=no}
     \subcaptionbox{\jrnd{6}{5}\label{fig:diff:extr:jrnd:6x5}}{
         \includegraphics[width=\linewidth]{figures/{j.rnd}/{stepwise.6x5.OPT.extremal}.pdf}}
-    \caption{Probability of extremal feature being optimal}
+    \caption{Probability of extremal feature being optimal move}
     \label{fig:diff:extr:features}
 \end{figure}
 \begin{figure}\centering
@@ -204,8 +205,8 @@ competitive for $6\times5$.
     \subcaptionbox{\jrnd{10}{10}\label{fig:diff:extr:jrnd:10x10}}{
         \includegraphics[width=\linewidth]{figures/{j.rnd}/{stepwise.10x10.OPT.extremal}.pdf}}
     \caption{}
-    \MyCaption{Probability of extremal feature being 
-    optimal}{fig:diff:extr:jrnd:6x5}{fig:diff:extr:jrnd:10x10}
+    \MyCaption{Probability of extremal feature being optimal 
+    move}{fig:diff:extr:jrnd:6x5}{fig:diff:extr:jrnd:10x10}
 \end{figure}
 
 \begin{figure}[p]\centering
@@ -378,9 +379,10 @@ performance of MWR.
   \centering
   \includegraphics[width=\linewidth]{figures/{j.rnd}/{boxplotRho.BDR.10x10}.pdf}
   \vspace*{-24pt}
-  \caption{Box plot of \jrnd{10}{10} \namerho, for BDR where SPT is applied for 
-    the first 10\%, 15\%, 20\%, 30\% or 40\% of the dispatches, followed by 
-    MWR.}
+  \caption[Box plot of \jrnd{10}{10} \namerho, for BDR where SPT is applied for 
+  the first followed by MWR.]{
+    Box plot of \jrnd{10}{10} \namerho, for BDR where SPT is applied for the 
+    first 10\%, 15\%, 20\%, 30\% or 40\% of the dispatches, followed by MWR.}
   \label{fig:diff:boxplot:BDR}
 \end{figure}
 
@@ -538,7 +540,7 @@ highlighted.
 
 \begin{figure}[t]
     \includegraphics[width=\linewidth]{{j.rnd/phi.ks.SDR.6x5}.pdf}
-    \caption{Stepwise K-S Test for features $\vphi$ segregated w.r.t. easy and 
+    \caption{Stepwise K-S test for features $\vphi$ segregated w.r.t. easy and 
         hard problems are drawn from the same continuous data distribution.}
     \label{fig:jrnd:feat:KStest}
 \end{figure}

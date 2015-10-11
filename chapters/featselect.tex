@@ -98,7 +98,9 @@ given in boldface.
     \centering
     \includegraphics[width=\linewidth]{figures/ALL/{pareto.rho.vs.acc}.pdf}
     \vspace*{-24pt}
-    \caption{Scatter plot for validation accuracy  (\%) against its 
+    \caption[Scatter plot for validation accuracy  (\%) against its 
+    corresponding mean expected $\rho$ (\%) for all 697 linear models from 
+    \cref{eq:697}]{Scatter plot for validation accuracy  (\%) against its 
         corresponding mean expected $\rho$ (\%) for all 697 linear models from 
         \cref{eq:697}.
         Pareto fronts are for each active feature count, and labelled with 
@@ -197,7 +199,8 @@ considerably worse off due to overfitting of classifying the preference set.
   \includegraphics[width=\textwidth]{figures/{j.rndn}/{pareto.10x10.phi}.pdf}\\
   \includegraphics[width=\textwidth]{figures/{f.rnd}/{pareto.10x10.phi}.pdf}
   \vspace*{-24pt}
-  \caption{Normalised weights for CDR models from \cref{tbl:CDR:pareto}, 
+  \caption[Normalised weights for CDR models from \cref{tbl:CDR:pareto}
+  ]{Normalised weights for CDR models from \cref{tbl:CDR:pareto}, 
     models are grouped w.r.t. its dimensionality, $d$. Note, a triangle 
     indicates a solution on the Pareto front.
     Furthermore, bottom annotation indicates their objectives
@@ -234,9 +237,11 @@ such as \cref{eq:bwc:opt}.
   \centering
   \includegraphics[width=\linewidth]{figures/ALL/{stepwise.10x10.FeatSelect}.pdf}
   \vspace*{-30pt}
-  \caption{Probability of choosing optimal move for models corresponding to 
-    highest mean validation accuracy and lowest mean deviation from 
-    optimality, $\rho$, compared to the baseline of probability of 
+  \caption[Probability of choosing optimal move for models corresponding to 
+  highest mean validation accuracy and lowest mean \namerho]{
+    Probability of choosing optimal move for models corresponding to 
+    highest mean validation accuracy and lowest mean \namerho, compared to the 
+    baseline of probability of 
     choosing an optimal move at random (dashed)}
   \label{fig:CDR:opt}
 \end{figure}
@@ -268,8 +273,9 @@ Results hold for the test set.
 
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{figures/{boxplotRho.FeatSelect.10x10}.pdf}
-  \caption{Box-plot for \namerho, for the best CDR preference models (cf. 
-  \cref{tbl:CDR:pareto}) and compared against their best reference model.} 
+  \caption[Box-plot for \namerho, for the best CDR preference models]{
+    Box-plot for \namerho, for the best CDR preference models (cf. 
+    \cref{tbl:CDR:pareto}) and compared against their best reference model.} 
   \label{fig:boxplot:CDR}
 \end{figure}
 

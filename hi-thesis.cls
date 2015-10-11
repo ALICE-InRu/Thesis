@@ -252,7 +252,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
         \tableofcontents
         
         \HeaderQuote{What is the use of a book, without pictures or 
-        conversations?}{Alice}
+        conversations?}{Alice}        
         \listoffigures
         \addcontentsline{toc}{chapter}{\listfigurename}
         
@@ -432,7 +432,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     \settowidth{\largNum}{#2}%
     \ifnum \c@tocdepth >\m@ne
     \addpenalty{-\@highpenalty}%
-    \vskip 1.0em \@plus\p@
+    %\vskip 1.0em \@plus\p@
     \setlength\@tempdima{6.5em}%
     \noindent
     \begingroup
