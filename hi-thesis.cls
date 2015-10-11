@@ -14,7 +14,7 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{hi-thesis}[2015/08/22 v1.0 University of Iceland Thesis Class]
-\LoadClass[11pt,b5paper,twoside]{book} % UGthesis
+\LoadClass[11pt,b5paper,twoside,openany]{book} % UGthesis
 
 % Required packages
 \RequirePackage{changepage} % check if page is odd/even
@@ -460,7 +460,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     \if@openright
     \cleardoublepage
     \else
-    \clearpage
+    \cleardoublepage
     \fi
     \thispagestyle{empty}% remove page numbering
     \if@twocolumn
@@ -486,7 +486,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     \normalsize
     \ifthenelse{\equal{\@printmode}{draft}}{
         \lfoot{Draft -- \today}
-    }{}
+    }{}    
 }
 \makeatother
 
@@ -514,6 +514,15 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     \renewcommand\chaptername{Paper}
     \renewcommand{\thechapter}{\Roman{chapter}}
     \pagestyle{plain}
+    
+    \strictpagecheck
+    \checkoddpage
+    \ifoddpage
+    % do nothing
+    \else
+    \newpage
+    \blankpage    
+    
     \include{endmatter/papers} 
 }
 
