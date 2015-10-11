@@ -27,9 +27,9 @@ Given the ad-hoc nature of the heuristic design process, there is clearly room
 for improvement. A number of attempts have been made to automate heuristic 
 design, and it is the ultimate goal of this dissertation to automate 
 optimisation heuristics via ordinal regression. 
-The focal point will be based on scheduling processes named \jsp\ scheduling 
-problem (\JSP), and one of its subclasses, the \fsp\ scheduling problem 
-(\FSP).
+The focal point will be based on scheduling processes named \emph{\jsp\ 
+scheduling problem} (\JSP), and one of its subclasses, the \emph{\fsp\ 
+scheduling problem} (\FSP).
 
 \noindent There are two main viewpoints on how to approach scheduling problems, 
 namely,
@@ -61,7 +61,7 @@ function during evolution in order to reduce the number of costly true value
 function evaluations. 
 In this paradigm, ordinal regression can be used for surrogate assisted 
 evolutionary optimisation, where models are ranked -- whereas for tailored 
-algorithms, features were ranked. 
+algorithms, features are ranked. 
 
 %\section{Relationship between problem structure and heuristic efficiency}
 \section{Rice's framework for algorithm selection}\label{sec:rice}
@@ -269,7 +269,7 @@ Unfortunately, there is not much said about algorithms that fail
 performance to some previous approach.
 So to quote a pioneer in scheduling, 
 \begin{quote}
-    ``The only real mistake is the one from which we learn nothing'' \\
+    ``The only real mistake is the one from which we learn nothing.'' \\
     \raggedleft Henry Ford
 \end{quote}
 In order to make the best of a bad situation, this derailment\footnote{
@@ -303,13 +303,18 @@ lead to better algorithm design, or at least improved understanding of
 
 \subsection*{Learning}
 The machine learning approach considered in this dissertation is a supervised one. In particular, preference learning, which is a data driven approach which determines what feature states are preferable to others.
-Defining the training data as $\{\vec{x}_i(k),y_i(k)\}_{k=1}^K\in\mathcal{D}$ then 
+Defining the training data as 
+$\{\vphi(\vec{x}_i(k)),y_i(k)\}_{k=1}^K\in\mathcal{D}$ then 
 \begin{enumerate*}
     \item samples $\vec{x}_i$ should represent the induced data distribution $\mathcal{D}$. 
     %that it the learned state-spaces are representative of the ones the eventual model would likely encounter. 
     This can be achieved by updating the learned model in an active imitation learning fashion, similar to the work of \cite{RossB10,RossGB11}, in particular their DAgger framework
     \item $y_i$ is labelled using a solver
-    \item data needs to be balanced, as the set is unbalanced w.r.t. dispatching step $k$
+    \item data needs to be balanced, as the set is unbalanced w.r.t. 
+    dispatching step $k$
+    \item to improve upon localised stepwise features $\vphi$, it's possible to 
+    incorporate $(K-k)$ roll-outs where the learned model can be construed as a 
+    deterministic pilot heuristic    
 \end{enumerate*}
 
 
@@ -350,9 +355,11 @@ thesis.
 \input{figures/code-flowchart.tex}
 
 \section{Outline}
-The dissertation is oriented around \jsp\ scheduling , which is explained in detail in \cref{ch:scheduling}.
+The dissertation is oriented around \jsp\ scheduling, which is explained in 
+detail in \cref{ch:scheduling}.
 Due to scarcity of real-world data, we let random problem generators 
-suffice, that are described in \cref{ch:genprobleminstances}. Moreover, the traditional 
+suffice. They are described in \cref{ch:genprobleminstances}. Moreover, the 
+traditional 
 OR-Library benchmark instances are similarly created, although for a greater 
 variety of problem sizes. 
 \citet{SmithMiles2015} warn that general practice in the OR-community is over-tuning of algorithms to a relatively small set of aging\footnote{
@@ -360,7 +367,7 @@ variety of problem sizes.
 	1990s, or earlier (cf. \cref{tbl:data:orlib}).}
 instances. 
 Obviously, the choice of data set has a direct influence of the proposed 
-algorithm. As they are developed with them specifically in mind. 
+algorithm, as they are developed with them specifically in mind. 
 This is why robustness towards different problem spaces, than initially trained 
 on, is of so much value, as it indicates how applicable our model is for 
 real-world deployment 

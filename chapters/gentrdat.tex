@@ -21,7 +21,7 @@ These collected features are denoted $\Phi$, where,
 \begin{equation}\label{eq:Phi}
 \Phi:= \bigcup_{i=1}^{N_{\train}} 
 \bigcup_{k=1}^K\bigcup_{J_j\in\mathcal{L}^{(k)}} 
-\condset{\vphi_j}{\vec{x}_i\in\mathcal{P}^{n\times m}_{\train} }.
+\condset{\vphi^j}{\vec{x}_i\in\mathcal{P}^{n\times m}_{\train} }.
 \end{equation}
 
 \begin{figure}[p]
@@ -127,7 +127,7 @@ As a result, we obtain the meta-data from
 \cref{fig:rice} as follows, 
 \begin{equation}\label{eq:trdat:metadata}
 \{\Phi^\pi,\mathcal{Y}^\pi\} := 
-\condset{\{ \vphi_j, C_{\max}^{\pi_\star(\vchi^j)}
+\condset{\{ \vphi^j, C_{\max}^{\pi_\star(\vchi^j)}
     \}}{J_j\in\mathcal{L}^{(k)}}_{k=1}^K \in \mathcal{F} \times \mathcal{Y}
 \end{equation}
 for a single problem instance $\vec{x}\in\mathcal{P}_{\train}$, and where 

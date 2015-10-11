@@ -6,19 +6,19 @@
 \section{Ordinal regression for \jsp}
 Using the training set $\{\Phi^\pi,\mathcal{Y}^\pi\}$, given in 
 \cref{eq:trdat:metadata} by following some policy $\pi$, 
-let $\vphi_{o}\in\Phi^\pi$ denote the post-decision state when dispatching 
+let $\vphi^{o}\in\Phi^\pi$ denote the post-decision state when dispatching 
 job $J_o$ corresponds to an optimal schedule being built. All post-decisions 
 states corresponding to suboptimal dispatches, $J_s$, are denoted by 
-$\vphi_{s}\in\Phi^\pi$. 
+$\vphi^{s}\in\Phi^\pi$. 
 
 Let's label feature sets which were considered optimal, 
-$\vec{z}_{o}=\vphi_{o}-\vphi_{s}$, and suboptimal, 
-$\vec{z}_{s}=\vphi_{s}-\vphi_{o}$ by $y_o=+1$ and $y_s=-1$ respectively. 
+$\vec{z}^{o}=\vphi^{o}-\vphi^{s}$, and suboptimal, 
+$\vec{z}^{s}=\vphi^{s}-\vphi^{o}$ by $y_o=+1$ and $y_s=-1$ respectively. 
 The preference learning problem is specified by a set of preference pairs,
 \begin{equation}\label{eq:Psi:jsp}
 	\Psi := \bigcup_{\{\vec{x}_i\}_{i=1}^{N_{\train}}}
     \condset{
-        \left\{\vec{z}_o,+1\right\},\left\{\vec{z}_s,-1\right\}}{\forall 
+        \left\{\vec{z}^o,+1\right\},\left\{\vec{z}^s,-1\right\}}{\forall 
         (J_o,J_s) 
         \in \mathcal{O}^{(k)} \times \mathcal{S}^{(k)}}_{k=1}^K 
     \subset \Phi\times Y 
@@ -62,7 +62,7 @@ When using linear classification model (cf. \cref{sec:ord:linpref}) for
 set can be used on any new data point (i.e. partial schedule), $\vchi$, and 
 their inner product is proportional to probability estimate \cref{eq:prob}. 
 %Similarly for non-linear classification models. 
-Hence, for each job on the job-list, $J_j\in\mathcal{L}$, let $\vphi_j$ denote 
+Hence, for each job on the job-list, $J_j\in\mathcal{L}$, let $\vphi^j$ denote 
 its corresponding post-decision state. Then the job chosen to be dispatched, 
 $J_{j^*}$, is the one corresponding to the highest preference estimate
 from \cref{eq:CDR:feat} where $\pi(\cdot)$ is the classification model obtained 

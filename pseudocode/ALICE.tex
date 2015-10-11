@@ -9,11 +9,8 @@
         \condset{Y(\pi_{\star},\vphi(\vec{x}))}{
             \vec{x}\in\mathcal{P}}$
         \Comment{collect optimal solutions}
-        %\State $Y^{\text{1SUB}} \gets \condset{Y(\pi,\vphi(\vec{x}))}{
-        %    \vec{x}\in\mathcal{P}, \abs{\pi\neq\pi_\star}=1}$
-        %        \Comment{make one suboptimal move}
         \State $\Phi^{\pi_\star} \gets 
-        \condset{\vphi_{\pi^\star}(\vec{x})}{
+        \condset{\vphi({\pi^\star}(\vec{x}))}{
             \vec{x}\in\mathcal{P}}$
         \Comment{collect optimal meta-data}
         \ForAll{$\pi \in\mathcal{A}$} 
@@ -23,7 +20,7 @@
             \vec{x}\in\mathcal{P}}$
         \Comment{collect solutions}
         \State $\Phi^{\pi} \gets 
-        \condset{\vphi_{\pi}(\vec{x})}{\vec{x}\in\mathcal{P}}$
+        \condset{\vphi({\pi}(\vec{x}))}{\vec{x}\in\mathcal{P}}$
         \Comment{collect meta-data}
         \State $\xi_{\pi} \gets \Exp{\given{\pi_{\star} = \pi}{\pi_{\star}}}$
         \Comment{optimality of $\pi$ (i.e. when $Y^{\pi_\star}=Y^\pi$)}
