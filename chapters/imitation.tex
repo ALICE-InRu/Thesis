@@ -83,7 +83,7 @@ Summary of $N_{\train}$ is given in \cref{tbl:Ntrain}.
 
 \input{tables/Ntrain}
 
-\section{Passive Imitation Learning}\label{sec:il:passive}
+\section{Passive imitation learning}\label{sec:il:passive}
 Using the terms from game-theory used in \citet{CesaBianchi06}, %ch 2: 
 then our problem is a basic version of the sequential prediction problem where 
 the predictor (or forecaster), $\pi$, observes each element of a sequence 
@@ -91,7 +91,7 @@ $\vchi$ of jobs, where at each time step $k \in \{1,...,K\}$, before the
 $k$-th job of the sequence is revealed, the predictor guesses its value 
 $\chi_k$ on the basis of the previous $k-1$ observations. 
 
-\subsection{Prediction with Expert Advice}\label{sec:expertPolicy}
+\subsection{Prediction with expert advice}\label{sec:expertPolicy}
 Before going further, let's formalise following an expert policy, 
 \PhiSet{\OPT}, from \cref{sec:trdat:param:tracks:passive}.
 Let's assume we know the expert policy $\pi^\star$, which we can query what 
@@ -123,7 +123,7 @@ When $\abs{\mathcal{O}^{(k)}}>1$, there can be several trajectories worth
 exploring. However, only one is chosen at random. This is deemed sufficient as 
 the number of problem instances, $N_{\train}$, is relatively large.
 
-\subsection{Follow the Perturbed Leader}\label{sec:perturbedLeader}
+\subsection{Follow the perturbed leader}\label{sec:perturbedLeader}
 By allowing a predictor to randomise it's possible to achieve improved 
 performance \citep{CesaBianchi06,Hannan57}, which is the inspiration for our 
 new strategy, where we follow the \emph{Perturbed Leader}, denoted 
@@ -174,7 +174,7 @@ $\bigOh{\epsilon K}$, if it were i.i.d.
 \end{figure}
 \input{tables/stats.passive.tex}
 
-\section{Active Imitation Learning}\label{sec:il:active}
+\section{Active imitation learning}\label{sec:il:active}
 
 To amend performance from \PhiSet{\OPT}-based models, suboptimal 
 state-spaces were explored in \cref{InRu15a} by inspecting the features from 
@@ -263,7 +263,7 @@ and its update procedure is detailed in \cref{pseudo:DAgger}.
 \input{pseudocode/imitationLearning}
 \input{pseudocode/DAgger}
 
-\subsection{DAgger Parameters}
+\subsection{DAgger parameters}
 Due to time constraints, then maximum number of iterations is $T=7$ are 
 inspected for \jrnd{6}{5} and \jrnd{10}{10} using \ref{bias:equal}.
 In addition, there will be three mixed strategies for $\{\beta_i\}_{i=0}^T$ in 
@@ -283,7 +283,7 @@ Moreover, \ref{DA:UNSUP} is a simple parameter-free version of the DAgger
 algorithm and often performs best in practice \cite{RossGB11}.
 
 \pagebreak
-\subsection{Experiments}\label{sec:ail:expr}
+\subsection{Experimental study}\label{sec:ail:expr}
 
 To address \ref{Boost:lmax}, then \PsiSet[\DA{7}]{p} for 
 \jrnd{10}{10} was trained with varying size $l_{\max}$, from 50,000 to its full 
@@ -394,7 +394,7 @@ We notice that with each iteration DAgger improves
 	(therefore $i=3$ was not run)
 \end{enumerate*}
 
-\section{Summary of Imitation Learning Experiments}
+\section{Summary of imitation learning experimental studies}
 \begin{figure}[t]
 	\includegraphics[width=\textwidth]{figures/{j.rnd}/{boxplot.summary.10x10}.pdf}
 	\vspace*{-18pt}
