@@ -58,8 +58,9 @@
 
 \RequirePackage[tight,nice]{units}
 
-\RequirePackage[margin=2.3cm,
-    b5paper,
+\RequirePackage[
+    b5paper,layout=b5paper,
+    margin=2.3cm,
     %showframe, % option good for draft mode
     includehead]{geometry} % 
 \RequirePackage[b5]{crop}
@@ -409,10 +410,50 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
 \setcounter{lofdepth}{1}
 \setcounter{lotdepth}{1}
 \renewcommand{\cftchapfont}{\normalsize \scshape}
-\renewcommand*\cftchapnumwidth{2em} % add margin to fit Roman numerals
-\renewcommand*\cftsecnumwidth{3em}  % from Papers section
+\setlength{\cftchapnumwidth}{2em}
+\cftsetindents{section}{2em}{2.4em}
+\cftsetindents{subsection}{4.4em}{3.2em}
+
+%\renewcommand*\cftchapnumwidth{2em} % add margin to fit Roman numerals
+%\renewcommand*\cftsecnumwidth{3em}  % from Papers section
 % -------------------------------------------------------------- list of figures
 \renewcommand\listfigurename{Listing of figures}
+
+\newlength{\largNum}
+
+\newlength{\tocRightMargin} % Marge droite
+\setlength{\tocRightMargin}{1.2cm}
+
+\newlength{\tocLeftMarginSecondLineFigure}
+\setlength{\tocLeftMarginSecondLineFigure}{2.5em}
+
+\makeatletter
+\renewcommand*\l@figure[2]{%
+    \settowidth{\largNum}{#2}%
+    \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@
+    \setlength\@tempdima{6.5em}%
+    \noindent
+    \begingroup
+    \def\numberline##1{\makebox[\tocLeftMarginSecondLineFigure][l]{\ ##1}}%
+    \pretolerance=10000
+    \parindent \z@ \rightskip \tocRightMargin
+    \parfillskip -\tocRightMargin
+    \leavevmode \normalsize
+    \advance\leftskip \tocLeftMarginSecondLineFigure
+    \hskip -\leftskip
+    #1\nobreak
+    \leaders\hbox{$\m@th
+        \mkern \@dotsep mu\hbox{.}\mkern \@dotsep
+        mu$}\hskip 1\tocRightMargin plus 1fil\nobreak
+    \hb@xt@\largNum{\hss #2}\par
+    \penalty\@highpenalty
+    \endgroup
+    \fi}
+
+\makeatother
+
 
 % --------------------------------------------------------------- list of tables
 \renewcommand\listtablename{Listing of tables}
