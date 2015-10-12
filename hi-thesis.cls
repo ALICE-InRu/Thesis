@@ -579,7 +579,6 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     status/.initial=published,
     natbib/.initial=NA,
     file/.initial=NA,
-    doi/.initial=NA,
 }
 
 \usepackage{keyval}
@@ -588,6 +587,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
 \newbibfield{author}
 \newbibfield{booktitle}
 \newbibfield{doi}
+\newbibfield{url}
 \newbibfield{month}
 \newbibfield{year}
 \newbibfield{publisher}
@@ -623,8 +623,15 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
             \usebibentry{\papers@get{natbib}}{booktitle}
             \ifthenelse{\equal{\papers@get{remark}}{NA}}{}{
                 -- \papers@get{remark}}
-            \ifthenelse{\equal{\papers@get{doi}}{NA}}{}{
-                \\doi: \papers@get{doi}}
+            \newline
+            
+            \ifthenelse{\equal{\papers@get{status}}{Submitted}}{
+            \noindent Manuscript: 
+            \url{\usebibentry{\papers@get{natbib}}{url}}
+            }{
+            \noindent doi: 
+            \href{http://dx.doi.org/\usebibentry{\papers@get{natbib}}{doi}}{\usebibentry{\papers@get{natbib}}{doi}}
+            }
         \end{spacing}
     }
     {\par\vskip4ex}
