@@ -84,8 +84,8 @@ In addition, varying permutations of the dispatching sequence (however given
 the same partial initial sequence) can result in very different complete 
 schedules but can still achieve the same makespan, and thus same \fullnamerho\ 
 (which is the measure under consideration). 
-Care must be taken in this case that neither resulting features are labelled 
-\footnote{Here the tasks labelled `optimal' do not necessarily yield the
+Care must be taken in this case that neither resulting features are 
+labelled\footnote{Here the tasks labelled `optimal' do not necessarily yield the
   optimum makespan (except in the case of following expert policy $\pi_\star$), 
   instead these are the optimal dispatches for the given partial schedule.} 
 as undesirable. 
@@ -203,7 +203,7 @@ relatively large, it is deemed sufficient to explore one trajectory for each
 instance, in those cases as well.
 
 These trajectory strategies were initially introduced in \cref{InRu15a}. 
-However, more SDR-based trajectories are now addressed since, e.g., LWR is 
+However, more SDR-based trajectories are now addressed since for example LWR is 
 considered more favourable for \fsp\ rather than MWR (cf. 
 \cref{ch:defdifficulty}). 
 
@@ -213,7 +213,7 @@ The number of features that were collected on a step-by-step basis for
 There is an apparent stair-like structure for LWR, in accordance with its 
 motivation (cf. \cref{sec:SDR}), which is completing jobs advanced in their 
 progress, that is to say minimising $\mathcal{L}$ and from \cref{eq:Phi} we 
-have $\abs{\Phi}\propto\abs{\mathcal{L}}$.
+have $\abs{\Phi(k)}\propto\abs{\mathcal{L}^{(k)}}$.
 Whereas MWR tries to keep the jobs more balanced, hence more steady 
 $\abs{\mathcal{L}}$, until at $k>(K-n)$ then \mbox{$\abs{\mathcal{L}} \lneq 
 (K-k)$}, which explains the sharp decent near the end for MWR.

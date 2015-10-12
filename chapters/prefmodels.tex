@@ -1,7 +1,11 @@
 \HeaderQuote{Oh my ears and whiskers, how late it's getting!}{Rabbit} 
 
 \chapter{Preference Learning}\label{ch:prefmodels} 
-\FirstSentence{L}{earning models considered in this } dissertation are based on ordinal regression in which the learning task is formulated as learning preferences. In the case of scheduling, learning which operations are preferred to others. Ordinal regression has been previously presented in \cite{Ru06:PPSN}, and given in \cref{ch:ordinal} for completeness. 
+\FirstSentence{L}{earning models considered in this } dissertation are based on 
+ordinal regression in which the supervised learning task is formulated as 
+learning preferences. In the case of scheduling, learning which operations are 
+preferred to others. Ordinal regression has been previously presented in 
+\cite{Ru06:PPSN}, and given in \cref{ch:ordinal} for completeness. 
 
 \section{Ordinal regression for \jsp}
 Using the training set $\{\Phi^\pi,\mathcal{Y}^\pi\}$, given in 
@@ -129,8 +133,8 @@ The main motivation for the data generation of $\Psi$ that will be used in
 preference learning, will now need to consider the following main aspects
 \begin{enumerate}[after={{}}, leftmargin=*, label={\textbf{PREF.\arabic*}}, 
 ref={{PREF.\arabic*}}]
-    \item Which path(s) should be investigated to collect training instances, 
-    i.e., $\Phi$. Should they be features gathered resulting in
+    \item Which path(s) $\pi$ should be investigated to collect training 
+    instances, i.e., \PhiSet{\pi}. Should they be features gathered resulting in
     \label{PREF:param:tracks}
     \begin{enumerate*}[label=\textit{\roman*)},before=\unskip{: }, itemjoin={{? 
     }}, itemjoin*={{, or }},after={{? }}]
@@ -194,14 +198,12 @@ The various ranking strategies for adding preference pairs to $\Psi$ defined by
 \cref{eq:Psi:jsp} were first reported in \cref{InRu15a}, and are the following,
 \begin{description}
     \item[Basic ranking, \PsiSet{b},] i.e., all optimum rankings $r_1$ versus 
-    all 
-    possible suboptimum rankings $r_i$, $i\in\{2,\ldots,n'\}$, preference pairs 
-    are added -- same basic set-up introduced in \cref{InRu11a}. Note, 
+    all possible suboptimum rankings $r_i$, $i\in\{2,\ldots,n'\}$, preference 
+    pairs are added -- same basic set-up introduced in \cref{InRu11a}. Note, 
     $\abs{\Psi_b}$ is defined in \cref{eq:sizePsi_b}.
     \item[Full subsequent rankings, \PsiSet{f},] i.e., all possible 
-    combinations 
-    of $r_i$ and $r_{i+1}$ for $i\in\{1,\ldots,n'\}$, preference pairs are 
-    added.
+    combinations of $r_i$ and $r_{i+1}$ for $i\in\{1,\ldots,n'\}$, preference 
+    pairs are added.
     \item[Partial subsequent rankings, \PsiSet{p},] i.e., sufficient set of 
     combinations of $r_i$ and $r_{i+1}$ for $i\in\{1,\ldots,n'\}$, are added to 
     the training set -- e.g. in the cases that there are more than one 
@@ -212,8 +214,11 @@ The various ranking strategies for adding preference pairs to $\Psi$ defined by
     $r_i$ versus $r_j$ for $i,j\in\{1,\ldots,n'\}$ and $i\neq j$, preference 
     pairs are added.
 \end{description}
-where $r_1>r_2>\ldots>r_{n'}$ ($n'\leq n$) are the rankings of the job-list, 
-$\mathcal{L}^{(k)}$, at time step $k$.
+where the rankings of the job-list, $\mathcal{L}^{(k)}$, at time step $k$, is 
+as follows, 
+\begin{equation}\label{eq:rank}
+   r_1>r_2>\ldots>r_{n'} \quad (n'\leq n)
+\end{equation}
 By definition the following property holds:
 \begin{equation}\label{eq:Psi:size}
     \Psi_p \subset \Psi_f \subset \Psi_b \subset \Psi_a
@@ -454,9 +459,9 @@ It's possible to circumvent the choice of stepwise sampling strategy by
 creating a preference model for each time step $k$, for a grand total of $K$ 
 models. 
 By doing so it's possible to capture local changes in the schedule, as we've 
-already seen the evolution of features varies. Moreover, in 
-\cref{fig:cma:boxplot} then a stepwise \emph{new} model was generally better 
-than a \emph{single} global one.
+already seen the evolution of features varies. Moreover, for CMA-ES 
+optimisation then a stepwise \emph{new} model was generally better 
+than a \emph{single} global one (cf. \cref{fig:cma:boxplot}).
 However, in that case it's not possible to test those models against 
 other dimensions, e.g., test benchmarks suite from OR-Library (cf. 
 \cref{tbl:data:orlib}). 
@@ -514,7 +519,7 @@ Whereas, in the case of \jrndn{10}{10} then a single stepwise model is not as
 adequate as its single counterparts, then over emphasising w.r.t. the set works 
 poorly. 
 All other bias strategies for \jrndn{10}{10} came out similar, with the 
-exception of \cref{bias:bcs} being slightly lacking, yet better than 
+exception of \ref{bias:bcs} being slightly lacking, yet better than 
 \ref{bias:featsize} and \ref{bias:prefsize}.
 
 Furthermore, \ref{bias:opt} work just as well as its simplified version 

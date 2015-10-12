@@ -7,9 +7,9 @@
 \FirstSentence{G}{enetic algorithms (GA) are one of the} most widely used 
 approaches in \JSP\ literature \citep{Pinedo08}. 
 GA is search heuristic that is inspired by the process of natural selection, 
-and is a subclass of evolutionary algorithms (EA), which generate solutions to 
-optimisation problems using techniques based on natural evolution, such as 
-inheritance, mutation, selection, and crossover.
+and is a subclass of \emph{evolutionary algorithms} (EA), which generate 
+solutions to optimisation problems using techniques based on natural evolution, 
+such as inheritance, mutation, selection, and crossover.
 
 When applying GAs to \JSP, an extensive number of schedules need to be 
 evaluated, and even for low dimensional JSP, it can quickly become 
@@ -26,7 +26,8 @@ Luckily a subsequent local search can mediate the optimisation
 
 The most predominant approach in hyper-heuristics, a framework of creating 
 \emph{new} heuristics from a set of  predefined heuristics, is genetic 
-programming \citep{Burke10}. Dispatching rules based genetic algorithms (DRGA) 
+programming \citep{Burke10}. 
+\emph{Dispatching rules based genetic algorithms} (DRGA) 
 \citep{Vazquez-Rodriguez09,Dhingra10,Nguyen13} are a special case of genetic 
 programming \citep{Koza05}, where GAs are applied indirectly to JSP via 
 \dr s, i.e., where a solution is no longer a \emph{proper} schedule 
@@ -70,8 +71,9 @@ heuristics. The approach in \cref{InRu14}, was to automate that selection
 similar to DRGA, by translating dispatching rules into measurable features and 
 optimising what their contribution should be via evolutionary search, i.e., 
 optimise the weights $\vec{w}$ in \cref{eq:CDR:feat} directly using
-covariance matrix adaptation evolution strategy (CMA-ES) by \cite{Hansen01}, 
-which has been proven to be a very efficient numerical optimisation technique. 
+\emph{covariance matrix adaptation evolution strategy} (CMA-ES) by 
+\cite{Hansen01}, which has been proven to be a very efficient numerical 
+optimisation technique. 
 The framework is straight forward and easy to implement and shows promising 
 results. 
 
@@ -191,8 +193,8 @@ middle, or end of the schedule.
 Alas, stepwise models aren't appropriate when inspecting robustness towards 
 different problem spaces.\footnote{Note, time dependant 
     models are inapplicable for OR-Library, since their size $n\times m$ 
-    doesn't match any size in the benchmark set. However, this is irrelevant 
-    for time independent models.}
+    does not match many of the sizes in the benchmark set. However, this is 
+    irrelevant for time independent models.}
 Hence, a single model for all iterations is preferred. 
 
 Regarding the choice of objective function in \cref{eq:cma:objfun}, then there 
@@ -216,7 +218,7 @@ Furthermore, notice how \fmxc{6}{5} obtains a significantly better mean $\rho$
 (from 52.8\% down to 24.46\%) for the \JSP\ (cf. \cref{fig:cma:boxplot:orlib}) 
 then it did for it's corresponding problem space, which was the only setting 
 where \cref{eq:cma:rho} was significantly different than \cref{eq:cma:makespan} 
-(worsening by $\approx1\%$).
+(worsening by $\Delta\rho\approx+1\%$).
 
 \begin{figure}[p]
     \subcaptionbox{Models applied to corresponding training and test set
@@ -252,9 +254,9 @@ great improvement when using \cref{eq:cma:rho} over \cref{eq:cma:makespan}.
 Implying, even though CMA-ES doesn't rely on optimal solutions, there are some 
 problem spaces where it can be of great benefit. This is due to the fact that 
 the problem instances can vary greatly within the same problem space 
-\cref{InRu12}. Thus normalising the objective function would help the 
-evolutionary search to deviate from giving too much weight for problematic 
-problem instances.
+(cf. \cref{ch:defdifficulty,InRu12}). Thus normalising the objective function 
+would help the evolutionary search to deviate from giving too much weight for 
+problematic problem instances.
 
 The main drawback of using evolutionary search for finding optimal weights for 
 \cref{eq:CDR:feat} is how computationally expensive it is to evaluate the mean 
@@ -275,5 +277,4 @@ value function evaluations, such as the approach in \cref{InRu11b}. This could
 reduce the computational cost of the evolutionary search considerably, making 
 it feasible to conduct the experiments from \cref{sec:cma:expr} for problems of 
 higher dimensions, e.g., with these adjustments it is possible to train on 
-$10\times10$ with greater ease, or even considering even higher dimensions, 
-e.g. $14\times14$.
+$10\times10$ with greater ease, or even considering even higher dimensions.

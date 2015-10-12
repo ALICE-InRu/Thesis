@@ -114,7 +114,7 @@ probability
 keep making optimal decisions, because once off the optimal track the 
 consequences can be dire. To demonstrate this interaction, 
 \cref{fig:diff:case:OPT} 
-depicts the worst and best case scenario of \namerho, once you've fallen off 
+depicts the best and worst case scenario of \namerho, once you've fallen off 
 the optimal track, defined as follows,
 \begin{subequations}\label{eq:bwc:opt}
   \begin{eqnarray} 
@@ -131,7 +131,7 @@ turn. Generally, there will be many mistakes made, and then the compound
 effects of making suboptimal decisions really start adding up. 
 In fact, \cref{fig:diff:extr:SDR} shows the probability of optimality when 
 following a fixed SDR (i.e. if \cref{eq:tracc:opt} is conditioned on $\pi$ 
-instead of $\pi_\star$).
+itself instead of $\pi_\star$).
 
 It is interesting that for \JSP, then making suboptimal decisions makes more of 
 an impact on the resulting makespan as the dispatching process progresses. 
@@ -273,12 +273,14 @@ $\xi_{\SDR}$.
 Similarly for \cref{eq:bwc:opt}, 
 \begin{subequations}\label{eq:bwc:track}
 \begin{IEEEeqnarray}{rCl}
-  \zeta_{\min}^{\pi}(k) &:=& \Exp[\pi]{\given{\min(\rho)}{
+  \zeta_{\min}^{\pi}(k) &:=& 
+  \Exp[\pi]{\given{\min_{J_j\in\mathcal{L}^{(k)}}(\rho)}{
       \forall C_{\max}^{\pi_\star(\vchi^{j})} \neq 
       C_{\max}^{\pi_\star(\vchi^{j^*})} \wedge j^* = 
       \argmax_{J_j\in\mathcal{L}^{(k)}}\{\pi(\vphi^j)\}
       }} \\
-  \zeta_{\max}^{\pi}(k) &:=& \Exp[\pi]{\given{\max(\rho)}{
+  \zeta_{\max}^{\pi}(k) &:=& 
+  \Exp[\pi]{\given{\max_{J_j\in\mathcal{L}^{(k)}}(\rho)}{
       \forall C_{\max}^{\pi_\star(\vchi^j)} \neq 
       C_{\max}^{\pi_\star(\vchi^{j^*})} \wedge j^* = 
       \argmax_{J_j\in\mathcal{L}^{(k)}}\{\pi(\vphi^j)\} 
@@ -293,7 +295,7 @@ with the additional metric $\zeta_{\mu}^{\pi}$, which gives the mean evolution
 for \namerho, when following a fixed policy $\pi$.
 Note, $\zeta^{\pi_{\star}}_{\min}=\zeta^{\star}_{\min}, 
 \zeta^{\pi_{\star}}_{\max}=\zeta^{\star}_{\max}$ and 
-$\zeta^{\pi_{\star}}_{\mu}=0$.
+$\zeta^{\pi_{\star}}_{\mu}\mapsto0$.
 \Cref{fig:diff:case:SDR} depicts \cref{eq:bwc:track} for expert policy 
 $\pi_\star$ and SDRs.
 
@@ -337,7 +339,7 @@ $\{\Phi^{\pi_\star},\mathcal{Y}^{\pi_\star}\}$.
 \section{Simple blended dispatching rule}\label{sec:diff:opt:bdr}
 The goal of this \lcnamecref{ch:defdifficulty} is to utilise feature behaviour 
 to motivate new (and \emph{hopefully} better) \dr s. 
-A na\"ive approach would be creating a simple blended \dr\ (BDR) which 
+A na\"ive approach would be creating a simple \emph{blended \dr}~(BDR) which 
 would be for instance switching between two SDRs at a predetermined time point. 
 
 For instance, MWR and SPT hardly ever coincide for easy or hard schedules (cf. 
@@ -352,7 +354,8 @@ more likely to find optimal dispatches in the initial steps, shortly after
 $k=15$ then $\xi_{\MWR}(k)$ becomes a contender again. 
 A box-plot of \namerho, for \Problem[10\times10]{\train} is 
 depicted in \cref{fig:diff:boxplot:BDR} for a switch between SPT to MWR at time 
-steps $k=\{10,15,20,30,40\}$. Main statistics are given in \cref{tbl:BDR:stats}.
+steps $k\in\{10,15,20,30,40\}$. Main statistics are given in 
+\cref{tbl:BDR:stats}.
 
 This little manipulation between SDRs does outperform SPT immensely, yet 
 doesn't manage to gain the performance edge of MWR. 
@@ -468,9 +471,9 @@ Individual \PhiSet{\SDR} are segregated w.r.t. its own quartiles defined
 in \cref{eq:easy.vs.hard}, whereas \PhiSet{\ALL} is using the joint quartiles 
 given in \cref{tbl:easyhard:quartile:6x5}. 
 Note, if a joint quartile is used for \PhiSet{\SDR}, then the segregation 
-becomes highly unbalanced, e.g., for MWR the bulk is considered `easy' and 
-there is only a single `hard' problem instance, as a result there 
-can be no comparison between the two. 
+becomes highly unbalanced, e.g., for MWR the bulk of the problem instances are 
+considered `easy' and there is only a single `hard' problem instance, as a 
+result there can be no comparison between the two. 
 The number of segregated problem instances for given in 
 \cref{tbl:jrnd:feat:cnt}.
 
@@ -664,7 +667,7 @@ optimistic. Since our deterministic policy isn't perfect, then it's non-trivial
 to anticipate that effect on our end-result. 
 As $\zeta_{\any}^{\star}$ is based on making only \emph{one} sub-optimal move, 
 and as there will undoubtedly be many more, then the measures $\xi^{\star}$ and 
-$\zeta_{\any}^{\star}$ were adjusted to their intended track, i.e., 
+$\zeta_{\any}^{\star}$ were adjusted to their intended policy, i.e., 
 $\zeta_{\any}^{\pi}$ and $\zeta_{\any}^{\pi}$. 
 The pros being that gives a better picture of the policy's performance 
 evolution. But the con is that this requires an intensive labelling process for 

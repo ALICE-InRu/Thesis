@@ -66,7 +66,7 @@ algorithms, features are ranked.
 %\section{Relationship between problem structure and heuristic efficiency}
 \section{Rice's framework for algorithm selection}\label{sec:rice}
 The aim of this dissertation is to understand what underlying characteristics 
-of the problem instances distinguish \emph{good} and \emph{bad} solutions 
+of the problem instances distinguish \emph{`good'} and \emph{`bad'} solutions 
 when implementing a particular algorithm. \citet{SmithMilesLion5} were 
 interested in discovering whether synthetic instances were in fact similar to 
 real-world instances for timetabling scheduling. Moreover,  
@@ -370,7 +370,7 @@ Obviously, the choice of data set has a direct influence of the proposed
 algorithm, as they are developed with them specifically in mind. 
 This is why robustness towards different problem spaces, than initially trained 
 on, is of so much value, as it indicates how applicable our model is for 
-real-world deployment 
+real-world deployment.
 
 The preliminary experiments done in \cref{InRu12} investigated the 
 characteristics of difficult \jsp\ schedules for a single heuristic. Continuing 
@@ -381,7 +381,9 @@ The analysis is done in more depth in \cref{ch:analysingsol} in the hopes of ext
 An approach based on supervised learning, mostly on optimal schedules will be 
 investigated and its effectiveness illustrated by improving upon well known 
 \dr s for \jsp\ scheduling in \cref{ch:prefmodels,ch:featselect,ch:imitation,ch:rollout}. 
-The method of generating training data is and its stepwise sampling bias is critical for the success of the method, as shown in \cref{sec:trdat:param:tracks:passive,sec:pref:bias}.
+The method of generating training data and its stepwise sampling bias is 
+critical for the success of the method, as shown in 
+\cref{sec:trdat:param:tracks:passive,sec:pref:bias}.
 Moreover, models should be created in an iterative fashion such that the learned state spaces correspond to ones that the learned policy will eventually encounter, this is done in \cref{ch:imitation}.
 \Cref{ch:featselect,ch:rollout}, on the other hand explore how the baseline preference model of \NrFeatLocal\ features progresses if you drop or add additional features, respectively. 
 
