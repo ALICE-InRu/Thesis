@@ -154,8 +154,9 @@ found. However, in some cases using just four fixed roll-outs were better (cf.
 In particular, we saw in \cref{sec:singlerollout} how pursuing $-\phiSPT$ 
 (which is basically repeatedly applying w.r.t. $-\phiproc$ for a 
 $(K-k)$-lookahead) significantly increased performance for $\rho$.
-Now, instead of doing fixed roll-outs based on SDRs, as \phiSDRRelated, then it 
-could be worth investigating a single roll-out of learned policy, $\hat{\pi}$. 
+Now, instead of doing fixed roll-outs based on SDRs, such as \phiSDRRelated, 
+then it could be worth investigating a single roll-out of learned policy, 
+$\hat{\pi}$. 
 Usually, the learned policy surpasses SPT (i.e. $-\phiproc$) w.r.t. stepwise 
 optimality, i.e., $\xi^{\star}_{\hat{\pi}}\geq\xi^{\star}_{-\phiproc}$. 
 So presumably even better performance could be achieved, without resorting 
@@ -174,11 +175,17 @@ Although it's noted that the quality (w.r.t. near-optimality) of reference
 policy is in accordance to its performance, as is to be expected. 
 
 \vfill
-To conclude in the words of the Nobel-Prize-winning Irish playwright:
 \begin{quote}
-    ``Imitation is not just the sincerest form of flattery \\ -- it's the 
-    sincerest form of learning'' \\
-    \raggedleft George Bernard Shaw
-\end{quote} 
+    So a prudent man must always follow in the footsteps of great men and 
+    imitate those who have been outstanding. If his own prowess fails to 
+    compare with theirs, at least it has an air of greatness about it. 
+    
+    \raggedleft Niccolò \cite{Maachiavelli}
+\end{quote}
+Just as this quote applied to \emph{new principalities acquired with one's own 
+    arms and prowess} centuries ago, it equally applies when setting up novel 
+supervised learning algorithms. 
+Namely, when it comes to designing algorithms there needs to be emphasis on 
+where to innovate and imitate when visiting state-spaces. 
 \vfill
 \vfill

@@ -2,7 +2,7 @@
 
 \FirstSentence{D}{espite the abundance of information gathered} by following 
 expert policy, the knowledge obtained is not enough by itself. Since the 
-learning model isn't perfect, it is bound to make a mistake eventually. 
+learning model is not perfect, it is bound to make a mistake eventually. 
 When it does, the model is in uncharted territory as there is no certainty that
 the samples already collected are able to explain the current situation. 
 For this we propose investigating features from suboptimal trajectories as 
@@ -33,20 +33,7 @@ The preference model presented in \cref{ch:prefmodels,ch:featselect} are
 comprised of collecting snap-shots of the state space by following a fixed
 policy, and verifying the resulting optimal makespan from each possible state. 
 This can be looked at as \emph{imitation learning} (IL), since we're trying to 
-imitate the fixed policy via preference learning. 
-
-\begin{quote}
-    So a prudent man must always follow in the footsteps of great men and 
-    imitate those who have been outstanding. If his own prowess fails to 
-    compare with theirs, at least it has an air of greatness about it. 
-    
-    \raggedleft Niccolò \cite{Maachiavelli}
-\end{quote}
-Just as this quote applied to \emph{new principalities acquired with one's own 
-arms and prowess} centuries ago, it equally applies when setting up novel 
-supervised learning algorithms. 
-Namely, when it comes to designing algorithms there needs to be emphasis on 
-where to innovate and imitate when visiting state-spaces. 
+imitate the fixed policy via preference learning.
 
 Up until now, the training data from \cref{ch:prefmodels,ch:featselect} has 
 been created from optimal \emph{or} suboptimal solutions of randomly generated 
@@ -107,12 +94,9 @@ This was originally introduced in \cref{InRu11a} and explored further in
 \cref{InRu15b}. 
 
 By querying the expert policy, $\pi_\star$, the ranking of the job-list, 
-$\mathcal{L}$, is determined such that,
-\begin{equation}
-r_1 \succ r_2 \succ \cdots \succ r_{n'} \quad (n' \leq n)
-\end{equation}
-implies $r_1$  is preferable to $r_2$, and $r_2$ is preferable to $r_3$, etc. 
-In  our study, we know the rank is proportional to its optimum makespan, hence 
+$\mathcal{L}$, is determined by \cref{eq:rank} such that $r_{i}$ is preferable 
+to $r_{i+1}$. 
+In our study, we know the rank is proportional to its optimum makespan, hence 
 the optimal job-list is the following, 
 \begin{equation}
 \mathcal{O}^{(k)}=\condset{r_i}{r_i \propto \min_{J_j \in \mathcal{L}^{(k)}}
@@ -206,9 +190,9 @@ DAgger has been proven successful on a variety of benchmarks, such as
 \begin{enumerate*}[label={{}}]
     \item the video games Super Tux Kart and Super Mario Bros. or
     handwriting recognition -- in all cases greatly improving traditional 
-    supervised imitation learning approaches \cite{RossGB11}
+    supervised imitation learning approaches \citep{RossGB11}
     \item real-world applications, e.g. autonomous navigation for large 
-    unmanned aerial vehicles \cite{Ross13}
+    unmanned aerial vehicles \citep{Ross13}
 \end{enumerate*}
 To illustrate the effectiveness of DAgger, the Super Mario Bros. experiment 
 gives a very simple and informative understanding of the benefits of the 
@@ -223,7 +207,6 @@ scenarios.
 With iterative methods, Mario would encounter these problematic situations and 
 eventually learn how to get himself unstuck. 
 
-\clearpage
 The policy of imitation learning at iteration $i>0$ is a mixed strategy given 
 as follows, 
 \begin{equation}\label{eq:il}
@@ -280,9 +263,8 @@ In addition, there will be three mixed strategies for $\{\beta_i\}_{i=0}^T$ in
 Note, \ref{DA:SUP} starts as \ref{DA:FIXSUP} and decays exponentially 
 towards \ref{DA:UNSUP}.
 Moreover, \ref{DA:UNSUP} is a simple parameter-free version of the DAgger 
-algorithm and often performs best in practice \cite{RossGB11}.
+algorithm and often performs best in practice \citep{RossGB11}.
 
-\pagebreak
 \subsection{Experimental study}\label{sec:ail:expr}
 
 To address \ref{Boost:lmax}, then \PsiSet[\DA{7}]{p} for 
@@ -325,12 +307,14 @@ Notice that if DAgger continually uses the same problem instances, then not
 much is gained after the first iteration, as performance stagnates quickly 
 thereafter.
 This is due to the fact that there is not enough variance between 
-\PhiSet{\IL{i}}, hence the aggregated feature set \PhiSet{\DA{i}} is only 
+\PhiSet{\IL{i}}, hence the aggregated feature set \PhiSet{\DA{i}} and 
+\PhiSet{\DA{(i-1)}} is only 
 slightly perturbed with each iterations. 
-Which from \cref{sec:pil:expr} we saw wasn't a very successful modification for 
-the expert policy. Although, it's noted that by introducing sub-optimal state 
-spaces the preference model is not as drastically bad as the extended optimal 
-policy, even though $\abs{\Phi^{\DA{i}}}\gg\abs{\Phi^{\OPT}_{\text{EXT}}}$ for 
+Which from \cref{sec:pil:expr} we saw extended aggregation was not a successful 
+modification for the expert policy. Although, it's noted that by introducing 
+sub-optimal state spaces the preference model is not as drastically bad as the 
+extended optimal policy, even though 
+$\abs{\Phi^{\DA{i}}_{\text{EXT}}}\gg\abs{\Phi^{\OPT}_{\text{EXT}}}$ for 
 \jrnd{10}{10} after $i>2$. This goes to show that `too much' data is no longer 
 a bad influence. 
 But rather, when using new problem instances at each iterations, the feature 
@@ -384,13 +368,13 @@ statistics are given in \cref{tbl:IL:stats}. Both adjusted \ref{bias:dbl2nd}
 and the corresponding \ref{bias:equal} from \cref{fig:active:boxplot:equal} are 
 shown together. 
 We notice that with each iteration DAgger improves
-\begin{enumerate*}  
+\begin{enumerate*}[itemjoin*={{, and on the other hand}}]  
 	\item for \ref{bias:equal} with \ref{Boost:EXT} then $i=1$ starts 
 	with increasing  $\Delta\rho\approx+1.39\%$. However, after that first 
 	iteration there is a performance boost of $\Delta\rho\approx-15.11\%$ after 
 	$i=2$ and after that $\Delta\rho\approx-1.31\%$ until the final iteration 
 	$T=7$
-	\item on the other hand when using adjusted \ref{bias:dbl2nd}, only one 
+	\item when using adjusted \ref{bias:dbl2nd}, only one 
 	iteration is needed, as  $\Delta\rho\approx-11.68$ for $i=1$, and after 
 	that it stagnates with $\Delta\rho\approx+0.55\%$ for $i=2$ 
 	(therefore $i=3$ was not run)
@@ -450,7 +434,12 @@ This study showed, that when accumulating training data for supervised
 learning using DAgger, it's possible to automate its generation in such a way 
 that the resulting model will be an accurate representative of the instances 
 it will later come across. 
-\pagebreak
+Or to phrase it in words of the Nobel-Prize-winning Irish playwright:
+\begin{quote}
+    ``Imitation is not just the sincerest form of flattery \\ -- it's the 
+    sincerest form of learning.'' \\
+    \raggedleft George Bernard Shaw
+\end{quote} 
 
 The experimental study in \cref{sec:ail:expr} showed that DAgger for \jsp\ is 
 sensitive to choice of $\beta_i$ in \cref{eq:il}. The best configuration was 
@@ -488,7 +477,7 @@ This occurs when a metric of a new state is sufficiently large enough from a
 previously queried states (to ensure diversity of learned optimal states). 
 Moreover, in DAgger all data samples are equally important, irrespective of its 
 iteration, which can require great number of iterations to learn how to recover 
-from the mistakes of earlier policies. To address the naivety of the data 
+from the mistakes of earlier policies. To address the na\"ivety of the data 
 aggregation, MMD suggests only aggregating a new data point 
 if it is sufficiently different to previously gathered states, \emph{and} if 
 the current policy has made a mistake. 
@@ -513,3 +502,5 @@ imitation learning (similar to DAgger framework) when the reference policy is
 poor (i.e. $\pi_\star$ in \cref{eq:il} is suboptimal), 
 although it's noted that the quality (w.r.t near-optimality) of reference 
 policy is in accordance to its performance, as is to be expected. 
+
+

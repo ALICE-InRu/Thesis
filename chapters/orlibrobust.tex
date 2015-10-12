@@ -12,10 +12,10 @@ However, there was no reference made to other models, except for demonstrating
 how far off the result was from the best known solutions (BKS).
 Now we will also consider the best configurations for preference models in 
 \cref{ch:prefmodels,ch:featselect,ch:imitation,ch:rollout}.
-Although, all models will be using the same training data \jrnd{10}{10}.
 
 \section{Experimental study}
 There were a grand-total thirteen linear \cdr s applied to the OR-Library. 
+Although, all models use the same training data: \jrnd{10}{10}.
 A total of two models from \cref{ch:esmodels} (i.e. optimised w.r.t. either 
 $\minCmax$ or $\minRho$) and eleven preference models from 
 \cref{ch:prefmodels,ch:featselect,ch:rollout,ch:imitation}.
@@ -69,8 +69,9 @@ with BKS). In addition the 1\%, 5\% and 10\% deviation from lowest found $\rho$
 is reported. This can also be seen in the box-plot given in 
 \cref{fig:comp:orlib}.
 
-\begin{figure}[t]
-\includegraphics[width=\textwidth]{{boxplot.ORLIB}.pdf}
+\begin{figure}[t]\centering
+\includegraphics[width=0.93\textwidth]{{boxplot.ORLIB}.pdf}
+\vspace*{-16pt}
 \caption{Box-plot for deviation from best known solution, $\rho$, trained on
 \jrnd{10}{10}}\label{fig:comp:orlib}
 \end{figure}
@@ -92,15 +93,15 @@ Of the thirteen linear models considered, then the one using random roll-outs
 the most computational effort in inspecting possible solutions for each problem 
 instance.
 Although it did not always find the lowest makespan of the models considered 
-(it did for 86.52\% instances), it was within 5\% error.
+(it did for 86.52\% instances), it was at least within 5\% error.
 The second best configuration was using \phiSDRRelated\ features. This is also 
 to be expected as it uses four fixed roll-outs. 
 Notice in \cref{tbl:comp:orlib}, when 24.1 is not the best model then the 20.1 
 model is best configuration (with very few exceptions). 
 Of its two configurations then following minimum $\minCmax$ proved better than 
 the one based on following expert policy. 
-This concurs with the findings for the preference models using only just 
-\phiLocalRelated\ features. 
+This concurs with the findings for the preference models using only local 
+features, \phiLocalRelated. 
 
 Furthermore, the model using only three local features has a remarkably low 
 $\rho$ compared to the other more sophisticated \phiLocalRelated\ preference 
