@@ -1,6 +1,6 @@
 Til eru margar aðferðir við að búa til ákvarðanareglur fyrir áætlanagerð. 
 Undanfarið hefur áherslan í fræðunum verið á beina leit (t.d. gentíska bestun) 
-eða gagnaþjálfun, en ein aðferð að því síðarnefnda er stýrður lærdómur.
+eða gagnaþjálfun, en ein aðferð við það síðarnefnda er stýrður lærdómur.
 Í ritgerðinni verður sú aðferð skoðuð nánar og sett fram líkan kallað 
 „\fullnameAlice“ (\Alice) um hvernig megi 
 framkvæma þessa greiningu á skilvirkan máta. 
@@ -8,27 +8,27 @@ framkvæma þessa greiningu á skilvirkan máta.
 Látum þjálfunargögnin vera 
 \mbox{$\{\vphi(\vec{x}_i(k)),y_i(k)\}_{k=1}^K\in\mathcal{D}$} og ritgerðin mun 
 sýna
-\begin{enumerate*}[itemjoin*={{ og }}]
+\begin{enumerate*}[itemjoin*={{; einnig }}]
     \item úrtök $\vphi(\vec{x}_i)$ þurfa að samræmast við gagnadreifinguna 
     $\mathcal{D}$ sem verður unnin úr henni. Þetta er gert með því að uppfæra 
-    lærða líkanið með virkum námsferli byggðu á eftirlíkingum
+    lærða líkanið með virku námsferli byggðu á eftirlíkingum
     \item $y_i$ er merkt með því að nota endurgjöf sérfræðings (gert með bestun)
     \item gögnin þurfa að vera í jafnvægi, þar sem gagnasettið er í ójafnvægi 
     með tilliti til skrefs $k$
-    \item til að betrumbæta lýsingu á núverandi stöðu $\vphi$, þá er hægt að 
+    \item til að betrumbæta lýsingu á núverandi stöðu $\vphi$, er hægt að 
     nota útspilun fyrir næstu 
-    $(K-k)$ skref, þ.e. að endalokum ákvarðanaferilsins. Þá er hægt að túlka 
+    $(K-k)$ skref, það er að endalokum ákvarðanaferilsins. Þá má túlka 
     lærða líkanið sem fyrirframákveðna útspilunarreglu
 \end{enumerate*}
 
 Þegar sérfræðingur er spurður, verður til mikið af gagnlegum upplýsingum sem 
 hægt er að nýta til að læra ný líkön. Til að mynda er hægt að komast að því 
 hvenær í ákvarðana\-ferlinu er líklegast að mistök eigi sér stað. Yfirleitt 
-gefa háar líkur á því að besta ákvörðun sé tekin (eða þjálfunar nákvæmni) til 
+gefa háar líkur á því að besta ákvörðun sé tekin (eða þjálfunarnákvæmni) til 
 kynna góða lokaframmistöðu, þ.e. í þessu samhengi að lágmarka heildartíma fyrir 
 allt ákvarðanaferlið. 
 Þar sem afleiðingar rangra ákvarðana eru ekki alltaf þekktar, 
-þá er betra að uppfæra matið með tilliti til ákvarðanatökunar sjálfrar.
+þá er betra að uppfæra matið með tilliti til ákvarðanatökunnar sjálfrar.
 
 Með þessari greiningu er einfaldara að búa til sérhæfðar ákvarðanareglur fyrir 
 hverja nýja notkun. Í ritgerðinni verða skoðaðar nokkrar mismunandi tegundir af 
