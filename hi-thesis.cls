@@ -253,26 +253,31 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
         written down: but I can't quite follow it as you say it.}{Alice}
         \tableofcontents
                 
+        \clearpage % ensure page refernce in TOC
         \HeaderQuote{What is the use of a book, without pictures or 
         conversations?}{Alice}        
-        \listoffigures
         \addcontentsline{toc}{chapter}{\listfigurename}
-                
+        \listoffigures
+                        
+        \clearpage % ensure page refernce in TOC
         \HeaderQuote{Always speak the truth, think before you speak, and write 
         it down afterwards.}{The Queen}
         \addcontentsline{toc}{chapter}{\listtablename}
         \listoftables
 
+        \clearpage % ensure page refernce in TOC
         \HeaderQuote{Sometimes I've believed as many as six impossible things 
             before breakfast.}{The Queen}
         \addcontentsline{toc}{chapter}{\listalgorithmname}
         \listofalgorithms
                         
+        \clearpage % ensure page refernce in TOC                        
         \HeaderQuote{Well, I never heard it before, but it sounds uncommon 
         nonsense.}{The Mock Turtle}
         \addcontentsline{toc}{chapter}{\listpublicationname}
         \listofpublications
-                
+
+        \clearpage % ensure page refernce in TOC                
         \HeaderQuote{That's nothing to what I could say if I chose. }{The 
         Duchess}
         \include{scripts/nomencl}
