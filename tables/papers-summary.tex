@@ -1,17 +1,17 @@
 \begin{table}\centering
-    \caption{Summary of experimental designs in \cref{Papers}.}
+    \caption{Summary of experimental designs in \cref{Papers}}
     \label{papers:summary}
     \noindent % otherwise minipages will indent page
     \begin{minipage}{\textwidth}\centering
     {\setlength{\tabcolsep}{3pt}
-    \begin{tabular}{c l c l c}\toprule
+    \begin{tabular}{c l c@{}l@{}c}\toprule
         Paper & Problem & Model & Model parameters 
         & $\abs{\text{Model}}$\footnote{Models are either stepwise (i.e. 
             total of $K$ models) or fixed throughout the dispatching 
             process.} \\ \midrule
         \ref{InRu11a} & \JSP & PREF & 
         ~~$\Phi^{\OPT}, \Psi_{b,\text{equal}}$ & $K$ \\
-        \ref{InRu11b} & $\R$-functions & CMA-ES & 
+        \ref{InRu11b} & $\R$-fun. & CMA-ES & 
         ~~surrogate sampling strategies & 1\\
         \ref{InRu12} & \JSP& SDR & 
         ~~MWR & 1 \\
