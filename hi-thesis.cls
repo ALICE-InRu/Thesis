@@ -252,27 +252,33 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
         \HeaderQuote{I think I should understand that better, if I had it 
         written down: but I can't quite follow it as you say it.}{Alice}
         \tableofcontents
-        
+                
         \HeaderQuote{What is the use of a book, without pictures or 
         conversations?}{Alice}        
         \listoffigures
         \addcontentsline{toc}{chapter}{\listfigurename}
-        
+                
         \HeaderQuote{Always speak the truth, think before you speak, and write 
         it down afterwards.}{The Queen}
-        \listoftables
         \addcontentsline{toc}{chapter}{\listtablename}
-        
+        \listoftables
+
+        \HeaderQuote{Sometimes I've believed as many as six impossible things 
+            before breakfast.}{The Queen}
+        \addcontentsline{toc}{chapter}{\listalgorithmname}
+        \listofalgorithms
+                        
         \HeaderQuote{Well, I never heard it before, but it sounds uncommon 
         nonsense.}{The Mock Turtle}
+        \addcontentsline{toc}{chapter}{\listpublicationname}
         \listofpublications
-        
+                
         \HeaderQuote{That's nothing to what I could say if I chose. }{The 
         Duchess}
         \include{scripts/nomencl}
-        \printnomenclature  
         \addcontentsline{toc}{chapter}{Nomenclature}
-
+        \printnomenclature  
+        
         \HeaderQuote{We're all mad here.}{The Cat}
         \acknowledgments
     }
@@ -334,11 +340,8 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     {\centering\sffamily\Large{\@author}\par}
     \vspace*{\fill}
     \AddToShipoutPicture*{\BackgroundPic}
-    %\includepdf[height=\paperheight]{frontmatter/HI-blueribbon.pdf}
-    
-    
-\newpage 
-     
+    %\includepdf[height=\paperheight]{frontmatter/HI-blueribbon.pdf}   
+    \newpage 
     \cleardoublepage
     \setcounter{page}{1}
 }
@@ -456,26 +459,33 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
 
 \makeatother
 
-
 % --------------------------------------------------------------- list of tables
 \renewcommand\listtablename{Listing of tables}
 
+% ----------------------------------------------------------- list of algorithms
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+\algnewcommand\algorithmicto{~\textbf{to}~}
+\algnewcommand\algorithmicand{~\textbf{and}~}
+\algrenewtext{For}[3]%
+{\algorithmicfor\ $#1 \gets #2 \text{\algorithmicto} #3$~\algorithmicdo}
+
+\renewcommand{\listalgorithmname}{Listing of algorithms}
+
 % --------------------------------------------------------- list of publications
+\newcommand\listpublicationname{Listing of publications}
 \newcommand*\listofpublications{ %
-    \chapter*{Listing of Publications}
-    \addcontentsline{toc}{chapter}{Listing of Publications}
-    \pagestyle{fancy}
-    \rhead{LISTING OF PUBLICATIONS}
+    \chapter*{\listpublicationname}    
     \input{frontmatter/papers}
-    \rhead[\fancyplain{}{\leftmark}]{\fancyplain{}{}}
 }
 
 % ---------------------------------------------------------------ackowledgements
 \makeatletter
 \newcommand{\acknowledgments}{
     \chapter*{Acknowledgements}
-    \pagestyle{fancy}
-    \rhead{ACKNOWLEDGEMENTS}
     \noindent
     \input{frontmatter/thanks}
     \begin{flushright}
@@ -485,7 +495,6 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     \end{flushright}
     \vspace*{\fill} 
     \cleardoublepage
-    \rhead[\fancyplain{}{\leftmark}]{\fancyplain{}{}}
 }
 \makeatother
 
@@ -531,6 +540,8 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     \ifthenelse{\equal{\@printmode}{draft}}{
         \lfoot{Draft -- \today}
     }{}    
+    \newpage
+    \blankpage        
 }
 \makeatother
 
