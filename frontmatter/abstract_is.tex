@@ -1,5 +1,40 @@
-% the abstract
+Til eru margar aðferðir við að búa til ákvarðanareglur fyrir áætlanagerð. 
+Undanfarið hefur áherslan í fræðunum verið á beina leit (t.d. gentíska bestun) 
+eða gagnaþjálfun, en ein aðferð að því síðarnefnda er stýrður lærdómur.
+Í ritgerðinni verður sú aðferð skoðuð nánar og sett fram líkan kallað 
+„\fullnameAlice“ (\Alice) um hvernig megi 
+framkvæma þessa greiningu á skilvirkan máta. 
 
-Ágrip á íslensku, lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque, id pulvinar odio lorem non turpis. Nullam sit amet enim. Suspendisse id velit vitae ligula volutpat condimentum. Aliquam erat volutpat. Sed quis velit. Nulla facilisi. Nulla libero. Vivamus pharetra posuere sapien. Nam consectetuer. Sed aliquam, nunc eget euismod ullamcorper, lectus nunc ullamcorper orci, fermentum bibendum enim nibh eget ipsum. Donec porttitor ligula eu dolor. Maecenas vitae nulla consequat libero cursus venenatis. Nam magna enim, accumsan eu, blandit sed, blandit a, eros.
+Látum þjálfunargögnin vera 
+\mbox{$\{\vphi(\vec{x}_i(k)),y_i(k)\}_{k=1}^K\in\mathcal{D}$} og ritgerðin mun 
+sýna
+\begin{enumerate*}[itemjoin*={{ og }}]
+    \item úrtök $\vphi(\vec{x}_i)$ þurfa að samræmast við gagnadreifinguna 
+    $\mathcal{D}$ sem verður unnin úr henni. Þetta er gert með því að uppfæra 
+    lærða líkanið með virkum námsferli byggðu á eftirlíkingum
+    \item $y_i$ er merkt með því að nota endurgjöf sérfræðings (gert með bestun)
+    \item gögnin þurfa að vera í jafnvægi, þar sem gagnasettið er í ójafnvægi 
+    með tilliti til skrefs $k$
+    \item til að betrumbæta lýsingu á núverandi stöðu $\vphi$, þá er hægt að 
+    nota útspilun fyrir næstu 
+    $(K-k)$ skref, þ.e. að endalokum ákvarðanaferilsins. Þá er hægt að túlka 
+    lærða líkanið sem fyrirframákveðna útspilunarreglu
+\end{enumerate*}
 
-Quisque facilisis erat a dui. Nam malesuada ornare dolor. Cras gravida, diam sit amet rhoncus ornare, erat elit consectetuer erat, id egestas pede nibh eget odio. Proin tincidunt, velit vel porta elementum, magna diam molestie sapien, non aliquet massa pede eu diam. Aliquam iaculis. Fusce et ipsum et nulla tristique facilisis. Donec eget sem sit amet ligula viverra gravida. Etiam vehicula urna vel turpis. Suspendisse sagittis ante a urna. Morbi a est quis orci consequat rutrum. Nullam egestas feugiat felis. Integer adipiscing semper ligula. Nunc molestie, nisl sit amet cursus convallis, sapien lectus pretium metus, vitae pretium enim wisi id lectus. Donec vestibulum. Etiam vel nibh. Nulla facilisi. Mauris pharetra. Donec augue. Fusce ultrices, neque id dignissim ultrices, tellus mauris dictum elit, vel lacinia enim metus eu nunc.
+Þegar sérfræðingur er spurður, verður til mikið af gagnlegum upplýsingum sem 
+hægt er að nýta til að læra ný líkön. Til að mynda er hægt að komast að því 
+hvenær í ákvarðanaferlinu er líklegast að mistök eigi sér stað. Yfirleitt gefa 
+háar líkur á því að besta ákvörðun sé tekin (eða þjálfunar nákvæmni) til kynna 
+góða lokaframmistöðu, þ.e. í þessu samhengi að lágmarka heildartíma fyrir allt 
+ákvarðanaferlið. Þar sem afleiðingar rangra ákvarðana eru ekki alltaf þekktar, 
+þá er betra að uppfæra matið með tilliti til ákvarðanatökunar sjálfrar.
+
+Með þessari greiningu er einfaldara að búa til sérhæfðar ákvarðanareglur fyrir 
+hverja nýja notkun. Í ritgerðinni verða skoðaðar nokkrar mismunandi tegundir af 
+verkniðurröðun á vélar. 
+Þar að auki verður vélnámið byggt á ákjósanlegri bestun, þar sem gerður er 
+greinarmunur á því hvaða stöður eru betri kostur en aðrar. Ákjósanlegri bestun 
+væri þó hægt að skipta út fyrir aðrar námsaðferðir, hægt væri að bæta við 
+fleiri skorðum á verkefnið eða beita sömu námsaðferð á aðra tegund af verkefnum 
+af svipuðum toga. 
+
