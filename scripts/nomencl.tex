@@ -23,47 +23,56 @@
 % Rice's Framework
 \nomenclature[f01]{$\mathcal{P}$}{Problem space or instance space}
 \nomenclature[f02]{$\mathcal{F}$}{Feature space, i.e., measurable properties of 
-the instances in $\mathcal{P}$}
+    the instances in $\mathcal{P}$}
 \nomenclature[f03]{$\mathcal{A}$}{Algorithm space}
 \nomenclature[f04]{$\mathcal{Y}$}{Performance space, i.e., the outcome for 
-$\mathcal{P}$ using an algorithm from $\mathcal{A}$}
+    $\mathcal{P}$ using an algorithm from $\mathcal{A}$}
 \nomenclature[f05]{$\Upsilon$}{Mapping for algorithm and feature space onto 
-performance space, i.e., $y=\Upsilon(a,\vphi(\vec{x}))\in\mathcal{Y}$ where 
-$\Upsilon:\mathcal{A}\times\mathcal{F}\mapsto\mathcal{Y}$}
+    performance space, i.e., 
+    \mbox{$y=\Upsilon(a,\vphi(\vec{x}))\in\mathcal{Y}$} where 
+    $\Upsilon:\mathcal{A}\times\mathcal{F}\mapsto\mathcal{Y}$}
 
 % JOB SHOP
 \nomenclature[j01]{$n$}{number of jobs in shop}
 \nomenclature[j02]{$m$}{number of machines in shop}
 \nomenclature[j03]{$\mathcal{J}$}{set of jobs, $\{J_1,\dotsc,J_j,\dotsc,J_n\}$}
-\nomenclature[j04]{$\mathcal{M}$}{set of machines, $\{M_1,\dotsc,M_a,\dotsc,M_m\}$}
+\nomenclature[j04]{$\mathcal{M}$}{set of machines, 
+$\{M_1,\dotsc,M_a,\dotsc,M_m\}$}
 \nomenclature[j05]{$p_{ja}$}{processing time for job $J_j$ on machine $M_a$}
 \nomenclature[j06]{$\vsigma_j$}{machine ordering for job $J_j$} 
 \nomenclature[j07]{$x_s(j,a)$}{starting time for job $J_j$ on machine $M_a$}
 \nomenclature[j08]{$x_f(j,a)$}{finishing time for job $J_j$ on machine $M_a$}
 \nomenclature[j09]{$s(a,j)$}{slot between current and previous task on machine 
-$M_a$}
+    $M_a$}
 \nomenclature[j10]{$\mathcal{L}$}{ready-list of jobs that have unassigned 
-tasks, $\mathcal{L}\subset\mathcal{J}$}
-\nomenclature[j11]{$C_{\max}$}{makespan, i.e. maximum completion times for all tasks}
-\nomenclature[j12]{$\vchi$}{sequence of dispatches $J_j$ to create (partial) schedule/solution} 
-\nomenclature[j13]{$\mathcal{U}(u_1,u_2)$}{uniform distribution from the interval $I=[u_1,u_2]\subset\R$}
+    tasks, $\mathcal{L}\subset\mathcal{J}$}
+\nomenclature[j11]{$C_{\max}$}{makespan, i.e. maximum completion times for all 
+tasks}
+\nomenclature[j12]{$\vchi$}{sequence of dispatches $J_j$ to create (partial) 
+schedule/solution} 
+\nomenclature[j13]{$\mathcal{U}(u_1,u_2)$}{uniform distribution from the 
+interval $I=[u_1,u_2]\subset\R$}
 \nomenclature[j14]{$\rho$}{percentage relative deviation from optimality}
 \nomenclature[j15]{$K$}{number of dispatches needed for a complete schedule, 
-$K=n\cdot m$}
+    $K=n\cdot m$}
 
 % ORDINAL REGRESSION 
-\nomenclature[o01]{$d$}{number of distinct features, i.e., dimension of $\mathcal{F}$}
+\nomenclature[o01]{$d$}{number of distinct features, i.e., dimension of 
+$\mathcal{F}$}
 \nomenclature[o02]{$N$}{number of problem instances}
 \nomenclature[o03]{$\Phi$}{training set}
 \nomenclature[o04]{$\Psi$}{preference set}
 \nomenclature[o05]{$l$}{size of preference set, $l=\abs{S}$}
 \nomenclature[o06]{$\vphi(k)$}{feature set, i.e., post-decision state, of a 
-(partial) schedule at time $k$}
-\nomenclature[o07]{$\tilde{\vphi}$}{scaled feature set, such that $\tilde{\vphi}_i\in[-1,1]$ for all $i\in\{1,..,d\}$}
+    (partial) schedule at time $k$}
+\nomenclature[o07]{$\tilde{\vphi}$}{scaled feature set, such that 
+$\tilde{\vphi}_i\in[-1,1]$ for all $i\in\{1,..,d\}$}
 \nomenclature[o08]{$\mathcal{O}^{(k)}$}{set of optimal dispatches at time  $k$}
-\nomenclature[o09]{$\mathcal{S}^{(k)}$}{set of suboptimal dispatches at time  $k$}
+\nomenclature[o09]{$\mathcal{S}^{(k)}$}{set of suboptimal dispatches at time  
+$k$}
 \nomenclature[o10]{$\vec{w}$}{linear weights for features $\vphi$}
-\nomenclature[o11]{$h$}{linear classification model, $h(\vec{x})=\inner{\vec{w}}{\vphi(\vec{x})}$}
+\nomenclature[o11]{$h$}{linear classification model, 
+$h(\vec{x})=\inner{\vec{w}}{\vphi(\vec{x})}$}
 
 % SURROGATE MODELLING
 %\nomenclature[s01]{$\tau$}{Kendall's $\tau$ statistic, i.e., normalised 
@@ -73,12 +82,11 @@ $K=n\cdot m$}
 \nomenclature[x01]{\PhiSet{\OPT}}{training data is guided by (random) optimum 
     trajectory}
 \nomenclature[x02]{\PhiSet{\SDR}}{training data is guided by a \sdr, where 
-$\text{SDR}\in\{\SPT,\LPT,\LWR,\MWR,\RND\}$}
+    $\text{SDR}\in\{\SPT,\LPT,\LWR,\MWR,\RND\}$}
 \nomenclature[x03]{\PhiSet{\CMAES}}{training data is guided by trajectory using 
-by CMA-ES obtained weights, either \PhiSet{\minCmax} or \PhiSet{\minRho}}
+    by CMA-ES obtained weights, either \PhiSet{\minCmax} or \PhiSet{\minRho}}
 \nomenclature[x04]{\PhiSet{\ALL}}{union of all aforementioned trajectories, 
-i.e.,  $\Phi^{\ALL}=\Phi^{\OPT}\cup\Phi^{\SDR}\cup\Phi^{\CMAES}$}
-
+    i.e.,  $\Phi^{\ALL}=\Phi^{\OPT}\cup\Phi^{\SDR}\cup\Phi^{\CMAES}$}
 \nomenclature[x05]{\PsiSet{b}}{preference set added w.r.t. basic ranking}
 \nomenclature[x06]{\PsiSet{f}}{preference set added w.r.t. full subsequent 
     ranking}
@@ -86,22 +94,21 @@ i.e.,  $\Phi^{\ALL}=\Phi^{\OPT}\cup\Phi^{\SDR}\cup\Phi^{\CMAES}$}
     ranking}
 \nomenclature[x08]{\PsiSet{a}}{preference set containing all possible 
     combination of rankings}
-
-
 \nomenclature[x13]{$p^{equal}$}{all preferences sampled equally }
-\nomenclature[x14]{$p^{opt}$}{preferences sampled proportional w.r.t. its stepwise optimality}
-\nomenclature[x15]{$p^{bcs}$}{preferences sampled reciprocally proportional w.r.t. its stepwise best case scenario of suboptimal dispatches }
-\nomenclature[x16]{$p^{wcs}$}{preferences sampled reciprocally proportional w.r.t. its stepwise worst case scenario of suboptimal dispatches }
+\nomenclature[x14]{$p^{opt}$}{preferences sampled proportional w.r.t. its 
+stepwise optimality}
+\nomenclature[x15]{$p^{bcs}$}{preferences sampled reciprocally proportional 
+w.r.t. its stepwise best case scenario of suboptimal dispatches }
+\nomenclature[x16]{$p^{wcs}$}{preferences sampled reciprocally proportional 
+w.r.t. its stepwise worst case scenario of suboptimal dispatches }
 
 % SUBSCRIPS AND SUPERSCRIPTS
 \nomenclature[y01]{$j$}{refers to job $J_j$}
 \nomenclature[y02]{$a$}{refers to machine $M_a$}
 \nomenclature[y03]{$k$}{refers to dispatch/time step $k$ for a schedule, 
-$k\in\{1,..,K}$}
+    $k\in\{1,..,K\}$}
 \nomenclature[y04]{o}{optimal job $J_o$}
 \nomenclature[y05]{s}{suboptimal job $J_s$}
-\nomenclature[y06]{OPT}{(known) optimum}
-\nomenclature[y07]{BKS}{best known solution}
 
 % ACRONYMS
 \nomenclature[z00]{\Alice}{\fullnameAlice}
@@ -115,6 +122,8 @@ $k\in\{1,..,K}$}
 \nomenclature[z08]{LPT}{Largest Processing Time rule}
 \nomenclature[z09]{LWR}{Least Work Remaining rule}
 \nomenclature[z10]{MWR}{Most Work Remaining rule}
-\nomenclature[z11]{ES}{Evolution Strategy}
-\nomenclature[z12]{CMA}{Covariance Matrix Adaptation}
+\nomenclature[z11]{RND}{Random dispatches}
+\nomenclature[z12]{CMA-ES}{Covariance Matrix Adaptation Evolutionary Strategy}
 \nomenclature[z13]{PREF}{Linear preference learning model}
+\nomenclature[z14]{OPT}{(known) optimum}
+\nomenclature[z15]{BKS}{best known solution}

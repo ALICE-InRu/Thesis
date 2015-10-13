@@ -282,7 +282,9 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
         Duchess}
         \include{scripts/nomencl}
         \addcontentsline{toc}{chapter}{Nomenclature}
+        \begin{spacing}{0.9}
         \printnomenclature  
+        \end{spacing}
         
         \HeaderQuote{We're all mad here.}{The Cat}
         \acknowledgments
