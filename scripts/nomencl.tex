@@ -22,9 +22,11 @@
 
 % Rice's Framework
 \nomenclature[f01]{$\mathcal{P}$}{Problem space or instance space}
-\nomenclature[f02]{$\mathcal{F}$}{Feature space, i.e., measurable properties of the instances in $\mathcal{P}$}
+\nomenclature[f02]{$\mathcal{F}$}{Feature space, i.e., measurable properties of 
+the instances in $\mathcal{P}$}
 \nomenclature[f03]{$\mathcal{A}$}{Algorithm space}
-\nomenclature[f04]{$\mathcal{Y}$}{Performance space, i.e., the outcome for $\mathcal{P}$ using an algorithm from $\mathcal{A}$}
+\nomenclature[f04]{$\mathcal{Y}$}{Performance space, i.e., the outcome for 
+$\mathcal{P}$ using an algorithm from $\mathcal{A}$}
 \nomenclature[f05]{$\Upsilon$}{Mapping for algorithm and feature space onto 
 performance space, i.e., $y=\Upsilon(a,\vphi(\vec{x}))\in\mathcal{Y}$ where 
 $\Upsilon:\mathcal{A}\times\mathcal{F}\mapsto\mathcal{Y}$}
@@ -40,7 +42,8 @@ $\Upsilon:\mathcal{A}\times\mathcal{F}\mapsto\mathcal{Y}$}
 \nomenclature[j08]{$x_f(j,a)$}{finishing time for job $J_j$ on machine $M_a$}
 \nomenclature[j09]{$s(a,j)$}{slot between current and previous task on machine 
 $M_a$}
-\nomenclature[j10{$\mathcal{R}$}{ready-list of jobs that have unassigned tasks, $\mathcal{R}\subset\mathcal{J}$}
+\nomenclature[j10]{$\mathcal{L}$}{ready-list of jobs that have unassigned 
+tasks, $\mathcal{L}\subset\mathcal{J}$}
 \nomenclature[j11]{$C_{\max}$}{makespan, i.e. maximum completion times for all tasks}
 \nomenclature[j12]{$\vchi$}{sequence of dispatches $J_j$ to create (partial) schedule/solution} 
 \nomenclature[j13]{$\mathcal{U}(u_1,u_2)$}{uniform distribution from the interval $I=[u_1,u_2]\subset\R$}
@@ -63,27 +66,28 @@ $K=n\cdot m$}
 \nomenclature[o11]{$h$}{linear classification model, $h(\vec{x})=\inner{\vec{w}}{\vphi(\vec{x})}$}
 
 % SURROGATE MODELLING
-\nomenclature[s01]{$\tau$}{Kendall's $\tau$ statistic, i.e., normalised difference in number of concordant and discordant pairs}
+%\nomenclature[s01]{$\tau$}{Kendall's $\tau$ statistic, i.e., normalised 
+%difference in number of concordant and discordant pairs}
 
 % EXPERIMENTAL SETTING
-\nomenclature[x01]{\PsiSet{b}}{preference set added w.r.t. basic ranking}
-\nomenclature[x02]{\PsiSet{f}}{preference set added w.r.t. full subsequent 
-ranking}
-\nomenclature[x03]{\PsiSet{p}}{preference set added w.r.t. partial subsequent 
-ranking}
-\nomenclature[x04]{\PsiSet{a}}{union of all aforementioned rankings, i.e., 
-$\Psi_{a}=\Psi_b\cup \Psi_f\cup \Psi_p$}
-\nomenclature[x05]{\PhiSet{\SPT}}{training data guided by SPT trajectory}
-\nomenclature[x06]{\PhiSet{\LPT}}{training data guided by LPT trajectory}
-\nomenclature[x07]{\PhiSet{\LWR}}{training data guided by LWR trajectory}
-\nomenclature[x08]{\PhiSet{\MWR}}{training data guided by MWR trajectory}
-\nomenclature[x09]{\PhiSet{\OPT}}{training data guided by (random) optimum 
-trajectory}
-\nomenclature[x10]{\PhiSet{\RND}}{training data guided by a random trajectory}
-\nomenclature[x11]{\PhiSet{\CMAES}}{training data guided by trajectory using by 
-CMA-ES obtained weights, either \PhiSet{\minCmax} or \PhiSet{\minRho}}
-\nomenclature[x12]{\PhiSet{\ALL}}{union of all aforementioned trajectories, 
-i.e.,  $\Phi^{\ALL}=\Phi^{\SDR}\cup\Phi^{\CMAES}$}
+\nomenclature[x01]{\PhiSet{\OPT}}{training data is guided by (random) optimum 
+    trajectory}
+\nomenclature[x02]{\PhiSet{\SDR}}{training data is guided by a \sdr, where 
+$\text{SDR}\in\{\SPT,\LPT,\LWR,\MWR,\RND\}$}
+\nomenclature[x03]{\PhiSet{\CMAES}}{training data is guided by trajectory using 
+by CMA-ES obtained weights, either \PhiSet{\minCmax} or \PhiSet{\minRho}}
+\nomenclature[x04]{\PhiSet{\ALL}}{union of all aforementioned trajectories, 
+i.e.,  $\Phi^{\ALL}=\Phi^{\OPT}\cup\Phi^{\SDR}\cup\Phi^{\CMAES}$}
+
+\nomenclature[x05]{\PsiSet{b}}{preference set added w.r.t. basic ranking}
+\nomenclature[x06]{\PsiSet{f}}{preference set added w.r.t. full subsequent 
+    ranking}
+\nomenclature[x07]{\PsiSet{p}}{preference set added w.r.t. partial subsequent 
+    ranking}
+\nomenclature[x08]{\PsiSet{a}}{preference set containing all possible 
+    combination of rankings}
+
+
 \nomenclature[x13]{$p^{equal}$}{all preferences sampled equally }
 \nomenclature[x14]{$p^{opt}$}{preferences sampled proportional w.r.t. its stepwise optimality}
 \nomenclature[x15]{$p^{bcs}$}{preferences sampled reciprocally proportional w.r.t. its stepwise best case scenario of suboptimal dispatches }
