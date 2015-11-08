@@ -61,8 +61,14 @@
 \RequirePackage[
     b5paper,layout=b5paper,
     margin=2.3cm,
-    %showframe, % option good for draft mode
+%    showframe, % option good for draft mode
     includehead]{geometry} % 
+    
+\addtolength{\textwidth}{1cm}
+\addtolength{\marginparwidth}{-1cm}
+\addtolength{\oddsidemargin}{-0.5cm}
+\addtolength{\evensidemargin}{-0.5cm}
+   
 \RequirePackage[b5]{crop}
 \topskip0pt % make text appear at top of page, othewise vertically centered
 
@@ -107,11 +113,7 @@
 
 % headers and footers
 \RequirePackage{fancyhdr} 
-\pagestyle{fancy} % options: empty , plain , fancy
 \renewcommand{\headrulewidth}{0pt}
-\lhead[\fancyplain{}{}]{\fancyplain{}{\rightmark}}
-\rhead[\fancyplain{}{\leftmark}]{\fancyplain{}{}}
-\cfoot{\fancyplain{}{\thepage}}
 \setlength\headheight{14pt}
 
 
@@ -266,14 +268,14 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
         \listoftables
 
         \clearpage % ensure page refernce in TOC
-        \HeaderQuote{Sometimes I've believed as many as six impossible things 
-            before breakfast.}{The Queen}
+        \HeaderQuote{Well, I never heard it before, but it sounds uncommon 
+            nonsense.}{The Mock Turtle}
         \addcontentsline{toc}{chapter}{\listalgorithmname}
         \listofalgorithms
                         
         \clearpage % ensure page refernce in TOC                        
-        \HeaderQuote{Well, I never heard it before, but it sounds uncommon 
-        nonsense.}{The Mock Turtle}
+        \HeaderQuote{Sometimes I've believed as many as six impossible things 
+            before breakfast.}{The Queen}
         \addcontentsline{toc}{chapter}{\listpublicationname}
         \listofpublications
 
@@ -296,7 +298,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
 \makeatletter
 \renewcommand{\maketitle}{ 
     \bookcover
-    \pagestyle{fancy}
+    \pagestyle{plain}
     \pagenumbering{roman}
     \thispagestyle{empty}
     \begin{center}
@@ -549,6 +551,10 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     }{}    
     \newpage
     \blankpage        
+    \pagestyle{fancy} % options: empty , plain , fancy
+    \lhead[\fancyplain{}{}]{\fancyplain{}{\rightmark}}
+    \rhead[\fancyplain{}{\leftmark}]{\fancyplain{}{}}
+    \cfoot{\fancyplain{}{\thepage}}
 }
 \makeatother
 
@@ -640,7 +646,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
             \small
             \usebibentry{\papers@get{natbib}}{booktitle}
             \ifthenelse{\equal{\papers@get{remark}}{NA}}{}{
-                -- \papers@get{remark}}
+            -- \papers@get{remark}}
             \newline
             
             \ifthenelse{\equal{\papers@get{status}}{Submitted}}{
