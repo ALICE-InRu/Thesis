@@ -10,14 +10,15 @@ class (such as scheduling) it is possible to construct problem instances where
 one heuristic would outperform another. 
 
 Each heuristic performs distinctly to others depending on the underlying data 
-distribution of the problem. Because any algorithm which 
+distribution of the problem. This is because any algorithm which 
 has superior performance in one class of problems is inevitably inferior over 
-another class, i.e., \emph{no free lunch} theorem \citep{Wolpert97nofree}. 
+another class, cf. \emph{no free lunch} theorem \citep{Wolpert97nofree}. 
 %  number of “no free lunch” (NFL) theorems are presented which establish that for any algorithm, any elevated performance over one class of problems is offset by performance over another class. 
 The success of a heuristic is how it manages to deal with and manipulate the 
 characteristics of its given problem instance. Thus, in order to understand 
 more fully how a heuristic will eventually perform, one needs to look into what 
-kind of problem instances are being introduced to the system. What defines a 
+kind of problem instances are being introduced to the system. 
+For this reason one needs to consider what defines a 
 problem instance, e.g., what are its key features? And how can they help with 
 designing better heuristics? Once the problem instances are fully understood, 
 an appropriate learning algorithm can be implemented in order to create 
@@ -115,7 +116,7 @@ In the context of Rice's framework, the aforementioned approaches to scheduling 
   \begin{equation}
     \max_{a\in\mathcal{A}}\:\Exp{\Upsilon\left(a,\vphi(\vec{x})\right)}
   \end{equation}
-  This is  straightforward  approach as the algorithm $a\in\mathcal{A}$ is 
+  This is a straightforward  approach as the algorithm $a\in\mathcal{A}$ is 
   optimised directly given the entire instances space $\vec{x}\in\mathcal{P}$ 
   dedicated for training. Alas, this comes at a great computational cost.
 \end{description}
@@ -136,7 +137,8 @@ The literature in scheduling mainly focuses on different objectives,
 e.g., \citet{Chang96} minimised the due-date tightness and 
 \citet{Drobouchevitch2000,Gao2007} looked into solving for bottleneck machines, 
 or even multi-objective \JSP\ \citep{Vazquez-Rodriguez09,Xia2005,Tay08}.
-In this dissertation only minimisation of the makespan will be considered, thus 
+In this dissertation only minimisation of the maximum completion times for all 
+tasks, commonly referred to as makespan, will be considered, thus 
 ignoring all due-date constraints. 
 Model assumptions (i.e. shop floor constraints) can also vary, e.g., 
 \citet{Thiagarajan05} incorporate different earliness, tardiness and holding 
@@ -147,7 +149,7 @@ from a given set, i.e., adding assignment of operations to the constraints.
 Moreover, it is possible to reduce \JSP\ to a \FSP, since in practice, 
 most jobs in the \jsp\ use the machines in the same order 
 \citep{Guinet1998,Ho2007}. 
-Formal mathematical model for \JSP\ is given in \cref{ch:scheduling}.
+A formal mathematical model for \JSP\ is given in \cref{ch:scheduling}.
 
 In order to find an optimal (or near optimal) solution for scheduling problems 
 one could either use exact methods or heuristics methods. Exact methods 
@@ -159,13 +161,13 @@ NP-hard\footnote{NP stands for Non-deterministic Polynomial-time.
 dimensionality, which impedes the application in finding the global optimum in 
 a reasonable amount of time. Heuristics are generally more time efficient, but 
 do not necessarily attain the global optimum. Therefore, \JSP\ has the 
-reputation of being notoriously difficult to solve. As a result, it's 
+reputation of being notoriously difficult to solve. As a result, it has 
 been widely studied in deterministic scheduling theory and its class of 
 problems has been tested on a plethora of different solution methodologies from 
 various research fields \citep{Meeran12}, all from simple and straight forward 
 \dr s to highly sophisticated frameworks.
 \Cref{jsp:methods} summarises the main techniques applied to solve \JSP. The 
-figure is based on Fig. 1 from \citet{Jain99}, however, updated to reflect the 
+figure is based on Fig. 1 from \citet{Jain99}, but updated to reflect the 
 previous work relevant to this dissertation.
 \input{figures/methods-flowchart.tex}
 
@@ -175,7 +177,7 @@ been rather limited. However, combined with local-search methodologies, they
 can be improved upon significantly, as \citeauthor{Meeran12} showed with the 
 use of a hybrid method involving \emph{Genetic Algorithms} (GA) and \emph{Tabu 
 Search} (TS). 
-Therefore, getting the best of both worlds, namely
+This ends up getting the best of both worlds, namely
 \begin{enumerate*}[label={{}}]
   \item the diverse global search obtained from GA 
   \item being complemented with the intensified local search capabilities of TS
@@ -210,11 +212,11 @@ used in research.
 There is no dominant rule, but the most effective have been \sdr s based on job 
 processing attributes \citep{Haupt89}. \citet{Tay08} showed that combining \dr 
 s, with the aid of \emph{Genetic Programming} (GP), is promising. However, 
-there is large number of rules to choose from, thus their combinations require 
-expert knowledge or extensive trial-and-error process.
+there is a large number of rules to choose from, thus their combinations 
+require expert knowledge or extensive trial-and-error process.
 
 DRs are a very useful approach to dealing with scheduling 
-environments because they are quick to implement (by computers and shop floor 
+environments because they are quickly implemented (by computers and shop floor 
 operators) and can cope with dynamic changes. 
 Furthermore, DRs are relatively easy to interpret which can be of paramount 
 importance for some end-users.
@@ -226,12 +228,25 @@ implementation due to their complexity. In order to mediate the process, the
 selection,  as `espresso' summarises the evolved features obtained by GP, 
 yielding a much simpler form that is more comprehensible for the end-user.
 The motivation for easily interpretable models, is particularly appealing, 
-even necessary in some cases. Because in some paradigms they become 
+even necessary in some cases. For example, in some paradigms they become 
 essential for getting them sanctioned, e.g., due to legislation for 
 implementation of uninhabited aerial vehicles (i.e. drones).
 
-Instead of using construction heuristics that creates \jsp\ schedules by sequentially dispatching one job at a time, one could work with complete feasible schedules and iteratively repairing them for a better result. Such was the approach by \cite{Zhang95} who studied space shuttle payload processing by using reinforcement learning, in particular, temporal difference learning. Starting with a relaxed problem, each job was scheduled as early as its temporal partial order would permit, there by initially ignoring any resource constraints on the machines, yielding the schedule's critical path. Then the schedule would be repaired so the resource constraints were satisfied in the minimum amount of iterations.
-This approach of a two phased process of construction and improvement is also implemented in timetable scheduling, e.g., \citet{Asmuni09} used a fuzzy approach in considering multiple heuristic ordering in the construction process, and only allowed feasible schedules to be passed to the improvement phase. 
+Instead of using construction heuristics which create \jsp\ schedules by 
+sequentially dispatching one job at a time, one could work with complete 
+feasible schedules and iteratively repairing them for a better result. Such was 
+the approach by \cite{Zhang95} who studied space shuttle payload processing by 
+using reinforcement learning, in particular, temporal difference learning. 
+Starting with a relaxed problem, each job was scheduled as early as its 
+temporal partial order would permit, there by initially ignoring any resource 
+constraints on the machines, yielding the schedule's critical path. Then the 
+schedule would be repaired so the resource constraints were satisfied in the 
+minimum amount of iterations.
+This approach of a two phased process of construction and improvement is also 
+implemented in timetable scheduling, where e.g., \citet{Asmuni09} used a fuzzy 
+approach in considering multiple heuristic ordering in the construction 
+process, and only allowed feasible schedules to be passed to the improvement 
+phase. 
 
 The alternative to hand-crafting heuristics, is to implement an automatic way of learning heuristics using a data driven approach. %Generating training data for job shop scheduling
 Data can be generated using a known heuristic, such an approach is taken in 
@@ -258,14 +273,14 @@ Again, stressing the importance of meaningful feature selection.
 The initial goal of the Ph.D. project was to use sophisticated algorithms for 
 preference learning on hard problems, in particular \jsp\ scheduling, and find 
 ways to mediate the computational effort that they require.
-After painstaking parameter tuning, and managing to find complex models 
-with high training accuracy. Alas, severely overfitted to the training 
-instances -- a simple linear model would suffice with similar performance, and 
-for much less overhead! Also, linear models come with the added benefit of easy 
-interpretability. 
+After painstaking parameter tuning, only complex models managed to achieve  
+high training accuracy. Alas, those complex models were severely overfitted to 
+the training instances -- a simple linear model would suffice with similar 
+performance, and for much less overhead! Also, linear models come with the 
+added benefit of easy interpretability. 
 
 Unfortunately, there is not much said about algorithms that fail 
-\citep{SmithMiles2015}, as the focus tend to be on claiming superiority in 
+\citep{SmithMiles2015}, as the focus tends to be on claiming superiority in 
 performance to some previous approach.
 So to quote a pioneer in scheduling, 
 \begin{quote}
@@ -283,10 +298,10 @@ is divided into two main phases
 \end{enumerate*} 
 
 \subsection*{Analysis}
-By dwelling on optimal solutions and trying to understand 
-their fundamental building blocks, and applying what you learn on \emph{simple} 
-models, before investing valuable time and resources in implementing the 
-current state-of-the-art algorithms. 
+One should always start by dwelling on optimal solutions and trying to 
+understand their fundamental building blocks, and applying what one learns on 
+\emph{simple} models, before investing valuable time and resources in 
+implementing the current state-of-the-art algorithms. 
 The research questions that are put forth are
 \begin{enumerate*}[itemjoin={{? }}, itemjoin*={{? And ultimately, }},
     after={{?}}]
@@ -319,7 +334,9 @@ $\{\vphi(\vec{x}_i(k)),y_i(k)\}_{k=1}^K\in\mathcal{D}$ then
 
 
 \subsection*{\Alice}
-It's the believe of the author, that the methodology of going about this can be applied to any kind of optimisation problem which involves sequential decision making. As such, then it's suitable to name the framework:
+It's the belief of the author, that the methodology of going about this can be 
+applied to any kind of optimisation problem which involves sequential decision 
+making. As such, then it's suitable to name the framework:
 \emph{\fullnameAlice}, or \Alice\footnote{
     The hopefully catchy and very deliberate `backronym,' pays homage to 
     the wonderful literary character, Alice in Wonderland--a personal 
@@ -337,8 +354,8 @@ pre-processing phase, i.e., inspect $\xi_{\hat{\pi}}$ and $\zeta_{\hat{\pi}}$.
 
 \section{Supplementary material}
 The Prologue will mostly focus on traditional \jsp\ problem instances. 
-However, in \cref{ch:genprobleminstances} there is a greater variety of problem 
-spaces introduced, and when seen fit some of them will be investigated as well 
+However, in \cref{ch:genprobleminstances} a greater variety of problem spaces 
+are introduced, and when seen fit some of them will be investigated as well 
 in the subsequent \lcnamecref{ch:defdifficulty}s. 
 Since most experiments have been run on all proposed problem spaces, they can be 
 inspected in the supplementary \shiny\ written in R. 

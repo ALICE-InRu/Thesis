@@ -20,18 +20,18 @@ The thesis is divided into two parts
 \makeatletter 
 \ifthenelse{\equal{\@monograph}{true}}{
     \nameref{Prologue} gives a coherent connection for the publications, and 
-    elaborates on chosen aspects.
-    Whereas, \nameref{Papers} cites the publications that are referenced.    
+    elaborates on chosen aspects,
+    whereas, \nameref{Papers} cites the publications that are referenced.    
 }{
     \nameref{Prologue} gives a coherent connection for the publications, and 
-    elaborates on chosen aspects, written as a monograph. 
-    Whereas, \nameref{Papers} contains copies of the publications, reprinted 
+    elaborates on chosen aspects, written as a monograph, 
+    whereas, \nameref{Papers} contains copies of the publications, reprinted 
     with permission from the publishers.}
 \makeatother
 
 \clearpage
 \subsection*{Mapping between \cref{Prologue} and \cref{Papers}}
-The prologue will be addressing the \jsp\ scheduling problem, detailed in 
+The prologue will address the \jsp\ scheduling problem, detailed in 
 \cref{ch:scheduling} and correspond to the application in 
 \cref{InRu11a,InRu12,InRu14,InRu15a,InRu15b}. The problem generators 
 used are subsequently described in \cref{ch:genprobleminstances}.
@@ -52,14 +52,15 @@ whose collection is addressed in \cref{ch:gentrdat,InRu15a} using passive
 imitation learning, whereas \cref{ch:imitation,InRu15b} included active 
 imitation learning with greatly improved results. 
 Moreover, the training data contains an abundance of information that can be 
-used to determine algorithm's footprint in instance space, which was done for 
-optimal solutions in \cref{InRu15b}, and in addition to that SDR based 
+used to determine the algorithm's footprint in instance space, which was done 
+for optimal solutions in \cref{InRu15b}, and in addition to that SDR based 
 trajectories were inspected in \cref{ch:analysingsol} along with tying together 
 the preliminary work in \cref{InRu12}. 
-Furthermore, \cref{ch:orlibrobust} compares to two methodologies, as the 
+Furthermore, \cref{ch:orlibrobust} compares two methodologies, as the 
 preference models had been significantly improved since \cref{InRu14}.
 An overview of experimental settings in \cref{Papers} is given in 
-\cref{papers:summary}. Finally, the dissertation concludes in 
-\cref{ch:conclusions} with discussion and addresses future work.
+\cref{papers:summary}. 
+\Cref{ch:conclusions} concludes the dissertation with discussion and addresses 
+future work.
     
 \input{tables/papers-summary.tex}
