@@ -1,30 +1,29 @@
 \HeaderQuote{Tut, tut, child! Everything's got a moral, if only you can find it.}{The Duchess} 
 
 \chapter{Conclusions}\label{ch:conclusions} 
-\FirstSentence{C}{urrent literature still hold} \sdr s in high regard, as they 
+\FirstSentence{C}{urrent literature still hold} \sdr s in high regard as they 
 are simple to implement and quite efficient. 
-However, they are generally taken for granted as there is clear lack of 
-investigation of \emph{how} these \dr s actually work, and what 
+However, they are generally taken for granted as there is a clear lack of 
+investigation of \emph{how} these \dr s actually work and what 
 makes them so successful (or in some cases unsuccessful)? 
 
-For instance, of the four SDRs from \cref{sec:SDR} this dissertation focused 
-on, why does MWR outperform so significantly for \jsp\, yet completely fail for 
-\fsp? 
-MWR seems to be able to adapt to varying distributions of processing times, 
-however, manipulating the machine ordering causes MWR to break down. 
-By inspecting optimal schedules, and meticulously researching what's going on, 
-every step of the way of the dispatching sequence as was done in 
-\cref{ch:analysingsol}, some light is shed where these SDRs vary w.r.t. the 
+For instance, of the four SDRs from \cref{sec:SDR}, this dissertation focused 
+on why does MWR outperform so significantly for \jsp\, yet completely fail for 
+\fsp? MWR seems to be able to adapt to varying distributions of processing times, 
+yet, manipulating the machine ordering causes MWR to break down.
+By inspecting optimal schedules and meticulously researching what is going on 
+throughout the dispatching sequence, as was done in 
+\cref{ch:analysingsol}, some light was shed on where these SDRs vary w.r.t. the 
 problem space at hand. 
 Once these simple rules are understood, then it's feasible to extrapolate the 
 knowledge gained and create new \cdr s that are likely to be successful. 
-An example of which was a blended \dr\ in \cref{sec:diff:opt:bdr}, where we 
+An example of which was a blended \dr\ in \cref{sec:diff:opt:bdr} where we 
 start with the SPT heuristic and switch over to MWR at predetermined time 
-points. Those pivotal time steps were chosen by inspecting where SPT succeeds 
-MWR (and vice versa). 
+points. The pivotal time steps were chosen by inspecting where SPT succeeds 
+MWR (and vice versa).
 By achieving a higher classification accuracy using the new BDR model, it 
-substantially improve its inherited rule SPT.
-Although, it doesn't transcend to a significantly lower \namerho, when compared 
+substantially improved its inherited rule SPT.
+Although, this does not transcend to a significantly lower \namerho, when compared 
 to its other inherited rule MWR. 
 Special care must be taken not to let SPT downgrade MWR's performance. This can 
 be avoided by inspecting how $\rho$ is evolving as a function of time for its 
@@ -66,7 +65,7 @@ notably
     optimal rank). Moreover, by incorporating \ref{conc:bias} it's possible to 
     weigh the training accuracy w.r.t. time-step 
     (cf. \cref{ch:featselect}),
-    \item allowing the predictor to randomise boosts performance as following 
+    \item allowing the predictor to randomise, boosts performance as following 
     the expert policy by itself is too difficult to learn on its own (cf. 
     \cref{sec:perturbedLeader}),
     \item following sub-optimal deterministic policies, yet labelling with an 
@@ -82,7 +81,7 @@ Moreover, several problem distributions and dimensionality from
 \cref{ch:genprobleminstances} were considered with sometimes contradictory 
 results. Fortunately, the performance seemed to hold when going to higher 
 dimension (i.e. from \Problem[6\times5]{} to \Problem[10\times10]{}). 
-Thereby justifying only considering `easy' \JSP\ in terms of computational 
+Thereby, justifying only considering `easy' \JSP\ in terms of computational 
 effort before investing valuable time for higher dimensional experiments. 
 However, problem distributions is a key component, and the learned model should 
 try to represent its intended (test) dataset as close as possible.
@@ -121,14 +120,14 @@ search (cf. \cref{tbl:cma:boxplot:set}).
 \section{Future work}
 
 The DAgger updating framework from \cref{sec:il:active} proposed starting with 
-the model based on the expert policy, \cref{pseudo:DAgger} only relies on 
-\emph{some} initial learned model. So in theory it should be possible to 
+the model based on the expert policy, \cref{pseudo:DAgger}, and only relies on 
+\emph{some} initial learned model. So in theory, it should be possible to 
 improve the \PsiSet[\minCmax]{p} set-up even further, by applying DAgger 
 afterwards to that learned model. Or in general substituting the learned 
 \PsiSet[\OPT]{p} to some other \emph{good} initial model.
-Perhaps even starting with the perturbed leader which has very similar 
-motivation as following the expert policy, yet with substantially better 
-performance straight off the bat. 
+Perhaps even starting with the perturbed leader, which has very similar 
+motivation as following the expert policy, yet yields substantially better 
+performance straight off the bat.
 
 We saw in \cref{sec:trdat:param:tracks:passive} that preference models using 
 training data from following SDR policy (i.e. \PhiSet{\SDR}) are good for 
@@ -136,7 +135,7 @@ improving its original heuristic. However, this did not transcend for
 \PhiSet{\CMAES}, which was statistically insignificant with the right stepwise 
 sampling bias.
 The nature of CMA-ES is to explore suboptimal routes until it converges to an 
-optimal one. So perhaps, if \PhiSet{\CMAES} wasn't based on following the 
+optimal route. So perhaps, if \PhiSet{\CMAES} wasn't based on following the 
 CMA-ES trajectory, but rather using the actual features encountered during its 
 optimisation. 
 Alas, CMA-ES used a computational budget of 50,000 function evaluations, each 
@@ -148,19 +147,19 @@ them.
 
 From \cref{ch:rollout,ch:orlibrobust} we saw that pilot models achieved the 
 lowest \namerho, of all other proposed models from the dissertation. 
-Generally the more roll-outs that are made, then lower fortified makespan is 
+Generally, the more roll-outs that are made, the lower fortified makespan is 
 found. However, in some cases using just four fixed roll-outs were better (cf. 
 \cref{tbl:comp:orlib}). 
 In particular, we saw in \cref{sec:singlerollout} how pursuing $-\phiSPT$ 
 (which is basically repeatedly applying w.r.t. $-\phiproc$ for a 
-$(K-k)$-lookahead) significantly increased performance for $\rho$.
+$(K-k)$-lookahead), significantly increased performance for $\rho$.
 Now, instead of doing fixed roll-outs based on SDRs, such as \phiSDRRelated, 
 then it could be worth investigating a single roll-out of learned policy, 
 $\hat{\pi}$. 
 Usually, the learned policy surpasses SPT (i.e. $-\phiproc$) w.r.t. stepwise 
 optimality, i.e., $\xi^{\star}_{\hat{\pi}}\geq\xi^{\star}_{-\phiproc}$. 
-So presumably even better performance could be achieved, without resorting 
-intensive computational budget of a hundred (or more) random roll-outs.
+So presumably, even better performance could be achieved without resorting 
+to an intensive computational budget of a hundred (or more) random roll-outs.
 
 The analysis-phase of \Alice\ is heavily dependent on having an expert 
 policy it's trying to mimic, i.e., knowing the \emph{optimal} solutions for the 
