@@ -14,7 +14,7 @@ will show
     distribution $\mathcal{D}$. This done by updating the learned model in an 
     active imitation learning fashion
     \item $y_i$ is labelled using an expert policy via a solver
-    \item data needs to be balanced, as the set is unbalanced w.r.t. 
+    \item data needs to be balanced, as the set is unbalanced w.r.t. the
     dispatching step $k$
     \item to improve upon localised stepwise features $\vphi$, it's possible to 
     incorporate $(K-k)$ roll-outs where the learned model can be construed as a 
@@ -33,8 +33,8 @@ measure needs to be adjusted for its intended trajectory.
 Using these guidelines, it becomes easier to create custom \dr s for one's 
 particular application. For this several different distributions of \jsp\ 
 will be considered.
-Moreover, the machine learning approach is based on preference learning 
-which determines what feature states are preferable to others. 
+Moreover, the machine learning approach is based on preference learning, i.e.,  
+which post-decision state is preferable to another. 
 However, that could easily be substituted for other learning methods or applied 
 to other shop-constraints or family of scheduling problems that are based on 
 iteratively applying \dr s.
