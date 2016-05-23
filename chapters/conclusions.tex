@@ -137,7 +137,7 @@ sampling bias.
 The nature of CMA-ES is to explore suboptimal routes until it converges to an 
 optimal route. So perhaps, if \PhiSet{\CMAES} wasn't based on following the 
 CMA-ES trajectory, but rather using the actual features encountered during its 
-optimisation. 
+optimisation would give a more meaningful preference set for learning. 
 Alas, CMA-ES used a computational budget of 50,000 function evaluations, each 
 consisting of the expectation of $N_{\train}$ problem instances. 
 So even though \cref{fig:cma:fit} becomes relatively stable after a few 
@@ -173,7 +173,6 @@ is possible to use imitation learning even when the reference policy is poor.
 Although it's noted that the quality (w.r.t. near-optimality) of reference 
 policy is in accordance to its performance, as is to be expected. 
 
-\vfill
 \begin{quote}
     So a prudent man must always follow in the footsteps of great men and 
     imitate those who have been outstanding. If his own prowess fails to 
