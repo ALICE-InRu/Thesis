@@ -6,29 +6,29 @@
 
 \FirstSentence{R}{oll-out algorithms, also known as Pilot Method} 
 \citep{Bertsekas97,Duin99}, for combinatorial optimisation aim to improve 
-performance by sequential application of a pilot heuristic, which completes the 
+performance by sequential application of a pilot heuristic which completes the 
 remaining $(K-k)$ steps. Roll-outs for \JSP\ have been conducted by 
 \citet{Ru12}. 
 Continuing with that work, \citet{Geirsson2012} compares several pilot 
 heuristics, e.g., \emph{Randomly Chosen Dispatch Rules} which is similar 
 to \phiSDRRelated\ (but here one roll-out per fixed SDR). 
-The motivation being, that a SDR-based roll-outs are of higher quality than 
-random ones, requiring less computational budget. 
+The motivation being that SDR-based roll-outs are of higher quality than 
+random ones which require less computational budget. 
 However, \citeauthor{Geirsson2012} notes that performance w.r.t. traditional 
-random roll-outs is statistically insignificant, and not worth the overhead of 
+random roll-outs is statistically insignificant and not worth the overhead of 
 implementing various SDRs beforehand. 
 
 \citeauthor{Geirsson2012} reworks the roll-out algorithm as an 
 $\abs{\mathcal{L}}$-armed bandit,\footnote{In probability theory, the
     multi-armed bandit problem \citep{badit:book} describes a gambler at a row 
-    of slot machines, who has to decide which machines to play, i.e., pull its 
+    of slot machines who has to decide which machines to play, i.e., pull its 
     lever, in  order to maximise his rewards, that are specific to each 
     machine. The gambler also has to decide how many times to play each machine 
     and in which order to play them. The gambler's actions are referred to as 
     \emph{pilot-heuristic}.} 
 i.e., each job of the job-list are the levers. Since the best job, $j^*$, to 
-dispatch at step $k$, is not known beforehand, therefore all available jobs are 
-evaluated, using roll-outs. 
+dispatch at step $k$, is not known beforehand, all available jobs are 
+evaluated using roll-outs. 
 As a result, using the features \phiRNDRelated, the weights $\vec{w}$ yield the 
 deterministic pilot heuristic. Although in \citeauthor{Geirsson2012}'s work, 
 other statistics were used for guidance, e.g., quartile and octile. 
@@ -56,8 +56,8 @@ $\phiRNDmin$, which was statistically insignificant.
 
 Revisiting \cref{fig:SDR:boxplot}, then SPT is never the best SDR for any of 
 the problem spaces (cf. \cref{fig:SDR:boxplot}).
-However, if we choose the minimum SPT from every possible operation onwards 
-gives the best result of \phiSDRRelated. This twist in SPT application boots 
+However, choosing the minimum SPT from every possible operation onwards 
+gives the best result of \phiSDRRelated. This twist in SPT application boosts 
 performance by 
 \begin{enumerate*}
     \item $\Delta\rho\approx -39\%$ for \jrnd{6}{5}
@@ -70,14 +70,14 @@ that it's better to \emph{not} choose the job SPT would `normally' pick, in the
 initial stages. As we saw from \cref{fig:diff:boxplot:BDR} then pursuing SPT 
 drastically derailed $\rho$ performance if it ventured off the optimal 
 trajectory. 
-However, SPT $\xi^{\star}_{-\phiproc}$ shows that on average SPT is policy that 
+However, SPT $\xi^{\star}_{-\phiproc}$ shows that on average SPT is a policy that 
 is likely to be optimal. 
 Therefore making SPT roll-outs with $\phiSPT$, namely, repeatedly applying a 
 $(K-k)$-lookahead for $-\phiproc$. 
 Then $\phiSPT$ manages to overcome the shortcomings of pursuing $-\phiproc$ on 
 its own for only a 1-step lookahead.
 
-Regarding random roll-outs, then the greedy $\phiRNDmin$ came on top for 
+Regarding random roll-outs, the greedy $\phiRNDmin$ came out on top for 
 \Problem[6\times5]{\train}, whereas for \jrnd{10}{10} then a better fortified 
 mean result was achieved by following $\phiRNDmean$.
 
@@ -102,7 +102,7 @@ considered as its deterministic pilot heuristic.
 If we only use \phiSDRRelated\ it requires 4 deterministic $(K-k)$ step 
 roll-outs at each time step. Whereas, introducing \phiRNDRelated\ costs an 
 additional 100 random roll-outs for each time step.
-Therefore we'll consider both using only the first \NrFeatSDR\ features as it's 
+Therefore, we'll consider both using only the first \NrFeatSDR\ features due to it's 
 relatively low computational budget, and also the computationally intensive 
 full model of \NrFeatGlobal\ features.
 
@@ -112,8 +112,8 @@ The experimental set-up will consider the stepwise sampling biases from
     \item \ref{bias:equal} (i.e. equal probability) 
     \item adjusted \ref{bias:dbl2nd} (i.e. double emphasis on second half)
 \end{enumerate*}
-Furthermore from training data will be using either the expert policy or 
-following the weights obtained from minimising w.r.t. $\minCmax$ defined in 
+Furthermore, the training data will be using either the expert policy or 
+following the weights obtained from minimising w.r.t. $\minCmax$ as defined in 
 \cref{eq:cma:makespan}. Both trajectories were detailed in 
 \cref{sec:trdat:param:tracks:passive}.
 Box-plot for \namerho, is depicted in \cref{fig:rollout:boxplot}, and its main 
@@ -161,8 +161,8 @@ configurations)
 The best configuration, namely following $\minCmax$ with adjusted stepwise bias 
 \ref{bias:dbl2nd}, is depicted with the CMA-ES obtained weights in 
 \cref{fig:rollout:Cmax:boxplot}. The local 16.1.ES.Cmax model was statistically 
-insignificant from the baseline CMA-ES obtained weights. From the figure we can 
-see how the models significantly improves with increased number of roll-outs.
+insignificant from the baseline CMA-ES obtained weights. From the figure, we can 
+see how the models significantly improve with an increased number of roll-outs.
 
 \begin{figure}[t]\centering 
     \includegraphics[width=\textwidth]{ALL/{boxplot.multi.rollout.6x5}.pdf}
@@ -194,17 +194,17 @@ $\{\rho,\rho_{\text{fort.}}\}$ were as follows
     \item $\{6.4\%,4.7\%\}$ compared to $\{9.7\%,6.0\}\%$ using 
     $\phiRNDmean$ for \jrnd{10}{10} 
 \end{enumerate*}
-Regarding \Problem[6\times5]{\train} there was no significant difference to 
+Regarding \Problem[6\times5]{\train}, there was no significant difference to 
 minimum $\phiRNDmin$. 
-Whereas, for \jrnd{10}{10} the preference model paid off, with an improvement 
+Whereas, for \jrnd{10}{10}, the preference model paid off, with an improvement 
 of $\Delta\rho\approx-3.3\%$ and $\Delta\rho_{\text{fort.}}\approx-1.3\%$.
 This is also the case where the greedy approach of following minimum 
 $\phiRNDmin$ was unsuccessful. Note, both dimensions had the same computational 
 budget of 100 random roll-outs for each dispatch. 
-In the case for \Problem[6\times5]{\train} then 100 roll-outs is quite enough. 
+In the case for \Problem[6\times5]{\train} the 100 roll-outs is quite enough. 
 Notice in \cref{fig:rollout:boxplot} that the minimum is very often found (the 
-3rd quartile is often 0), and mean $\rho_{\text{fort.}}\leq1.5\%$.
-However, as the possibilities for operations grows exponentially with increased 
+3rd quartile is often 0) and mean $\rho_{\text{fort.}}\leq1.5\%$.
+However, as the possibilities for operations grow exponentially with increased 
 dimensionality, then for \jrnd{10}{10} we notice that we need to be more 
 mindful how we allocate our $(K-k)$ roll-outs to achieve a good performance.
 
@@ -226,18 +226,18 @@ costly function evaluations.
 Although, for low dimension \jsp\ (i.e. \Problem[6\times5]{\train}) the learned 
 deterministic policy did not statistically improve performance, as it was 
 equally adequate to pursue minimum $\phiRNDmin$ on its own.
-However, going to higher dimension, as was done for \jrnd{10}{10}, then finally 
+However, going to a higher dimension, as was done for \jrnd{10}{10}, then finally 
 we're able to reap the fruit of one's labour.
 
 Unfortunately, \phiRNDRelated\ are not practical features for high dimensional 
 data due to excessive computational cost. 
-Nevertheless, bearing \cref{fig:diff:case:OPT:10x10} in mind then it 
-might be sufficient to do only a few steps lookahead at some key times in the 
+Nevertheless, bearing \cref{fig:diff:case:OPT:10x10} in mind, it 
+might be sufficient to lookahead only a few steps at key times in the 
 dispatching process. For instance, let the computational budget for 
-\frnd{10}{10} roll-outs be full $K$-solutions in the beginning phases, as 
+\frnd{10}{10} roll-outs be full $K$-solutions in the beginning phases as 
 that's when the problem space is most susceptible to bad moves. Then gradually 
 decrease to only a few step lookahead, as \fsp\ is then relatively stable.
-Conversely for \jrnd{10}{10}, start with a few step lookahead, and then 
+Conversely, for \jrnd{10}{10}, start with a few step lookahead, and then 
 expand the horizon as time goes by. Alternatively, when there aren't that many 
 dispatches left, it might be worth developing a hybrid approach where the 
 remaining dispatches from that point are optimised with some exact methods. 
