@@ -679,7 +679,14 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     \ifthenelse{\equal{\@printmode}{draft}}{ % do nothing
     }{\ifthenelse{\equal{\@monograph}{true}}{  % do nothing    
     }{
-        \includepdf[pages={-}, % all pages
+        \includepdf[page=1, % first page
+        width=\textwidth, % full text-width
+        pagecommand={\thispagestyle{empty} % continue page numbering
+            \thumbindex{\value{chapter}}{\Roman{chapter}} % paper ID
+        } 
+        ]{\papers@get{file}}
+    
+        \includepdf[pages={2-}, % all pages after
         width=\textwidth, % full text-width
         pagecommand={\thispagestyle{plain} % continue page numbering
             \thumbindex{\value{chapter}}{\Roman{chapter}} % paper ID
