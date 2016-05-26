@@ -150,10 +150,10 @@ suboptimal decisions later in the decision process.
 
 \begin{figure}\centering
   \subcaptionbox{$6\times5$\label{fig:diff:case:OPT:6x5}}{
-    \includegraphics[width=\linewidth]{figures/ALL/{stepwise.6x5.OPT.casescenario}.pdf}\vspace*{-12pt}}
+    \includegraphics[width=0.95\linewidth]{figures/ALL/{stepwise.6x5.OPT.casescenario}.pdf}\vspace*{-12pt}}
   \\
   \subcaptionbox{$10\times10$\label{fig:diff:case:OPT:10x10}}{
-    \includegraphics[width=\linewidth]{figures/ALL/{stepwise.10x10.OPT.casescenario}.pdf}\vspace*{-12pt}}
+    \includegraphics[width=0.95\linewidth]{figures/ALL/{stepwise.10x10.OPT.casescenario}.pdf}\vspace*{-12pt}}
   \caption[Mean \namerho, for best and worst case scenario for making one 
   suboptimal move]{Mean \namerho, for best and worst case scenario of 
   making \emph{one} suboptimal dispatch (i.e. $\zeta_{\min}^{\star}$ and 
@@ -196,7 +196,7 @@ competitive for $6\times5$.
 \begin{figure}\centering
     \captionsetup{list=no}
     \subcaptionbox{\jrnd{6}{5}\label{fig:diff:extr:jrnd:6x5}}{
-        \includegraphics[width=\linewidth]{figures/{j.rnd}/{stepwise.6x5.OPT.extremal}.pdf}}
+        \includegraphics[width=.95\linewidth]{figures/{j.rnd}/{stepwise.6x5.OPT.extremal}.pdf}}
     \caption{Probability of extremal feature being optimal move}
     \label{fig:diff:extr:features}
 \end{figure}
@@ -204,7 +204,7 @@ competitive for $6\times5$.
     \captionsetup{list=no}
     \ContinuedFloat
     \subcaptionbox{\jrnd{10}{10}\label{fig:diff:extr:jrnd:10x10}}{
-        \includegraphics[width=\linewidth]{figures/{j.rnd}/{stepwise.10x10.OPT.extremal}.pdf}}
+        \includegraphics[width=.95\linewidth]{figures/{j.rnd}/{stepwise.10x10.OPT.extremal}.pdf}}
     \caption{}
     \MyCaption{Probability of extremal feature being optimal 
     move}{fig:diff:extr:jrnd:6x5}{fig:diff:extr:jrnd:10x10}
@@ -213,7 +213,7 @@ competitive for $6\times5$.
 \begin{figure}[p]\centering
   \captionsetup{list=no}
   \subcaptionbox{$6\times5$\label{fig:diff:extr:SDR:6x5}}{
-    \includegraphics[width=\linewidth]{figures/{stepwise.6x5.SDR}.pdf}}
+    \includegraphics[width=.95\linewidth]{figures/{stepwise.6x5.SDR}.pdf}}
   \caption[Probability of SDR yielding optimal move]{
     Probability of SDR yielding optimal move. 
     Both optimal (solid: $\xi^\star_{\SDR}$) and SDR-based (dashed: 
@@ -226,10 +226,10 @@ competitive for $6\times5$.
   \subcaptionbox{$10\times10$\label{fig:diff:extr:SDR:10x10}}{
     \begin{tikzpicture}
     \node[anchor=south west,inner sep=0] (image) at (0,0,0) 
-    {\includegraphics[width=\linewidth]{figures/{stepwise.10x10.SDR}.pdf}};
+    {\includegraphics[width=.9\linewidth]{figures/{stepwise.10x10.SDR}.pdf}};
     \begin{scope}[x={(image.south east)},y={(image.north west)}]
     \node (zoom) at (0.27,.45)
-    {\includegraphics[width=0.24\linewidth]{figures/j.rnd/{stepwise.10x10.SDR.zoom}.pdf}};
+    {\includegraphics[width=0.2\linewidth]{figures/j.rnd/{stepwise.10x10.SDR.zoom}.pdf}};
     \end{scope}
     \end{tikzpicture}\vspace*{-12pt}}
   \caption{Note, due to computational complexity, only \jrnd{10}{10} has 
@@ -303,7 +303,7 @@ $\pi_\star$ and SDRs.
 \begin{figure}[p]\centering
     \captionsetup{list=no}
     \subcaptionbox{$10\times10$\label{fig:diff:case:SDR:10x10}}{
-        \includegraphics[width=0.8\linewidth]{figures/{j.rnd}/{stepwise.10x10.ALL.casescenario}.pdf}\vspace*{-12pt}}
+        \includegraphics[width=0.7\linewidth]{figures/{j.rnd}/{stepwise.10x10.ALL.casescenario}.pdf}\vspace*{-12pt}}
     \caption{Mean \namerho, for best and worst case scenario when not
         following a fixed policy $\pi$ (i.e. $\zeta_{\min}^\pi$ and 
         $\zeta_{\max}^\pi$), depicted as lower and upper bound, respectively. 
@@ -314,7 +314,7 @@ $\pi_\star$ and SDRs.
     \captionsetup{list=no}
     \ContinuedFloat
     \subcaptionbox{$6\times5$\label{fig:diff:case:SDR:6x5}}{
-        \includegraphics[width=\linewidth]{figures/ALL/{stepwise.6x5.ALL.casescenario}.pdf}}
+        \includegraphics[width=.95\linewidth]{figures/ALL/{stepwise.6x5.ALL.casescenario}.pdf}}
     \caption{Note, $\{\zeta^{\pi^\star}_{\min},\zeta^{\pi^\star}_{\max}\}$ are 
     illustrated jointly for \Problem{\train} in \cref{fig:diff:case:OPT}}
     \MyCaption{Mean \namerho, for best and worst case scenario for not following
@@ -381,8 +381,8 @@ performance of MWR.
 
 \begin{figure}[p]
   \centering
-  \includegraphics[width=\linewidth]{figures/{j.rnd}/{boxplotRho.BDR.10x10}.pdf}
-  \vspace*{-24pt}
+  \includegraphics[width=.85\linewidth]{figures/{j.rnd}/{boxplotRho.BDR.10x10}.pdf}
+  \vspace*{-6pt}
   \caption[Box plot of \jrnd{10}{10} \namerho, for BDR where SPT is applied for 
   the first followed by MWR.]{
     Box plot of \jrnd{10}{10} \namerho, for BDR where SPT is applied for the 
@@ -439,7 +439,7 @@ computational cost.
 \begin{figure}\centering
   \captionsetup{list=no}
   \subcaptionbox{\jrnd{6}{5}\label{fig:diff:evol:jrnd:6x5}}{
-    \includegraphics[width=\linewidth]{figures/{j.rnd}/{stepwise.6x5.evolution}.pdf}}
+    \includegraphics[width=.95\linewidth]{figures/{j.rnd}/{stepwise.6x5.evolution}.pdf}}
   \caption{Mean stepwise evolution of $\tilde{\vphi}$, which is scaled 
   according to \cref{eq:scale}}
   \label{fig:diff:opt:evol}
@@ -448,7 +448,7 @@ computational cost.
   \captionsetup{list=no}
   \ContinuedFloat
   \subcaptionbox{\jrnd{10}{10}\label{fig:diff:evol:jrnd:10x10}}{
-    \includegraphics[width=\linewidth]{figures/{j.rnd}/{stepwise.10x10.evolution}.pdf}}
+    \includegraphics[width=.95\linewidth]{figures/{j.rnd}/{stepwise.10x10.evolution}.pdf}}
   \caption{}
   \MyCaption{Mean stepwise evolution of 
   $\tilde{\vphi}$}{fig:diff:evol:jrnd:6x5}{fig:diff:evol:jrnd:10x10}
@@ -550,8 +550,9 @@ highlighted.
 \end{figure}
 
 \begin{figure}
-    \includegraphics[width=\linewidth]{{j.rnd/phi.corr.SDR.6x5}.pdf}
-    \includegraphics[width=\linewidth]{{j.rnd/phi.corr.ALL.6x5}.pdf}
+    \includegraphics[width=.95\linewidth]{{j.rnd/phi.corr.SDR.6x5}.pdf}
+    \vspace{-6pt}
+    \includegraphics[width=.95\linewidth]{{j.rnd/phi.corr.ALL.6x5}.pdf}
     \caption{Stepwise significance of a correlation coefficient for \jrnd{6}{5} 
         features $\vphi$, segregated w.r.t. easy and hard problems, with 
         resulting \namerho.}

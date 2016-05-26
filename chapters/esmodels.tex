@@ -220,13 +220,13 @@ then it did for it's corresponding problem space, which was the only setting
 where \cref{eq:cma:rho} was significantly different than \cref{eq:cma:makespan} 
 (worsening by $\Delta\rho\approx+1\%$).
 
-\begin{figure}[p]
+\begin{figure}[p] \centering
     \subcaptionbox{Models applied to corresponding training and test set
-        \label{fig:cma:boxplot:set}}{
+        \label{fig:cma:boxplot:set}}{\vspace{-12pt}
         \includegraphics[width=\textwidth]{{boxplot.CMAES}.pdf}}
     \subcaptionbox{Models applied to ORLIB test set 
         \label{fig:cma:boxplot:orlib}}{
-        \includegraphics[width=\textwidth]{{boxplot.CMAES.ORLIB}.pdf}}
+        \includegraphics[width=0.9\textwidth]{{boxplot.CMAES.ORLIB}.pdf}}
 	\caption[Box-plot for \namerho, after CMA-ES optimisation]{Box-plot for
         \namerho, when implementing the final weights obtained from CMA-ES 
         optimisation, using objective functions from 
