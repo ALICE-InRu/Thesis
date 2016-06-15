@@ -134,3 +134,13 @@ application}}
     itemjoin={{; }}, itemjoin*={{, and }},
     after={{. }}
 }
+
+\newcommand{\myopenleft}{
+    \strictpagecheck
+    \checkoddpage
+    \ifoddpage 
+        %do nothing
+    \else 
+        \blankpage
+    \fi
+}
