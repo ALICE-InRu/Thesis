@@ -558,13 +558,15 @@ Note, optimisation w.r.t. \cref{eq:cma:makespan} achieved 10.57\%
 and 11.33\% mean $\rho$ for training and test set, respectively, which is 
 statistically insignificant from the adjusted preference model.
 
+
 \section{Conclusions}
+
 Since the preference set is ideally aggregated and possibly re-sampled 
 to adjust for lacking $\abs{\Psi(k)}$ count, then $\Psi$ needs to be sampled to 
 size $l_{\max}$ such that it contains maximum information, yet with minimal 
 amount of preference pairs. 
 By use of partial subsequent Pareto ranking to address \ref{PREF:param:ranks}, 
-denoted \PsiSet{p}, from \cref{sec:trdat:param:ranks}, it's possible to reduce 
+denoted \PsiSet{p}, it's possible to reduce 
 $\abs{\Psi}$ significantly, without loss in performance. 
 
 Experimental results in \cref{sec:trdat:param:tracks:passive} for 
@@ -580,7 +582,7 @@ Moreover, additional emphasis to the latter stages of the dispatches is
 beneficial as that's when \JSP\ is more susceptible to failure. 
 Furthermore, since the problem spaces showed difference boost in performance 
 depending on the various complexities of its best sampling strategy, its 
-simpler version is recommended, namely configuration denoted \ref{bias:dbl2nd}.
+simpler version is recommended, namely configuration \ref{bias:dbl2nd}.
 
 Inspired by the original work by \cite{Siggi05}, having fixed DRs guide the 
 generation of training data (except correctly labelling with analytic means) 

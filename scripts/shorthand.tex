@@ -134,3 +134,13 @@ application}}
     itemjoin={{; }}, itemjoin*={{, and }},
     after={{. }}
 }
+
+\newcommand{\openoddpage}{
+    \strictpagecheck
+    \checkoddpage
+    \ifoddpage 
+        %do nothing
+    \else 
+        \blankpage
+    \fi
+}
