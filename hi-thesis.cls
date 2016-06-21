@@ -191,7 +191,7 @@ tablewithin=chapter]{caption} % gæti haft frekar figurewithin=section
     \newpage
     %\topskip0pt % messes up with new chapters, creates 2 empty pages!
     \vspace*{\fill}
-    \centerline{This page is intentionally left blank.}
+    %\centerline{This page is intentionally left blank.}
     \vspace{\fill}
 }
 
