@@ -80,13 +80,15 @@ notably
 Moreover, several problem distributions and dimensionality from 
 \cref{ch:genprobleminstances} were considered with sometimes contradictory 
 results. Fortunately, the performance seemed to hold when going to higher 
-dimension (i.e. from \Problem[6\times5]{} to \Problem[10\times10]{}). 
+dimension (i.e. from \ProblemSpace[6\times5]{} to \ProblemSpace[10\times10]{}). 
 Thereby, justifying only considering `easy' \JSP\ in terms of computational 
 effort before investing valuable time for higher dimensional experiments. 
 However, problem distributions is a key component, and the learned model should 
 try to represent its intended (test) dataset as close as possible.
-Furthermore, \cref{ch:orlibrobust} showed that results from \Problem{\train} to 
-corresponding \Problem{\test} holds for completely different test application, 
+Furthermore, \cref{ch:orlibrobust} showed that results from 
+\ProblemSpace{\train} to 
+corresponding \ProblemSpace{\test} holds for completely different test 
+application, 
 e.g., OR-Library benchmark suite.
 
 Creating new \dr s is by no means trivial. For \jsp\ there is 

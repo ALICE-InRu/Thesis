@@ -237,9 +237,9 @@ set, $\Psi$. A box-plot for \fullnamerho, is presented in
 From the figure it is apparent there can be a performance edge gained by 
 implementing a particular trajectory strategy, yet ranking scheme seems to be 
 irrelevant. Moreover, the behaviour is analogous across all other 
-\Problem[6\times5]{\train} in \cref{tbl:data}.
+\ProblemSpace[6\times5]{\train} in \cref{tbl:data}.
 
-First let's restrict  the models to \Problem[6\times5]{\train}. 
+First let's restrict  the models to \ProblemSpace[6\times5]{\train}. 
 There is no statistical difference between \PsiSet{f} and \PsiSet{p} 
 ranking-schemes across all disciplines,
 which is expected since \PsiSet{f} is designed to contain the same preference 
@@ -254,7 +254,7 @@ Since a smaller preference set is preferred, its opted to use the \PsiSet{p}
 ranking scheme henceforth as the default set-up for \ref{PREF:param:ranks}. 
 
 Moving on to higher dimension, results for \jrnd{10}{10} were similar to 
-\Problem[6\times5]{\train}. Only exception begin that ranking schemes 
+\ProblemSpace[6\times5]{\train}. Only exception begin that ranking schemes 
 showed difference in performance when using \PhiSet{\OPT}, where 
 \PsiSet[\OPT]{p} come on top. Strengthening our previous choice of \PsiSet{p} 
 as standard ranking scheme.
@@ -264,7 +264,7 @@ as standard ranking scheme.
   \includegraphics[width=.95\textwidth]{{prefdat.size.6x5}.pdf}
   \vspace*{-18pt}
   \caption[Size of preference set, $\abs{\Psi}$]{Size of 
-  \Problem[6\times5]{\train} preference set, $l=\abs{\Psi}$, for 
+  \ProblemSpace[6\times5]{\train} preference set, $l=\abs{\Psi}$, for 
   different trajectory strategies and ranking schemes (where 
   $N_{\train}=500$) }
   \label{fig:size:Psi:K}
@@ -275,7 +275,7 @@ as standard ranking scheme.
   \vspace*{-18pt}
   \caption[Box-plot for various $\Phi$ and $\Psi$ set-up]{
       Box-plot for various $\Phi$ and $\Psi$ set-up using
-      \Problem[6\times5]{\train}. The trajectories 
+      \ProblemSpace[6\times5]{\train}. The trajectories 
       the models are based on are depicted in white on the far right.}
   \label{fig:boxplot:prefset}
 \end{figure}
@@ -284,11 +284,12 @@ as standard ranking scheme.
 
 We'd like to inspect which trajectory is the best to use for $\Psi$. 
 \Cref{InRu15a} only considered \jrnd{6}{5} and \jrndn{6}{5}, 
-however, results for \Problem[6\times5]{\train} and 
+however, results for \ProblemSpace[6\times5]{\train} and 
 \jrnd{10}{10} are currently available.\footnote{Additional problem spaces can 
     be found in \shiny: Preference Models $>$ Trajectories \& ranks.}
 Models from \cref{fig:boxplot:prefset} are limited to the ones corresponding to 
-\PsiSet{p}. Moreover, main statistics for \Problem[10\times10]{} are given in 
+\PsiSet{p}. Moreover, main statistics for \ProblemSpace[10\times10]{} are given 
+in 
 \cref{tbl:tracks:boxplot}.
 \Cref{fig:size:Psi.p:K} jointly illustrates the size of the preference set 
 used, i.e., $\abs{\Psi_p}$ from \cref{fig:size:Psi:K}.
@@ -388,7 +389,7 @@ the training data collection.
     \includegraphics[width=\textwidth]{{prefdat.p.size.6x5}.pdf}
     \vspace*{-30pt}
     \caption[Size of preference set, $\abs{\Psi_p}$]{Size of 
-        \Problem[6\times5]{\train} preference set, $l=\abs{\Psi_p}$, for 
+        \ProblemSpace[6\times5]{\train} preference set, $l=\abs{\Psi_p}$, for 
         different trajectory strategies}
     \label{fig:size:Psi.p:K}
 \end{figure}
@@ -399,7 +400,7 @@ the training data collection.
     \includegraphics[width=\textwidth]{{bias.CDR.10x10}.pdf}
     \vspace*{-30pt}
     \caption{Log probability for stepwise sampling for \PsiSet[\OPT]{p} based 
-    on \Problem[10\times10]{\train}}
+    on \ProblemSpace[10\times10]{\train}}
     \label{fig:bias}
 \end{figure}
 
@@ -453,7 +454,7 @@ boost that adjustment even further.
 Lastly, \ref{bias:dbl1st} and \ref{bias:dbl2nd} are very simplified 
 versions of the aforementioned strategies.
 \Cref{fig:bias} jointly illustrates the stepwise bias strategies for 
-\Problem[10\times10]{\train}. 
+\ProblemSpace[10\times10]{\train}. 
 
 It's possible to circumvent the choice of stepwise sampling strategy by 
 creating a preference model for each time step $k$, for a grand total of $K$ 
@@ -478,8 +479,8 @@ other dimensions, e.g., test benchmarks suite from OR-Library (cf.
 \end{figure}
 
 \Cref{fig:bias:boxplot} depicts box-plots for \namerho, using the various 
-sampling strategies for \Problem[10\times10]{}. 
-Main statistics for \Problem[10\times10]{\train} are reported in 
+sampling strategies for \ProblemSpace[10\times10]{}. 
+Main statistics for \ProblemSpace[10\times10]{\train} are reported in 
 \cref{tbl:bias:boxplot}. 
 In addition to the stepwise bias strategies (both adjusted and not) a stepwise 
 model (one for each step $k$) is given for reference.

@@ -78,14 +78,15 @@ Then $\phiSPT$ manages to overcome the shortcomings of pursuing $-\phiproc$ on
 its own for only a 1-step lookahead.
 
 Regarding random roll-outs, the greedy $\phiRNDmin$ came out on top for 
-\Problem[6\times5]{\train}, whereas for \jrnd{10}{10} then a better fortified 
+\ProblemSpace[6\times5]{\train}, whereas for \jrnd{10}{10} then a better 
+fortified 
 mean result was achieved by following $\phiRNDmean$.
 
 \begin{figure}[p]\centering 
     \includegraphics[width=\textwidth]{ALL/{boxplot.single.rollout.ALL}.pdf}
     \caption[Box-plot for single roll-out features]{Box-plot for \namerho, for 
     top three single extremal values for \phiGlobalRelated\ roll-out using 
-    \Problem{\train}. SPT shown for reference on the far right.}
+    \ProblemSpace{\train}. SPT shown for reference on the far right.}
     \label{fig:rollout1:boxplot}
 \end{figure}
 
@@ -195,14 +196,16 @@ $\{\rho,\rho_{\text{fort.}}\}$ were as follows
     \item $\{6.4\%,4.7\%\}$ compared to $\{9.7\%,6.0\}\%$ using 
     $\phiRNDmean$ for \jrnd{10}{10} 
 \end{enumerate*}
-Regarding \Problem[6\times5]{\train}, there was no significant difference to 
+Regarding \ProblemSpace[6\times5]{\train}, there was no significant difference 
+to 
 minimum $\phiRNDmin$. 
 Whereas, for \jrnd{10}{10}, the preference model paid off, with an improvement 
 of $\Delta\rho\approx-3.3\%$ and $\Delta\rho_{\text{fort.}}\approx-1.3\%$.
 This is also the case where the greedy approach of following minimum 
 $\phiRNDmin$ was unsuccessful. Note, both dimensions had the same computational 
 budget of 100 random roll-outs for each dispatch. 
-In the case for \Problem[6\times5]{\train} the 100 roll-outs is quite enough. 
+In the case for \ProblemSpace[6\times5]{\train} the 100 roll-outs is quite 
+enough. 
 Notice in \cref{fig:rollout:boxplot} that the minimum is very often found (the 
 3rd quartile is often 0) and mean $\rho_{\text{fort.}}\leq1.5\%$.
 However, as the possibilities for operations grow exponentially with increased 
@@ -224,7 +227,8 @@ deterministic pilot heuristic, which we could learn via preference models from
 optimisation as was done in \cref{ch:esmodels} as that would require too many 
 costly function evaluations.
 
-Although, for low dimension \jsp\ (i.e. \Problem[6\times5]{\train}) the learned 
+Although, for low dimension \jsp\ (i.e. \ProblemSpace[6\times5]{\train}) the 
+learned 
 deterministic policy did not statistically improve performance, as it was 
 equally adequate to pursue minimum $\phiRNDmin$ on its own.
 However, going to a higher dimension, as was done for \jrnd{10}{10}, then finally 

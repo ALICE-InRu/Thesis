@@ -127,11 +127,13 @@ trajectory the extended training set was simply obtained by iterating over more
 examples, given in \cref{tbl:Ntrain}.
 
 \Cref{fig:boxplot:passive} depicts a box-plot for \namerho, using 
-\Problem[6\times5]{\train} and \jrnd{10}{10}. Main statistics are reported in 
+\ProblemSpace[6\times5]{\train} and \jrnd{10}{10}. Main statistics are reported 
+in 
 \cref{tbl:stats:passive}.
 Results show that following the perturbed leader significantly improved 
 following the expert policy for \jrndn{6}{5}, \jrndJ{6}{5}, \jrndM{6}{5}, 
-\frndn{6}{5} and \fmc{6}{5}. Other \Problem[6\times5]{\train} problem spaces 
+\frndn{6}{5} and \fmc{6}{5}. Other \ProblemSpace[6\times5]{\train} problem 
+spaces 
 and \jrnd{10}{10} had insignificant performance boost.
 
 Results showed that the expert policy is a promising starting point. 
@@ -153,7 +155,7 @@ $\bigOh{\epsilon K}$, if it were i.i.d.
     \includegraphics[width=.95\textwidth]{ALL/{boxplot.passive.6x5}.pdf}
     \includegraphics[width=.95\textwidth]{ALL/{boxplot.passive.10x10}.pdf}
     \caption{Box-plots for \namerho, following either expert policy or 
-    perturbed leader for \Problem[6\times5]{\train} and \jrnd{10}{10}}
+    perturbed leader for \ProblemSpace[6\times5]{\train} and \jrnd{10}{10}}
     \label{fig:boxplot:passive}
 \end{figure}
 \input{tables/stats.passive.tex}
@@ -336,7 +338,8 @@ Of all the suggested $\beta_i$ strategies then \ref{DA:UNSUP} managed to get
 the best overall performance, and therefore \ref{Boost:EXT} was also applied to 
 that approach. 
 
-For other \Problem[6\times5]{\train} problem spaces\footnote{Consult \shiny: 
+For other \ProblemSpace[6\times5]{\train} problem spaces\footnote{Consult 
+\shiny: 
 Preference models $>$ Imitation Learning} then there was not much difference in 
 \ref{DA:SUP} and \ref{DA:UNSUP}, although the latter was slightly better for 
 \frnd{6}{5}.
@@ -358,7 +361,8 @@ $N_{\train}$ problem spaces over and over again (i.e. not applying
     \label{fig:active:boxplot:equal}
 \end{figure}
 
-The best $\{\beta_i\}_{i=1}^T$ configuration for \Problem[6\times5]{\train} and 
+The best $\{\beta_i\}_{i=1}^T$ configuration for 
+\ProblemSpace[6\times5]{\train} and 
 \jrnd{10}{10} was \ref{DA:UNSUP} using an extended data set (i.e. 
 \ref{Boost:EXT}). Therefore, for \jrnd{10}{10} that configuration will also be 
 tried for adjusted \ref{bias:dbl2nd}, however, iterations were stopped as soon 
@@ -454,7 +458,7 @@ What is interesting though, is that \ref{Boost:EXT} is well suited for
 active imitation learning, using the same $l_{\max}$ as before. 
 Note, the amount of problems used for $N^{\text{OPT}}_{\text{train, EXT}}$ is 
 equivalent to $i=9$ or $i=2\tfrac{1}{3}$ iterations of extended DAgger 
-for \Problem[6\times5]{\train} and \jrnd{10}{10}, respectively.
+for \ProblemSpace[6\times5]{\train} and \jrnd{10}{10}, respectively.
 The \emph{new} varied data gives the aggregated feature set more information 
 of what is important to learn in subsequent iterations, as those new states are 
 more likely to be encountered `in practice' rather than `in theory.' 

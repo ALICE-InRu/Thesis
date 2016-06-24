@@ -206,7 +206,7 @@ to occur in practice. However, only the random instances they used (type C) are
 reported in the OR-Library, for a total of 42 problem instances with processing 
 times following a uniform distribution, $\vec{p}\sim\mathcal{U}(1,100)$, of 
 dimensions varying from $20\times5$ to $75\times20$, although \cite{orlibFSP} 
-omitted \Problem[75 \times 20]{reC} instances in their comparison.
+omitted \ProblemSpace[75 \times 20]{reC} instances in their comparison.
 
 \begin{table}\centering
 \noindent
@@ -216,16 +216,24 @@ omitted \Problem[75 \times 20]{reC} instances in their comparison.
   \begin{tabular}{llrrll}\toprule
     & name & $n\times m$ & $N_{\test}$ & note & shorthand  \\
     \midrule \multirow{6}{*}{\rot{\JSP}}
-    &\Problem{ft} & various &  3 &\citet{orlib_ft} & \texttt{ft06,ft10,ft20}\\
-    &\Problem{la} & various & 40 &\citet{orlib_la} & \texttt{la01-la40}     \\
-    &\Problem{abz}& various &  5 &\citet{orlib_abz}& \texttt{abz05-abz09}   \\
-    &\Problem{orb}& $10\times10$& 10 &\citet{orlib_orb}& \texttt{orb01-orb10}\\
-    &\Problem{swv}& various & 20 &\citet{orlib_swv}&\texttt{swv01-swv20}\\
-    & \Problem{yn} & $20\times20$& 4  &\citet{orlib_yn} & \texttt{yn01-yn04}\\
+    &\ProblemSpace{ft} & various &  3 &\citet{orlib_ft} & 
+    \texttt{ft06,ft10,ft20}\\
+    &\ProblemSpace{la} & various & 40 &\citet{orlib_la} & 
+    \texttt{la01-la40}     \\
+    &\ProblemSpace{abz}& various &  5 &\citet{orlib_abz}& 
+    \texttt{abz05-abz09}   \\
+    &\ProblemSpace{orb}& $10\times10$& 10 &\citet{orlib_orb}& 
+    \texttt{orb01-orb10}\\
+    &\ProblemSpace{swv}& various & 20 &\citet{orlib_swv}&\texttt{swv01-swv20}\\
+    & \ProblemSpace{yn} & $20\times20$& 4  &\citet{orlib_yn} & 
+    \texttt{yn01-yn04}\\
     \midrule \multirow{3}{*}{\rot{\FSP}}
-    &\Problem{car}& various &  8 & \citet{orlib_car} & \texttt{car1-car8} \\
-    &\Problem{hel}& various &  2 & \citet{orlib_hel} & \texttt{hel1,hel2}  \\
-    &\Problem{reC}& various & 21 & \citet{orlib_rec}\footnote{Only odd-numbered
+    &\ProblemSpace{car}& various &  8 & \citet{orlib_car} & \texttt{car1-car8} 
+    \\
+    &\ProblemSpace{hel}& various &  2 & \citet{orlib_hel} & \texttt{hel1,hel2}  
+    \\
+    &\ProblemSpace{reC}& various & 21 & \citet{orlib_rec}\footnote{Only 
+    odd-numbered
         instances in \texttt{rec01-rec42} are given, since the even-numbered 
         instances are obtained from the previous instance by just reversing the 
         processing order of each job; the optimal value of each odd-numbered 

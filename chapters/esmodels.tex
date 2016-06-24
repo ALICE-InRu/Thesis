@@ -88,7 +88,7 @@ Preliminary experiments were first reported in \cref{InRu14,InRu15a} using
 \begin{enumerate*}
     \item standard set-up of parameters of the CMA-ES optimisation
     \item runtime was limited to 288 hours on a cluster for each 
-    \Problem[6\times5]{\train} problem set given in \cref{tbl:data}, 
+    \ProblemSpace[6\times5]{\train} problem set given in \cref{tbl:data}, 
     where in every case the optimisation reached its maximum walltime
 \end{enumerate*}
 \Cref{InRu14} had one model for all $K$ time steps, whereas \cref{InRu15a} used 
@@ -97,7 +97,7 @@ a different stepwise model at each dispatch iteration.
 Various data distributions from \cref{ch:genprobleminstances} are investigated. 
 Due to computational cost, only $6\times5$ instances were initially 
 considered. However, since then the scheduling subroutines have been made more 
-time-efficient, making \Problem[10\times10]{\train} applicable in a 
+time-efficient, making \ProblemSpace[10\times10]{\train} applicable in a 
 reasonable amount of time. 
 CMA-ES models will be mostly trained on the lower dimension, $6\times5$, 
 and only the general random $10\times10$ \JSP\ case is explored. 
