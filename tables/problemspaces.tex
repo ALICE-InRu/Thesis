@@ -1,0 +1,22 @@
+\begin{tabular}{llcccl}\toprule
+& name & size ($n\times m$) & $N_{\train}$ & $N_{\test}$ & note 
+\\ \midrule
+\multirow{8}{*}{\rot{\JSP}}
+& \jrnd{6}{5}   &$6\times5$ & 500 & 500 & random \\
+& \jrndn{6}{5}  &$6\times5$ & 500 & 500 & random-narrow \\
+& \jrndJ{6}{5}  &$6\times5$ & 500 & 500 & random with job variation \\
+& \jrndM{6}{5}  &$6\times5$ & 500 & 500 & random with machine variation \\
+& \jrnd{10}{10} &$10\times10$& 300 & 200 & random \\
+& \jrndn{10}{10}&$10\times10$& 300 & 200 & random-narrow \\ 
+& \jrndJ{10}{10} &$10\times10$& 300 & 200 & random with job variation\\
+& \jrndM{10}{10} &$10\times10$& 300 & 200 & random with machine variation\\
+\midrule
+\multirow{6}{*}{\rot{\FSP}}
+& \frnd{6}{5}  & $6\times5$ & 500 & 500 & random \\ 
+& \frndn{6}{5} & $6\times5$ & 500 & 500 & random-narrow \\ 
+& \fjc{6}{5}   & $6\times5$ & 500 & 500 & job-correlated \\ 
+& \fmc{6}{5}   & $6\times5$ & 500 & 500 & machine-correlated \\ 
+& \fmxc{6}{5}  & $6\times5$ & 500 & 500 & mixed-correlation \\ 
+& \frnd{10}{10}& $10\times10$ & 300 & 200 & random \\ 
+\bottomrule
+\end{tabular}

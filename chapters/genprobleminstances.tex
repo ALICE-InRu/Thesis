@@ -128,31 +128,9 @@ generated for training and testing, respectively. Values for $N$ are given in
 \begin{table}[t]\centering
 	\caption{Problem space distributions used in experimental studies. 
     %Note, problem instances are synthetic and each problem space is i.i.d.
-  }\label{tbl:data}
-	{\renewcommand{\arraystretch}{1.5}
-		\begin{tabular}{llcccl}\toprule
-			& name           & size ($n\times m$) & $N_{\train}$ & 
-			$N_{\test}$ & note                          
-			\\ \midrule
-			\multirow{8}{*}{\rot{\JSP}}
-			& \jrnd{6}{5}   &$6\times5$ & 500 & 500 & random \\
-			& \jrndn{6}{5}  &$6\times5$ & 500 & 500 & random-narrow \\
-			& \jrndJ{6}{5}  &$6\times5$ & 500 & 500 & random with job variation \\
-			& \jrndM{6}{5}  &$6\times5$ & 500 & 500 & random with machine variation \\
-      & \jrnd{10}{10} &$10\times10$& 300 & 200 & random \\
-			& \jrndn{10}{10}&$10\times10$& 300 & 200 & random-narrow \\ 
-      &\jrndJ{10}{10} &$10\times10$& 300 & 200 & random with job variation\\
-      &\jrndM{10}{10} &$10\times10$& 300 & 200 & random with machine variation\\
-			\midrule
-			\multirow{6}{*}{\rot{\FSP}}
-			& \frnd{6}{5}  & $6\times5$ & 500 & 500 & random \\ 
-			& \frndn{6}{5} & $6\times5$ & 500 & 500 & random-narrow \\ 
-			& \fjc{6}{5}   & $6\times5$ & 500 & 500 & job-correlated \\ 
-			& \fmc{6}{5}   & $6\times5$ & 500 & 500 & machine-correlated \\ 
-			& \fmxc{6}{5}  & $6\times5$ & 500 & 500 & mixed-correlation \\ 
-			& \frnd{10}{10}& $10\times10$ & 300 & 200 & random \\ 
-			\bottomrule
-		\end{tabular}}
+    }\label{tbl:data}
+    {\renewcommand{\arraystretch}{1.5}
+    \input{tables/problemspaces}}
 \end{table}
 
 \section{Benchmark problem suite}\label{sec:data:orlib}
@@ -213,33 +191,6 @@ omitted \ProblemSpace[75 \times 20]{reC} instances in their comparison.
 \begin{minipage}{\textwidth}
   \caption{Benchmark problems from OR-Library used in experimental studies.}
   \label{tbl:data:orlib}
-  \begin{tabular}{llrrll}\toprule
-    & name & $n\times m$ & $N_{\test}$ & note & shorthand  \\
-    \midrule \multirow{6}{*}{\rot{\JSP}}
-    &\ProblemSpace{ft} & various &  3 &\citet{orlib_ft} & 
-    \texttt{ft06,ft10,ft20}\\
-    &\ProblemSpace{la} & various & 40 &\citet{orlib_la} & 
-    \texttt{la01-la40}     \\
-    &\ProblemSpace{abz}& various &  5 &\citet{orlib_abz}& 
-    \texttt{abz05-abz09}   \\
-    &\ProblemSpace{orb}& $10\times10$& 10 &\citet{orlib_orb}& 
-    \texttt{orb01-orb10}\\
-    &\ProblemSpace{swv}& various & 20 &\citet{orlib_swv}&\texttt{swv01-swv20}\\
-    & \ProblemSpace{yn} & $20\times20$& 4  &\citet{orlib_yn} & 
-    \texttt{yn01-yn04}\\
-    \midrule \multirow{3}{*}{\rot{\FSP}}
-    &\ProblemSpace{car}& various &  8 & \citet{orlib_car} & \texttt{car1-car8} 
-    \\
-    &\ProblemSpace{hel}& various &  2 & \citet{orlib_hel} & \texttt{hel1,hel2}  
-    \\
-    &\ProblemSpace{reC}& various & 21 & \citet{orlib_rec}\footnote{Only 
-    odd-numbered
-        instances in \texttt{rec01-rec42} are given, since the even-numbered 
-        instances are obtained from the previous instance by just reversing the 
-        processing order of each job; the optimal value of each odd-numbered 
-        instance and its even-numbered counterpart is the same.}  
-    & \texttt{reC01-reC42}\\
-    \bottomrule
-  \end{tabular}
+  \input{../tables/orlib}
 \end{minipage}
 \end{table}
