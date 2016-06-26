@@ -1,3 +1,5 @@
+\pgfdeclarelayer{bgk0}
+\pgfsetlayers{bgk0,main}  
 \begin{tikzpicture}[scale=1.3, auto, swap]
     % Draw the network
     % First we draw the jobs
@@ -27,7 +29,7 @@
     \foreach \source/ \dest in {Source/J1M1,Source/J2M1,Source/J3M1,Source/J4M4}
     \path[possible edge] (\source) -- (\dest);
     % draw background for job's swimlane
-    \begin{pgfonlayer}{background}
+    \begin{pgfonlayer}{bgk0}
     \filldraw [job line,set1red!10]
     (J1M1.north -| J1M1.west) rectangle (J1M5.south -| J1M5.east);
     \filldraw [job line,set1blue!10]

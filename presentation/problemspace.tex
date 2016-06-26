@@ -1,1 +1,23 @@
 \section{Problem space}\againframe<1>{alice}
+\frame{
+    \frametitle{Mad Hatter tea-party}
+    \input{figures/example.graph.tikzstyle.tex}
+    \setbeamercovered{transparent}
+    \begin{columns}
+    \begin{column}[T]{0.5\columnwidth}
+    \uncover<1>{\resizebox{\columnwidth}{!}{\input{figures/example.graph.k0.tex}}}
+    \\\vspace{24pt}
+    \uncover<2>{\resizebox{\columnwidth}{!}{\input{figures/example.graph.k20.tex}}}
+    \end{column}
+    \begin{column}[T]{0.5\columnwidth}
+    \only<1-2>{\resizebox{\columnwidth}{!}{\input{figures/gametree.tex}}}
+    \visible<3>{\resizebox{\columnwidth}{!}{\input{figures/example.graph.k10.tex}}}
+    \\\vspace{24pt}
+    \includegraphics<3>[width=\columnwidth]{figures/{example.gantt}.pdf}
+    \end{column}
+    \end{columns}
+}
+\frame{
+    \frametitle{Mad Hatter tea-party (SDRs)}
+    \includegraphics[width=\columnwidth,height=.9\textheight]{figures/{example.gantt.SDRs}.pdf}
+}
