@@ -1,1 +1,34 @@
 \section{Subspace of instances}\againframe<2>{alice}
+\frame{\frametitle{Problem instance generators}
+    \vspace{-24pt}
+    \begin{table}
+    {\renewcommand{\arraystretch}{1.1}\scriptsize
+    \begin{tabular}{llcccl}\toprule
+        & name & size ($n\times m$) & $N_{\train}$ & $N_{\test}$ & note 
+        \\ \midrule
+        \multirow{9}{*}{\rot{\JSP}}
+        & \jrnd{6}{5}   &$6\times5$ & 500 & 500 & random \\
+        & \jrndn{6}{5}  &$6\times5$ & 500 & 500 & random-narrow \\
+        & \jrndJ{6}{5}  &$6\times5$ & 500 & 500 & random with job variation \\
+        & \jrndM{6}{5}  &$6\times5$ & 500 & 500 & random with machine variation 
+        \\
+        & \jrnd{10}{10} &$10\times10$& 300 & 200 & random \\
+        & \jrndn{10}{10}&$10\times10$& 300 & 200 & random-narrow \\ 
+        & \jrndJ{10}{10} &$10\times10$& 300 & 200 & random with job variation\\
+        & \jrndM{10}{10} &$10\times10$& 300 & 200 & random with machine 
+        variation\\
+        & \ProblemSpace{JSP.ORLIB} & various & -- & 82 & various\\
+        \midrule
+        \multirow{7}{*}{\rot{\FSP}}
+        & \frnd{6}{5}  & $6\times5$ & 500 & 500 & random \\ 
+        & \frndn{6}{5} & $6\times5$ & 500 & 500 & random-narrow \\ 
+        & \fjc{6}{5}   & $6\times5$ & 500 & 500 & job-correlated \\ 
+        & \fmc{6}{5}   & $6\times5$ & 500 & 500 & machine-correlated \\ 
+        & \fmxc{6}{5}  & $6\times5$ & 500 & 500 & mixed-correlation \\ 
+        & \frnd{10}{10}& $10\times10$ & 300 & 200 & random \\
+        & \ProblemSpace{FPS.ORLIB} & various & -- & 31 & various \\  
+        \bottomrule
+    \end{tabular}    
+    }
+    \end{table}
+}
