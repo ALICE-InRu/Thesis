@@ -1,6 +1,51 @@
 \section{Problem space}\againframe<1>{alice}
+
 \frame{
-    \frametitle{Mad Hatter tea-party}
+    \frametitle{Job Shop Scheduling (\JSP)}
+    Simple \jsp\ is where $n$ jobs are scheduled on 
+    a set of $m$ machines, subject to constraints  
+    \bi each job must follow a predefined machine order,  
+    \item that a machine can handle at most one job at a time\ei  
+    \textbf{Objective:} schedule the jobs so as to minimise the maximum 
+    completion time, i.e., makespan, $C_{\max}$.
+}
+\frame{\frametitle{Dispatching rules}
+    Dispatching rules (DR) are consecutive executions found by
+    \bi Starting with an empty schedule and adding on one operation at a time. 
+    \item When a machine is free the DR inspects the available jobs and 
+    selects the one with the \alert{highest priority}. 
+    \item Complete schedule consists of $\ell=n\cdot m$ sequential dispatches.
+    \item At each dispatch $k$, \alert{features} $\vphi(k)$ for the temporal 
+    schedule are calculated\ei
+}
+
+\frame{
+    \frametitle{Mad Hatter tea-party (definition)}
+    \begin{columns}
+        \begin{column}{0.35\columnwidth}
+            The attending guests
+            \bii{$J_\arabic*$)} Alice\label{guest:alice}
+                \item March Hare\label{guest:marchhare}
+                \item Dormouse\label{guest:dormouse}
+                \item Mad Hatter\label{guest:madhatter}\ei
+        \end{column}
+        \begin{column}{0.65\columnwidth}
+            They all have to
+            \bii{$M_\arabic*$)} have wine or pour tea
+                \item spread butter
+                \item get a haircut
+                \item check the time of the broken watch
+                \item say what they mean\ei
+        \end{column}
+    \end{columns}
+    \vspace{6pt}
+    This can be considered as is a typical $4\times5$ \jsp, where
+    \bi our guests are the jobs
+    \item their tasks are the machines
+    \item objective is to minimise $C_{\max}$ (when Alice can leave)\ei
+}
+\frame{
+    \frametitle{Mad Hatter tea-party (action states)}    
     \input{figures/example.graph.tikzstyle.tex}
     \setbeamercovered{transparent}
     \begin{columns}
