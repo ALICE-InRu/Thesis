@@ -1,1 +1,45 @@
 \section{Feature space}\againframe<3>{alice}
+\frame{\frametitle{Features for \JSP}\label{tbl:features}
+    \begin{table}[t!] \centering
+    \vspace{-14pt}
+    \resizebox{\textheight}{!}
+    {\scriptsize 
+    \renewcommand{\arraystretch}{0.6}
+    \begin{tabular}{ccl}
+        \toprule
+        %& $\vphi$ & Feature description \\  \midrule
+        \multirow{10}{*}{\rot{\textbf{job}}}
+        & $\phiproc$ & job processing time \\
+        & $\phistartTime$ & job start-time \\
+        & $\phiendTime$ & job end-time \\
+        & $\phiarrivalTime$ & job arrival time \\ 
+        & $\phiwait$ & time job had to wait \\ 
+        & $\phijobTotProcTime$ & total processing time for job \\
+        & $\phijobWrm$ & total work remaining for job \\
+        & $\phijobOps$ & number of assigned operations for job \\ 
+        \midrule
+        \multirow{10}{*}{\rot{\textbf{machine}}}
+        & $\phimacFree$ & when machine is next free \\
+        & $\phimacTotProcTime$ & total processing time for machine \\
+        & $\phimacWrm$ & total work remaining for machine \\
+        & $\phimacOps$ & number of assigned operations for machine \\
+        & $\phireducedSlack$ & change in idle time by assignment \\
+        & $\phimacSlack$ & total idle time for machine \\
+        & $\phiallSlack$ & total idle time for all machines \\
+        & $\phimakespan$ & current makespan \\
+        \midrule
+        \multirow{12}{*}{\rot{\textbf{final makespan}}}
+        & $\phiSPT$ & final makespan using SPT \\
+        & $\phiLPT$ & final makespan using LPT \\
+        & $\phiLWR$ & final makespan using LWR \\
+        & $\phiMWR$ & final makespan using MWR \\
+        & $\phiRND$ & final makespans using 100 random rollouts \\ 
+        & $\phiRNDmean$ & mean for $\phiRND$ \\ 
+        & $\phiRNDstd$ & standard deviation for $\phiRND$ \\
+        & $\phiRNDmin$ & minimum value for $\phiRND$\\ 
+        & $\phiRNDmax$ & maximum value for $\phiRND$\\ 
+        \bottomrule
+    \end{tabular}
+    }
+    \end{table}
+}
