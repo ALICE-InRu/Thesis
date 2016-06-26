@@ -11,6 +11,7 @@
 /Users/joseph/Documents/LaTeX/beamer/base/themes/theme/beamerthemeBerkeley.sty,v
  d02a7cf4d8ae 2010/06/17 09:11:41 rivanvx $
 
+\DeclareOptionBeamer{beamermargin}{\def\swidth{#1}}
 
 \DeclareOptionBeamer{hideothersubsections}{\PassOptionsToPackage{hideothersubsections=#1}{beamerouterthemesidebar}}
 \DeclareOptionBeamer{hideallsubsections}{\PassOptionsToPackage{hideallsubsections=#1}{beamerouterthemesidebar}}
@@ -19,9 +20,8 @@
 \DeclareOptionBeamer{left}{\PassOptionsToPackage{left}{beamerouterthemesidebar}}
 \DeclareOptionBeamer{right}{\PassOptionsToPackage{right}{beamerouterthemesidebar}}
 
-\DeclareOptionBeamer{ordinarypageslogo}{\logo{\includegraphics[height=45pt]{#1}}}
+\DeclareOptionBeamer{ordinarypageslogo}{\logo{\includegraphics[height=\swidth]{#1}}}
 \ProcessOptionsBeamer
-
 
 \mode<presentation>
 
@@ -34,6 +34,14 @@
 \setbeamercolor*{frametitle}{parent=palette primary}
 
 \setbeamerfont{block title}{size={}}
+
+\makeatletter
+\setlength{\beamer@headheight}{\swidth}
+\newlength\sidebarwd
+\setlength\sidebarwd{\swidth}
+\setbeamersize{sidebar width left=\sidebarwd}
+\setlength\beamer@sidebarwidth{\sidebarwd}
+\makeatother
 
 \mode
 <all>
