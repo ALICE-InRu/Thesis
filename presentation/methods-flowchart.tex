@@ -1,0 +1,131 @@
+%http://tex.stackexchange.com/questions/244742/work-breakdown-structure-wbs-horizontally
+\usetikzlibrary{shapes,positioning,shadows,trees,fit,arrows,calc}
+
+\tikzset{
+        %every node/.style={inner sep=1,outer sep=1},
+        txtLrg/.style={rectangle, draw, %text width=2cm, 
+          align=flush center, 
+          font=\bfseries\scriptsize\sffamily, thin},
+        txtSml/.style  = {txtLrg, align=left, font=\tiny\sffamily},
+        txtComment/.style = {font=\tiny\sffamily, xshift=-0.4cm, near start,
+            text width=4cm, rotate=90, align=left},
+        txtRef/.style= {}, %font=\tiny\sffamily, midway, above, sloped},
+        hybrid/.style = {}, %-,draw=black, dashed},
+        based/.style = {arrow, dotted},
+        long/.style = {minimum width=7em},
+        medium/.style = {minimum width=6em},
+        small/.style = {minimum width=5em},
+        verysmall/.style = {minimum width=2.7em}
+}
+
+\forestset{
+    normal/.style  = {for tree={child anchor=west, parent anchor=east}},
+    rotated/.style = {for tree={child anchor=north, parent anchor=south},
+        rotate=90},
+    unrotate/.style = {normal, rotate=-90},
+    root/.style  = {txtLrg, rotated, fill=gray!50},
+    onode/.style = {txtLrg, rotated, fill=gray!25},
+    tnode/.style = {txtSml, normal, fill=gray!10},
+    alert/.style = {fill=red!10},
+    emphasis/.style = {}, %tikz={\node [draw,red,thick,fit to tree]{};}},
+    edge from parent/.style={arrow, edge from parent fork right}
+}
+
+\rot{\rot{\rot{\resizebox{.95\textheight}{!}{%
+\begin{forest}
+for tree={
+    s sep=3pt, % distance between siblings
+    grow=east,
+    growth parent anchor=east,
+    edge path={\noexpand\path[\forestoption{edge},->, >={latex}] 
+        (!u.parent anchor) -- +(5pt,0pt) |- (.child anchor)
+        \forestoption{edge label};}
+}
+[\JSP, root
+    [Approximation, root, edge label = {node[txtComment, left]{
+            Approximations methods, or heuristics, are generally time 
+            efficient, but do not necessarily attain the global optimum.}},
+        [General algorithms\\(iterative methods), onode, 
+            [Artificial intelligence, onode
+                [Machine\\learning, onode,  
+                    [Roll-out / Pilot method, tnode, long, alert]
+                    [Reinforcement learning, tnode, long]
+                    [Decision tree, tnode, long]
+                    [Imitation\\learning, onode, emphasis, alert, 
+                        [Active, onode, 
+                            [DAgger, tnode, small]
+                        ]
+                        [Passive, onode, 
+                            [Follow the expert, tnode, small]
+                            [Perturbed leader, tnode, small]
+                            [Follow heuristics, tnode, small]
+                        ]
+                    ]
+                ]
+                [Constraint satisfaction,tnode, long]
+%                [Expert systems,tnode, medium]
+                [Ant colony optimisation,tnode, long, name=ACO]
+                [Artificial neural network,tnode, long, name=ANN]
+            ]
+            [Local search, onode
+                [Reinsertion algorithms, tnode, long]
+                [Threshold alg., onode, long, unrotate
+                    [Simulated annealing, tnode, medium, name=SA]
+                    [Threshold accepting, tnode, medium
+                    ]
+                    [Iterative development, tnode, medium]
+                ]
+                [Large step optimisation, tnode, long]
+                [Tabu Search, tnode, long, name=TS]
+                [Evolutionary computation,tnode, long, alert, 
+                    [Genetic local search, tnode, medium]
+                ]
+                [Genetic algorithms, tnode, long, name=GA
+                    [Genetic programming, tnode, medium, name=GP]
+                ]
+                [Variable depth search, tnode, long, name=VDS]
+            ]
+        ]
+        [Tailored algorithms\\(constructive methods), onode
+            [Bottleneck based\\heuristics, onode, unrotate
+                [Shifting bottle-\\neck procedure, tnode, name=SBP
+                    [Beam search, tnode, name=BS]
+                ]
+            ]
+            [Insertion algorithm, tnode]
+            [Priority DR, onode, emphasis, alert,  
+                [SDR, onode
+                    [SPT, tnode, verysmall]
+                    [LPT, tnode, verysmall]
+                    [LWR, tnode, verysmall]
+                    [MWR, tnode, verysmall]
+                ]
+                [CDR, tnode, name=CDR, rotated]
+            ] 
+         ]
+    ]
+    [Optimisation, root, edge label = {node[txtComment, right]{
+            Exact methods guarantee an optimal solution, although for NP-hard 
+            problems they are intractable for high dimensionality.}},
+        [Efficient methods, tnode] 
+        [Enumerative methods, onode, 
+            [Branch \& Bound, tnode, name=BB, alert]
+            [Mathematical, onode
+                [Surrogate duality, tnode, long] 
+                [Lagrangian relaxation, tnode, long] 
+                [Decomposition methods, tnode, long] 
+                [Integer linear programming, tnode, long] 
+                [Mixed integer lin.prog., tnode, long] 
+            ]
+        ]
+    ]
+]
+\draw[arrow] (ANN) -| (SA);
+\draw[arrow] (VDS) -| (SBP);
+%\draw[based,out=east,in=north] (BB) to node[txtRef] {\cite{BeamSearch}} (BS);
+%\draw[hybrid,out=east,in=east] (GA) to (TS);
+%\draw[based,out=east,in=east]  (ACO) to node[txtRef] {\cite{Korytkowski13}} 
+%(CDR) ;
+%\draw[based,out=east,in=east] (GP) to (CDR);
+\end{forest}
+}}}}
