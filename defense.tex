@@ -1,0 +1,121 @@
+% Copyright 2009 by Tomasz Mazur
+% This file may be distributed and/or modified in all ways.
+
+%\documentclass[xcolor=pdftex,t,11pt,handout]{beamer}
+\documentclass[xcolor=pdftex,t,11pt]{beamer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       SET OPTIONS BELOW        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[icelandic, english]{babel}
+\usepackage{t1enc} 
+\usepackage{textcomp}
+\usepackage[
+% Toggle showing page counter
+pagecounter=true,
+%
+% String to be used between the current page and the
+% total page count, e.g. of, /, from, etc.
+pageofpages=of,
+%
+% Defines the shape of bullet points. Available options: circle, square
+bullet=circle,
+%
+% Show a line below the frame title. 
+titleline=true,
+%
+% Set the style of the title page (true for fancy, false for standard)
+alternativetitlepage=true,
+%
+% Institution logo for fancy title page.
+titlepagelogo=presentation/beamer/hilogo,
+ordinarypageslogo=presentation/beamer/hilogo,
+]{presentation/beamer/beamerthemeBerkeley} 
+
+% Select color theme. Available options are:
+% mininmal, greenandblue, blue, red
+\usepackage{presentation/beamer/beamercolorthemehi}
+
+%Select different font themes.Available options are:
+% default, serif, structurebold, structureitalicserif, structuresmallcapsserif
+\usefonttheme{structurebold}
+
+\setbeamercovered{transparent}
+
+\newcommand{\bi}{\begin{enumerate}[label={{$\star$}}]\item }
+\newcommand{\ei}{\end{enumerate}}
+
+\input{scripts/shorthand.tex} % put your own shorthand declarations here
+\input{scripts/packages.tex} % put your own shorthand declarations here
+
+\graphicspath{{presentation/},{figures/}}
+\DeclareGraphicsExtensions{.eps,.png}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       PRESENTATION INFO        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author[Helga]{Helga Ingimundard\'{o}ttir}
+\title{\Alice}
+\subtitle{\fullnameAlice}
+\institute{University of Iceland}	
+\date{June 30, 2016}
+
+\newcommand<>{\tikzMe}[1]{% previously: \def\tikzMe<#1>#2{…
+    \tikz[baseline]\node[BeamerAlert=#2,anchor=base] {#1};
+}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       SLIDE DEFINITIONS        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\section{Introduction}
+\frame{
+\frametitle{Introduction}
+Motivation
+\bi The general goal is to train optimisation algorithms, for an 
+arbitrary problem domain, using data\ei
+Contribution
+\bi The main contribution of this thesis is towards a better understanding of 
+how this training data should be constructed\ei 
+}
+\frame[label=alice]{
+    \frametitle{Framework for Algorithm Learning}
+    \input{presentation/alice}
+}
+
+\input{presentation/problemspace}
+\input{presentation/subspace}
+\input{presentation/features}
+\input{presentation/algorithms}
+\input{presentation/performance}
+\input{presentation/footprints}
+\input{presentation/preferences}
+\input{presentation/learning}
+\input{presentation/conclusions}
+
+\frame{
+\frametitle{Thank you for your attention}
+\begin{columns}[T]
+    \begin{column}{0.5\columnwidth} 
+        \vspace{36pt}
+        \begin{center}
+            Helga Ingimundard\'{o}ttir\\
+            \url{hei2@hi.is}
+        \end{center}
+        \vspace{36pt}
+        Supplementary material
+        \bi \href{https://tgax89.rhi.hi.is:3838/alice}{Shiny application}
+            \item \href{https://github.com/ALICE-InRu/Cheshire}{Github} 
+        \ei
+    \end{column}
+    \begin{column}{0.5\columnwidth}
+        \includegraphics[width=\columnwidth]{tenniel/queen-alice.jpg}
+    \end{column}    
+\end{columns}
+}
+\end{document}
