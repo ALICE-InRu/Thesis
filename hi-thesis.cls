@@ -90,15 +90,6 @@
 % gray color for the chapter numbers and other fancy headings
 \makeatother
 
-% colors styles for ColorBrewer Set1 - to match ggplot2
-\definecolor{set1red}{RGB}{228, 26, 28} %1 #E41A1C
-\definecolor{set1blue}{RGB}{55, 126, 184} %2 #377EB8
-\definecolor{set1green}{RGB}{77, 175, 74} %3 #4DAF4A
-\definecolor{set1purple}{RGB}{152, 78, 163} %4 #984EA3
-\definecolor{set1orange}{RGB}{255, 127, 0} %5 #FF7F00
-\definecolor{set1yellow}{RGB}{255, 255, 51} %6 #FFFF33
-\definecolor{set1brown}{RGB}{166, 86, 40} %7 #A65628
-\definecolor{set1pink}{RGB}{247, 129, 191} %8 #F781BF
 % spacing 
 \RequirePackage{setspace} 
 %\onehalfspacing
