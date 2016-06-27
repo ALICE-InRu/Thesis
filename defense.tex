@@ -62,6 +62,16 @@ beamermargin=47pt]{presentation/beamer/beamerthemeBerkeley}
 \institute{University of Iceland}	
 \date{June 30, 2016}
 
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+\algnewcommand\algorithmicto{~\textbf{to}~}
+\algnewcommand\algorithmicand{~\textbf{and}~}
+\algrenewtext{For}[3]%
+{\algorithmicfor\ $#1 \gets #2 \text{\algorithmicto} #3$~\algorithmicdo}
+
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

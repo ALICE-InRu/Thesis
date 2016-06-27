@@ -1,1 +1,28 @@
 \section{Preference learning}\againframe<8>{alice}
+\frame{\frametitle{Ordinal Regression}
+    Preference learning
+    \bi Mapping of points to ranks: $ \{h(\cdot) : \Phi \mapsto Y\}$ where 
+    $$\vphi_o \succ \vphi_s \quad \iff \quad h(\vphi_o) > h(\vphi_s)$$
+    \item The preference is defined by a linear function:
+    $$ h(\vphi) = \sum_{i=1}^d w_i \vphi $$
+    based on $d$ features -- optimised w.r.t. $\vec{w}$\ei	
+}
+\frame{\frametitle{Learning methods}
+    Passive imitation learning
+        \bi Prediction with expert advice, $\pi_\star$ -- Gurobi\ei
+    \pause 
+    Active imitation learning
+        \bi Follow the perturbed leader (OPT$\epsilon$)
+        \pause\item Dataset Aggregation (DAgger)
+        $$ \pi_i = \beta_i \pi_\star + (1-\beta_i)\hat{\pi}_{i-1}$$
+        where $\hat{\pi}_{i-1}$ is the previous learned model, \pause and 
+        $\hat{\pi}_i$ learns on
+        $$ \Phi^{\text{DA}i} = \bigcup_{i'=0}^i \Phi^{\text{IL}i'}$$
+        aggregated dataset of all previous iterations\ei   
+}
+\frame{\frametitle{DAgger}
+\input{presentation/code_DAgger}    
+}
+\frame{\frametitle{\Namerho}
+    \includegraphics[width=\columnwidth]{figures/{j.rnd}/{boxplot.summary.10x10}.pdf}
+}

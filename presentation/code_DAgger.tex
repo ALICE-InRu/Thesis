@@ -1,0 +1,27 @@
+\begin{algorithmic}[1]
+\Require $T\geq1$
+\Procedure{DAgger}{$\pi_\star,\Phi^{\IL{0}},T$}
+    \State $\hat{\pi}_0 \gets$ \Call{Train}{$\Phi^{\IL{0}}$}
+        \Comment{initial model, iff $\Phi^{\IL{0}}=\Phi^{\OPT}$}
+\pause 
+    \For{i}{1}{T} \Comment{at each imitation learning iteration}
+\pause 
+        \State Let $\pi_i = \beta_i\pi_\star + (1-\beta_i)\hat{\pi}_{i-1}$
+\pause 
+        \State Sample a $K$-solution using $\pi_i$
+            \Comment{\Call{IL}{$i,\hat{\pi}_{i-1},\pi_\star$}}
+\pause      
+        \State $\Phi^{\IL{i}} = \{(s,\pi_\star(s))\}$ 
+            \Comment{visited by $\pi_i$ and actions by $\pi_\star$}
+\pause           
+        \State $\Phi^{\DA{i}} \gets \Phi^{\DA{i-1}} \cup \Phi^{\IL{i}}$ 
+            \Comment{aggregate datasets}
+\pause
+        \State $\hat{\pi}_{i+1} \gets$ \Call{Train}{$\Phi^{\DA{i}}$}
+            \Comment{preference model}
+    \EndFor
+\pause
+    \State \Return best $\hat{\pi}_i$ on validation \Comment{best preference 
+    model}
+\EndProcedure
+\end{algorithmic}
