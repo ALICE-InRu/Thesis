@@ -3,3 +3,31 @@
 \includegraphics<1>[width=\columnwidth]{presentation/{boxplot.6x5.SDRs}.pdf}   
 \includegraphics<2>[width=\columnwidth]{presentation/{boxplot.10x10.SDRs}.pdf}  
 }
+\frame{\frametitle{Making optimal decisions, $\xi_\pi^\star$}
+\includegraphics<1>[width=\columnwidth]{figures/{stepwise.10x10.OPT.unique}.pdf}
+\includegraphics<2>[width=\columnwidth]{figures/{stepwise.10x10.OPT}.pdf}
+}
+\frame{\frametitle{Making optimal decisions, $\xi_\pi$}
+\begin{tikzpicture}
+\node[anchor=south west,inner sep=0] (image) at (0,0,0) 
+{\includegraphics[width=\columnwidth]{figures/{stepwise.10x10.SDR}.pdf}};
+    \begin{scope}[x={(image.south east)},y={(image.north west)}]
+    \node (zoom) at (0.3,.45)
+    {\includegraphics[width=0.3\linewidth]{figures/j.rnd/{stepwise.10x10.SDR.zoom}.pdf}};
+    \end{scope}
+\end{tikzpicture}    
+}
+\frame{
+\frametitle{Impact of suboptimal decision,  
+$\{\zeta^{\star}_{\min},\zeta^{\star}_{\max}\}$}
+\includegraphics[width=\columnwidth]{figures/ALL/{stepwise.10x10.OPT.casescenario}.pdf}\vspace*{-12pt}
+}
+\frame{
+\frametitle{Impact of suboptimal decision,
+$\{\zeta^{\pi}_{\min},\zeta^{\pi}_{\max}\}$}
+\vspace{12pt}
+\includegraphics[width=\columnwidth]{figures/{j.rnd}/{stepwise.10x10.ALL.casescenario}.pdf}\vspace*{-12pt}
+}
+\frame{\frametitle{Blended \dr}
+\includegraphics[width=\columnwidth]{figures/{j.rnd}/{boxplotRho.BDR.10x10}.pdf}
+}
