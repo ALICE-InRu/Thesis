@@ -1,1 +1,51 @@
 \section{Conclusions}\againframe<9>{alice}
+\frame{\frametitle{Using \fullnameAlice\ framework I}
+The thesis introduced a framework for learning (\alert<1>{linear}) \cdr\ -- 
+using \alert<1>{\jsp} as a case-study -- with the following guidelines
+\pause        
+    \bi For a given problem domain, use a suitable problem \alert<2>{generator} 
+    to \alert<2>{train} and \alert<2>{test} on.
+\pause 
+    \item Define \alert<3>{features} to grasp the essence of visited 
+    \alert<3>{$k$-solutions}
+\pause
+\item \alert<4->{Success} is highly dependent on the preference pairs 
+introduced to the system: 
+\pause
+    \bi \PsiSet{p} \alert<5>{reduces} the preference set without loss of 
+    performance. 
+\pause
+    \item \alert<6>{Stepwise bias} is needed to balance time dependent 
+    \PsiSet{p} in order to create \alert<6>{time independent} models. \ei
+\pause 
+    It is \alert<7>{non intuitive} how to go about \alert<7>{collecting} 
+    training data\ei
+}
+\frame{\frametitle{Using \fullnameAlice\ framework II}
+Continued from prev. slide
+    \bi Learning \alert<1>{optimal} trajectories predominant in literature. 
+    Study showed \PhiSet{\OPT} can result in \alert<1>{insufficient} knowledge.
+\pause 
+    \item Following \alert<2>{sub-optimal} deterministic policies, yet 
+    labelling with an optimal solver, \alert<2>{improves} the guiding 
+    policy.
+\pause 
+    \item In \alert<3>{sequential} decision making, all future observations are 
+    dependent on \alert<3>{previous} operations.
+\pause
+    Active update procedure using \alert<4>{DAgger} ensures sample states the 
+    \alert<4>{learned model is likely to encounter} is integrated to 
+    \PsiSet[\DA{i}]{p}.
+\pause
+    \item Instead of reusing same problem instances, extend the training set 
+    with \alert<5>{new} instances for \alert<5>{quicker convergence} of 
+    DAgger\ei    
+}
+\frame{\frametitle{Future work}
+    Main conclusions
+    \bi \ei        
+}
+
+
+
+% uppskrift of how-to-make-an-algorithm
