@@ -44,6 +44,20 @@
     \end{table}
 }
 
+\frame{\frametitle{Trajectory strategies for \PhiSet{}}
+    Following
+    \bi [\PhiSet{OPT}] some (random) optimal task
+    \pause\item [\PhiSet{CMA}] the task corresponding to highest priority, 
+        computed with fixed weights $\vec{w}$, which were obtained by 
+        optimising with CMA-ES.%\beamergotobutton{CMA-ES} 
+    \pause\item [\PhiSet{SPT}] the SDR shortest processing time (SPT).
+    \pause\item [\PhiSet{LPT}] the SDR longest processing time (LPT).
+    \pause\item [\PhiSet{LWR}] the SDR least work remaining (LWR).
+    \pause\item [\PhiSet{MWR}] the SDR most work remaining (MWR).
+    \pause\item [\PhiSet{RND}] some random task.
+    \pause\item [\PhiSet{ALL}] union of all of the above\ei
+}
+
 \frame{\frametitle{Sampled size of $\abs{\Phi}$ 
         ($6\times5, N_{train}=500)$}
     \vspace{-12pt}

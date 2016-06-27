@@ -1,1 +1,44 @@
 \section{Preference set}\againframe<7>{alice}
+\frame{\frametitle{Generating training data}
+    \Alice\ framework for creating \dr s
+    \bi \alert{Linear classification} to identify good dispatches, 
+    from worse ones. 
+    \pause \item Generate feature set, $\Phi\subset\mathcal{F}$, both from 
+    \bi \alert{optimal} solutions, $\vphi^o$ 
+    \item \alert{suboptimal} solutions, $\vphi^s$\ei 
+    by exploring various \alert{trajectories} within the feature-space 
+    (where $\vphi^o,\vphi^s\in\mathcal{F}$).
+    \pause \item Sample $\Phi$ to create training set $\Psi$ with rank 
+    pairs:
+    \bi \alert{optimal} decision, $(\vec{z}^o,y_o)=(\vphi^o-\vphi^s,+1)$ 
+    \item \alert{suboptimal} decision, $(\vec{z}^s,y_s)=(\vphi^s-\vphi^o,-1)$\ei
+    using different \alert{ranking} schemes 
+    (where $\vec{z}^o,\vec{z}^s\in\Psi$) 
+    \pause \item Sample $\Psi$ using \alert{stepwise bias} for time independent 
+    policy\ei
+}
+
+\frame{\frametitle{Ranking schemes for \PsiSet{}}
+    Sampling rankings of available jobs where where $r_1>r_2>\cdots>r_{n'}$ 
+    $(n'\leq n)$ with respect to
+    \pause\bi[\PsiSet{b}] all opt rankings $r_1$ vs. all possible subopt 
+    rankings $r_i$, $i\in\{2,...,n'\}$
+    \pause\item[\PsiSet{f}] full subsequent rankings, i.e., all combinations of 
+    $r_i$ and $r_{i+1}$ for all $i\in\{1,...,n'\}$. 
+    \pause\item[\PsiSet{p}] partial subsequent rankings, similar ot $S_f$ 
+    except if there are more than one operation with the same ranking, only one 
+    is needed to be compared to subsequent rank, i.e., $S_p\subset S_f$.
+    \pause\item[\PsiSet{a}] union of all of the above\ei
+}
+
+\frame{\frametitle{Sampled size of $\abs{\Psi}$ 
+        ($6\times5, N_{train}=500)$}
+    \vspace{-12pt}
+    \begin{center}   
+        \includegraphics[height=.95\textheight]{figures/{prefdat.p.size.6x5}.pdf}
+    \end{center}    
+}
+\frame{\frametitle{Stepwise bias strategies}
+    \includegraphics[width=\columnwidth]{figures/{bias.CDR.10x10}.pdf}
+}
+
