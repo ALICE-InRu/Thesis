@@ -1,35 +1,38 @@
 \section{Preference set}\againframe<7>{alice}
 \frame{\frametitle{Generating training data}
     \Alice\ framework for creating \dr s
-    \bi \alert{Linear classification} to identify good dispatches, 
+    \bi \alert<1>{Linear classification} to identify good dispatches, 
     from worse ones. 
-    \pause \item Generate feature set, $\Phi\subset\mathcal{F}$, both from 
-    \bi \alert{optimal} solutions, $\vphi^o$ 
-    \item \alert{suboptimal} solutions, $\vphi^s$\ei 
-    by exploring various \alert{trajectories} within the feature-space 
+    \pause \item \alert<2>{Generate} feature set, 
+    $\alert<2>{\Phi}\subset\mathcal{F}$, both from 
+    \bi \alert<2>{optimal} solutions, $\vphi^o$ 
+    \item \alert<2>{suboptimal} solutions, $\vphi^s$\ei 
+    by exploring various \alert<2>{trajectories} within the feature-space 
     (where $\vphi^o,\vphi^s\in\mathcal{F}$).
-    \pause \item Sample $\Phi$ to create training set $\Psi$ with rank 
-    pairs:
-    \bi \alert{optimal} decision, $(\vec{z}^o,y_o)=(\vphi^o-\vphi^s,+1)$ 
-    \item \alert{suboptimal} decision, $(\vec{z}^s,y_s)=(\vphi^s-\vphi^o,-1)$\ei
-    using different \alert{ranking} schemes 
+    \pause \item Sample $\Phi$ to \alert<3>{create} training set 
+    \alert<3>{$\Psi$} with rank pairs:
+    \bi \alert<3>{optimal} decision, $(\vec{z}^o,y_o)=(\vphi^o-\vphi^s,+1)$ 
+    \item \alert<3>{suboptimal} decision, 
+    $(\vec{z}^s,y_s)=(\vphi^s-\vphi^o,-1)$\ei
+    using different \alert<3>{ranking} schemes 
     (where $\vec{z}^o,\vec{z}^s\in\Psi$) 
-    \pause \item Sample $\Psi$ using \alert{stepwise bias} for time independent 
-    policy\ei
+    \pause \item \alert<4>{Sample $\Psi$} using \alert<4>{stepwise bias} for 
+    time independent policy\ei
 }
 
 \frame{\frametitle{Ranking schemes for \PsiSet{}}
-    Sampling rankings of available jobs where where $r_1>r_2>\cdots>r_{n'}$ 
+    \alert{Sampling rankings} of available jobs where where 
+    $r_1>r_2>\cdots>r_{n'}$ 
     $(n'\leq n)$ with respect to
-    \pause\bi[\PsiSet{b}] all opt rankings $r_1$ vs. all possible subopt 
-    rankings $r_i$, $i\in\{2,...,n'\}$
-    \pause\item[\PsiSet{f}] full subsequent rankings, i.e., all combinations of 
-    $r_i$ and $r_{i+1}$ for all $i\in\{1,...,n'\}$. 
-    \pause\item[\PsiSet{p}] partial subsequent rankings, similar to \PsiSet{f}
-    except if there are more than one operation with the same rank, only one 
-    is needed to be compared to subsequent rank     
+    \pause\bi[\PsiSet{b}] \alert<2>{all} opt rankings $r_1$ vs. all possible 
+    subopt rankings $r_i$, $i\in\{2,...,n'\}$
+    \pause\item[\PsiSet{f}] \alert<3>{full subsequent} rankings, i.e., all 
+    combinations of $r_i$ and $r_{i+1}$ for all $i\in\{1,...,n'\}$. 
+    \pause\item[\PsiSet{p}] \alert<4>{partial subsequent} rankings, similar to 
+    \PsiSet{f} except if there are more than one operation with the same rank, 
+    only one is needed to be compared to subsequent rank     
     (\PsiSet{p}$\subset$\PsiSet{f}).
-    \pause\item[\PsiSet{a}] union of all of the above\ei
+    \pause\item[\PsiSet{a}] union of \alert<5>{all} of the above\ei
 }
 
 \frame{\frametitle{Sampled size of $\abs{\Psi}$ 
@@ -41,21 +44,21 @@
 }
 
 \frame{\frametitle{Stepwise bias for sampling \PsiSet{}}
-    Sampling stepwise bias for preference pairs
-    \pause\bi \textbf{(equal)} equal probability. 
-    \pause\item \textbf{(opt)} inverse optimality for random dispatches
+    Sampling \alert{stepwise bias} for preference pairs
+    \pause\bi \alert<2>{(equal)} equal probability. 
+    \pause\item \alert<3>{(opt)} inverse optimality for random dispatches
     -- $1-\xi_{\RND}^{\star}$.
-    \pause\item \textbf{(bcs)} best case scenario for mean $\rho$ 
+    \pause\item \alert<4>{(bcs)} best case scenario for mean $\rho$ 
     -- $\zeta^{\star}_{\min}$.
-    \pause\item \textbf{(wcs)} worst case scenario for mean $\rho$ 
+    \pause\item \alert<5>{(wcs)} worst case scenario for mean $\rho$ 
     -- $\zeta^{\star}_{\max}$.
-    \pause\item \textbf{(featsize)} inversely proportional to 
+    \pause\item \alert<6>{(featsize)} inversely proportional to 
     $\abs{\Phi^{\OPT}}$
-    \pause\item \textbf{(prefsize)} inversely proportional to 
+    \pause\item \alert<7>{(prefsize)} inversely proportional to 
     $\abs{\Psi^{\OPT}_p}$
-    \pause\item \textbf{(dbl1st)} \label{bias:dbl1st} twice as much weight on 
+    \pause\item \alert<8>{(dbl1st)} \label{bias:dbl1st} twice as much weight on 
     the first half of the dispatches.
-    \pause\item \textbf{(dbl2nd)} twice as much weight on the second half of 
+    \pause\item \alert<9>{(dbl2nd)} twice as much weight on the second half of 
     the dispatches\ei
 }
 

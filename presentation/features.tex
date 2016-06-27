@@ -45,16 +45,16 @@
 }
 
 \frame{\frametitle{Trajectory strategies for \PhiSet{}}
-    Following
-    \bi (\PhiSet{OPT}) some (random) optimal task.
-    \pause \item (\PhiSet{\minRho}) the task corresponding to highest priority, 
-        computed with weights obtained by optimising with CMA-ES. 
-    \pause \item (\PhiSet{\SPT}) the SDR shortest processing time (SPT).
-    \pause \item (\PhiSet{\LPT}) the SDR longest processing time (LPT).
-    \pause \item (\PhiSet{\LWR}) the SDR least work remaining (LWR).
-    \pause \item (\PhiSet{\MWR}) the SDR most work remaining (MWR).
-    \pause \item (\PhiSet{\RND}) some random task.
-    \pause \item (\PhiSet{\ALL}) union of all of the above\ei
+    Following the \alert<1-7>{policy}
+    \bi \alert<1>{(\PhiSet{OPT})} expert $\pi_\star$.
+    \pause \item \alert<2>{(\PhiSet{\minRho})} the policy obtained by 
+    optimising with CMA-ES. 
+    \pause \item \alert<3>{(\PhiSet{\SPT})} shortest processing time (SPT).
+    \pause \item \alert<4>{(\PhiSet{\LPT})} longest processing time (LPT).
+    \pause \item \alert<5>{(\PhiSet{\LWR})} least work remaining (LWR).
+    \pause \item \alert<6>{(\PhiSet{\MWR})} most work remaining (MWR).
+    \pause \item \alert<7>{(\PhiSet{\RND})} random policy (RND).
+    \pause \item \alert<8>{(\PhiSet{\ALL})} union of all of the above\ei
 }
 
 \frame{\frametitle{Sampled size of $\abs{\Phi}$ 
