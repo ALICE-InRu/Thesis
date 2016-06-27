@@ -25,9 +25,10 @@
     rankings $r_i$, $i\in\{2,...,n'\}$
     \pause\item[\PsiSet{f}] full subsequent rankings, i.e., all combinations of 
     $r_i$ and $r_{i+1}$ for all $i\in\{1,...,n'\}$. 
-    \pause\item[\PsiSet{p}] partial subsequent rankings, similar ot $S_f$ 
-    except if there are more than one operation with the same ranking, only one 
-    is needed to be compared to subsequent rank, i.e., $S_p\subset S_f$.
+    \pause\item[\PsiSet{p}] partial subsequent rankings, similar to \PsiSet{f}
+    except if there are more than one operation with the same rank, only one 
+    is needed to be compared to subsequent rank     
+    (\PsiSet{p}$\subset$\PsiSet{f}).
     \pause\item[\PsiSet{a}] union of all of the above\ei
 }
 
@@ -38,7 +39,26 @@
         \includegraphics[height=.95\textheight]{figures/{prefdat.p.size.6x5}.pdf}
     \end{center}    
 }
+
+\frame{\frametitle{Stepwise bias for sampling \PsiSet{}}
+    Sampling stepwise bias for preference pairs
+    \pause\bi \textbf{(equal)} equal probability. 
+    \pause\item \textbf{(opt)} inverse optimality for random dispatches
+    -- $1-\xi_{\RND}^{\star}$.
+    \pause\item \textbf{(bcs)} best case scenario for mean $\rho$ 
+    -- $\zeta^{\star}_{\min}$.
+    \pause\item \textbf{(wcs)} worst case scenario for mean $\rho$ 
+    -- $\zeta^{\star}_{\max}$.
+    \pause\item \textbf{(featsize)} inversely proportional to 
+    $\abs{\Phi^{\OPT}}$
+    \pause\item \textbf{(prefsize)} inversely proportional to 
+    $\abs{\Psi^{\OPT}_p}$
+    \pause\item \textbf{(dbl1st)} \label{bias:dbl1st} twice as much weight on 
+    the first half of the dispatches.
+    \pause\item \textbf{(dbl2nd)} twice as much weight on the second half of 
+    the dispatches\ei
+}
+
 \frame{\frametitle{Stepwise bias strategies}
     \includegraphics[width=\columnwidth]{figures/{bias.CDR.10x10}.pdf}
 }
-
