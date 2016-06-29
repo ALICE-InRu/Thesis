@@ -1,4 +1,4 @@
-\section{Preference learning}\againframe<8>{alice}
+\section{Preference learning}\againframe<13>{alice}
 \frame{\frametitle{Ordinal Regression}
     \alert<1>{Preference} \alert<2>{learning}
     \bi Mapping of points to ranks: $ \{h(\cdot) : \Phi \mapsto Y\}$ 
@@ -7,28 +7,30 @@
     \quad \iff \quad 
     h(\vphi_o) \alert<1>{>} h(\vphi_s)$$
     \pause \item The preference is defined by a \alert<2-3>{linear} function:
-    $$ h(\vphi) = \sum_{i=1}^d \alert<2>{w_i} \vphi $$
+    $$ h(\vphi) = \inner{\alert<2> {w_i}}{\vphi} $$
     \alert<2>{optimised} w.r.t. $\vec{w}$ based on training 
     data \PsiSet{}
     \pause \item Note: \alert<3>{Limitations} in \alert<3>{approximation} 
     function to capture the complex dynamics incorporated in optimal 
     trajectories\ei	
 }
-\frame{\frametitle{Learning methods}
-    \alert<1-2>{Passive} imitation learning (single pass)
-        \bi Prediction with expert advice, \alert<1>{$\pi_\star$} -- Gurobi
-        \pause \item Follow the perturbed leader (\alert<2>{OPT$\epsilon$})\ei
-    \pause 
-    \alert<3->{Active} imitation learning (iterative)
-        \bi Dataset Aggregation (\alert<3->{DAgger})
+\againframe<2>{algorithms}
+\frame{\frametitle{Passive imitation learning }
+    \alert<1>{Passive} imitation learning (\alert<1>{single} pass)
+        \pause \bi Prediction with expert advice, \alert<2,5>{$\pi_\star$}
+        \pause \item Follow the perturbed leader (\alert<3,5>{OPT$\epsilon$})
+        \pause \item Follow a heuristic (e.g. \alert<4>{SDRs})\ei
+    \includegraphics<5>[width=\columnwidth]{ALL/{boxplot.passive.10x10}.pdf}
+}
+\frame{\frametitle{Active imitation learning}
+    \alert<1>{Active} imitation learning (\alert<1>{iterative})\pause
+        \bi Dataset Aggregation (\alert<2->{DAgger})
         $$ \pi_i = \beta_i \pi_\star + (1-\beta_i)\hat{\pi}_{i-1}$$
         where $\hat{\pi}_{i-1}$ is the previous learned model, \pause and 
-        $\hat{\pi}_i$ learns on
-        $$ \Phi^{\text{DA}i} = \alert<4>{\bigcup_{i'=0}^i} \Phi^{\text{IL}i'}$$
-        \alert<4>{aggregated dataset} of all previous iterations\ei   
-}
-\frame{\frametitle{DAgger}
-\input{presentation/code_DAgger}    
+        $\hat{\pi}_i$ learns on 
+        %$$ \Phi^{\text{DA}i} = \alert<3>{\bigcup_{i'=0}^i} \Phi^{\text{IL}i'}$$
+        \alert<3>{aggregated dataset} of all previous iterations\ei   
+        \includegraphics<4>[width=\columnwidth]{presentation/{boxplot.10x10.AIL}.pdf}
 }
 \frame{\frametitle{\Namerho}
     \includegraphics[width=\columnwidth]{figures/{j.rnd}/{boxplot.summary.10x10}.pdf}
