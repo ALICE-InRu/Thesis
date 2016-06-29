@@ -1,66 +1,59 @@
-\section{Problem space}\againframe<1>{alice}
-
-\frame{
-    \frametitle{Job Shop Scheduling (\JSP)}
-    Simple \jsp\ is where $n$ jobs are scheduled on 
-    a set of $m$ machines, subject to constraints  
-    \bi each job must follow a predefined machine order,  
-    \item that a machine can handle at most one job at a time\ei  
-    \textbf{Objective:} schedule the jobs so as to minimise the maximum 
-    completion time, i.e., makespan, $C_{\max}$.
-}
-\frame{\frametitle{Dispatching rules}
-    Dispatching rules (DR) are consecutive executions found by
-    \bi Starting with an empty schedule and adding on one operation at a time. 
-    \item When a machine is free the DR inspects the available jobs and 
-    selects the one with the \alert{highest priority}. 
-    \item Complete schedule consists of $\ell=n\cdot m$ sequential dispatches.
-    \item At each dispatch $k$, \alert{features} $\vphi(k)$ for the temporal 
-    schedule are calculated\ei
-}
-
+\section{Problem space}\againframe<9>{alice}
 \frame{
     \frametitle{Mad Hatter tea-party (definition)}
     \begin{columns}
         \begin{column}{0.35\columnwidth}
-            The attending guests
-            \bii{$J_\arabic*$)} Alice\label{guest:alice}
-                \item March Hare\label{guest:marchhare}
-                \item Dormouse\label{guest:dormouse}
-                \item Mad Hatter\label{guest:madhatter}\ei
+            The attending guests\alert<4>{
+            \bii{$J_\arabic*$)}{\color{set1red}Alice}
+                \item{\color{set1blue}March Hare}
+                \item{\color{set1green}Dormouse}
+                \item{\color{set1purple}Mad Hatter}\ei}
         \end{column}
+        \pause
         \begin{column}{0.65\columnwidth}
-            They all have to
-            \bii{$M_\arabic*$)} have wine or pour tea
-                \item spread butter
-                \item get a haircut
-                \item check the time of the broken watch
-                \item say what they mean\ei
+            They all have to\alert<5>{
+            \bii{$M_\arabic*$)}{\color{black}have wine or pour tea}
+                \item{\color{black}spread butter}
+                \item{\color{black}get a haircut}
+                \item{\color{black}check the time of the broken watch}
+                \item{\color{black}say what they mean}\ei}
         \end{column}
+        \pause
     \end{columns}
     \vspace{6pt}
-    This can be considered as is a typical $4\times5$ \jsp, where
-    \bi our guests are the jobs
-    \item their tasks are the machines
-    \item objective is to minimise $C_{\max}$ (when Alice can leave)\ei
+    This can be considered as is a typical $\alert<4>{4}\times\alert<5>{5}$ 
+    \jsp, where\pause
+    \bi our guests are the \alert<4>{jobs}\pause
+    \item their tasks are the \alert<5>{machines}\pause
+    \item objective is to \alert<6>{minimise $C_{\max}$} (when Alice can 
+    leave)\ei
 }
 \frame{
     \frametitle{Mad Hatter tea-party (action states)}    
+\begin{center}
+    \only<1>{$k=0$}
+    \only<2>{$k=10$}
+    \only<3>{$k=20$}
+\end{center}
+\begin{columns}
+\begin{column}[T]{0.5\columnwidth}
+    \begin{figure}
     \input{figures/example.graph.tikzstyle.tex}
-    \setbeamercovered{transparent}
-    \begin{columns}
-    \begin{column}[T]{0.5\columnwidth}
-    \uncover<1>{\resizebox{\columnwidth}{!}{\input{figures/example.graph.k0.tex}}}
-    \\\vspace{24pt}
-    \uncover<2>{\resizebox{\columnwidth}{!}{\input{figures/example.graph.k20.tex}}}
-    \end{column}
-    \begin{column}[T]{0.5\columnwidth}
-    \only<1-2>{\resizebox{\columnwidth}{!}{\input{figures/gametree.tex}}}
-    \visible<3>{\resizebox{\columnwidth}{!}{\input{figures/example.graph.k10.tex}}}
-    \\\vspace{24pt}
-    \includegraphics<3>[width=\columnwidth]{figures/{example.gantt}.pdf}
-    \end{column}
-    \end{columns}
+    \only<1>{\resizebox{\columnwidth}{!}{\input{figures/example.graph.k0.tex}}}
+    \only<2>{\resizebox{\columnwidth}{!}{\input{figures/example.graph.k10.tex}}}
+    \only<3>{\resizebox{\columnwidth}{!}{\input{figures/example.graph.k20.tex}}}
+    \caption{Disjunctive graph}
+    \end{figure}
+\end{column}
+\begin{column}[T]{0.5\columnwidth}
+    \begin{figure}
+    \includegraphics<1>[width=\columnwidth]{presentation/{example.gantt.k0}.pdf}
+    \includegraphics<2>[width=\columnwidth]{presentation/{example.gantt.k10}.pdf}
+    \includegraphics<3>[width=\columnwidth]{presentation/{example.gantt.k20}.pdf}
+    \caption{Gantt chart}
+    \end{figure}
+\end{column}
+\end{columns}
 }
 \frame{
     \frametitle{Mad Hatter tea-party (SDRs)}
