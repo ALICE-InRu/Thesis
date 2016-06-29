@@ -30,7 +30,7 @@ alternativetitlepage=true,
 % Institution logo for fancy title page.
 titlepagelogo=presentation/beamer/hilogo,
 ordinarypageslogo=presentation/beamer/hilogo,
-beamermargin=47pt]{presentation/beamer/beamerthemeBerkeley} 
+beamermargin=50pt]{presentation/beamer/beamerthemeBerkeley} 
 
 % Select color theme. Available options are:
 % mininmal, greenandblue, blue, red
@@ -48,6 +48,7 @@ beamermargin=47pt]{presentation/beamer/beamerthemeBerkeley}
 
 \input{scripts/shorthand.tex} % put your own shorthand declarations here
 \input{scripts/packages.tex} % put your own shorthand declarations here
+\renewcommand{\vphi}{\boldsymbol{\phi}}
 
 \graphicspath{{presentation/},{figures/}}
 \DeclareGraphicsExtensions{.eps,.png}
@@ -82,20 +83,8 @@ beamermargin=47pt]{presentation/beamer/beamerthemeBerkeley}
 \titlepage
 \end{frame}
 
-\section{Introduction}
-\frame{
-\frametitle{Introduction}
-\alert<1>{Motivation}
-\bi The general goal is to train optimisation algorithms, for an 
-arbitrary problem domain, using data\ei
-\pause \alert<2>{Contribution}
-\bi The main contribution of this thesis is towards a better understanding of 
-how this training data should be constructed\ei 
-}
-\frame[label=alice]{
-    \frametitle{Framework for Algorithm Learning}
-    \input{presentation/alice}
-}
+\input{presentation/introduction}
+\input{presentation/overview}
 
 \input{presentation/problemspace}
 \input{presentation/subspace}
@@ -111,22 +100,24 @@ how this training data should be constructed\ei
 \frametitle{Acknowledgements}
 \begin{columns}[T]
     \begin{column}{0.56\columnwidth} 
-       \textbf{Funding}: University of Iceland's Research Fund.
-        \\\vspace{24pt}
-       \textbf{Doctoral committee}
-       \bi {Prof. T\'{o}mas Philip R\'{u}narsson},\\{University of Iceland} 
-       (advisor).
-       \item {Prof. Gunnar Stef\'{a}nsson},\\{University of Iceland}.
-       \item {Prof. Mich\`{e}le Sebag},\\{Universit\'{e} Paris-Sud}\ei
+        \textbf{Funding}: University of Iceland's Research Fund.
+        \\\vspace{18pt}
+        \textbf{Doctoral committee}
+        \bi {Prof. T\'{o}mas Philip R\'{u}narsson},\\{University of Iceland} 
+        (advisor).
+        \item {Prof. Gunnar Stef\'{a}nsson},\\{University of Iceland}.
+        \item {Prof. Mich\`{e}le Sebag},\\{Universit\'{e} Paris-Sud}\ei
     \end{column}
     \begin{column}{0.44\columnwidth}
         \includegraphics[width=\columnwidth]{tenniel-committee.jpg}
     \end{column}    
 \end{columns}
+\vspace{6pt}
+\textbf{Illustrations}: Sir John Tenniel (1820--1914) 
 }
 
 \frame{
-\frametitle{Thank you for your attention}
+\frametitle{Thank You for Your Attention}
 \begin{columns}[T]
     \begin{column}{0.5\columnwidth} 
         \begin{center}
