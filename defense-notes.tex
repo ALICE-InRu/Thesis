@@ -1,0 +1,428 @@
+\documentclass[20pt,a4paper]{extarticle}
+
+\usepackage{xcolor}
+\usepackage{pdfpages}
+\usepackage{multirow}
+
+\input{scripts/shorthand}
+\usepackage[a4paper,top=12pt,bottom=.8cm,right=2cm,left=2cm]{geometry}
+
+\hyphenpenalty=10000
+
+\usepackage{enumitem}
+\setlist{leftmargin=0mm}
+\newcommand{\bi}{\begin{itemize}\item }
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\be}{\begin{enumerate}\item }
+\newcommand{\ee}{\end{enumerate}}
+
+\newcommand{\forward}{{\color{red}\textbf{forwards}}~}
+\newcommand{\backward}{{\color{red}\textbf{backwards}}~}
+
+%opening
+\title{\fullnameAlice}
+\author{Helga Ingimundard\'{o}ttir}
+\date{June 30, 2016}
+
+\newcommand{\printpage}[1]{%
+    \clearpage
+    \begin{figure}[t!]\centering
+    \fbox{\includegraphics[page=#1,scale=0.75]{handout.pdf}}
+    \end{figure}
+}
+\newcommand{\printpages}[2]{
+    \clearpage
+    \begin{figure}[t!]\centering
+    \fbox{\includegraphics[page=#1,scale=0.5]{handout.pdf}}
+    \fbox{\includegraphics[page=#2,scale=0.5]{handout.pdf}}
+    \end{figure}
+}
+\newcommand{\printfullpages}[2]{
+    \clearpage
+    \begin{figure}[t!]\centering
+        \fbox{\includegraphics[page=#1,scale=1]{handout.pdf}}
+        \fbox{\includegraphics[page=#2,scale=1]{handout.pdf}}
+    \end{figure}
+}
+\begin{document}
+\printpage{1}
+\bi I would like to start by thanking the Faculty of Industrial Engineering, 
+    Mechanical Engineering and Computer Science for accepting my thesis for 
+    defence
+\ei
+\begin{tabular}{cll}
+    \textbf{A} & \multicolumn{2}{l}{\textbf{Analysis} or footprints}\\
+    \textbf{L} & \multicolumn{2}{l}{Preference \textbf{Learning}}\\
+    \textbf{I} & \multicolumn{2}{l}{\textbf{Iterative} feedback improvements}\\
+    \textbf{C} & \textbf{Consecutive} & \multirow{2}{*}{$\Bigg\}$ 
+    \parbox{8cm}{the 
+            search operator\\in algorithm space}}\\
+    \textbf{E} & \textbf{Executions}& 
+\end{tabular}
+
+\printpage{2}
+\bi I will start with a brief introduction
+    \item The motivation is to train an optimisation algorithm using data
+    \item This can be done for an arbitrary problem domain
+    \forward
+    \item The main contribution of the thesis is towards a better understanding 
+    of how this training should be constructed
+    \item The quality of the training data will rewarded with a better learned 
+    algorithm
+\ei 
+
+\printpage{3}
+\bi The thesis presents a framework call \Alice\ to go about this
+    \item It is built on Rice's framework for algorithm selection from 1976
+    \item Here is it presented as a flow chart, emphasised with pink blocks. 
+    The additional blocks are for clarification of what's going on
+    \forward \be We start with the problem space -- this could be some 
+    arbitrary problem domain
+    \forward \item Generally we will work with simulated data, so this will 
+    limit 
+    the problem space to a subspace of instances
+    \forward \item Then we collect features. Features are used to describe the 
+    quality of a solution
+    \forward \item From there we look at the algorithm space. This could be any 
+    kind algorithm you would want to test for your problem space. It could be 
+    for example a machine learning technique or evolutionary strategy.
+    \forward \item So take an algorithm and apply it to the features resulting 
+    for a given set of instances and we get a performance
+    \forward \item Now we can infer with the interaction of an algorithm and 
+    problem space using footprints in instance space (also known as landmarking)
+    This could for explain why an algorithm is successful or unsuccessful for 
+    these types of problems
+    \ee 
+    \item Adding on to Rice's framework \forward the following represents a 
+    framework for algorithm learning.
+    The additional block are for the learning phase in the flow chart
+    \item We would start in the same fashion as before \forward x3
+    \item But from the collected features \forward we will create preferences  
+    that will serve as input \forward for the preference learning
+    \item The outcome of which is \forward an algorithm, and we can continue 
+    \forward our framework as before and \forward redo our analysis.
+    \item From here we can use the footprints analysis to iteratively improve  
+    the learning model via feedback to the preference set
+    \item This has been a brief overview, and now I will address each block in 
+    more detail. 
+\ei 
+
+\printpage{4}
+\bi Starting with Problem Space (OVERVIEW) \forward The thesis uses \jsp\ 
+scheduling problem as a case study, and I will explain using an hypothetical 
+example based around \forward The Mad Hatter's Tea Party
+    \item Here we can see four guest: Alice, March Hare, Dourmouse and the host 
+    Mad Hatter
+    \item All of them have to perform 5 different activities and the time it 
+    takes can very between guests 
+    \forward \item So this can be considered as a 4-job 5-machine \jsp\ subject 
+    to the constraints
+    \item \forward none of the guests can multi task and each must follow a 
+    predetermined order for their tasks (e.g. March Hare insists on doing them 
+    alphabetically) and they would rather wait than breaking habit 
+    \item \forward and that a machine can handle at most one job at a time 
+    (e.g. 
+    two can't simultaneously pour from the same teapot )
+    \item We know Alice needs to see the Red Queen ASAP however she's polite 
+    and won't leave until everyone has finished their activity
+    \item \forward so the objective is to schedule the jobs so as to minimise 
+    the 
+    maximum completion time (so-called makespan) -- when Alice can leave
+\ei
+
+\printpage{5}
+\bi We arrived at the tea party with a clean slate.
+    \item The disjunctive grasp has a swim-lane for each guest that yields the 
+    predetermined ordering, so we go from left to right -- but we can hop 
+    between lanes.
+    \item We need to visit all of the nodes (guest performing an activity) in 
+    the graph with a Hamiltonian path (a total of 20 operations). 
+    \item What we need to do know is to select from the available jobs 
+    (grey in DG) which one should we select next based on which one of 
+    these jobs has the highest priority -- this is essentially a DR
+    \item The Gantt chart then translates the dispatched operations into 
+    physical time or \textit{seconds} (eg at what o'clock should Alice 
+    start/finish pouring tea)
+    \item \forward Here we are further along the dispatching seq. and we can 
+    see 
+    the partial schedule to emerge. 
+    \item Solids are already chosen (pink in DG) and dashed are potential 
+    outcomes for the available jobs (Notice Alice is finished, so only 3 
+    op. currently remain)
+    \item \forward We do these executions consecutively until we've visited all 
+    nodes in the DG. So this is an example of a completed solution.
+    \item Here Mad Hatter is the last to finish, so the makespan is at 548 
+    seconds (~9min). 
+    \item Notice that Alice finished much earlier and there is a bottleneck for 
+    taking turns in speaking ($M_5$), is there some other way to arrange 
+    these tasks so Alice could leave sooner?
+\ei 
+
+\printpage{6}    
+\bi Here the top four are the outcomes for our Tea-Party using commonly used 
+    \sdr\ from the literature. They are simple to use yet surprisingly 
+    effective. They are called SPT, LPT, LWR and MWR. 
+    \item Previous slides showed SPT being constructed with just over 9min, but 
+    MWR would have taken $7 \frac{1}{2}$min
+    \item A random solution is shown in the lower left-hand-corner (8min)
+    \item However an optimal solution (obtained by expert policy or 
+    \textit{narrator}) would have been for example the one shown in the lower 
+    right hand corner, with Alice leaving in 7min
+    \item What we want to now learn is a deterministic policy (or heuristic) 
+    that closely resembles the expert policy in the right-hand-corner
+    (from these trials, MWR is the best heuristic policy)
+\ei 
+\printpage{7}
+\bi Moving on, given the problem space \jsp\ we will use simulated data 
+    so this is the subspace of instances (OVERVIEW) \forward 
+    \item The thesis address various problem generators
+    \item There are 5 types of processing time distributions (eg seconds it 
+    takes Alice to pour a cup of tea)
+    \item There are also 2 variations of machine ordering -- if it distinct 
+    between all jobs it is called \jsp\ or if it is the same for all jobs it is 
+    called \fsp\
+    \item Moreover, there are 2 problem sizes explored $6\times5$ that require 
+    30 operations and $10\times10$ requiring 100 operations.  
+    \item \forward However, only the highlighted subspaces will be explored in 
+    this presentation
+\ei 
+\printpage{8}
+\bi Now we can start looking into features for \jsp\\ (OVERVIEW) \forward
+    \item Features are a way to measure the quality of our solution which is 
+    being built
+    \item Here we can see 16 one-step lookahead features and 8 rollout 
+    features, but the presentation will only consider one-step lookahead
+    \item They are inspired from commonly used \sdr\ 
+    \item \forward $\phi_1$ corresponds to shortest/longest proc. time
+    \item \forward $\phi_7$ corresponds to least/most work remaining
+\ei 
+\printpage{9}
+\bi We can sample features from $k$-solutions using some policy to guide a 
+trajectory through feature space
+    \item \forward that could obtained from an expert policy -- so inspecting 
+    the 
+    features encountered while creating an optimal solution
+    \item \forward or we can use some deterministic \sdr\ like SPT \forward or 
+    LPT 
+    \forward LWR \\ \forward MWR \forward or some random trajectory.
+    \item \forward instead of following \sdr\ we could also use some more 
+    sophisticated heuristic, such as \cdr\ found by optimising with 
+    evolutionary search 
+    \item \forward and we can aggregate features across different trajectory 
+    policies 
+\ei 
+\printpage{10}
+\bi Remark from our Tea-party example, that Alice finished all of her   
+    activities quite early ($k<10$), so even though there are 4-jobs, they can 
+    number of available operations we can collect features from diminishes as 
+    the dispatching sequence progresses
+    \item Here we can see the amount of features encountered evolving with the 
+    dispatching step for the aforementioned trajectories 
+\ei 
+\printpage{11}
+\bi Moving on to Algorithm space (OVERVIEW) \forward 
+    \item There have been various methods used to solve \jsp\ -- here we can 
+    see a tree representation of the nature of those techniques based on the 
+    work from Jain and Meeran in 1999
+    \item I've highlighted the methods addressed in the thesis:
+    \item Branch and bound is the optimisation algorithm I use for labelling my 
+    features
+    \item \sdr\ have already been described (ie SPT, LPT, LWR, MWR) 
+    \item and \cdr\ is a combination of those simpler rules
+    \item I used evolutionary search to find appropriate weights for a CDR
+    \item Roll-outs were used to design more comprehensive features with 
+    respect to the schedule's overall performance (\phiGlobalRelated)
+    \item \forward My contribution lies in the \textit{new branch} called 
+    imitation learning that to ES learns weights for CDR -- this will be 
+    address more thoroughly later
+\ei 
+\printpage{12}
+\bi Performance space (OVERVIEW) \forward
+    \item is the loss function that describes the discrepancy between the 
+    predicted value using a certain policy compared to the true optimum outcome 
+    obtained using expert advice 
+    \item therefore the lower the mean for the deviation of optimality the 
+    better the policy 
+\ei  
+\printpage{13}
+\bi Regarding footprints in instance space I will start by inferring the     
+    interaction of the \sdr s from before to the previously discussed problem 
+    generators \\(OVERVIEW) \forward 
+    \item Here we can see a box-plot for \namerho\
+    \item for \jsp\ it is best to use MWR of these rules as it will give me the 
+    lowest mean of deviation
+    \item on the other hand its counterpart LWR is much better for \fsp
+    \item Here we can see that despite the same processing time distributions 
+    the change in machine ordering definition we see MWR is better than LWR for 
+    \jsp\ and vice versa for \fsp
+    \item \forward Result hold when going to a higher dimensionality 
+    \item So this is only based on results from the final dispatching step, but 
+    we would like to know when in the dispatching sequence this performance 
+    discrepancy starts to occur
+\ei 
+\printpage{14}
+\bi Here we are looking at a $10\times 10$ problem spaces and inspecting given  
+    an optimal trajectory how many optimal moves are available at any given 
+    dispatching step. As we already saw, the number of total moves (optimal and 
+    suboptimal) diminish as $k$ increases 
+    \item \forward so here we have the number of moves translated in terms of 
+    probability of choosing optimal move -- basically what are the odds you 
+    would at random select the optimal move (given you do everything else 
+    correct)
+\ei 
+\printpages{15}{16}
+\bi Now let's look at the odds of selecting the optimal move using
+    a deterministic policy, such as a \sdr\
+    \item Here we see for \jsp\ that SPT is the most likely policy to select 
+    the optimal move, or at least until step $k=40$ when MWR becomes the better 
+    option
+    \item Similar thing are going on for \fsp\ except SPT starts of best until 
+    $k=10$ where LWR surpasses in probability 
+    \item Based on this information, I want to create a \dr\ that starts with 
+    SPT until step 40 and then switches to uses MWR from there on out
+    \item \forward I call this a blended \dr 
+    \item This switching of policies does improve the upon SPT immensely, 
+    however it still doesn't manage to achieve the same greatness MWR did on 
+    its own. 
+    \item Now why is that? \backward So instead of looking at the probability 
+    of selecting the optimal move, let's look at what happens if you make a 
+    sub-optimal move \forward
+\ei 
+\printpage{17}
+\bi Here see the impact in terms of \namerho, (so not probability of optimality)
+    if we make one misstep -- everything else is done to optimality 
+    \item The lower bound is then the best case scenario and upper bound is the 
+    worst case scenario -- with the dashed line as the mean impact 
+    \item Notice that for \jsp\ it isn't imperative to make a bad decision in 
+    the initial phases of dispatching, it's more important to focus on doing 
+    the right thing towards the end
+    \item The opposite is true for \fsp, where the absolute first moves are 
+    critical towards final outcome. 
+    \item This can be explained by the nature of \fsp\ where having the same 
+    machine ordering constrict the search space in such a way it's hard to 
+    recover from previous mistakes. Whereas the randomness in machine ordering 
+    \jsp\ natively takes care of that 
+\ei 
+\printpages{18}{19}
+\bi In sequential decision making, all future observations are dependent on 
+    previous operations, therefore since we are bound to make mistakes, 
+    analysis based on optimal solutions is no longer valid. 
+    \item Therefore let's update the measures based on the probability of 
+    choosing an optimal move for a given \sdr\ during its dispatching 
+    process    
+    \item Here we see the compound effects of making suboptimal decisions
+    \item Notice that for $k<15$ SPT is above the MWR probability, and this is 
+    why switching here is good decision -- although not statically significant 
+    from MWR (but as we remember the impact on $\rho$ is the least during that 
+    phase)
+    \item \forward Analogous to before (shown in yellow) here we see the impact 
+    of not following our proposed policy (whose $\rho$ evolution is dashed 
+    line). So the band between that line and the lower bound is the possible 
+    improvement we could learn from that trajectory 
+    \item In fact a BDR switch at $k=40$ never had a chance of 
+    improving SPT as the temporal makespan was already higher than the final 
+    makespan for MWR and had 60 operation left to dispatch
+\ei 
+\printpage{20}
+\bi With the information obtained by our footprint analysis we can start 
+    generating training data that will serve as input in preference learning 
+    (OVERVIEW) \forward
+    \item The objective will be identifying good dispatching/features from 
+    worse ones
+    \item \forward From the feature set we have both optimal and suboptimal 
+    solutions --this could be the state that results in Alice pouring tea vs. 
+    Dormouse singing twinkle-twinkle little star 
+    \item \forward By using branch and bound I have determined that Alice is 
+    the preferred option of the two, so I can create the preference pair 
+    $\{\vphi_{\textrm{A}} - \vphi_{\textrm{D}},+1\}$ and 
+    $\{\vphi_{\textrm{D}} - \vphi_{\textrm{A}},-1\}$. 
+    The combination of all optimal/suboptimal pairs creates the preference set 
+    $\Psi$. And there are various ranking schemes of how to select the minimum 
+    mount of pairs without loss of information
+    \item Furthermore, since we will eventually like to create a policy that 
+    could work for the OR-Library (which can be of a much greater size then I 
+    am currently training on) I like to make a dispatching step independent 
+    model.
+    \item Remember the amount of features encountered for a given 
+    trajectory  
+\ei 
+\printpages{21}{22}
+\bi Here we see the resulting amount of preference pairs 
+    collected 
+    \item Bearing in mind for \jsp\ the impact w.r.t. $\rho$ was the greater 
+    influenced during the latter stages of dispatching the emphasis in learning 
+    should be there also -- however there are fewer samples to learn from, so 
+    we need to balance that out with a stepwise bias strategy 
+    \item \forward Here are some ad-hoc strategies for stepwise sampling based 
+    on the footprints analysis
+\ei 
+\printpages{23}{24}
+\bi Preference learning is a methodology in order to create a mapping for pairs 
+    to ranks, such that optimal feature is preferred to a suboptimal feature if 
+    and only if the function evaluation of a optimal feature is higher than the 
+    function evaluation of a suboptimal feature
+    \item \forward In the thesis I only consider the mapping to be a linear 
+    function, so the learning algorithm is optimising with respect to weights 
+    $\vec{w}$ using the preference set
+    \item the resulting model is effectively a \cdr
+    \item \forward Note this is only a linear approximation used to capture the 
+    complex underlying dynamics -- you could easily substitute the inner 
+    product to kernel methods or a more state-of-the-art algorithm 
+    \item \forward Revisiting the algorithm space again, the focus is now on 
+    the imitation learning branch which is divided into two sub-branches: 
+    Passive and Active
+\ei 
+\printpage{25}
+\bi Passive imitation learning only needs one collection of training set 
+    \item \forward I can start by learning on \PsiSet[\textrm{OPT}]{p} -- that 
+    is prediction using expert advice
+    \item \forward or I can perturb that trajectory with an $\epsilon$ 
+    likelihood
+    \item \forward or I could training data from some deterministic policy
+    \item In all of these cases I'm always labelling the using expert advice 
+    (gurobi), is only a matter of where does my feature set come from
+    \item \forward Here are box-plots for top two strategies, and we see that 
+    by introducing suboptimal states spaces to the training set a lower $\rho$ 
+    is achieved -- implying learning for optimal trajectories is insufficient, 
+    at least in the case of a linear approximation function it is unattainable 
+    to learn those optimal state spaces
+    \item Furthermore, using more problem instances (but always same sized 
+    $|$\PsiSet[\textrm{OPT}]{p}$|=l_{\max}$, but more variety of problem 
+    instances) gives a worse result
+\ei 
+\printpage{26}
+\bi Instead of using some heuristics (here a SDRs chosen ad-hoc) to guide your 
+    training data a more sophisticated approach would be to use active 
+    imitation leaning, that in an iterative fashion 
+    \item \forward I would create a model using Dataset Aggregation (DAgger)
+    that essentially continues with the learned policy using expert advice 
+    (from prev. slide) -- this would be iteration 0
+    \item I would then collect the features encountered by my learned model and 
+    retrain -- that way the learned model is more likely to encounter features 
+    that it has learned
+    \item and there can be a combination of the learned model from the previous 
+    iteration and the expert, where $\beta$ controls how you let go of the 
+    expert and solely rely on learned policies (fixed-supervised-unsupervised)
+    \item \forward In the case of DAgger performance becomes (slightly) better 
+    with each iteration of DAgger, however for after the 2nd iteration you need 
+    to use new problem instances get more variety of new features (in contrast 
+    to PIL).    
+\ei 
+\printpage{27}
+\bi You don't have to have a sampling bias strategy to get a good result 
+    using DAgger as it's is automatically inbuilt in DAgger to sample the 
+    space. However, if you do use a good sampling bias convergence is quicker
+    \item On the left we have two references (not imitation learning). MWR was 
+    the best SDR for \jsp\ -- and AIL and PIL approaches were significantly 
+    better
+    \item CMA-ES is a brute force approach where an optimisation can $~$week in 
+    computational effort -- where an iteration of DAgger could take less than a 
+    day -- nevertheless the brute force approach still managed to find a better 
+    weights than AIL 
+\ei 
+\printfullpages{28}{29}
+\printpages{30}{31}
+\bi Invite guests to PhD party!
+\ei 
+
+\end{document}
