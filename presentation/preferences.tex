@@ -1,22 +1,20 @@
 \section{Preference Set}\againframe<12|handout:0>{alice}
-\frame{\frametitle{Generating Training Data}\framesubtitle{}
-    \Alice\ framework for creating \dr s
-    \bi \alert<1>{Linear classification} to identify good dispatches, 
-    from worse ones. 
-    \pause \item \alert<2>{Generate} feature set, 
-    $\alert<2>{\Phi}\subset\mathcal{F}$, both from 
-    \bi \alert<2>{optimal} solutions, $\vphi^o$ 
-    \item \alert<2>{suboptimal} solutions, $\vphi^s$\ei 
-    by exploring various \alert<2>{trajectories} within the feature-space 
+\frame{\frametitle{Preference Set}\framesubtitle{}
+    Generating training data
+    \bi \alert<1>{Generate} feature set, 
+    $\alert<1>{\Phi}\subset\mathcal{F}$, both from 
+    \bi \alert<1>{optimal} solutions, $\vphi^o$ 
+    \item \alert<1>{suboptimal} solutions, $\vphi^s$\ei 
+    by exploring various \alert<1>{trajectories} within the feature-space 
     (where $\vphi^o,\vphi^s\in\mathcal{F}$).
-    \pause \item Sample $\Phi$ to \alert<3>{create} training set 
-    \alert<3>{$\Psi$} with rank pairs:
-    \bi \alert<3>{optimal} decision, $(\vec{z}^o,y_o)=(\vphi^o-\vphi^s,+1)$ 
-    \item \alert<3>{suboptimal} decision, 
+    \pause \item Sample $\Phi$ to \alert<2>{create} training set 
+    \alert<2>{$\Psi$} with rank pairs:
+    \bi \alert<2>{optimal} decision, $(\vec{z}^o,y_o)=(\vphi^o-\vphi^s,+1)$ 
+    \item \alert<2>{suboptimal} decision, 
     $(\vec{z}^s,y_s)=(\vphi^s-\vphi^o,-1)$\ei
-    using different \alert<3>{ranking} schemes 
+    using different \alert<2>{ranking} schemes 
     (where $\vec{z}^o,\vec{z}^s\in\Psi$) 
-    \pause \item \alert<4>{Sample $\Psi$} using \alert<4>{stepwise bias} for 
+    \pause \item \alert<3>{Sample $\Psi$} using \alert<3>{stepwise bias} for 
     time independent policy\ei
 }
 
