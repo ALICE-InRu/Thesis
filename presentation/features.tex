@@ -1,4 +1,4 @@
-\section{Feature space}\againframe<3>{alice}
+\section{Feature space}\againframe<11>{alice}
 \frame{\frametitle{Features for \JSP}\label{tbl:features}
     \begin{table}[t!] \centering
     \vspace{-14pt}
@@ -9,13 +9,13 @@
         \toprule
         %& $\vphi$ & Feature description \\  \midrule
         \multirow{10}{*}{\rot{\textbf{job}}}
-        & $\phiproc$ & job processing time \\
+        & \alert<2>{$\phiproc$} & \alert<2>{job processing time} \\
         & $\phistartTime$ & job start-time \\
         & $\phiendTime$ & job end-time \\
         & $\phiarrivalTime$ & job arrival time \\ 
         & $\phiwait$ & time job had to wait \\ 
         & $\phijobTotProcTime$ & total processing time for job \\
-        & $\phijobWrm$ & total work remaining for job \\
+        & \alert<3>{$\phijobWrm$} & \alert<3>{total work remaining for job} \\
         & $\phijobOps$ & number of assigned operations for job \\ 
         \midrule
         \multirow{10}{*}{\rot{\textbf{machine}}}
@@ -41,26 +41,25 @@
         \bottomrule
     \end{tabular}
     }
-    \end{table}
+    \end{table}\pause\pause
 }
 
 \frame{\frametitle{Trajectory strategies for \PhiSet{}}
     Following the \alert<1-7>{policy}
-    \bi \alert<1>{(\PhiSet{OPT})} expert $\pi_\star$.
-    \pause \item \alert<2>{(\PhiSet{\minRho})} the policy obtained by 
+    \bi \alert<1>{(\PhiSet{\OPT})} expert $\pi_\star$.
+    \pause \item \alert<2>{(\PhiSet{\SPT})} shortest processing time (SPT).
+    \pause \item \alert<3>{(\PhiSet{\LPT})} longest processing time (LPT).
+    \pause \item \alert<4>{(\PhiSet{\LWR})} least work remaining (LWR).
+    \pause \item \alert<5>{(\PhiSet{\MWR})} most work remaining (MWR).
+    \pause \item \alert<6>{(\PhiSet{\RND})} random policy (RND).
+    \pause \item \alert<7>{(\PhiSet{\minRho})} the policy obtained by 
     optimising with CMA-ES. 
-    \pause \item \alert<3>{(\PhiSet{\SPT})} shortest processing time (SPT).
-    \pause \item \alert<4>{(\PhiSet{\LPT})} longest processing time (LPT).
-    \pause \item \alert<5>{(\PhiSet{\LWR})} least work remaining (LWR).
-    \pause \item \alert<6>{(\PhiSet{\MWR})} most work remaining (MWR).
-    \pause \item \alert<7>{(\PhiSet{\RND})} random policy (RND).
     \pause \item \alert<8>{(\PhiSet{\ALL})} union of all of the above\ei
 }
 
-\frame{\frametitle{Sampled size of $\abs{\Phi}$ 
+\frame[label=featsize]{\frametitle{Sampled size of $\abs{\Phi(k)}$ 
         ($6\times5, N_{train}=500)$}
-    \vspace{-12pt}
     \begin{center}    
-        \includegraphics[height=.95\textheight]{figures/{trdat.size.6x5}.pdf}
+        \includegraphics[width=\columnwidth]{presentation/{trdat.size.6x5}.pdf}
     \end{center}    
 }

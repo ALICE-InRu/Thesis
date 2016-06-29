@@ -1,4 +1,4 @@
-\section{Preference set}\againframe<7>{alice}
+\section{Preference set}\againframe<12>{alice}
 \frame{\frametitle{Generating training data}
     \Alice\ framework for creating \dr s
     \bi \alert<1>{Linear classification} to identify good dispatches, 
@@ -20,48 +20,15 @@
     time independent policy\ei
 }
 
-\frame{\frametitle{Ranking schemes for \PsiSet{}}
-    \alert{Sampling rankings} of available jobs where where 
-    $r_1>r_2>\cdots>r_{n'}$ 
-    $(n'\leq n)$ with respect to
-    \pause\bi[\PsiSet{b}] \alert<2>{all} opt rankings $r_1$ vs. all possible 
-    subopt rankings $r_i$, $i\in\{2,...,n'\}$
-    \pause\item[\PsiSet{f}] \alert<3>{full subsequent} rankings, i.e., all 
-    combinations of $r_i$ and $r_{i+1}$ for all $i\in\{1,...,n'\}$. 
-    \pause\item[\PsiSet{p}] \alert<4>{partial subsequent} rankings, similar to 
-    \PsiSet{f} except if there are more than one operation with the same rank, 
-    only one is needed to be compared to subsequent rank     
-    (\PsiSet{p}$\subset$\PsiSet{f}).
-    \pause\item[\PsiSet{a}] union of \alert<5>{all} of the above\ei
-}
-
-\frame{\frametitle{Sampled size of $\abs{\Psi}$ 
+\againframe{featsize}
+\frame{\frametitle{Sampled size of $\abs{\Psi(k)}$ 
         ($6\times5, N_{train}=500)$}
     \vspace{-12pt}
     \begin{center}   
-        \includegraphics[height=.95\textheight]{figures/{prefdat.p.size.6x5}.pdf}
+        \includegraphics[width=\columnwidth]{presentation/{prefdat.p.size.6x5}.pdf}
     \end{center}    
 }
 
-\frame{\frametitle{Stepwise bias for sampling \PsiSet{}}
-    Sampling \alert{stepwise bias} for preference pairs
-    \pause\bi \alert<2>{(equal)} equal probability. 
-    \pause\item \alert<3>{(opt)} inverse optimality for random dispatches
-    -- $1-\xi_{\RND}^{\star}$.
-    \pause\item \alert<4>{(bcs)} best case scenario for mean $\rho$ 
-    -- $\zeta^{\star}_{\min}$.
-    \pause\item \alert<5>{(wcs)} worst case scenario for mean $\rho$ 
-    -- $\zeta^{\star}_{\max}$.
-    \pause\item \alert<6>{(featsize)} inversely proportional to 
-    $\abs{\Phi^{\OPT}}$
-    \pause\item \alert<7>{(prefsize)} inversely proportional to 
-    $\abs{\Psi^{\OPT}_p}$
-    \pause\item \alert<8>{(dbl1st)} \label{bias:dbl1st} twice as much weight on 
-    the first half of the dispatches.
-    \pause\item \alert<9>{(dbl2nd)} twice as much weight on the second half of 
-    the dispatches\ei
-}
-
 \frame{\frametitle{Stepwise bias strategies}
-    \includegraphics[width=\columnwidth]{figures/{bias.CDR.10x10}.pdf}
+    \includegraphics[width=\columnwidth]{presentation/{bias.CDR.6x5}.pdf}
 }
