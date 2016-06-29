@@ -1,4 +1,4 @@
-\section{Conclusions}\againframe<9>{alice}
+\section{Conclusions}\againframe<8>{alice}
 \frame{\frametitle{Using \fullnameAlice\ framework I}
 The thesis introduced a framework for learning (\alert<1>{linear}) \cdr\ -- 
 using \alert<1>{\jsp} as a case-study -- with the following guidelines
@@ -12,8 +12,8 @@ using \alert<1>{\jsp} as a case-study -- with the following guidelines
 \item \alert<4->{Success} is highly dependent on the preference pairs 
 introduced to the system: 
 \pause
-    \bi \PsiSet{p} \alert<5>{reduces} the preference set without loss of 
-    performance. 
+    \bi \PsiSet{p} \alert<5>{reduces} the preference set \alert<5>{without 
+    loss} of performance. 
 \pause
     \item \alert<6>{Stepwise bias} is needed to balance time dependent 
     \PsiSet{p} in order to create \alert<6>{time independent} models. \ei
@@ -30,22 +30,14 @@ Continued from prev. slide
     labelling with an optimal solver, \alert<2>{improves} the guiding 
     policy.
 \pause 
-    \item In \alert<3>{sequential} decision making, all future observations are 
-    dependent on \alert<3>{previous} operations.
-\pause
-    Active update procedure using \alert<4>{DAgger} ensures sample states the 
-    \alert<4>{learned model is likely to encounter} is integrated to 
+    \item Active update procedure using \alert<3>{DAgger} ensures sample states 
+    the \alert<3>{learned model is likely to encounter} is integrated to 
     \PsiSet[\DA{i}]{p}.
 \pause
     \item Instead of reusing same problem instances, extend the training set 
-    with \alert<5>{new} instances for \alert<5>{quicker convergence} of 
-    DAgger\ei    
+    with \alert<4>{new} instances for \alert<4>{quicker convergence} of 
+    DAgger.
+\pause 
+    \item In \alert<5>{sequential} decision making, all future observations are 
+    dependent on \alert<5>{previous} operations\ei
 }
-\frame{\frametitle{Future work}
-    Main conclusions
-    \bi \ei        
-}
-
-
-
-% uppskrift of how-to-make-an-algorithm
