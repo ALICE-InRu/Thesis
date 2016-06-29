@@ -1,17 +1,18 @@
 \section{Problem space}\againframe<9>{alice}
 \frame{
     \frametitle{Mad Hatter tea-party (definition)}
+    \only<1>{\centering\includegraphics[height=.9\textheight]{figures/{alice-mad-tea-party}.eps}}
+    \only<2->{
     \begin{columns}
         \begin{column}{0.35\columnwidth}
-            The attending guests\alert<4>{
+            The attending guests\alert<3>{
             \bii{$J_\arabic*$)}{\color{set1red}Alice}
                 \item{\color{set1blue}March Hare}
                 \item{\color{set1green}Dormouse}
                 \item{\color{set1purple}Mad Hatter}\ei}
         \end{column}
-        \pause
         \begin{column}{0.65\columnwidth}
-            They all have to\alert<5>{
+            They all have to\alert<4>{
             \bii{$M_\arabic*$)}{\color{black}have wine or pour tea}
                 \item{\color{black}spread butter}
                 \item{\color{black}get a haircut}
@@ -21,19 +22,19 @@
         \pause
     \end{columns}
     \vspace{6pt}
-    This can be considered as is a typical $\alert<4>{4}\times\alert<5>{5}$ 
+    This can be considered as is a typical $\alert<3>{4}\times\alert<4>{5}$ 
     \jsp, where\pause
-    \bi our guests are the \alert<4>{jobs}\pause
-    \item their tasks are the \alert<5>{machines}\pause
-    \item objective is to \alert<6>{minimise $C_{\max}$} (when Alice can 
-    leave)\ei
+    \bi our guests are the \alert<3>{jobs}\pause
+    \item their tasks are the \alert<4>{machines}\pause
+    \item objective is to \alert<5>{minimise $C_{\max}$} (when Alice can 
+    leave)\ei}
 }
 \frame{
-    \frametitle{Mad Hatter tea-party (action states)}    
+    \frametitle{Mad Hatter tea-party ($k$-solutions)}    
 \begin{center}
-    \only<1>{$k=0$}
-    \only<2>{$k=10$}
-    \only<3>{$k=20$}
+    \only<1>{\textbf{Start}: $k=0$}
+    \only<2>{\textbf{Midway}: $k=10$}
+    \only<3>{\textbf{Finish}: $k=20$}
 \end{center}
 \begin{columns}
 \begin{column}[T]{0.5\columnwidth}
@@ -56,6 +57,6 @@
 \end{columns}
 }
 \frame{
-    \frametitle{Mad Hatter tea-party (SDRs)}
+    \frametitle{Mad Hatter tea-party ($K$-solutions)}
     \includegraphics[width=\columnwidth,height=.9\textheight]{figures/{example.gantt.SDRs}.pdf}
 }
