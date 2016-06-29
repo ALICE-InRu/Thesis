@@ -1,7 +1,7 @@
-\section{Problem space}\againframe<9>{alice}
+\section{Problem space}\againframe<9|handout:0>{alice}
 \frame{
     \frametitle{Mad Hatter tea-party (definition)}
-    \only<1>{\centering\includegraphics[height=.9\textheight]{figures/{alice-mad-tea-party}.eps}}
+    \only<1|handout:0>{\centering\includegraphics[height=.9\textheight]{figures/{alice-mad-tea-party}.eps}}
     \only<2->{
     \begin{columns}
         \begin{column}{0.35\columnwidth}
@@ -32,25 +32,25 @@
 \frame{
     \frametitle{Mad Hatter tea-party ($k$-solutions)}    
 \begin{center}
-    \only<1>{\textbf{Start}: $k=0$}
+    \only<1|handout:0>{\textbf{Start}: $k=0$}
     \only<2>{\textbf{Midway}: $k=10$}
-    \only<3>{\textbf{Finish}: $k=20$}
+    \only<3|handout:0>{\textbf{Finish}: $k=20$}
 \end{center}
 \begin{columns}
 \begin{column}[T]{0.5\columnwidth}
     \begin{figure}
     \input{figures/example.graph.tikzstyle.tex}
-    \only<1>{\resizebox{\columnwidth}{!}{\input{figures/example.graph.k0.tex}}}
+    \only<1|handout:0>{\resizebox{\columnwidth}{!}{\input{figures/example.graph.k0.tex}}}
     \only<2>{\resizebox{\columnwidth}{!}{\input{figures/example.graph.k10.tex}}}
-    \only<3>{\resizebox{\columnwidth}{!}{\input{figures/example.graph.k20.tex}}}
+    \only<3|handout:0>{\resizebox{\columnwidth}{!}{\input{figures/example.graph.k20.tex}}}
     \caption{Disjunctive graph}
     \end{figure}
 \end{column}
 \begin{column}[T]{0.5\columnwidth}
     \begin{figure}
-    \includegraphics<1>[width=\columnwidth]{presentation/{example.gantt.k0}.pdf}
+    \includegraphics<1|handout:0>[width=\columnwidth]{presentation/{example.gantt.k0}.pdf}
     \includegraphics<2>[width=\columnwidth]{presentation/{example.gantt.k10}.pdf}
-    \includegraphics<3>[width=\columnwidth]{presentation/{example.gantt.k20}.pdf}
+    \includegraphics<3|handout:0>[width=\columnwidth]{presentation/{example.gantt.k20}.pdf}
     \caption{Gantt chart}
     \end{figure}
 \end{column}

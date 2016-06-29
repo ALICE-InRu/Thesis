@@ -1,4 +1,4 @@
-\section{Preference set}\againframe<12>{alice}
+\section{Preference set}\againframe<12|handout:0>{alice}
 \frame{\frametitle{Generating training data}
     \Alice\ framework for creating \dr s
     \bi \alert<1>{Linear classification} to identify good dispatches, 
@@ -20,15 +20,18 @@
     time independent policy\ei
 }
 
-\againframe{featsize}
-\frame{\frametitle{Sampled size of $\abs{\Psi(k)}$ 
-        ($6\times5, N_{train}=500)$}
+\againframe<handout:0>{featsize}
+\frame{
+    \frametitle{Sampled size of $\abs{\Psi(k)}$}
+    \framesubtitle{($6\times5, N_{train}=500)$}
     \vspace{-12pt}
     \begin{center}   
         \includegraphics[width=\columnwidth]{presentation/{prefdat.p.size.6x5}.pdf}
     \end{center}    
 }
 
-\frame{\frametitle{Stepwise bias strategies}
+\frame{
+    \frametitle{Stepwise bias strategies}
+    \framesubtitle{($6\times5, N_{train}=500$)}
     \includegraphics[width=\columnwidth]{presentation/{bias.CDR.6x5}.pdf}
 }
