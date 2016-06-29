@@ -8,7 +8,7 @@
           font=\bfseries\scriptsize\sffamily, thin},
         txtSml/.style  = {txtLrg, align=left, font=\tiny\sffamily},
         txtComment/.style = {font=\tiny\sffamily, xshift=-0.4cm, near start,
-            text width=4cm, rotate=90, align=left},
+            text width=5cm, rotate=90, align=left},
         txtRef/.style= {}, %font=\tiny\sffamily, midway, above, sloped},
         hybrid/.style = {}, %-,draw=black, dashed},
         based/.style = {arrow, dotted},
@@ -26,8 +26,10 @@
     root/.style  = {txtLrg, rotated, fill=gray!50},
     onode/.style = {txtLrg, rotated, fill=gray!25},
     tnode/.style = {txtSml, normal, fill=gray!10},
-    alert/.style = {fill=red!10},
-    emphasis/.style = {}, %tikz={\node [draw,red,thick,fit to tree]{};}},
+    thesis/.style = {fill=red!50},
+    alert/.style = {draw=red,thick},
+    emphasis/.style = {tikz={
+            \node<2>[fill,fill opacity=.1,purple,thick,fit to tree]{};}},
     edge from parent/.style={arrow, edge from parent fork right}
 }
 
@@ -48,12 +50,13 @@ for tree={
         [General algorithms\\(iterative methods), onode, 
             [Artificial intelligence, onode
                 [Machine\\learning, onode,  
-                    [Roll-out / Pilot method, tnode, long, alert]
+                    [Roll-out / Pilot method, tnode, long, thesis]
                     [Reinforcement learning, tnode, long]
                     [Decision tree, tnode, long]
-                    [Imitation\\learning, onode, emphasis, alert, 
+                    [Imitation\\learning, onode, emphasis, thesis, 
+                    name=IL
                         [Active, onode, 
-                            [DAgger, tnode, small]
+                            [DAgger, tnode, small, name=DAgger]
                         ]
                         [Passive, onode, 
                             [Follow the expert, tnode, small]
@@ -77,7 +80,7 @@ for tree={
                 ]
                 [Large step optimisation, tnode, long]
                 [Tabu Search, tnode, long, name=TS]
-                [Evolutionary computation,tnode, long, alert, 
+                [Evolutionary computation,tnode, long, thesis, 
                     [Genetic local search, tnode, medium]
                 ]
                 [Genetic algorithms, tnode, long, name=GA
@@ -92,8 +95,8 @@ for tree={
                     [Beam search, tnode, name=BS]
                 ]
             ]
-            [Insertion algorithm, tnode]
-            [Priority DR, onode, emphasis, alert,  
+            %[Insertion algorithm, tnode]
+            [Priority DR, onode, emphasis, thesis,  
                 [SDR, onode
                     [SPT, tnode, verysmall]
                     [LPT, tnode, verysmall]
@@ -109,7 +112,7 @@ for tree={
             problems they are intractable for high dimensionality.}},
         [Efficient methods, tnode] 
         [Enumerative methods, onode, 
-            [Branch \& Bound, tnode, name=BB, alert]
+            [Branch \& Bound, tnode, name=BB, thesis]
             [Mathematical, onode
                 [Surrogate duality, tnode, long] 
                 [Lagrangian relaxation, tnode, long] 
@@ -122,10 +125,7 @@ for tree={
 ]
 \draw[arrow] (ANN) -| (SA);
 \draw[arrow] (VDS) -| (SBP);
-%\draw[based,out=east,in=north] (BB) to node[txtRef] {\cite{BeamSearch}} (BS);
-%\draw[hybrid,out=east,in=east] (GA) to (TS);
-%\draw[based,out=east,in=east]  (ACO) to node[txtRef] {\cite{Korytkowski13}} 
-%(CDR) ;
-%\draw[based,out=east,in=east] (GP) to (CDR);
+\draw<2>[arrow,alert] (IL.east) to[out=90,in=30] (CDR.east);
+\pause
 \end{forest}
 }}}}
