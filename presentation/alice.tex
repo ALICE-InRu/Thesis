@@ -6,30 +6,30 @@
     txt/.style = {font=\small\sffamily,text width=9em,align=center,midway},
     ltxt/.style = {txt,left,align=right},
     rtxt/.style = {txt,right,align=left},
-    rice/.style = {fill=gray!35},    
+    rice/.style = {beameralert=1},    
     invisible/.style={opacity=0,text opacity=0},
     visible on/.style={alt=#1{}{invisible}},
     alt/.code args={<#1>#2#3}{%
         \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} 
     },
-    beameralert/.style={alt=<#1>{fill=red!30}{},anchor=base},
-    BeamerAlert/.style={alt=#1{fill=red!30,rounded corners}{},anchor=base}
+    beameralert/.style={alt=<#1>{fill=red!50}{},anchor=base},
 }
 \vspace{-12pt}
 \resizebox{\columnwidth}{!}{%
 % The block diagram code is probably more verbose than necessary
 \begin{tikzpicture}[auto, node distance=2.3cm]%,>=latex']
-\node [block, rice, beameralert=1] (P) {Problem space $\vec{z}\in\mathcal{P}$};
-\node [block, beameralert=2, below of=P] (I) {Subspace of instances 
-\mbox{$\vec{x}\in \mathcal{P}' \subset \mathcal{P}$}};
-\node [block, rice, beameralert=3, below of=I] (Phi) {Feature space 
-$\vphi(\vec{x})\in\Phi\subset\mathcal{F}$};
-\node [block, beameralert=6, right of=P, xshift=3.4cm] (F) 
+\node [block, rice, beameralert=2, beameralert=9] (P) {Problem space 
+$\vec{z}\in\mathcal{P}$};
+\node [block, beameralert=3, beameralert=10, below of=P] (I) {Subspace of 
+instances \mbox{$\vec{x}\in \mathcal{P}' \subset \mathcal{P}$}};
+\node [block, rice, beameralert=4, beameralert=11, below of=I] (Phi) {Feature 
+space $\vphi(\vec{x})\in\Phi\subset\mathcal{F}$};
+\node [block, beameralert=7, beameralert=16, right of=P, xshift=3.4cm] (F) 
 {Footprints in instance space};
-\node [block, rice, beameralert=5, right of=I, xshift=3.4cm] (Y) 
-{Performance space $y\in\mathcal{Y}$};
-\node [block, rice, beameralert=4, right of=Phi, xshift=3.4cm] (A) 
-{Algorithm space $a\in\mathcal{A}$};
+\node [block, rice, beameralert=6, beameralert=15, right of=I, xshift=3.4cm] 
+(Y) {Performance space $y\in\mathcal{Y}$};
+\node [block, rice, beameralert=5, beameralert=14, right of=Phi, xshift=3.4cm] 
+(A) {Algorithm space $a\in\mathcal{A}$};
 
 \draw [arrow] (P) -- node[ltxt] {instance selection} (I);
 \draw [arrow] (I) -- node[ltxt] {feature selection $\vphi$} (Phi);
@@ -40,17 +40,16 @@ $\vphi(\vec{x})\in\Phi\subset\mathcal{F}$};
     $f(y(a,\vec{x}))$} (F);
 \draw [arrow] (F) -- node[txt] {infer algorithm performance on all 
     $\vec{z}\in\mathcal{P}$} (P);
-
-\visible<7->{
-\node [block, beameralert=7, below of=Phi] (Psi) {Preference set $\Psi \subset 
-\Phi$};
-\node [block, beameralert=8, right of=Psi, xshift=3.4cm] (PREF) {Preference 
-learning};
-\draw [arrow,dotted] (Phi) -- node[ltxt] {sample preference pairs} (Psi);
-\draw [arrow,dotted] (Psi) -- (PREF);
-\draw [arrow,dotted] (PREF) -- node[rtxt] {train algorithm $a$} (A);
+\visible<8->{
+\node [block, beameralert=12, below of=Phi] (Psi) {Preference 
+set $\Psi \subset \Phi$};
+\node [block, beameralert=13, right of=Psi, xshift=3.4cm] 
+(PREF) {Preference learning};
+\draw [arrow] (Phi) -- node[ltxt] {sample preference pairs} (Psi);
+\draw [arrow] (Psi) -- (PREF);
+\draw [arrow] (PREF) -- node[rtxt] {train algorithm $a$} (A);
 }
-\visible<9>{
+\visible<8->{
     \draw [arrow,dotted] (F) -- node[txt,sloped,above] {feedback} (Psi);
 }
 \end{tikzpicture}}
